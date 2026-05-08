@@ -52,6 +52,8 @@ apis:
         url: https://docs.buttondown.com/changelog
       - type: Status
         url: https://buttondown.statuspage.io/
+      - type: OpenAPI
+        url: openapi/buttondown-openapi.yml
     x-features:
       - Subscriber management (create, update, list, delete)
       - Email sending and scheduling
