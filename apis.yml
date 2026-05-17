@@ -7,7 +7,7 @@ description: >-
   programmatic management of subscribers, emails, newsletters, and related
   resources.
 type: Index
-x-type: company
+kind: company
 position: Consumer
 access: 3rd-Party
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
@@ -48,9 +48,9 @@ apis:
         url: https://docs.buttondown.com/
       - type: API Keys
         url: https://buttondown.com/requests
-      - type: Changelog
+      - type: ChangeLog
         url: https://docs.buttondown.com/changelog
-      - type: Status
+      - type: StatusPage
         url: https://buttondown.statuspage.io/
       - type: OpenAPI
         url: openapi/buttondown-openapi.yml
@@ -114,9 +114,9 @@ common:
     url: https://buttondown.com/pricing
   - type: Blog
     url: https://buttondown.com/blog
-  - type: Status
+  - type: StatusPage
     url: https://buttondown.statuspage.io/
-  - type: Changelog
+  - type: ChangeLog
     url: https://docs.buttondown.com/changelog
   - type: Support
     url: mailto:support@buttondown.email
