@@ -1,0 +1,107 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Buttondown API — Webhooks
+  description: 'Buttondown API — Webhooks. 2 operations. Lead operation: List all webhooks. Self-contained Naftiko capability
+    covering one Buttondown business surface.'
+  tags:
+  - Buttondown
+  - Webhooks
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    BUTTONDOWN_API_KEY: BUTTONDOWN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: buttondown-webhooks
+    baseUri: https://api.buttondown.email/v1
+    description: Buttondown API — Webhooks business capability. Self-contained, no shared references.
+    resources:
+    - name: webhooks
+      path: /webhooks
+      operations:
+      - name: listwebhooks
+        method: GET
+        description: List all webhooks
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createwebhook
+        method: POST
+        description: Create a webhook
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.BUTTONDOWN_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: buttondown-webhooks-rest
+    port: 8080
+    description: REST adapter for Buttondown API — Webhooks. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/webhooks
+      name: webhooks
+      description: REST surface for webhooks.
+      operations:
+      - method: GET
+        name: listwebhooks
+        description: List all webhooks
+        call: buttondown-webhooks.listwebhooks
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createwebhook
+        description: Create a webhook
+        call: buttondown-webhooks.createwebhook
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: buttondown-webhooks-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Buttondown API — Webhooks. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-all-webhooks
+      description: List all webhooks
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: buttondown-webhooks.listwebhooks
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-webhook
+      description: Create a webhook
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: buttondown-webhooks.createwebhook
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

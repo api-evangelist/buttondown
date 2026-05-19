@@ -1,0 +1,139 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Buttondown API — Emails
+  description: 'Buttondown API — Emails. 3 operations. Lead operation: List emails (drafts, scheduled, sent). Self-contained
+    Naftiko capability covering one Buttondown business surface.'
+  tags:
+  - Buttondown
+  - Emails
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    BUTTONDOWN_API_KEY: BUTTONDOWN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: buttondown-emails
+    baseUri: https://api.buttondown.email/v1
+    description: Buttondown API — Emails business capability. Self-contained, no shared references.
+    resources:
+    - name: emails
+      path: /emails
+      operations:
+      - name: listemails
+        method: GET
+        description: List emails (drafts, scheduled, sent)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createemail
+        method: POST
+        description: Create an email
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: emails-id
+      path: /emails/{id}
+      operations:
+      - name: getemail
+        method: GET
+        description: Retrieve an email
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.BUTTONDOWN_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: buttondown-emails-rest
+    port: 8080
+    description: REST adapter for Buttondown API — Emails. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/emails
+      name: emails
+      description: REST surface for emails.
+      operations:
+      - method: GET
+        name: listemails
+        description: List emails (drafts, scheduled, sent)
+        call: buttondown-emails.listemails
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createemail
+        description: Create an email
+        call: buttondown-emails.createemail
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/emails/{id}
+      name: emails-id
+      description: REST surface for emails-id.
+      operations:
+      - method: GET
+        name: getemail
+        description: Retrieve an email
+        call: buttondown-emails.getemail
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: buttondown-emails-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Buttondown API — Emails. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-emails-drafts-scheduled-sent
+      description: List emails (drafts, scheduled, sent)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: buttondown-emails.listemails
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-email
+      description: Create an email
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: buttondown-emails.createemail
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieve-email
+      description: Retrieve an email
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: buttondown-emails.getemail
+      outputParameters:
+      - type: object
+        mapping: $.

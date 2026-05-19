@@ -1,0 +1,199 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Buttondown API — Subscribers
+  description: 'Buttondown API — Subscribers. 5 operations. Lead operation: List all subscribers. Self-contained Naftiko capability
+    covering one Buttondown business surface.'
+  tags:
+  - Buttondown
+  - Subscribers
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    BUTTONDOWN_API_KEY: BUTTONDOWN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: buttondown-subscribers
+    baseUri: https://api.buttondown.email/v1
+    description: Buttondown API — Subscribers business capability. Self-contained, no shared references.
+    resources:
+    - name: subscribers
+      path: /subscribers
+      operations:
+      - name: listsubscribers
+        method: GET
+        description: List all subscribers
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createsubscriber
+        method: POST
+        description: Create a subscriber
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: subscribers-id
+      path: /subscribers/{id}
+      operations:
+      - name: getsubscriber
+        method: GET
+        description: Retrieve a subscriber
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatesubscriber
+        method: PATCH
+        description: Update a subscriber
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletesubscriber
+        method: DELETE
+        description: Delete a subscriber
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.BUTTONDOWN_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: buttondown-subscribers-rest
+    port: 8080
+    description: REST adapter for Buttondown API — Subscribers. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/subscribers
+      name: subscribers
+      description: REST surface for subscribers.
+      operations:
+      - method: GET
+        name: listsubscribers
+        description: List all subscribers
+        call: buttondown-subscribers.listsubscribers
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createsubscriber
+        description: Create a subscriber
+        call: buttondown-subscribers.createsubscriber
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/subscribers/{id}
+      name: subscribers-id
+      description: REST surface for subscribers-id.
+      operations:
+      - method: GET
+        name: getsubscriber
+        description: Retrieve a subscriber
+        call: buttondown-subscribers.getsubscriber
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updatesubscriber
+        description: Update a subscriber
+        call: buttondown-subscribers.updatesubscriber
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletesubscriber
+        description: Delete a subscriber
+        call: buttondown-subscribers.deletesubscriber
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: buttondown-subscribers-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Buttondown API — Subscribers. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-all-subscribers
+      description: List all subscribers
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: buttondown-subscribers.listsubscribers
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-subscriber
+      description: Create a subscriber
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: buttondown-subscribers.createsubscriber
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieve-subscriber
+      description: Retrieve a subscriber
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: buttondown-subscribers.getsubscriber
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-subscriber
+      description: Update a subscriber
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: buttondown-subscribers.updatesubscriber
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-subscriber
+      description: Delete a subscriber
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: buttondown-subscribers.deletesubscriber
+      outputParameters:
+      - type: object
+        mapping: $.
