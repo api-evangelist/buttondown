@@ -125,6 +125,8 @@ common:
     url: https://docs.buttondown.com/changelog
   - type: Support
     url: mailto:support@buttondown.email
+  - type: LLMsTxt
+    url: https://docs.buttondown.com/llms.txt
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
