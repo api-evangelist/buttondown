@@ -1,8 +1,9 @@
 aid: buttondown
 name: Buttondown
-description: Buttondown is an independent email newsletter platform for creators and businesses, offering a markdown editor,
-  automations, paid subscriptions, analytics, team collaboration, and a feature-complete REST API for programmatic management
-  of subscribers, emails, newsletters, and related resources.
+description: >-
+  Buttondown is an independent email newsletter platform for creators and businesses, offering a markdown editor,
+  automations, paid subscriptions, analytics, team collaboration, and a feature-complete REST API for programmatic
+  management of subscribers, emails, newsletters, and related resources.
 type: Index
 kind: company
 position: Consumer
@@ -24,88 +25,80 @@ specificationVersion: '0.19'
 apis:
   - aid: buttondown:buttondown-api
     name: Buttondown API
-    description: The Buttondown API is a RESTful HTTP API that enables programmatic management of newsletters, subscribers,
-      emails, drafts, tags, automations, surveys, and webhooks. Authentication is via API keys issued in the Buttondown dashboard,
-      and the API powers both first-party and third-party tooling on the platform.
+    description: >-
+      The Buttondown API is a RESTful HTTP API that enables programmatic management of newsletters, subscribers, emails,
+      drafts, tags, automations, surveys, and webhooks. Authentication is via API keys issued in the Buttondown
+      dashboard, and the API powers both first-party and third-party tooling on the platform.
     humanURL: https://docs.buttondown.com/api
     baseURL: https://api.buttondown.email/v1
     tags:
-    - Email
-    - Newsletters
-    - REST
-    - Subscribers
+      - Email
+      - Newsletters
+      - REST
+      - Subscribers
     properties:
-    - type: Documentation
-      url: https://docs.buttondown.com/api
-    - type: Developer Portal
-      url: https://docs.buttondown.com/
-    - type: API Keys
-      url: https://buttondown.com/requests
-    - type: ChangeLog
-      url: https://docs.buttondown.com/changelog
-    - type: StatusPage
-      url: https://buttondown.statuspage.io/
-    - type: OpenAPI
-      url: openapi/buttondown-openapi.yml
-    - type: NaftikoCapability
-      url: capabilities/buttondown-emails.yaml
-    - type: NaftikoCapability
-      url: capabilities/buttondown-newsletters.yaml
-    - type: NaftikoCapability
-      url: capabilities/buttondown-subscribers.yaml
-    - type: NaftikoCapability
-      url: capabilities/buttondown-tags.yaml
-    - type: NaftikoCapability
-      url: capabilities/buttondown-webhooks.yaml
+      - type: Documentation
+        url: https://docs.buttondown.com/api
+      - type: Developer Portal
+        url: https://docs.buttondown.com/
+      - type: API Keys
+        url: https://buttondown.com/requests
+      - type: ChangeLog
+        url: https://docs.buttondown.com/changelog
+      - type: StatusPage
+        url: https://buttondown.statuspage.io/
+      - type: OpenAPI
+        url: openapi/buttondown-openapi.yml
     x-features:
-    - Subscriber management (create, update, list, delete)
-    - Email sending and scheduling
-    - Draft creation and revision
-    - Tag and segmentation management
-    - Automations and drip sequences
-    - Webhooks for event delivery
-    - Survey and poll endpoints
-    - Paid subscription support
+      - Subscriber management (create, update, list, delete)
+      - Email sending and scheduling
+      - Draft creation and revision
+      - Tag and segmentation management
+      - Automations and drip sequences
+      - Webhooks for event delivery
+      - Survey and poll endpoints
+      - Paid subscription support
     x-use-cases:
-    - Syncing subscribers from an external CRM or identity system
-    - Automated email publishing pipelines
-    - Custom signup and preference pages
-    - Analytics and reporting integrations
-    - Event-driven automations via webhooks
+      - Syncing subscribers from an external CRM or identity system
+      - Automated email publishing pipelines
+      - Custom signup and preference pages
+      - Analytics and reporting integrations
+      - Event-driven automations via webhooks
   - aid: buttondown:newsletter-platform
     name: Buttondown Newsletter Platform
-    description: The Buttondown hosted newsletter platform provides a markdown-based composition experience, subscriber management,
-      delivery infrastructure, analytics, monetization via paid subscriptions, team collaboration, and integrations with Discord,
-      Memberful, YouTube, and RSS.
+    description: >-
+      The Buttondown hosted newsletter platform provides a markdown-based composition experience, subscriber management,
+      delivery infrastructure, analytics, monetization via paid subscriptions, team collaboration, and integrations with
+      Discord, Memberful, YouTube, and RSS.
     humanURL: https://buttondown.com/
     tags:
-    - Analytics
-    - Email
-    - Markdown
-    - Newsletters
-    - SaaS
+      - Analytics
+      - Email
+      - Markdown
+      - Newsletters
+      - SaaS
     properties:
-    - type: Website
-      url: https://buttondown.com/
-    - type: Features
-      url: https://buttondown.com/features
-    - type: Integrations
-      url: https://buttondown.com/features/integrations
-    - type: Pricing
-      url: https://buttondown.com/pricing
+      - type: Website
+        url: https://buttondown.com/
+      - type: Features
+        url: https://buttondown.com/features
+      - type: Integrations
+        url: https://buttondown.com/features/integrations
+      - type: Pricing
+        url: https://buttondown.com/pricing
     x-features:
-    - Markdown editor with personalization
-    - Paid subscriptions without platform fees
-    - Analytics dashboard
-    - Automations and scheduling
-    - Team collaboration without per-seat pricing
-    - Concierge migration service
-    - High deliverability and spam protection
+      - Markdown editor with personalization
+      - Paid subscriptions without platform fees
+      - Analytics dashboard
+      - Automations and scheduling
+      - Team collaboration without per-seat pricing
+      - Concierge migration service
+      - High deliverability and spam protection
     x-use-cases:
-    - Independent creator newsletters
-    - Paid subscription newsletters
-    - Company and product newsletters
-    - Migration from other newsletter platforms
+      - Independent creator newsletters
+      - Paid subscription newsletters
+      - Company and product newsletters
+      - Migration from other newsletter platforms
 common:
   - type: GitHubOrganization
     url: https://github.com/buttondown
