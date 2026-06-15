@@ -1,0 +1,267 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Buttondown API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Subscribers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all subscribers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.email/v1/subscribers"
+          },
+          "docs": "List all subscribers"
+        },
+        {
+          "info": {
+            "name": "Create a subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.email/v1/subscribers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a subscriber"
+        },
+        {
+          "info": {
+            "name": "Retrieve a subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.email/v1/subscribers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve a subscriber"
+        },
+        {
+          "info": {
+            "name": "Update a subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.buttondown.email/v1/subscribers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a subscriber"
+        },
+        {
+          "info": {
+            "name": "Delete a subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.buttondown.email/v1/subscribers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a subscriber"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Emails",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List emails (drafts, scheduled, sent)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.email/v1/emails"
+          },
+          "docs": "List emails (drafts, scheduled, sent)"
+        },
+        {
+          "info": {
+            "name": "Create an email",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.email/v1/emails",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an email"
+        },
+        {
+          "info": {
+            "name": "Retrieve an email",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.email/v1/emails/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve an email"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Tags",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.email/v1/tags"
+          },
+          "docs": "List all tags"
+        },
+        {
+          "info": {
+            "name": "Create a tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.email/v1/tags",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a tag"
+        },
+        {
+          "info": {
+            "name": "Retrieve a tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.email/v1/tags/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve a tag"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Newsletters",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all newsletters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.email/v1/newsletters"
+          },
+          "docs": "List all newsletters"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Webhooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all webhooks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.email/v1/webhooks"
+          },
+          "docs": "List all webhooks"
+        },
+        {
+          "info": {
+            "name": "Create a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.email/v1/webhooks",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a webhook"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
