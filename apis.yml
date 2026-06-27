@@ -39,7 +39,7 @@ apis:
     properties:
       - type: Documentation
         url: https://docs.buttondown.com/api
-      - type: Developer Portal
+      - type: DeveloperPortal
         url: https://docs.buttondown.com/
       - type: API Keys
         url: https://buttondown.com/requests
@@ -118,7 +118,7 @@ common:
     url: https://docs.buttondown.com/changelog
   - type: Support
     url: mailto:support@buttondown.email
-  - type: LLMsTxt
+  - type: LlmsText
     url: https://docs.buttondown.com/llms.txt
 maintainers:
   - FN: Kin Lane
