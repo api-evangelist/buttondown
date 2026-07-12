@@ -100,6 +100,12 @@ apis:
       - Company and product newsletters
       - Migration from other newsletter platforms
 common:
+  - type: VulnerabilityDisclosure
+    url: security/buttondown-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/buttondown-domain-security.yml
+  - type: Authentication
+    url: authentication/buttondown-authentication.yml
   - type: GitHubOrganization
     url: https://github.com/buttondown
   - type: LinkedIn
