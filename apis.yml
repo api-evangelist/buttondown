@@ -100,6 +100,8 @@ apis:
       - Company and product newsletters
       - Migration from other newsletter platforms
 common:
+  - type: AgenticAccess
+    url: agentic-access/buttondown-agentic-access.yml
   - type: VulnerabilityDisclosure
     url: security/buttondown-vulnerability-disclosure.yml
   - type: DomainSecurity
