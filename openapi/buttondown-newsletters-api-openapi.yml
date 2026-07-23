@@ -1,0 +1,55 @@
+openapi: 3.1.0
+info:
+  title: Buttondown Emails Newsletters API
+  version: '1.0'
+  description: Minimal OpenAPI 3.1 description of the Buttondown newsletter platform API. Covers core RESTful resources for subscribers, emails, tags, newsletters, and webhooks. Derived from the public Buttondown documentation.
+  x-generated-from: https://docs.buttondown.com/api
+  x-generated-by: claude-crawl-2026-05-08
+servers:
+- url: https://api.buttondown.email/v1
+  description: Production
+security:
+- apiKeyAuth: []
+tags:
+- name: Newsletters
+paths:
+  /newsletters:
+    get:
+      tags:
+      - Newsletters
+      summary: List all newsletters
+      operationId: listNewsletters
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedList'
+components:
+  schemas:
+    PaginatedList:
+      type: object
+      properties:
+        count:
+          type: integer
+        next:
+          type: string
+          nullable: true
+        previous:
+          type: string
+          nullable: true
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Resource'
+      additionalProperties: true
+    Resource:
+      type: object
+      additionalProperties: true
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: API token in the form `Token <api-key>`.

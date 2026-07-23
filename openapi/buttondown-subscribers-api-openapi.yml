@@ -1,0 +1,121 @@
+openapi: 3.1.0
+info:
+  title: Buttondown Emails Subscribers API
+  version: '1.0'
+  description: Minimal OpenAPI 3.1 description of the Buttondown newsletter platform API. Covers core RESTful resources for subscribers, emails, tags, newsletters, and webhooks. Derived from the public Buttondown documentation.
+  x-generated-from: https://docs.buttondown.com/api
+  x-generated-by: claude-crawl-2026-05-08
+servers:
+- url: https://api.buttondown.email/v1
+  description: Production
+security:
+- apiKeyAuth: []
+tags:
+- name: Subscribers
+paths:
+  /subscribers:
+    get:
+      tags:
+      - Subscribers
+      summary: List all subscribers
+      operationId: listSubscribers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedList'
+    post:
+      tags:
+      - Subscribers
+      summary: Create a subscriber
+      operationId: createSubscriber
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Resource'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Resource'
+  /subscribers/{id}:
+    parameters:
+    - $ref: '#/components/parameters/IdParam'
+    get:
+      tags:
+      - Subscribers
+      summary: Retrieve a subscriber
+      operationId: getSubscriber
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Resource'
+    patch:
+      tags:
+      - Subscribers
+      summary: Update a subscriber
+      operationId: updateSubscriber
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Resource'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Resource'
+    delete:
+      tags:
+      - Subscribers
+      summary: Delete a subscriber
+      operationId: deleteSubscriber
+      responses:
+        '204':
+          description: Deleted
+components:
+  schemas:
+    PaginatedList:
+      type: object
+      properties:
+        count:
+          type: integer
+        next:
+          type: string
+          nullable: true
+        previous:
+          type: string
+          nullable: true
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Resource'
+      additionalProperties: true
+    Resource:
+      type: object
+      additionalProperties: true
+  parameters:
+    IdParam:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: API token in the form `Token <api-key>`.
