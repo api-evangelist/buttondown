@@ -6,9 +6,22 @@ description: >-
   management of subscribers, emails, newsletters, and related resources.
 type: Index
 kind: company
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+    - plans
+    - authentication
+  generated: '2026-07-22'
+  method: derived
 position: Consumer
 access: 3rd-Party
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/buttondown.png
 tags:
   - Analytics
   - Automations
@@ -20,23 +33,19 @@ tags:
   - Subscribers
 url: https://raw.githubusercontent.com/api-evangelist/buttondown/refs/heads/main/apis.yml
 created: '2026-04-23'
-modified: '2026-05-19'
+modified: '2026-07-25'
 specificationVersion: '0.19'
 apis:
-  - aid: buttondown:buttondown-api
-    name: Buttondown API
-    description: >-
-      The Buttondown API is a RESTful HTTP API that enables programmatic management of newsletters, subscribers, emails,
-      drafts, tags, automations, surveys, and webhooks. Authentication is via API keys issued in the Buttondown
-      dashboard, and the API powers both first-party and third-party tooling on the platform.
+  - aid: buttondown:buttondown-emails-api
+    name: Buttondown Emails API
+    description: The Emails API from Buttondown — 2 operation(s) for emails.
     humanURL: https://docs.buttondown.com/api
     baseURL: https://api.buttondown.email/v1
     tags:
-      - Email
-      - Newsletters
-      - REST
-      - Subscribers
+      - Emails
     properties:
+      - type: OpenAPI
+        url: openapi/buttondown-emails-api-openapi.yml
       - type: Documentation
         url: https://docs.buttondown.com/api
       - type: DeveloperPortal
@@ -47,23 +56,86 @@ apis:
         url: https://docs.buttondown.com/changelog
       - type: StatusPage
         url: https://buttondown.statuspage.io/
+  - aid: buttondown:buttondown-newsletters-api
+    name: Buttondown Newsletters API
+    description: The Newsletters API from Buttondown — 1 operation(s) for newsletters.
+    humanURL: https://docs.buttondown.com/api
+    baseURL: https://api.buttondown.email/v1
+    tags:
+      - Newsletters
+    properties:
       - type: OpenAPI
-        url: openapi/buttondown-openapi.yml
-    x-features:
-      - Subscriber management (create, update, list, delete)
-      - Email sending and scheduling
-      - Draft creation and revision
-      - Tag and segmentation management
-      - Automations and drip sequences
-      - Webhooks for event delivery
-      - Survey and poll endpoints
-      - Paid subscription support
-    x-use-cases:
-      - Syncing subscribers from an external CRM or identity system
-      - Automated email publishing pipelines
-      - Custom signup and preference pages
-      - Analytics and reporting integrations
-      - Event-driven automations via webhooks
+        url: openapi/buttondown-newsletters-api-openapi.yml
+      - type: Documentation
+        url: https://docs.buttondown.com/api
+      - type: DeveloperPortal
+        url: https://docs.buttondown.com/
+      - type: API Keys
+        url: https://buttondown.com/requests
+      - type: ChangeLog
+        url: https://docs.buttondown.com/changelog
+      - type: StatusPage
+        url: https://buttondown.statuspage.io/
+  - aid: buttondown:buttondown-subscribers-api
+    name: Buttondown Subscribers API
+    description: The Subscribers API from Buttondown — 2 operation(s) for subscribers.
+    humanURL: https://docs.buttondown.com/api
+    baseURL: https://api.buttondown.email/v1
+    tags:
+      - Subscribers
+    properties:
+      - type: OpenAPI
+        url: openapi/buttondown-subscribers-api-openapi.yml
+      - type: Documentation
+        url: https://docs.buttondown.com/api
+      - type: DeveloperPortal
+        url: https://docs.buttondown.com/
+      - type: API Keys
+        url: https://buttondown.com/requests
+      - type: ChangeLog
+        url: https://docs.buttondown.com/changelog
+      - type: StatusPage
+        url: https://buttondown.statuspage.io/
+  - aid: buttondown:buttondown-tags-api
+    name: Buttondown Tags API
+    description: The Tags API from Buttondown — 2 operation(s) for tags.
+    humanURL: https://docs.buttondown.com/api
+    baseURL: https://api.buttondown.email/v1
+    tags:
+      - Tags
+    properties:
+      - type: OpenAPI
+        url: openapi/buttondown-tags-api-openapi.yml
+      - type: Documentation
+        url: https://docs.buttondown.com/api
+      - type: DeveloperPortal
+        url: https://docs.buttondown.com/
+      - type: API Keys
+        url: https://buttondown.com/requests
+      - type: ChangeLog
+        url: https://docs.buttondown.com/changelog
+      - type: StatusPage
+        url: https://buttondown.statuspage.io/
+  - aid: buttondown:buttondown-webhooks-api
+    name: Buttondown Webhooks API
+    description: The Webhooks API from Buttondown — 1 operation(s) for webhooks.
+    humanURL: https://docs.buttondown.com/api
+    baseURL: https://api.buttondown.email/v1
+    tags:
+      - Webhooks
+    properties:
+      - type: OpenAPI
+        url: openapi/buttondown-webhooks-api-openapi.yml
+      - type: Documentation
+        url: https://docs.buttondown.com/api
+      - type: DeveloperPortal
+        url: https://docs.buttondown.com/
+      - type: API Keys
+        url: https://buttondown.com/requests
+      - type: ChangeLog
+        url: https://docs.buttondown.com/changelog
+      - type: StatusPage
+        url: https://buttondown.statuspage.io/
   - aid: buttondown:newsletter-platform
     name: Buttondown Newsletter Platform
     description: >-
