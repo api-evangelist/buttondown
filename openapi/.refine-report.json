@@ -1,0 +1,22 @@
+{
+  "provider": "buttondown",
+  "sources": [
+    "buttondown-emails-api-openapi.yml",
+    "buttondown-newsletters-api-openapi.yml",
+    "buttondown-subscribers-api-openapi.yml",
+    "buttondown-tags-api-openapi.yml",
+    "buttondown-webhooks-api-openapi.yml"
+  ],
+  "outputs": [
+    "buttondown-emails-api-openapi.yml",
+    "buttondown-newsletters-api-openapi.yml",
+    "buttondown-subscribers-api-openapi.yml",
+    "buttondown-tags-api-openapi.yml",
+    "buttondown-webhooks-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
