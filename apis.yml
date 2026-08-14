@@ -1,9 +1,12 @@
 aid: buttondown
 name: Buttondown
-description: >-
-  Buttondown is an independent email newsletter platform for creators and businesses, offering a markdown editor,
-  automations, paid subscriptions, analytics, team collaboration, and a feature-complete REST API for programmatic
-  management of subscribers, emails, newsletters, and related resources.
+description: Buttondown is an independent, bootstrapped email newsletter platform for writers, creators and developers,
+  offering a Markdown and rich-text editor, subscriber management with tags, segments and metadata, automations,
+  RSS-to-email, surveys, comments, paid subscriptions via Stripe with no revenue share, custom sending and hosting
+  domains, and hosted archives. Its public REST API covers 133 operations across 29 resource areas — subscribers,
+  emails, tags, segments, automations, webhooks, imports, exports, surveys, forms, images, snippets, prices and
+  more — described by a live OpenAPI 3.1 document, backed by an 82-event webhook catalog, a date-based version train,
+  idempotency keys, and a first-party CLI for syncing newsletter content to a local folder.
 type: Index
 kind: company
 accessModel:
@@ -15,191 +18,647 @@ accessModel:
   label: Freemium · Self-serve signup
   confidence: high
   source:
-    - plans
-    - authentication
+  - plans
+  - authentication
   generated: '2026-07-22'
   method: derived
 position: Consumer
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/buttondown.png
 tags:
-  - Analytics
+- Analytics
+- Automations
+- Email
+- Markdown
+- Newsletters
+- Paid Subscriptions
+- SaaS
+- Subscribers
+- Webhooks
+- Segmentation
+- Developer Tools
+- Marketing
+url: https://raw.githubusercontent.com/api-evangelist/buttondown/refs/heads/main/apis.yml
+created: '2026-04-23'
+modified: '2026-08-13'
+specificationVersion: '0.19'
+apis:
+- aid: buttondown:buttondown-accounts-api
+  name: Buttondown Accounts API
+  description: The Accounts API from Buttondown — 1 operation(s) covering the authenticated account and its plan/feature
+    state.
+  humanURL: https://docs.buttondown.com/api-accounts-me
+  baseURL: https://api.buttondown.com/v1
+  tags:
+  - Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/buttondown-accounts-api-openapi.yml
+  - type: Overlay
+    url: overlays/buttondown-accounts-overlay.yaml
+  - type: APIReference
+    url: https://docs.buttondown.com/api-accounts-me
+  - type: Documentation
+    url: https://docs.buttondown.com/api-introduction
+- aid: buttondown:buttondown-advertising-units-api
+  name: Buttondown Advertising Units API
+  description: The Advertising Units API from Buttondown — 6 operation(s) covering newsletter sponsorship inventory
+    — advertising units and the slots sold against them.
+  humanURL: https://docs.buttondown.com/api-advertising-units-introduction
+  baseURL: https://api.buttondown.com/v1
+  tags:
+  - Advertising Units
+  properties:
+  - type: OpenAPI
+    url: openapi/buttondown-advertising-units-api-openapi.yml
+  - type: Overlay
+    url: overlays/buttondown-advertising-units-overlay.yaml
+  - type: APIReference
+    url: https://docs.buttondown.com/api-advertising-units-introduction
+  - type: Documentation
+    url: https://docs.buttondown.com/api-introduction
+- aid: buttondown:buttondown-api-requests-api
+  name: Buttondown API Requests API
+  description: The API Requests API from Buttondown — 2 operation(s) covering the account's own API request log,
+    including retained response bodies for idempotent requests.
+  humanURL: https://docs.buttondown.com/api-api-requests-list
+  baseURL: https://api.buttondown.com/v1
+  tags:
+  - API Requests
+  properties:
+  - type: OpenAPI
+    url: openapi/buttondown-api-requests-api-openapi.yml
+  - type: Overlay
+    url: overlays/buttondown-api-requests-overlay.yaml
+  - type: APIReference
+    url: https://docs.buttondown.com/api-api-requests-list
+  - type: Documentation
+    url: https://docs.buttondown.com/api-introduction
+- aid: buttondown:buttondown-attachments-api
+  name: Buttondown Attachments API
+  description: The Attachments API from Buttondown — 4 operation(s) covering files attached to emails and inbox
+    replies.
+  humanURL: https://docs.buttondown.com/api-attachments-introduction
+  baseURL: https://api.buttondown.com/v1
+  tags:
+  - Attachments
+  properties:
+  - type: OpenAPI
+    url: openapi/buttondown-attachments-api-openapi.yml
+  - type: Overlay
+    url: overlays/buttondown-attachments-overlay.yaml
+  - type: APIReference
+    url: https://docs.buttondown.com/api-attachments-introduction
+  - type: Documentation
+    url: https://docs.buttondown.com/api-introduction
+- aid: buttondown:buttondown-automations-api
+  name: Buttondown Automations API
+  description: The Automations API from Buttondown — 7 operation(s) covering triggered and scheduled email sequences,
+    their actions, timing and analytics.
+  humanURL: https://docs.buttondown.com/api-automation-introduction
+  baseURL: https://api.buttondown.com/v1
+  tags:
   - Automations
+  properties:
+  - type: OpenAPI
+    url: openapi/buttondown-automations-api-openapi.yml
+  - type: Overlay
+    url: overlays/buttondown-automations-overlay.yaml
+  - type: APIReference
+    url: https://docs.buttondown.com/api-automation-introduction
+  - type: Documentation
+    url: https://docs.buttondown.com/api-introduction
+- aid: buttondown:buttondown-books-api
+  name: Buttondown Books API
+  description: The Books API from Buttondown — 5 operation(s) covering the Bookshop.org book catalog embedded in
+    newsletters.
+  humanURL: https://docs.buttondown.com/api-introduction
+  baseURL: https://api.buttondown.com/v1
+  tags:
+  - Books
+  properties:
+  - type: OpenAPI
+    url: openapi/buttondown-books-api-openapi.yml
+  - type: Overlay
+    url: overlays/buttondown-books-overlay.yaml
+  - type: APIReference
+    url: https://docs.buttondown.com/api-introduction
+  - type: Documentation
+    url: https://docs.buttondown.com/api-introduction
+- aid: buttondown:buttondown-bulk-actions-api
+  name: Buttondown Bulk Actions API
+  description: The Bulk Actions API from Buttondown — 2 operation(s) covering asynchronous mass operations over
+    existing records.
+  humanURL: https://docs.buttondown.com/api-bulk-actions-introduction
+  baseURL: https://api.buttondown.com/v1
+  tags:
+  - Bulk Actions
+  properties:
+  - type: OpenAPI
+    url: openapi/buttondown-bulk-actions-api-openapi.yml
+  - type: Overlay
+    url: overlays/buttondown-bulk-actions-overlay.yaml
+  - type: APIReference
+    url: https://docs.buttondown.com/api-bulk-actions-introduction
+  - type: Documentation
+    url: https://docs.buttondown.com/api-introduction
+- aid: buttondown:buttondown-comments-api
+  name: Buttondown Comments API
+  description: The Comments API from Buttondown — 5 operation(s) covering subscriber comments on emails, and their
+    moderation state.
+  humanURL: https://docs.buttondown.com/api-comments-introduction
+  baseURL: https://api.buttondown.com/v1
+  tags:
+  - Comments
+  properties:
+  - type: OpenAPI
+    url: openapi/buttondown-comments-api-openapi.yml
+  - type: Overlay
+    url: overlays/buttondown-comments-overlay.yaml
+  - type: APIReference
+    url: https://docs.buttondown.com/api-comments-introduction
+  - type: Documentation
+    url: https://docs.buttondown.com/api-introduction
+- aid: buttondown:buttondown-coupons-api
+  name: Buttondown Coupons API
+  description: The Coupons API from Buttondown — 1 operation(s) covering Stripe coupons available to a paid newsletter.
+  humanURL: https://docs.buttondown.com/api-coupons-introduction
+  baseURL: https://api.buttondown.com/v1
+  tags:
+  - Coupons
+  properties:
+  - type: OpenAPI
+    url: openapi/buttondown-coupons-api-openapi.yml
+  - type: Overlay
+    url: overlays/buttondown-coupons-overlay.yaml
+  - type: APIReference
+    url: https://docs.buttondown.com/api-coupons-introduction
+  - type: Documentation
+    url: https://docs.buttondown.com/api-introduction
+- aid: buttondown:buttondown-emails-api
+  name: Buttondown Emails API
+  description: The Emails API from Buttondown — 11 operation(s) covering drafting, scheduling, publishing, rendering
+    and analyzing newsletter emails.
+  humanURL: https://docs.buttondown.com/api-emails-introduction
+  baseURL: https://api.buttondown.com/v1
+  tags:
+  - Emails
+  properties:
+  - type: OpenAPI
+    url: openapi/buttondown-emails-api-openapi.yml
+  - type: Overlay
+    url: overlays/buttondown-emails-overlay.yaml
+  - type: APIReference
+    url: https://docs.buttondown.com/api-emails-introduction
+  - type: Documentation
+    url: https://docs.buttondown.com/api-introduction
+- aid: buttondown:buttondown-events-api
+  name: Buttondown Events API
+  description: The Events API from Buttondown — 2 operation(s) covering the unified event store that also powers
+    webhooks.
+  humanURL: https://docs.buttondown.com/api-events-retrieve
+  baseURL: https://api.buttondown.com/v1
+  tags:
+  - Events
+  properties:
+  - type: OpenAPI
+    url: openapi/buttondown-events-api-openapi.yml
+  - type: Overlay
+    url: overlays/buttondown-events-overlay.yaml
+  - type: APIReference
+    url: https://docs.buttondown.com/api-events-retrieve
+  - type: Documentation
+    url: https://docs.buttondown.com/api-introduction
+- aid: buttondown:buttondown-exports-api
+  name: Buttondown Exports API
+  description: The Exports API from Buttondown — 3 operation(s) covering data exports of subscribers, emails and
+    events.
+  humanURL: https://docs.buttondown.com/api-exports-introduction
+  baseURL: https://api.buttondown.com/v1
+  tags:
+  - Exports
+  properties:
+  - type: OpenAPI
+    url: openapi/buttondown-exports-api-openapi.yml
+  - type: Overlay
+    url: overlays/buttondown-exports-overlay.yaml
+  - type: APIReference
+    url: https://docs.buttondown.com/api-exports-introduction
+  - type: Documentation
+    url: https://docs.buttondown.com/api-introduction
+- aid: buttondown:buttondown-external-feeds-api
+  name: Buttondown External Feeds API
+  description: The External Feeds API from Buttondown — 7 operation(s) covering RSS-to-email feeds, their polling
+    cadence and the items they produce.
+  humanURL: https://docs.buttondown.com/api-external-feed-introduction
+  baseURL: https://api.buttondown.com/v1
+  tags:
+  - External Feeds
+  properties:
+  - type: OpenAPI
+    url: openapi/buttondown-external-feeds-api-openapi.yml
+  - type: Overlay
+    url: overlays/buttondown-external-feeds-overlay.yaml
+  - type: APIReference
+    url: https://docs.buttondown.com/api-external-feed-introduction
+  - type: Documentation
+    url: https://docs.buttondown.com/api-introduction
+- aid: buttondown:buttondown-forms-api
+  name: Buttondown Forms API
+  description: The Forms API from Buttondown — 5 operation(s) covering hosted and embeddable subscription forms.
+  humanURL: https://docs.buttondown.com/api-introduction
+  baseURL: https://api.buttondown.com/v1
+  tags:
+  - Forms
+  properties:
+  - type: OpenAPI
+    url: openapi/buttondown-forms-api-openapi.yml
+  - type: Overlay
+    url: overlays/buttondown-forms-overlay.yaml
+  - type: APIReference
+    url: https://docs.buttondown.com/api-introduction
+  - type: Documentation
+    url: https://docs.buttondown.com/api-introduction
+- aid: buttondown:buttondown-images-api
+  name: Buttondown Images API
+  description: The Images API from Buttondown — 4 operation(s) covering images hosted for use in emails and archives.
+  humanURL: https://docs.buttondown.com/api-images-introduction
+  baseURL: https://api.buttondown.com/v1
+  tags:
+  - Images
+  properties:
+  - type: OpenAPI
+    url: openapi/buttondown-images-api-openapi.yml
+  - type: Overlay
+    url: overlays/buttondown-images-overlay.yaml
+  - type: APIReference
+    url: https://docs.buttondown.com/api-images-introduction
+  - type: Documentation
+    url: https://docs.buttondown.com/api-introduction
+- aid: buttondown:buttondown-imports-api
+  name: Buttondown Imports API
+  description: The Imports API from Buttondown — 5 operation(s) covering bulk subscriber imports — the supported
+    path for adding subscribers at volume.
+  humanURL: https://docs.buttondown.com/api-imports-introduction
+  baseURL: https://api.buttondown.com/v1
+  tags:
+  - Imports
+  properties:
+  - type: OpenAPI
+    url: openapi/buttondown-imports-api-openapi.yml
+  - type: Overlay
+    url: overlays/buttondown-imports-overlay.yaml
+  - type: APIReference
+    url: https://docs.buttondown.com/api-imports-introduction
+  - type: Documentation
+    url: https://docs.buttondown.com/api-introduction
+- aid: buttondown:buttondown-newsletters-api
+  name: Buttondown Newsletters API
+  description: The Newsletters API from Buttondown — 7 operation(s) covering newsletter settings, branding, locale,
+    and custom sending/hosting domain verification.
+  humanURL: https://docs.buttondown.com/api-newsletters-introduction
+  baseURL: https://api.buttondown.com/v1
+  tags:
+  - Newsletters
+  properties:
+  - type: OpenAPI
+    url: openapi/buttondown-newsletters-api-openapi.yml
+  - type: Overlay
+    url: overlays/buttondown-newsletters-overlay.yaml
+  - type: APIReference
+    url: https://docs.buttondown.com/api-newsletters-introduction
+  - type: Documentation
+    url: https://docs.buttondown.com/api-introduction
+- aid: buttondown:buttondown-notes-api
+  name: Buttondown Notes API
+  description: The Notes API from Buttondown — 3 operation(s) covering internal notes attached to subscribers and
+    team members.
+  humanURL: https://docs.buttondown.com/api-notes-introduction
+  baseURL: https://api.buttondown.com/v1
+  tags:
+  - Notes
+  properties:
+  - type: OpenAPI
+    url: openapi/buttondown-notes-api-openapi.yml
+  - type: Overlay
+    url: overlays/buttondown-notes-overlay.yaml
+  - type: APIReference
+    url: https://docs.buttondown.com/api-notes-introduction
+  - type: Documentation
+    url: https://docs.buttondown.com/api-introduction
+- aid: buttondown:buttondown-ping-api
+  name: Buttondown Ping API
+  description: The Ping API from Buttondown — 1 operation(s) covering a connectivity and credential health check.
+  humanURL: https://docs.buttondown.com/api-ping
+  baseURL: https://api.buttondown.com/v1
+  tags:
+  - Ping
+  properties:
+  - type: OpenAPI
+    url: openapi/buttondown-ping-api-openapi.yml
+  - type: Overlay
+    url: overlays/buttondown-ping-overlay.yaml
+  - type: APIReference
+    url: https://docs.buttondown.com/api-ping
+  - type: Documentation
+    url: https://docs.buttondown.com/api-introduction
+- aid: buttondown:buttondown-prices-api
+  name: Buttondown Prices API
+  description: The Prices API from Buttondown — 3 operation(s) covering paid-subscription pricing and products.
+  humanURL: https://docs.buttondown.com/api-prices-create
+  baseURL: https://api.buttondown.com/v1
+  tags:
+  - Prices
+  properties:
+  - type: OpenAPI
+    url: openapi/buttondown-prices-api-openapi.yml
+  - type: Overlay
+    url: overlays/buttondown-prices-overlay.yaml
+  - type: APIReference
+    url: https://docs.buttondown.com/api-prices-create
+  - type: Documentation
+    url: https://docs.buttondown.com/api-introduction
+- aid: buttondown:buttondown-public-api
+  name: Buttondown Public API
+  description: The Public API from Buttondown — 1 operation(s) covering the unauthenticated public archive search.
+  humanURL: https://docs.buttondown.com/api-introduction
+  baseURL: https://api.buttondown.com/v1
+  tags:
+  - Public
+  properties:
+  - type: OpenAPI
+    url: openapi/buttondown-public-api-openapi.yml
+  - type: Overlay
+    url: overlays/buttondown-public-overlay.yaml
+  - type: APIReference
+    url: https://docs.buttondown.com/api-introduction
+  - type: Documentation
+    url: https://docs.buttondown.com/api-introduction
+- aid: buttondown:buttondown-segments-api
+  name: Buttondown Segments API
+  description: The Segments API from Buttondown — 5 operation(s) covering saved, reusable audiences built from tag
+    and metadata filters.
+  humanURL: https://docs.buttondown.com/api-segments-introduction
+  baseURL: https://api.buttondown.com/v1
+  tags:
+  - Segments
+  properties:
+  - type: OpenAPI
+    url: openapi/buttondown-segments-api-openapi.yml
+  - type: Overlay
+    url: overlays/buttondown-segments-overlay.yaml
+  - type: APIReference
+    url: https://docs.buttondown.com/api-segments-introduction
+  - type: Documentation
+    url: https://docs.buttondown.com/api-introduction
+- aid: buttondown:buttondown-snippets-api
+  name: Buttondown Snippets API
+  description: The Snippets API from Buttondown — 5 operation(s) covering reusable content snippets referenced from
+    emails.
+  humanURL: https://docs.buttondown.com/api-snippets-introduction
+  baseURL: https://api.buttondown.com/v1
+  tags:
+  - Snippets
+  properties:
+  - type: OpenAPI
+    url: openapi/buttondown-snippets-api-openapi.yml
+  - type: Overlay
+    url: overlays/buttondown-snippets-overlay.yaml
+  - type: APIReference
+    url: https://docs.buttondown.com/api-snippets-introduction
+  - type: Documentation
+    url: https://docs.buttondown.com/api-introduction
+- aid: buttondown:buttondown-subscribers-api
+  name: Buttondown Subscribers API
+  description: The Subscribers API from Buttondown — 12 operation(s) covering subscriber lifecycle — creation, updates,
+    tags, referrals, automations and Stripe subscriptions.
+  humanURL: https://docs.buttondown.com/api-subscribers-introduction
+  baseURL: https://api.buttondown.com/v1
+  tags:
+  - Subscribers
+  properties:
+  - type: OpenAPI
+    url: openapi/buttondown-subscribers-api-openapi.yml
+  - type: Overlay
+    url: overlays/buttondown-subscribers-overlay.yaml
+  - type: APIReference
+    url: https://docs.buttondown.com/api-subscribers-introduction
+  - type: Documentation
+    url: https://docs.buttondown.com/api-introduction
+- aid: buttondown:buttondown-survey-responses-api
+  name: Buttondown Survey Responses API
+  description: The Survey Responses API from Buttondown — 3 operation(s) covering responses collected from newsletter
+    surveys.
+  humanURL: https://docs.buttondown.com/api-surveys-introduction
+  baseURL: https://api.buttondown.com/v1
+  tags:
+  - Survey Responses
+  properties:
+  - type: OpenAPI
+    url: openapi/buttondown-survey-responses-api-openapi.yml
+  - type: Overlay
+    url: overlays/buttondown-survey-responses-overlay.yaml
+  - type: APIReference
+    url: https://docs.buttondown.com/api-surveys-introduction
+  - type: Documentation
+    url: https://docs.buttondown.com/api-introduction
+- aid: buttondown:buttondown-surveys-api
+  name: Buttondown Surveys API
+  description: The Surveys API from Buttondown — 5 operation(s) covering surveys embedded in emails and on the archive.
+  humanURL: https://docs.buttondown.com/api-surveys-introduction
+  baseURL: https://api.buttondown.com/v1
+  tags:
+  - Surveys
+  properties:
+  - type: OpenAPI
+    url: openapi/buttondown-surveys-api-openapi.yml
+  - type: Overlay
+    url: overlays/buttondown-surveys-overlay.yaml
+  - type: APIReference
+    url: https://docs.buttondown.com/api-surveys-introduction
+  - type: Documentation
+    url: https://docs.buttondown.com/api-introduction
+- aid: buttondown:buttondown-tags-api
+  name: Buttondown Tags API
+  description: The Tags API from Buttondown — 6 operation(s) covering subscriber tags and their analytics.
+  humanURL: https://docs.buttondown.com/api-tags-introduction
+  baseURL: https://api.buttondown.com/v1
+  tags:
+  - Tags
+  properties:
+  - type: OpenAPI
+    url: openapi/buttondown-tags-api-openapi.yml
+  - type: Overlay
+    url: overlays/buttondown-tags-overlay.yaml
+  - type: APIReference
+    url: https://docs.buttondown.com/api-tags-introduction
+  - type: Documentation
+    url: https://docs.buttondown.com/api-introduction
+- aid: buttondown:buttondown-users-api
+  name: Buttondown Users API
+  description: The Users API from Buttondown — 5 operation(s) covering team members on the account and their permissions.
+  humanURL: https://docs.buttondown.com/api-users-create
+  baseURL: https://api.buttondown.com/v1
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/buttondown-users-api-openapi.yml
+  - type: Overlay
+    url: overlays/buttondown-users-overlay.yaml
+  - type: APIReference
+    url: https://docs.buttondown.com/api-users-create
+  - type: Documentation
+    url: https://docs.buttondown.com/api-introduction
+- aid: buttondown:buttondown-webhooks-api
+  name: Buttondown Webhooks API
+  description: The Webhooks API from Buttondown — 7 operation(s) covering webhook registration, delivery attempts,
+    and test fires.
+  humanURL: https://docs.buttondown.com/api-webhooks-introduction
+  baseURL: https://api.buttondown.com/v1
+  tags:
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/buttondown-webhooks-api-openapi.yml
+  - type: Overlay
+    url: overlays/buttondown-webhooks-overlay.yaml
+  - type: APIReference
+    url: https://docs.buttondown.com/api-webhooks-introduction
+  - type: Documentation
+    url: https://docs.buttondown.com/api-introduction
+  - type: Webhooks
+    url: asyncapi/buttondown-webhooks.yml
+- aid: buttondown:newsletter-platform
+  name: Buttondown Newsletter Platform
+  description: The Buttondown hosted newsletter platform provides a markdown-based composition experience, subscriber
+    management, delivery infrastructure, analytics, monetization via paid subscriptions, team collaboration, and
+    integrations with Discord, Memberful, YouTube, Stripe, Shopify, BigCommerce, Patreon and RSS.
+  humanURL: https://buttondown.com/
+  tags:
+  - Analytics
   - Email
   - Markdown
   - Newsletters
-  - Paid Subscriptions
   - SaaS
-  - Subscribers
-url: https://raw.githubusercontent.com/api-evangelist/buttondown/refs/heads/main/apis.yml
-created: '2026-04-23'
-modified: '2026-07-25'
-specificationVersion: '0.19'
-apis:
-  - aid: buttondown:buttondown-emails-api
-    name: Buttondown Emails API
-    description: The Emails API from Buttondown — 2 operation(s) for emails.
-    humanURL: https://docs.buttondown.com/api
-    baseURL: https://api.buttondown.email/v1
-    tags:
-      - Emails
-    properties:
-      - type: OpenAPI
-        url: openapi/buttondown-emails-api-openapi.yml
-      - type: Documentation
-        url: https://docs.buttondown.com/api
-      - type: DeveloperPortal
-        url: https://docs.buttondown.com/
-      - type: API Keys
-        url: https://buttondown.com/requests
-      - type: ChangeLog
-        url: https://docs.buttondown.com/changelog
-      - type: StatusPage
-        url: https://buttondown.statuspage.io/
-  - aid: buttondown:buttondown-newsletters-api
-    name: Buttondown Newsletters API
-    description: The Newsletters API from Buttondown — 1 operation(s) for newsletters.
-    humanURL: https://docs.buttondown.com/api
-    baseURL: https://api.buttondown.email/v1
-    tags:
-      - Newsletters
-    properties:
-      - type: OpenAPI
-        url: openapi/buttondown-newsletters-api-openapi.yml
-      - type: Documentation
-        url: https://docs.buttondown.com/api
-      - type: DeveloperPortal
-        url: https://docs.buttondown.com/
-      - type: API Keys
-        url: https://buttondown.com/requests
-      - type: ChangeLog
-        url: https://docs.buttondown.com/changelog
-      - type: StatusPage
-        url: https://buttondown.statuspage.io/
-  - aid: buttondown:buttondown-subscribers-api
-    name: Buttondown Subscribers API
-    description: The Subscribers API from Buttondown — 2 operation(s) for subscribers.
-    humanURL: https://docs.buttondown.com/api
-    baseURL: https://api.buttondown.email/v1
-    tags:
-      - Subscribers
-    properties:
-      - type: OpenAPI
-        url: openapi/buttondown-subscribers-api-openapi.yml
-      - type: Documentation
-        url: https://docs.buttondown.com/api
-      - type: DeveloperPortal
-        url: https://docs.buttondown.com/
-      - type: API Keys
-        url: https://buttondown.com/requests
-      - type: ChangeLog
-        url: https://docs.buttondown.com/changelog
-      - type: StatusPage
-        url: https://buttondown.statuspage.io/
-  - aid: buttondown:buttondown-tags-api
-    name: Buttondown Tags API
-    description: The Tags API from Buttondown — 2 operation(s) for tags.
-    humanURL: https://docs.buttondown.com/api
-    baseURL: https://api.buttondown.email/v1
-    tags:
-      - Tags
-    properties:
-      - type: OpenAPI
-        url: openapi/buttondown-tags-api-openapi.yml
-      - type: Documentation
-        url: https://docs.buttondown.com/api
-      - type: DeveloperPortal
-        url: https://docs.buttondown.com/
-      - type: API Keys
-        url: https://buttondown.com/requests
-      - type: ChangeLog
-        url: https://docs.buttondown.com/changelog
-      - type: StatusPage
-        url: https://buttondown.statuspage.io/
-  - aid: buttondown:buttondown-webhooks-api
-    name: Buttondown Webhooks API
-    description: The Webhooks API from Buttondown — 1 operation(s) for webhooks.
-    humanURL: https://docs.buttondown.com/api
-    baseURL: https://api.buttondown.email/v1
-    tags:
-      - Webhooks
-    properties:
-      - type: OpenAPI
-        url: openapi/buttondown-webhooks-api-openapi.yml
-      - type: Documentation
-        url: https://docs.buttondown.com/api
-      - type: DeveloperPortal
-        url: https://docs.buttondown.com/
-      - type: API Keys
-        url: https://buttondown.com/requests
-      - type: ChangeLog
-        url: https://docs.buttondown.com/changelog
-      - type: StatusPage
-        url: https://buttondown.statuspage.io/
-  - aid: buttondown:newsletter-platform
-    name: Buttondown Newsletter Platform
-    description: >-
-      The Buttondown hosted newsletter platform provides a markdown-based composition experience, subscriber management,
-      delivery infrastructure, analytics, monetization via paid subscriptions, team collaboration, and integrations with
-      Discord, Memberful, YouTube, and RSS.
-    humanURL: https://buttondown.com/
-    tags:
-      - Analytics
-      - Email
-      - Markdown
-      - Newsletters
-      - SaaS
-    properties:
-      - type: Website
-        url: https://buttondown.com/
-      - type: Features
-        url: https://buttondown.com/features
-      - type: Integrations
-        url: https://buttondown.com/features/integrations
-      - type: Pricing
-        url: https://buttondown.com/pricing
-    x-features:
-      - Markdown editor with personalization
-      - Paid subscriptions without platform fees
-      - Analytics dashboard
-      - Automations and scheduling
-      - Team collaboration without per-seat pricing
-      - Concierge migration service
-      - High deliverability and spam protection
-    x-use-cases:
-      - Independent creator newsletters
-      - Paid subscription newsletters
-      - Company and product newsletters
-      - Migration from other newsletter platforms
-common:
-  - type: AgenticAccess
-    url: agentic-access/buttondown-agentic-access.yml
-  - type: VulnerabilityDisclosure
-    url: security/buttondown-vulnerability-disclosure.yml
-  - type: DomainSecurity
-    url: security/buttondown-domain-security.yml
-  - type: Authentication
-    url: authentication/buttondown-authentication.yml
-  - type: GitHubOrganization
-    url: https://github.com/buttondown
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/buttondown
+  properties:
   - type: Website
     url: https://buttondown.com/
-  - type: Documentation
-    url: https://docs.buttondown.com/
+  - type: Features
+    url: https://buttondown.com/features
+  - type: Integrations
+    url: https://buttondown.com/features/integrations
   - type: Pricing
     url: https://buttondown.com/pricing
-  - type: Blog
-    url: https://buttondown.com/blog
-  - type: StatusPage
-    url: https://buttondown.statuspage.io/
-  - type: ChangeLog
-    url: https://docs.buttondown.com/changelog
-  - type: Support
-    url: mailto:support@buttondown.email
-  - type: LlmsText
-    url: https://docs.buttondown.com/llms.txt
+  x-features:
+  - Markdown editor with personalization
+  - Paid subscriptions without platform fees
+  - Analytics dashboard
+  - Automations and scheduling
+  - Team collaboration without per-seat pricing
+  - Concierge migration service
+  - High deliverability and spam protection
+  x-use-cases:
+  - Independent creator newsletters
+  - Paid subscription newsletters
+  - Company and product newsletters
+  - Migration from other newsletter platforms
+common:
+- type: OpenAPI
+  url: openapi/_original/buttondown-openapi.json
+- type: AgenticAccess
+  url: agentic-access/buttondown-agentic-access.yml
+- type: Authentication
+  url: authentication/buttondown-authentication.yml
+- type: API Keys
+  url: https://buttondown.com/keys
+- type: Conventions
+  url: conventions/buttondown-conventions.yml
+- type: Idempotency
+  url: conventions/buttondown-conventions.yml
+- type: ErrorCatalog
+  url: errors/buttondown-error-codes.yml
+- type: ErrorCodes
+  url: errors/buttondown-problem-types.yml
+- type: RateLimits
+  url: rate-limits/buttondown-rate-limits.yml
+- type: Plans
+  url: plans/buttondown-plans-pricing.yml
+- type: FinOps
+  url: finops/buttondown-finops.yml
+- type: DataModel
+  url: data-model/buttondown-data-model.yml
+- type: Conformance
+  url: conformance/buttondown-conformance.yml
+- type: Lifecycle
+  url: lifecycle/buttondown-lifecycle.yml
+- type: Deprecation
+  url: https://docs.buttondown.com/api-versioning
+- type: Versioning
+  url: https://docs.buttondown.com/api-versioning
+- type: StatusPage
+  url: https://status.buttondown.com
+- type: ChangeLog
+  url: changelog/buttondown-changelog.yml
+- type: Packages
+  url: packages/buttondown-packages.yml
+- type: CLI
+  url: cli/buttondown-cli.yml
+- type: Sandbox
+  url: sandbox/buttondown-sandbox.yml
+- type: Examples
+  url: examples/buttondown-fixtures.json
+- type: Webhooks
+  url: asyncapi/buttondown-webhooks.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: WellKnown
+  url: well-known/buttondown-well-known.yml
+- type: SecurityTxt
+  url: well-known/buttondown-security.txt
+- type: VulnerabilityDisclosure
+  url: security/buttondown-vulnerability-disclosure.yml
+- type: Security
+  url: https://buttondown.com/blog/security
+- type: DomainSecurity
+  url: security/buttondown-domain-security.yml
+- type: LLMsTxt
+  url: llms/buttondown-llms.txt
+- type: Website
+  url: https://buttondown.com/
+- type: DeveloperPortal
+  url: https://docs.buttondown.com/
+- type: Documentation
+  url: https://docs.buttondown.com/
+- type: APIReference
+  url: https://docs.buttondown.com/api-introduction
+- type: GettingStarted
+  url: https://docs.buttondown.com/quickstart
+- type: Support
+  url: https://buttondown.com/support
+- type: Blog
+  url: https://buttondown.com/blog
+- type: GitHubOrganization
+  url: https://github.com/buttondown
+- type: SourceCode
+  url: https://github.com/buttondown/openapi
+- type: LinkedIn
+  url: https://www.linkedin.com/company/buttondown
+- type: Pricing
+  url: https://buttondown.com/pricing
+- type: SignUp
+  url: https://buttondown.com/register
+- type: Login
+  url: https://buttondown.com/login
+- type: TermsOfService
+  url: https://buttondown.com/legal/terms
+- type: PrivacyPolicy
+  url: https://buttondown.com/legal/privacy
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 134
+  pass: local-v1
