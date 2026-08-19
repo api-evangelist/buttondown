@@ -1,0 +1,75 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://docs.buttondown.com/test-mode, https://github.com/buttondown/openapi (fixtures.json),
+  https://docs.buttondown.com/api-webhooks-test, and the buttondown CLI's --dry-run flag
+description: >-
+  Buttondown does not run a separate sandbox environment and publishes no test-vs-live key prefixes:
+  there is one API host, one key namespace, and production data. What it does publish is a set of
+  safe-rehearsal mechanisms — a newsletter-level test mode that redirects every send to the author, a
+  webhook test-fire endpoint, a CLI dry-run, and a machine-readable fixture file covering every
+  response object.
+separate_environment: false
+test_credentials: false
+key_prefixes:
+  test: null
+  live: null
+  note: >-
+    API keys carry no environment prefix. Isolation is achieved with scoped permissions per key
+    (see authentication/buttondown-authentication.yml), not with a test-mode key.
+mechanisms:
+  - name: Test mode
+    kind: account-mode
+    scope: newsletter
+    docs: https://docs.buttondown.com/test-mode
+    enable: Settings → Danger Zone → Test mode
+    behavior:
+      - Every email is redirected to the newsletter's primary email address instead of subscribers.
+      - Subject lines are prefixed with "[TEST MODE]".
+      - A banner in the email header names the subscriber who would have received it.
+      - All other behavior (tracking, templating, automations) is unchanged.
+    limitations:
+      - Applies to all emails from the newsletter, including automations; cannot be scoped to one send.
+      - Test emails still count toward the monthly email limit.
+      - Analytics reflect the author's own opens and clicks, not subscriber behavior.
+  - name: Webhook test fire
+    kind: trigger
+    operation: test_webhook
+    path: POST /v1/webhooks/{id}/test
+    docs: https://docs.buttondown.com/api-webhooks-test
+    behavior: Sends a synthetic delivery to a configured webhook so an endpoint can be verified before real events fire.
+  - name: CLI dry run
+    kind: preview
+    command: buttondown push --dry-run
+    docs: https://docs.buttondown.com/buttondown-cli
+    behavior: Previews which local emails and media would be uploaded without writing anything.
+  - name: Ping
+    kind: connectivity
+    operation: ping
+    path: GET /v1/ping
+    behavior: Unauthenticated-shape health check for verifying reachability and credentials.
+fixtures:
+  published: true
+  url: https://github.com/buttondown/openapi/blob/main/fixtures.json
+  file: examples/buttondown-fixtures.json
+  description: >-
+    Buttondown publishes a fixtures.json alongside its OpenAPI containing one realistic example
+    object per response schema — Subscriber, Email, Tag, Webhook, Automation, Newsletter, Survey,
+    Export, APIRequest, ExternalEvent, Price, Attachment and 28 more. These are the values to build
+    mocks and tests against.
+  object_count: 40
+enums:
+  published: true
+  url: https://github.com/buttondown/openapi/blob/main/enums.json
+  file: examples/buttondown-enums.json
+  description: >-
+    A companion enums.json documenting every enum declared in the spec with per-value descriptions —
+    including the full 82-value ExternalEventType webhook catalog. Buttondown ships it separately
+    because OpenAPI cannot yet carry per-value enum documentation (OAI/OpenAPI-Specification#348).
+danger_flags:
+  - header: X-Buttondown-Live-Dangerously
+    applies_to: [create_email, update_email]
+    description: Bypasses the guard that rejects email bodies beginning with YAML frontmatter.
+  - header: X-Buttondown-Bypass-Firewall
+    applies_to: [create_subscriber]
+    description: Bypasses the subscriber firewall; rate limited to 5 per hour per newsletter.

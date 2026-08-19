@@ -4,151 +4,75 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Buttondown
 providerId: buttondown
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-08-13'
+generated: '2026-08-13'
+method: searched
+source: https://buttondown.com/pricing
+description: >-
+  Buttondown's published pricing, read from its pricing page. This replaces the 2026-05-04 scaffold,
+  whose tiers and quotas were placeholder values. Buttondown does not sell named API plans: the base
+  price is a continuous function of active subscriber count (free for the first 100), and capability
+  is sold as fixed-price monthly add-ons rather than tiers. API access itself is not metered or
+  separately priced; it is governed by rate limits, not by plan quota.
 tags:
-  - Analytics
-  - Automations
   - Email
-  - Markdown
   - Newsletters
   - Paid Subscriptions
   - SaaS
-  - Subscribers
-description: Machine-readable plans and pricing scaffold for this API provider. Conforms to the API Commons
-  Plans schema. Tier limits and prices are scaffold defaults; replace with provider-published values.
+pricing_model: subscriber-based-base-plus-addons
+currency: USD
+billing_period: month
 plans:
   - id: buttondown-free
     name: Free
-    type: freemium
-    description: Free entry tier for the Buttondown API surface. Intended for evaluation, prototyping,
-      and low-volume integrations. Real limits and pricing must be reconciled with the provider's published
-      plan documentation.
-    entries:
-      - label: API Requests
-        description: Monthly API request quota across all included endpoints
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 1000
-        timeFrame: month
-        geo: global
-        domains:
-          - https://api.buttondown.email/v1
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the free tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 10
-        timeFrame: minute
-        geo: global
-        domains:
-          - https://api.buttondown.email/v1
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-    elements:
-      - name: Public Documentation
-      - name: Community Support
-      - name: Sandbox Access
-      - name: Buttondown API
-      - name: Buttondown Newsletter Platform
-  - id: buttondown-pro
-    name: Professional
-    type: paid
-    description: Production tier for Buttondown. Provides higher quotas, priority support, and access
-      to the broader API portfolio. Pricing placeholder; align with the provider's pricing page.
-    entries:
-      - label: API Requests
-        description: Monthly API request quota
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 100000
-        timeFrame: month
-        geo: global
-        domains:
-          - https://api.buttondown.email/v1
-        unit: 1
-        price: TBD
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the professional tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 100
-        timeFrame: minute
-        geo: global
-        domains:
-          - https://api.buttondown.email/v1
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Overage
-        description: Per-request price after monthly quota is exceeded
-        name: overage
-        type: metered
-        metric: requests
-        limit: -1
-        timeFrame: month
-        geo: global
-        domains:
-          - https://api.buttondown.email/v1
-        unit: 1000
-        price: TBD
-        userMultiplied: false
-    elements:
-      - name: All Production Endpoints
-      - name: Email Support
-      - name: SLA Targets
-      - name: Webhook Subscriptions
-      - name: Buttondown API
-      - name: Buttondown Newsletter Platform
-  - id: buttondown-enterprise
-    name: Enterprise
-    type: enterprise
-    description: Custom-negotiated tier for Buttondown. Includes dedicated capacity, contractual SLAs,
-      security review, data residency options, and named technical account management.
-    entries:
-      - label: API Requests
-        description: Negotiated request volume; -1 indicates uncapped subject to fair use
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: -1
-        timeFrame: month
-        geo: configurable
-        domains:
-          - https://api.buttondown.email/v1
-        unit: 1
-        price: custom
-        userMultiplied: false
-      - label: Rate Limit
-        description: Negotiated burst and steady-state rate
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 1000
-        timeFrame: minute
-        geo: configurable
-        domains:
-          - https://api.buttondown.email/v1
-        unit: 1
-        price: custom
-        userMultiplied: false
-    elements:
-      - name: Unlimited / Negotiated Volume
-      - name: 24/7 Dedicated Support
-      - name: Contractual SLA
-      - name: Security & Compliance Review
-      - name: Dedicated Account Manager
-      - name: Custom Data Residency
-      - name: Buttondown API
-      - name: Buttondown Newsletter Platform
-maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+    type: free
+    price: 0
+    currency: USD
+    period: month
+    description: >-
+      Free for the first 100 active subscribers, with unlimited emails at up to one send per day to
+      the full list.
+    included:
+      - Rich text or Markdown editor
+      - Send from a custom domain
+      - Hosted newsletter archives
+      - Privacy-first analytics posture
+    limits:
+      - {name: active_subscribers, limit: 100, unit: subscribers}
+      - {name: send_frequency, limit: 1, unit: email per day to the full subscriber base}
+  - id: buttondown-paid
+    name: Paid (subscriber-scaled)
+    type: usage
+    price: null
+    currency: USD
+    period: month
+    description: >-
+      Above 100 active subscribers the base price scales continuously with the number of active
+      subscribers; the pricing page exposes it through a subscriber-count slider rather than named
+      tiers. Buttondown charges for active subscribers only, not total contacts.
+    limits:
+      - {name: send_frequency, limit: 1, unit: email per day to the full subscriber base, note: "higher volume requires a usage-based conversation with sales"}
+add_ons:
+  - {name: Tagging & segmentation, price: 9, currency: USD, period: month}
+  - {name: Paid subscriptions, price: 9, currency: USD, period: month, note: no platform revenue share}
+  - {name: Comments and surveys, price: 9, currency: USD, period: month}
+  - {name: Analytics, price: 9, currency: USD, period: month}
+  - {name: RSS-to-email support, price: 9, currency: USD, period: month}
+  - {name: Sponsorships, price: 9, currency: USD, period: month}
+  - {name: Email attachments, price: 9, currency: USD, period: month}
+  - {name: Archives on a custom domain, price: 29, currency: USD, period: month}
+  - {name: Multiple newsletters, price: 29, currency: USD, period: month}
+  - {name: Automations, price: 29, currency: USD, period: month}
+  - {name: Whitelabeling, price: 79, currency: USD, period: month}
+  - {name: Teams, price: 79, currency: USD, period: month}
+discounts:
+  - {name: Non-profit, amount: 50%, eligibility: "registered 501(c)(3) or national equivalent, verified by email"}
+api_access:
+  metered: false
+  note: >-
+    API access is not sold as a separate plan or quota. Consumption is bounded by the published rate
+    limits (see rate-limits/buttondown-rate-limits.yml). Some API-reachable capabilities are gated on
+    the corresponding add-on — creating tags, for example, returns 403 feature_disabled on a plan
+    without the tagging add-on.
+plan_count: 2
+add_on_count: 12

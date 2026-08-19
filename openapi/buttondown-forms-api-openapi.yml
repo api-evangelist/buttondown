@@ -1,0 +1,777 @@
+openapi: 3.1.0
+info:
+  title: Buttondown Forms API
+  version: 1.0.0
+  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction)
+    for guides and examples.
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://api.buttondown.com/v1
+security:
+- ApiKeyAuth: []
+tags:
+- name: Forms
+paths:
+  /forms:
+    post:
+      operationId: create_form
+      summary: Create Form
+      parameters: []
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Form'
+              examples:
+                create_form:
+                  summary: Create a form
+                  value:
+                    id: '{{ id }}'
+                    creation_date: '2020-01-01T00:00:00Z'
+                    title: Newsletter signup
+                    slug: '{{ email.slug }}'
+                    body: ''
+                    css: ''
+                    success_body: ''
+                    surveys: []
+                    admin: false
+                    status: active
+                    subscriber_count: 0
+                    confirmed_subscriber_count: 0
+                    page_view_count: 0
+          links:
+            retrieve_form:
+              operationId: retrieve_form
+              parameters:
+                path.id: $response.body#/id
+            update_form:
+              operationId: update_form
+              parameters:
+                path.id: $response.body#/id
+            delete_form:
+              operationId: delete_form
+              parameters:
+                path.id: $response.body#/id
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage_CreateFormErrorCode_'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Create a new form
+      tags:
+      - Forms
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FormInput'
+            examples:
+              create_form:
+                summary: Create a form
+                value:
+                  title: Newsletter signup
+                  slug: newsletter-signup
+        required: true
+      security:
+      - ApiKeyAuth: []
+    get:
+      operationId: list_forms
+      summary: List Forms
+      parameters:
+      - in: query
+        name: status
+        schema:
+          description: If provided, only return forms with the given status.
+          example:
+          - active
+          items:
+            $ref: '#/components/schemas/FormStatus'
+          title: Status
+          type: array
+        required: false
+        description: If provided, only return forms with the given status.
+        example:
+        - active
+      - in: query
+        name: -status
+        schema:
+          description: If provided, only return forms without the given status.
+          example:
+          - disabled
+          items:
+            $ref: '#/components/schemas/FormStatus'
+          title: -Status
+          type: array
+        required: false
+        description: If provided, only return forms without the given status.
+        example:
+        - disabled
+      - in: query
+        name: admin
+        schema:
+          description: If provided, filter by admin-only flag.
+          title: Admin
+          type: boolean
+        required: false
+        description: If provided, filter by admin-only flag.
+      - in: query
+        name: ordering
+        schema:
+          allOf:
+          - enum:
+            - creation_date
+            - -creation_date
+            - title
+            - -title
+            - slug
+            - -slug
+            - status
+            - -status
+            title: Ordering
+            type: string
+          default: -creation_date
+          description: The ordering to apply to the results.
+          example: -creation_date
+        required: false
+        description: The ordering to apply to the results.
+        example: -creation_date
+      - in: query
+        name: page
+        required: false
+        description: The page number of the paginated response.
+        schema:
+          type: integer
+          title: Page
+          description: The page number of the paginated response.
+          default: 1
+          example: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormPage'
+              examples:
+                list_forms:
+                  summary: List forms
+                  value:
+                    results:
+                    - id: '{{ id }}'
+                      creation_date: '2020-01-01T00:00:00Z'
+                      title: Newsletter signup
+                      slug: '{{ email.slug }}'
+                      body: ''
+                      css: ''
+                      success_body: ''
+                      surveys: []
+                      admin: false
+                      status: active
+                      subscriber_count: 0
+                      confirmed_subscriber_count: 0
+                      page_view_count: 0
+                    next: null
+                    previous: null
+                    count: 1
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: List all forms
+      tags:
+      - Forms
+      security:
+      - ApiKeyAuth: []
+  /forms/{id}:
+    get:
+      operationId: retrieve_form
+      summary: Retrieve Form
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Form'
+              examples:
+                retrieve_form:
+                  summary: Retrieve a form
+                  value:
+                    id: '{{ id }}'
+                    creation_date: '2020-01-01T00:00:00Z'
+                    title: Newsletter signup
+                    slug: '{{ email.slug }}'
+                    body: ''
+                    css: ''
+                    success_body: ''
+                    surveys: []
+                    admin: false
+                    status: active
+                    subscriber_count: 0
+                    confirmed_subscriber_count: 0
+                    page_view_count: 0
+          links:
+            update_form:
+              operationId: update_form
+              parameters:
+                path.id: $response.body#/id
+            delete_form:
+              operationId: delete_form
+              parameters:
+                path.id: $response.body#/id
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Retrieve a specific form by its ID
+      tags:
+      - Forms
+      security:
+      - ApiKeyAuth: []
+    patch:
+      operationId: update_form
+      summary: Update Form
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Form'
+          links:
+            retrieve_form:
+              operationId: retrieve_form
+              parameters:
+                path.id: $response.body#/id
+            delete_form:
+              operationId: delete_form
+              parameters:
+                path.id: $response.body#/id
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Update a form's properties
+      tags:
+      - Forms
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FormUpdateInput'
+        required: true
+      security:
+      - ApiKeyAuth: []
+    delete:
+      operationId: delete_form
+      summary: Delete Form
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      responses:
+        '204':
+          description: No Content
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Delete a form
+      tags:
+      - Forms
+      security:
+      - ApiKeyAuth: []
+components:
+  schemas:
+    CreateFormErrorCode:
+      description: 'Represents the type of error that occurred when creating a form.
+
+
+        Human-readable error messages are provided in the `detail` field of the response;
+
+        these values are meant to be parseable by code or client logic.'
+      enum:
+      - slug_already_exists
+      title: CreateFormErrorCode
+      type: string
+    ErrorMessage:
+      properties:
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
+            how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage
+      type: object
+    ErrorMessage_CreateFormErrorCode_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/CreateFormErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
+            how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[CreateFormErrorCode]
+      type: object
+    Form:
+      properties:
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        title:
+          description: The human-readable title of the form, shown in the UI and on the hosted form page.
+          title: Title
+          type: string
+        slug:
+          description: A URL-safe identifier used in the form's hosted URL (e.g. `/forms/{slug}`). Must be unique per newsletter.
+          title: Slug
+          type: string
+        body:
+          description: Markdown body rendered above the subscribe fields on the hosted form page.
+          title: Body
+          type: string
+        css:
+          description: Custom CSS applied to the hosted form page.
+          title: Css
+          type: string
+        success_body:
+          description: Markdown shown to the subscriber after a successful submission.
+          title: Success Body
+          type: string
+        surveys:
+          description: IDs of surveys to attach to this form. Responses are associated with the submitting subscriber.
+          items:
+            type: string
+          title: Surveys
+          type: array
+        admin:
+          description: If true, the form acts as an admin-only signup form — it skips confirmation and can accept additional
+            subscriber fields.
+          title: Admin
+          type: boolean
+        status:
+          $ref: '#/components/schemas/FormStatus'
+          description: The status of the form. Only `active` forms accept submissions.
+        subscriber_count:
+          description: The number of subscribers who signed up through this form.
+          title: Subscriber Count
+          type: integer
+        confirmed_subscriber_count:
+          description: The number of confirmed subscribers who signed up through this form.
+          title: Confirmed Subscriber Count
+          type: integer
+        page_view_count:
+          description: The number of page views for this form.
+          title: Page View Count
+          type: integer
+      required:
+      - id
+      - creation_date
+      - title
+      - slug
+      - body
+      - css
+      - success_body
+      - surveys
+      - admin
+      - status
+      - subscriber_count
+      - confirmed_subscriber_count
+      - page_view_count
+      title: Form
+      type: object
+    FormInput:
+      properties:
+        title:
+          description: The human-readable title of the form, shown in the UI and on the hosted form page.
+          maxLength: 255
+          title: Title
+          type: string
+          example: Contact Form
+        slug:
+          description: A URL-safe identifier used in the form's hosted URL (e.g. `/forms/{slug}`). Must be unique per newsletter.
+          maxLength: 100
+          title: Slug
+          type: string
+          example: contact
+        body:
+          default: ''
+          description: Markdown body rendered above the subscribe fields on the hosted form page.
+          title: Body
+          type: string
+          example: ''
+        css:
+          default: ''
+          description: Custom CSS applied to the hosted form page.
+          title: Css
+          type: string
+          example: ''
+        success_body:
+          default: ''
+          description: Markdown shown to the subscriber after a successful submission.
+          title: Success Body
+          type: string
+          example: Thank you for your submission!
+        surveys:
+          description: IDs of surveys to attach to this form. Responses are associated with the submitting subscriber.
+          items:
+            type: string
+          title: Surveys
+          type: array
+          example: []
+        admin:
+          default: false
+          description: If true, the form acts as an admin-only signup form — it skips confirmation and can accept additional
+            subscriber fields.
+          title: Admin
+          type: boolean
+          example: false
+        status:
+          allOf:
+          - $ref: '#/components/schemas/FormStatus'
+          default: active
+          description: The status of the form. Only `active` forms accept submissions.
+          example: active
+      required:
+      - title
+      - slug
+      title: FormInput
+      type: object
+    FormPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/Form'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[Form]
+      type: object
+    FormStatus:
+      type: string
+      enum:
+      - active
+      - inactive
+      title: FormStatus
+      description: An enumeration.
+    FormUpdateInput:
+      properties:
+        title:
+          anyOf:
+          - maxLength: 255
+            type: string
+          - type: 'null'
+          description: The human-readable title of the form, shown in the UI and on the hosted form page.
+          title: Title
+        slug:
+          anyOf:
+          - maxLength: 100
+            type: string
+          - type: 'null'
+          description: A URL-safe identifier used in the form's hosted URL (e.g. `/forms/{slug}`). Must be unique per newsletter.
+          title: Slug
+        body:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Markdown body rendered above the subscribe fields on the hosted form page.
+          title: Body
+        css:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Custom CSS applied to the hosted form page.
+          title: Css
+        success_body:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Markdown shown to the subscriber after a successful submission.
+          title: Success Body
+        surveys:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          description: IDs of surveys to attach to this form. Responses are associated with the submitting subscriber.
+          title: Surveys
+        admin:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          description: If true, the form acts as an admin-only signup form — it skips confirmation and can accept additional
+            subscriber fields.
+          title: Admin
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/FormStatus'
+          - type: 'null'
+          description: The status of the form. Only `active` forms accept submissions.
+      title: FormUpdateInput
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: API key passed as 'Token <your-api-key>' in the Authorization header.

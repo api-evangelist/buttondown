@@ -1,0 +1,71 @@
+generated: '2026-08-13'
+method: searched
+source: https://github.com/buttondown/cli (README.md, package.json, src/commands/) and https://docs.buttondown.com/buttondown-cli
+name: buttondown
+description: >-
+  Buttondown's first-party command-line interface. It is a content-sync tool rather than a general
+  API wrapper: it pulls a newsletter's emails and media down to a local folder as Markdown files
+  with YAML frontmatter, lets you edit them in any editor, and pushes changes back. Every command
+  runs against the public REST API at https://api.buttondown.com/v1 using an API key.
+repository: https://github.com/buttondown/cli
+docs: https://docs.buttondown.com/buttondown-cli
+license: MIT
+package:
+  registry: npm
+  name: "@buttondown/cli"
+  version: 1.0.9
+  published: '2025-10-30'
+install:
+  - method: npm-global
+    command: npm install -g @buttondown/cli
+  - method: npx
+    command: npx @buttondown/cli
+runtime:
+  engine: node
+  minimum: '>=20.10'
+commands:
+  - name: login
+    group: auth
+    description: Authenticate with a Buttondown API key and store it locally.
+    flags: ["--api-key/-k", "--force/-f"]
+  - name: logout
+    group: auth
+    description: Clear stored credentials.
+  - name: create
+    group: content
+    description: Create a new draft email locally.
+    flags: ["--title/-t"]
+  - name: pull
+    group: sync
+    description: Download all emails as Markdown files and all images from Buttondown into a local directory.
+    flags: ["--directory/-d"]
+  - name: push
+    group: sync
+    description: >-
+      Upload new or modified emails and any new media files back to Buttondown, rewriting relative
+      image references to their hosted URLs before the email is saved.
+    flags: ["--directory/-d", "--dry-run"]
+global_flags:
+  - flag: "--base-url/-b"
+    description: "API base URL (default: https://api.buttondown.com/v1)"
+  - flag: "--json"
+    description: Output a single machine-readable JSON line — the agent-friendly output mode.
+  - flag: "--help"
+  - flag: "--version"
+conventions:
+  exit_codes: >-
+    All commands exit non-zero on failure, including partial failures, so the CLI is safe to use
+    in scripts and CI.
+  local_layout:
+    config_file: .buttondown.json
+    directories: [emails/, media/]
+    email_format: >-
+      Markdown with YAML frontmatter carrying id, subject, status, email_type, slug, publish_date,
+      editor_mode (plaintext | fancy) and attachments[].
+sync_surfaces:
+  - emails
+  - images
+  - attachments
+  - automations
+  - snippets
+  - newsletter

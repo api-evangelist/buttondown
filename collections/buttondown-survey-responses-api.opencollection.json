@@ -1,0 +1,148 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Buttondown Survey Responses API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Survey Responses",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve Survey Responses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/survey_responses",
+            "params": [
+              {
+                "name": "email_id",
+                "value": "em_01jv2m9q8r7s6t5w4x3y2z1abc",
+                "type": "query",
+                "description": "If provided, only return responses submitted from the given email ID(s)."
+              },
+              {
+                "name": "automation_id",
+                "value": "aut_01jv2m9q8r7s6t5w4x3y2z1abc",
+                "type": "query",
+                "description": "If provided, only return responses submitted from the given automation ID(s)."
+              },
+              {
+                "name": "subscriber_id",
+                "value": "sub_01jv2m9q8r7s6t5w4x3y2z1abc",
+                "type": "query",
+                "description": "If provided, only return responses made by the given [subscriber(s)](https://docs.buttondown.com/api-subscribers-introduction)."
+              },
+              {
+                "name": "source",
+                "value": "landing-page",
+                "type": "query",
+                "description": "If provided, only return responses submitted from the given arbitrary source string(s)."
+              },
+              {
+                "name": "survey_id",
+                "value": "srv_01jv2m9q8r7s6t5w4x3y2z1abc",
+                "type": "query",
+                "description": "If provided, only return responses made to the given [survey(s)](https://docs.buttondown.com/api-surveys-introduction)."
+              },
+              {
+                "name": "creation_date__start",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return responses made after the given date."
+              },
+              {
+                "name": "creation_date__end",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return responses made before the given date."
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "If provided, expand the given field."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number of the paginated response."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List all survey responses"
+        },
+        {
+          "info": {
+            "name": "Create Survey Response",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/survey_responses",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a new survey response"
+        },
+        {
+          "info": {
+            "name": "Update Survey Response",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.buttondown.com/v1/survey_responses/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update a survey response's text. Only the response owner (subscriber) can update their response."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

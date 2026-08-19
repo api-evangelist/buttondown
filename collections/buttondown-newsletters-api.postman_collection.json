@@ -1,0 +1,3102 @@
+{
+  "item": [
+    {
+      "id": "e10b8e1c-3536-4119-b77b-fac645f6826b",
+      "name": "Newsletters",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "091b7751-a052-421a-8952-75004c057448",
+          "name": "List Newsletters",
+          "request": {
+            "name": "List Newsletters",
+            "description": {
+              "content": "List all newsletters",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "newsletters"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "The page number of the paginated response."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ba5d1234-9282-497f-a421-96fbd2a90a3f",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"id\": \"string\",\n      \"creation_date\": \"2004-06-10T22:48:33.738Z\",\n      \"api_key\": \"707d1d3c-2dc5-2b77-c780-cdf8f95a45e8\",\n      \"description\": \"string\",\n      \"name\": \"string\",\n      \"username\": \"string\",\n      \"announcement_bar_background_color\": \"\",\n      \"announcement_bar_text\": \"\",\n      \"announcement_bar_visibility\": \"disabled\",\n      \"archive_theme\": \"modern\",\n      \"auditing_mode\": \"disabled\",\n      \"css\": \"\",\n      \"custom_churn_email_body\": \"\",\n      \"custom_churn_email_subject\": \"\",\n      \"custom_churn_email_template\": \"naked\",\n      \"custom_email_template\": \"string\",\n      \"custom_expired_trial_notification_body\": \"\",\n      \"custom_expired_trial_notification_subject\": \"\",\n      \"custom_expired_trial_notification_template\": \"naked\",\n      \"custom_gift_subscription_email_body\": \"\",\n      \"custom_gift_subscription_email_subject\": \"\",\n      \"custom_gift_subscription_email_template\": \"custom\",\n      \"custom_gift_unsubscription_email_body\": \"\",\n      \"custom_gift_unsubscription_email_subject\": \"\",\n      \"custom_gift_unsubscription_email_template\": \"custom\",\n      \"custom_premium_confirmation_email_body\": \"\",\n      \"custom_premium_confirmation_email_subject\": \"\",\n      \"custom_premium_confirmation_email_template\": \"plaintext\",\n      \"custom_subscription_confirmation_email_subject\": \"\",\n      \"custom_subscription_confirmation_email_template\": \"plaintext\",\n      \"custom_subscription_confirmation_email_text\": \"\",\n      \"custom_subscription_confirmation_reminder_email_subject\": \"\",\n      \"custom_subscription_confirmation_reminder_email_text\": \"\",\n      \"custom_subscription_confirmed_email_subject\": \"\",\n      \"custom_subscription_confirmed_email_text\": \"\",\n      \"domain\": \"\",\n      \"email_address\": \"\",\n      \"email_domain\": \"\",\n      \"email_theme_configuration\": {},\n      \"footer\": \"\",\n      \"from_name\": \"\",\n      \"header\": \"\",\n      \"hosting_domain_status\": \"none\",\n      \"icon\": \"string\",\n      \"icon_alt_text\": \"\",\n      \"image\": \"string\",\n      \"locale\": \"en\",\n      \"metadata\": {},\n      \"reply_to_address\": \"\",\n      \"sending_domain_status\": \"none\",\n      \"sort\": \"creation_date\",\n      \"subscription_confirmation_redirect_url\": \"\",\n      \"subscription_redirect_url\": \"\",\n      \"template\": \"modern\",\n      \"test_mode\": false,\n      \"theme_configuration\": {},\n      \"timezone\": \"Etc/UTC\",\n      \"tint_color\": \"#0069FF\",\n      \"web_css\": \"\"\n    },\n    {\n      \"id\": \"string\",\n      \"creation_date\": \"1985-09-11T01:48:21.846Z\",\n      \"api_key\": \"0db833ca-5e5d-fc33-3fe4-5a682b5c5ead\",\n      \"description\": \"string\",\n      \"name\": \"string\",\n      \"username\": \"string\",\n      \"announcement_bar_background_color\": \"\",\n      \"announcement_bar_text\": \"\",\n      \"announcement_bar_visibility\": \"disabled\",\n      \"archive_theme\": \"modern\",\n      \"auditing_mode\": \"enabled\",\n      \"css\": \"\",\n      \"custom_churn_email_body\": \"\",\n      \"custom_churn_email_subject\": \"\",\n      \"custom_churn_email_template\": \"custom\",\n      \"custom_email_template\": \"string\",\n      \"custom_expired_trial_notification_body\": \"\",\n      \"custom_expired_trial_notification_subject\": \"\",\n      \"custom_expired_trial_notification_template\": \"naked\",\n      \"custom_gift_subscription_email_body\": \"\",\n      \"custom_gift_subscription_email_subject\": \"\",\n      \"custom_gift_subscription_email_template\": \"modern\",\n      \"custom_gift_unsubscription_email_body\": \"\",\n      \"custom_gift_unsubscription_email_subject\": \"\",\n      \"custom_gift_unsubscription_email_template\": \"classic\",\n      \"custom_premium_confirmation_email_body\": \"\",\n      \"custom_premium_confirmation_email_subject\": \"\",\n      \"custom_premium_confirmation_email_template\": \"classic\",\n      \"custom_subscription_confirmation_email_subject\": \"\",\n      \"custom_subscription_confirmation_email_template\": \"modern\",\n      \"custom_subscription_confirmation_email_text\": \"\",\n      \"custom_subscription_confirmation_reminder_email_subject\": \"\",\n      \"custom_subscription_confirmation_reminder_email_text\": \"\",\n      \"custom_subscription_confirmed_email_subject\": \"\",\n      \"custom_subscription_confirmed_email_text\": \"\",\n      \"domain\": \"\",\n      \"email_address\": \"\",\n      \"email_domain\": \"\",\n      \"email_theme_configuration\": {},\n      \"footer\": \"\",\n      \"from_name\": \"\",\n      \"header\": \"\",\n      \"hosting_domain_status\": \"none\",\n      \"icon\": \"string\",\n      \"icon_alt_text\": \"\",\n      \"image\": \"string\",\n      \"locale\": \"en\",\n      \"metadata\": {},\n      \"reply_to_address\": \"\",\n      \"sending_domain_status\": \"none\",\n      \"sort\": \"creation_date\",\n      \"subscription_confirmation_redirect_url\": \"\",\n      \"subscription_redirect_url\": \"\",\n      \"template\": \"modern\",\n      \"test_mode\": false,\n      \"theme_configuration\": {},\n      \"timezone\": \"Etc/UTC\",\n      \"tint_color\": \"#0069FF\",\n      \"web_css\": \"\"\n    }\n  ],\n  \"count\": 802,\n  \"next\": \"string\",\n  \"previous\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b9d3b3a-3717-41b5-b56b-d80cf77fa11e",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "569a9f57-719d-43fb-9070-76c0f26c41df",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8d6847c-da3b-4f32-b6c8-cc55f0d56941",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a6f911e6-4e06-483e-8124-79ba6966ed02",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b96239cb-c77f-4f0f-b707-bf55410578eb",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "6701"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests permitted per minute.",
+                  "key": "X-RateLimit-Limit",
+                  "value": "6701"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests remaining in the current window.",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "6701"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp at which the window resets.",
+                  "key": "X-RateLimit-Reset",
+                  "value": "6701"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "da21f43b-9061-4bf6-b645-7ab4efa00b80",
+          "name": "Create Newsletter",
+          "request": {
+            "name": "Create Newsletter",
+            "description": {
+              "content": "Create a new newsletter",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "newsletters"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"<string>\",\n  \"name\": \"<string>\",\n  \"username\": \"<string>\",\n  \"announcement_bar_background_color\": \"<string>\",\n  \"announcement_bar_text\": \"\",\n  \"announcement_bar_visibility\": \"disabled\",\n  \"archive_theme\": \"modern\",\n  \"auditing_mode\": \"<string>\",\n  \"css\": \"\",\n  \"custom_email_template\": \"<string>\",\n  \"domain\": \"\",\n  \"email_address\": \"<email>\",\n  \"email_domain\": \"\",\n  \"email_theme_configuration\": {},\n  \"footer\": \"\",\n  \"from_name\": \"\",\n  \"header\": \"\",\n  \"icon\": \"\",\n  \"icon_alt_text\": \"\",\n  \"image\": \"\",\n  \"locale\": \"en\",\n  \"metadata\": {},\n  \"reply_to_address\": \"<email>\",\n  \"subscription_confirmation_redirect_url\": \"\",\n  \"subscription_redirect_url\": \"\",\n  \"template\": \"modern\",\n  \"test_mode\": \"<boolean>\",\n  \"theme_configuration\": {},\n  \"timezone\": \"Etc/UTC\",\n  \"tint_color\": \"#0069FF\",\n  \"web_css\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e8d784fc-29bb-46f8-bcdb-cce40b7b9569",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Stay up to date with the latest trends in wigs and hairpieces\",\n  \"name\": \"Sheinhardt Wig Company\",\n  \"username\": \"sheinhardt\",\n  \"announcement_bar_background_color\": \"<string>\",\n  \"announcement_bar_text\": \"Subscribe to get 20% off your first order!\",\n  \"announcement_bar_visibility\": \"everyone\",\n  \"archive_theme\": \"modern\",\n  \"auditing_mode\": \"enabled\",\n  \"css\": \".header { color: #000; }\",\n  \"custom_email_template\": \"<string>\",\n  \"domain\": \"sheinhardt.com\",\n  \"email_address\": \"<email>\",\n  \"email_domain\": \"mail.sheinhardt.com\",\n  \"email_theme_configuration\": {\n    \"primary-color\": \"#0069FF\"\n  },\n  \"enabled_features\": [\n    \"archives\",\n    \"portal\",\n    \"surveys\"\n  ],\n  \"footer\": \"<p>Thanks for reading!</p>\",\n  \"from_name\": \"Sheinhardt Wig Company\",\n  \"header\": \"<p>Welcome to our newsletter!</p>\",\n  \"icon\": \"https://example.com/icon.png\",\n  \"icon_alt_text\": \"\",\n  \"image\": \"https://example.com/header.jpg\",\n  \"locale\": \"en\",\n  \"metadata\": {\n    \"source\": \"my-app\",\n    \"tier\": \"pro\"\n  },\n  \"reply_to_address\": \"<email>\",\n  \"subscription_confirmation_redirect_url\": \"https://example.com/confirmed\",\n  \"subscription_redirect_url\": \"https://example.com/thanks\",\n  \"template\": \"modern\",\n  \"test_mode\": \"<boolean>\",\n  \"theme_configuration\": {\n    \"primary-color\": \"#0069FF\"\n  },\n  \"timezone\": \"America/New_York\",\n  \"tint_color\": \"#0069FF\",\n  \"web_css\": \".container { max-width: 800px; }\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"creation_date\": \"2015-01-25T20:35:50.549Z\",\n  \"api_key\": \"831fb13c-e901-8e86-b530-92079fe4c362\",\n  \"description\": \"string\",\n  \"name\": \"string\",\n  \"username\": \"string\",\n  \"announcement_bar_background_color\": \"\",\n  \"announcement_bar_text\": \"\",\n  \"announcement_bar_visibility\": \"disabled\",\n  \"archive_theme\": \"modern\",\n  \"auditing_mode\": \"enabled\",\n  \"css\": \"\",\n  \"custom_churn_email_body\": \"\",\n  \"custom_churn_email_subject\": \"\",\n  \"custom_churn_email_template\": \"plaintext\",\n  \"custom_email_template\": \"string\",\n  \"custom_expired_trial_notification_body\": \"\",\n  \"custom_expired_trial_notification_subject\": \"\",\n  \"custom_expired_trial_notification_template\": \"naked\",\n  \"custom_gift_subscription_email_body\": \"\",\n  \"custom_gift_subscription_email_subject\": \"\",\n  \"custom_gift_subscription_email_template\": \"naked\",\n  \"custom_gift_unsubscription_email_body\": \"\",\n  \"custom_gift_unsubscription_email_subject\": \"\",\n  \"custom_gift_unsubscription_email_template\": \"modern\",\n  \"custom_premium_confirmation_email_body\": \"\",\n  \"custom_premium_confirmation_email_subject\": \"\",\n  \"custom_premium_confirmation_email_template\": \"classic\",\n  \"custom_subscription_confirmation_email_subject\": \"\",\n  \"custom_subscription_confirmation_email_template\": \"naked\",\n  \"custom_subscription_confirmation_email_text\": \"\",\n  \"custom_subscription_confirmation_reminder_email_subject\": \"\",\n  \"custom_subscription_confirmation_reminder_email_text\": \"\",\n  \"custom_subscription_confirmed_email_subject\": \"\",\n  \"custom_subscription_confirmed_email_text\": \"\",\n  \"domain\": \"\",\n  \"email_address\": \"\",\n  \"email_domain\": \"\",\n  \"email_theme_configuration\": {},\n  \"footer\": \"\",\n  \"from_name\": \"\",\n  \"header\": \"\",\n  \"hosting_domain_status\": \"none\",\n  \"icon\": \"string\",\n  \"icon_alt_text\": \"\",\n  \"image\": \"string\",\n  \"locale\": \"en\",\n  \"metadata\": {},\n  \"reply_to_address\": \"\",\n  \"sending_domain_status\": \"none\",\n  \"sort\": \"creation_date\",\n  \"subscription_confirmation_redirect_url\": \"\",\n  \"subscription_redirect_url\": \"\",\n  \"template\": \"modern\",\n  \"test_mode\": false,\n  \"theme_configuration\": {},\n  \"timezone\": \"Etc/UTC\",\n  \"tint_color\": \"#0069FF\",\n  \"web_css\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2ad5fe60-a9d2-4dad-ab8d-b3def2f63693",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Stay up to date with the latest trends in wigs and hairpieces\",\n  \"name\": \"Sheinhardt Wig Company\",\n  \"username\": \"sheinhardt\",\n  \"announcement_bar_background_color\": \"<string>\",\n  \"announcement_bar_text\": \"Subscribe to get 20% off your first order!\",\n  \"announcement_bar_visibility\": \"everyone\",\n  \"archive_theme\": \"modern\",\n  \"auditing_mode\": \"enabled\",\n  \"css\": \".header { color: #000; }\",\n  \"custom_email_template\": \"<string>\",\n  \"domain\": \"sheinhardt.com\",\n  \"email_address\": \"<email>\",\n  \"email_domain\": \"mail.sheinhardt.com\",\n  \"email_theme_configuration\": {\n    \"primary-color\": \"#0069FF\"\n  },\n  \"enabled_features\": [\n    \"archives\",\n    \"portal\",\n    \"surveys\"\n  ],\n  \"footer\": \"<p>Thanks for reading!</p>\",\n  \"from_name\": \"Sheinhardt Wig Company\",\n  \"header\": \"<p>Welcome to our newsletter!</p>\",\n  \"icon\": \"https://example.com/icon.png\",\n  \"icon_alt_text\": \"\",\n  \"image\": \"https://example.com/header.jpg\",\n  \"locale\": \"en\",\n  \"metadata\": {\n    \"source\": \"my-app\",\n    \"tier\": \"pro\"\n  },\n  \"reply_to_address\": \"<email>\",\n  \"subscription_confirmation_redirect_url\": \"https://example.com/confirmed\",\n  \"subscription_redirect_url\": \"https://example.com/thanks\",\n  \"template\": \"modern\",\n  \"test_mode\": \"<boolean>\",\n  \"theme_configuration\": {\n    \"primary-color\": \"#0069FF\"\n  },\n  \"timezone\": \"America/New_York\",\n  \"tint_color\": \"#0069FF\",\n  \"web_css\": \".container { max-width: 800px; }\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"email_domain_conflicts_with_hosting_domain\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8ef90b6a-6f42-4234-b61a-424359b95cff",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Stay up to date with the latest trends in wigs and hairpieces\",\n  \"name\": \"Sheinhardt Wig Company\",\n  \"username\": \"sheinhardt\",\n  \"announcement_bar_background_color\": \"<string>\",\n  \"announcement_bar_text\": \"Subscribe to get 20% off your first order!\",\n  \"announcement_bar_visibility\": \"everyone\",\n  \"archive_theme\": \"modern\",\n  \"auditing_mode\": \"enabled\",\n  \"css\": \".header { color: #000; }\",\n  \"custom_email_template\": \"<string>\",\n  \"domain\": \"sheinhardt.com\",\n  \"email_address\": \"<email>\",\n  \"email_domain\": \"mail.sheinhardt.com\",\n  \"email_theme_configuration\": {\n    \"primary-color\": \"#0069FF\"\n  },\n  \"enabled_features\": [\n    \"archives\",\n    \"portal\",\n    \"surveys\"\n  ],\n  \"footer\": \"<p>Thanks for reading!</p>\",\n  \"from_name\": \"Sheinhardt Wig Company\",\n  \"header\": \"<p>Welcome to our newsletter!</p>\",\n  \"icon\": \"https://example.com/icon.png\",\n  \"icon_alt_text\": \"\",\n  \"image\": \"https://example.com/header.jpg\",\n  \"locale\": \"en\",\n  \"metadata\": {\n    \"source\": \"my-app\",\n    \"tier\": \"pro\"\n  },\n  \"reply_to_address\": \"<email>\",\n  \"subscription_confirmation_redirect_url\": \"https://example.com/confirmed\",\n  \"subscription_redirect_url\": \"https://example.com/thanks\",\n  \"template\": \"modern\",\n  \"test_mode\": \"<boolean>\",\n  \"theme_configuration\": {\n    \"primary-color\": \"#0069FF\"\n  },\n  \"timezone\": \"America/New_York\",\n  \"tint_color\": \"#0069FF\",\n  \"web_css\": \".container { max-width: 800px; }\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "64b862cb-8867-4d13-a919-d1d72d9bdf8c",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Stay up to date with the latest trends in wigs and hairpieces\",\n  \"name\": \"Sheinhardt Wig Company\",\n  \"username\": \"sheinhardt\",\n  \"announcement_bar_background_color\": \"<string>\",\n  \"announcement_bar_text\": \"Subscribe to get 20% off your first order!\",\n  \"announcement_bar_visibility\": \"everyone\",\n  \"archive_theme\": \"modern\",\n  \"auditing_mode\": \"enabled\",\n  \"css\": \".header { color: #000; }\",\n  \"custom_email_template\": \"<string>\",\n  \"domain\": \"sheinhardt.com\",\n  \"email_address\": \"<email>\",\n  \"email_domain\": \"mail.sheinhardt.com\",\n  \"email_theme_configuration\": {\n    \"primary-color\": \"#0069FF\"\n  },\n  \"enabled_features\": [\n    \"archives\",\n    \"portal\",\n    \"surveys\"\n  ],\n  \"footer\": \"<p>Thanks for reading!</p>\",\n  \"from_name\": \"Sheinhardt Wig Company\",\n  \"header\": \"<p>Welcome to our newsletter!</p>\",\n  \"icon\": \"https://example.com/icon.png\",\n  \"icon_alt_text\": \"\",\n  \"image\": \"https://example.com/header.jpg\",\n  \"locale\": \"en\",\n  \"metadata\": {\n    \"source\": \"my-app\",\n    \"tier\": \"pro\"\n  },\n  \"reply_to_address\": \"<email>\",\n  \"subscription_confirmation_redirect_url\": \"https://example.com/confirmed\",\n  \"subscription_redirect_url\": \"https://example.com/thanks\",\n  \"template\": \"modern\",\n  \"test_mode\": \"<boolean>\",\n  \"theme_configuration\": {\n    \"primary-color\": \"#0069FF\"\n  },\n  \"timezone\": \"America/New_York\",\n  \"tint_color\": \"#0069FF\",\n  \"web_css\": \".container { max-width: 800px; }\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e43e5ef-15ee-4d56-addc-2420b0893b73",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Stay up to date with the latest trends in wigs and hairpieces\",\n  \"name\": \"Sheinhardt Wig Company\",\n  \"username\": \"sheinhardt\",\n  \"announcement_bar_background_color\": \"<string>\",\n  \"announcement_bar_text\": \"Subscribe to get 20% off your first order!\",\n  \"announcement_bar_visibility\": \"everyone\",\n  \"archive_theme\": \"modern\",\n  \"auditing_mode\": \"enabled\",\n  \"css\": \".header { color: #000; }\",\n  \"custom_email_template\": \"<string>\",\n  \"domain\": \"sheinhardt.com\",\n  \"email_address\": \"<email>\",\n  \"email_domain\": \"mail.sheinhardt.com\",\n  \"email_theme_configuration\": {\n    \"primary-color\": \"#0069FF\"\n  },\n  \"enabled_features\": [\n    \"archives\",\n    \"portal\",\n    \"surveys\"\n  ],\n  \"footer\": \"<p>Thanks for reading!</p>\",\n  \"from_name\": \"Sheinhardt Wig Company\",\n  \"header\": \"<p>Welcome to our newsletter!</p>\",\n  \"icon\": \"https://example.com/icon.png\",\n  \"icon_alt_text\": \"\",\n  \"image\": \"https://example.com/header.jpg\",\n  \"locale\": \"en\",\n  \"metadata\": {\n    \"source\": \"my-app\",\n    \"tier\": \"pro\"\n  },\n  \"reply_to_address\": \"<email>\",\n  \"subscription_confirmation_redirect_url\": \"https://example.com/confirmed\",\n  \"subscription_redirect_url\": \"https://example.com/thanks\",\n  \"template\": \"modern\",\n  \"test_mode\": \"<boolean>\",\n  \"theme_configuration\": {\n    \"primary-color\": \"#0069FF\"\n  },\n  \"timezone\": \"America/New_York\",\n  \"tint_color\": \"#0069FF\",\n  \"web_css\": \".container { max-width: 800px; }\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "60cec2f5-d784-43ad-9db1-534114ffc4ee",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Stay up to date with the latest trends in wigs and hairpieces\",\n  \"name\": \"Sheinhardt Wig Company\",\n  \"username\": \"sheinhardt\",\n  \"announcement_bar_background_color\": \"<string>\",\n  \"announcement_bar_text\": \"Subscribe to get 20% off your first order!\",\n  \"announcement_bar_visibility\": \"everyone\",\n  \"archive_theme\": \"modern\",\n  \"auditing_mode\": \"enabled\",\n  \"css\": \".header { color: #000; }\",\n  \"custom_email_template\": \"<string>\",\n  \"domain\": \"sheinhardt.com\",\n  \"email_address\": \"<email>\",\n  \"email_domain\": \"mail.sheinhardt.com\",\n  \"email_theme_configuration\": {\n    \"primary-color\": \"#0069FF\"\n  },\n  \"enabled_features\": [\n    \"archives\",\n    \"portal\",\n    \"surveys\"\n  ],\n  \"footer\": \"<p>Thanks for reading!</p>\",\n  \"from_name\": \"Sheinhardt Wig Company\",\n  \"header\": \"<p>Welcome to our newsletter!</p>\",\n  \"icon\": \"https://example.com/icon.png\",\n  \"icon_alt_text\": \"\",\n  \"image\": \"https://example.com/header.jpg\",\n  \"locale\": \"en\",\n  \"metadata\": {\n    \"source\": \"my-app\",\n    \"tier\": \"pro\"\n  },\n  \"reply_to_address\": \"<email>\",\n  \"subscription_confirmation_redirect_url\": \"https://example.com/confirmed\",\n  \"subscription_redirect_url\": \"https://example.com/thanks\",\n  \"template\": \"modern\",\n  \"test_mode\": \"<boolean>\",\n  \"theme_configuration\": {\n    \"primary-color\": \"#0069FF\"\n  },\n  \"timezone\": \"America/New_York\",\n  \"tint_color\": \"#0069FF\",\n  \"web_css\": \".container { max-width: 800px; }\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"type\": \"string\",\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4100e8fd-93b8-4309-acdf-25e7e3bfc18f",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Stay up to date with the latest trends in wigs and hairpieces\",\n  \"name\": \"Sheinhardt Wig Company\",\n  \"username\": \"sheinhardt\",\n  \"announcement_bar_background_color\": \"<string>\",\n  \"announcement_bar_text\": \"Subscribe to get 20% off your first order!\",\n  \"announcement_bar_visibility\": \"everyone\",\n  \"archive_theme\": \"modern\",\n  \"auditing_mode\": \"enabled\",\n  \"css\": \".header { color: #000; }\",\n  \"custom_email_template\": \"<string>\",\n  \"domain\": \"sheinhardt.com\",\n  \"email_address\": \"<email>\",\n  \"email_domain\": \"mail.sheinhardt.com\",\n  \"email_theme_configuration\": {\n    \"primary-color\": \"#0069FF\"\n  },\n  \"enabled_features\": [\n    \"archives\",\n    \"portal\",\n    \"surveys\"\n  ],\n  \"footer\": \"<p>Thanks for reading!</p>\",\n  \"from_name\": \"Sheinhardt Wig Company\",\n  \"header\": \"<p>Welcome to our newsletter!</p>\",\n  \"icon\": \"https://example.com/icon.png\",\n  \"icon_alt_text\": \"\",\n  \"image\": \"https://example.com/header.jpg\",\n  \"locale\": \"en\",\n  \"metadata\": {\n    \"source\": \"my-app\",\n    \"tier\": \"pro\"\n  },\n  \"reply_to_address\": \"<email>\",\n  \"subscription_confirmation_redirect_url\": \"https://example.com/confirmed\",\n  \"subscription_redirect_url\": \"https://example.com/thanks\",\n  \"template\": \"modern\",\n  \"test_mode\": \"<boolean>\",\n  \"theme_configuration\": {\n    \"primary-color\": \"#0069FF\"\n  },\n  \"timezone\": \"America/New_York\",\n  \"tint_color\": \"#0069FF\",\n  \"web_css\": \".container { max-width: 800px; }\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "6701"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests permitted per minute.",
+                  "key": "X-RateLimit-Limit",
+                  "value": "6701"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests remaining in the current window.",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "6701"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp at which the window resets.",
+                  "key": "X-RateLimit-Reset",
+                  "value": "6701"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "30d4bbc9-1111-4332-97a0-686ad68d4f64",
+          "name": "Retrieve Newsletter",
+          "request": {
+            "name": "Retrieve Newsletter",
+            "description": {
+              "content": "Retrieve a specific newsletter by its ID",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "newsletters",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "505a0ebe-b13e-4254-a923-70f496fef66f",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"creation_date\": \"2015-01-25T20:35:50.549Z\",\n  \"api_key\": \"831fb13c-e901-8e86-b530-92079fe4c362\",\n  \"description\": \"string\",\n  \"name\": \"string\",\n  \"username\": \"string\",\n  \"announcement_bar_background_color\": \"\",\n  \"announcement_bar_text\": \"\",\n  \"announcement_bar_visibility\": \"disabled\",\n  \"archive_theme\": \"modern\",\n  \"auditing_mode\": \"enabled\",\n  \"css\": \"\",\n  \"custom_churn_email_body\": \"\",\n  \"custom_churn_email_subject\": \"\",\n  \"custom_churn_email_template\": \"plaintext\",\n  \"custom_email_template\": \"string\",\n  \"custom_expired_trial_notification_body\": \"\",\n  \"custom_expired_trial_notification_subject\": \"\",\n  \"custom_expired_trial_notification_template\": \"naked\",\n  \"custom_gift_subscription_email_body\": \"\",\n  \"custom_gift_subscription_email_subject\": \"\",\n  \"custom_gift_subscription_email_template\": \"naked\",\n  \"custom_gift_unsubscription_email_body\": \"\",\n  \"custom_gift_unsubscription_email_subject\": \"\",\n  \"custom_gift_unsubscription_email_template\": \"modern\",\n  \"custom_premium_confirmation_email_body\": \"\",\n  \"custom_premium_confirmation_email_subject\": \"\",\n  \"custom_premium_confirmation_email_template\": \"classic\",\n  \"custom_subscription_confirmation_email_subject\": \"\",\n  \"custom_subscription_confirmation_email_template\": \"naked\",\n  \"custom_subscription_confirmation_email_text\": \"\",\n  \"custom_subscription_confirmation_reminder_email_subject\": \"\",\n  \"custom_subscription_confirmation_reminder_email_text\": \"\",\n  \"custom_subscription_confirmed_email_subject\": \"\",\n  \"custom_subscription_confirmed_email_text\": \"\",\n  \"domain\": \"\",\n  \"email_address\": \"\",\n  \"email_domain\": \"\",\n  \"email_theme_configuration\": {},\n  \"footer\": \"\",\n  \"from_name\": \"\",\n  \"header\": \"\",\n  \"hosting_domain_status\": \"none\",\n  \"icon\": \"string\",\n  \"icon_alt_text\": \"\",\n  \"image\": \"string\",\n  \"locale\": \"en\",\n  \"metadata\": {},\n  \"reply_to_address\": \"\",\n  \"sending_domain_status\": \"none\",\n  \"sort\": \"creation_date\",\n  \"subscription_confirmation_redirect_url\": \"\",\n  \"subscription_redirect_url\": \"\",\n  \"template\": \"modern\",\n  \"test_mode\": false,\n  \"theme_configuration\": {},\n  \"timezone\": \"Etc/UTC\",\n  \"tint_color\": \"#0069FF\",\n  \"web_css\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "73bd8086-ad08-490d-97a6-ac327ec7998d",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "87409ebb-bb60-4439-8eee-2b0721704670",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "15899eca-2218-4be1-b680-d2b3fc3781c3",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5080ce58-0028-40dd-ae82-072d9c532470",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ebab292c-3b6a-40e1-bdf6-a9f6f3704645",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "6701"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests permitted per minute.",
+                  "key": "X-RateLimit-Limit",
+                  "value": "6701"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests remaining in the current window.",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "6701"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp at which the window resets.",
+                  "key": "X-RateLimit-Reset",
+                  "value": "6701"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7be81477-ade7-4268-bf9e-3b57c67fe5ef",
+          "name": "Update Newsletter",
+          "request": {
+            "name": "Update Newsletter",
+            "description": {
+              "content": "Update a newsletter's settings",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "newsletters",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"announcement_bar_background_color\": \"<string>\",\n  \"announcement_bar_text\": \"<string>\",\n  \"announcement_bar_visibility\": \"<string>\",\n  \"archive_theme\": \"<string>\",\n  \"auditing_mode\": \"<string>\",\n  \"css\": \"<string>\",\n  \"custom_churn_email_body\": \"<string>\",\n  \"custom_churn_email_subject\": \"<string>\",\n  \"custom_churn_email_template\": \"<string>\",\n  \"custom_email_template\": \"<string>\",\n  \"custom_expired_trial_notification_body\": \"<string>\",\n  \"custom_expired_trial_notification_subject\": \"<string>\",\n  \"custom_expired_trial_notification_template\": \"<string>\",\n  \"custom_gift_subscription_email_body\": \"<string>\",\n  \"custom_gift_subscription_email_subject\": \"<string>\",\n  \"custom_gift_subscription_email_template\": \"<string>\",\n  \"custom_gift_unsubscription_email_body\": \"<string>\",\n  \"custom_gift_unsubscription_email_subject\": \"<string>\",\n  \"custom_gift_unsubscription_email_template\": \"<string>\",\n  \"custom_premium_confirmation_email_body\": \"<string>\",\n  \"custom_premium_confirmation_email_subject\": \"<string>\",\n  \"custom_premium_confirmation_email_template\": \"<string>\",\n  \"custom_subscription_confirmation_email_subject\": \"<string>\",\n  \"custom_subscription_confirmation_email_text\": \"<string>\",\n  \"custom_subscription_confirmation_email_template\": \"<string>\",\n  \"custom_subscription_confirmation_reminder_email_subject\": \"<string>\",\n  \"custom_subscription_confirmation_reminder_email_text\": \"<string>\",\n  \"custom_subscription_confirmed_email_subject\": \"<string>\",\n  \"custom_subscription_confirmed_email_text\": \"<string>\",\n  \"description\": \"<string>\",\n  \"domain\": \"<string>\",\n  \"email_address\": \"<email>\",\n  \"email_domain\": \"<string>\",\n  \"email_theme_configuration\": {\n    \"key_0\": \"<string>\"\n  },\n  \"enabled_features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"footer\": \"<string>\",\n  \"from_name\": \"<string>\",\n  \"header\": \"<string>\",\n  \"icon\": \"<string>\",\n  \"icon_alt_text\": \"<string>\",\n  \"image\": \"<string>\",\n  \"locale\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": 7737\n  },\n  \"name\": \"<string>\",\n  \"reply_to_address\": \"<email>\",\n  \"socials\": [\n    {\n      \"type\": \"<string>\",\n      \"url\": \"<string>\",\n      \"label\": \"<string>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"url\": \"<string>\",\n      \"label\": \"<string>\"\n    }\n  ],\n  \"subscription_confirmation_redirect_url\": \"<string>\",\n  \"subscription_redirect_url\": \"<string>\",\n  \"template\": \"<string>\",\n  \"test_mode\": \"<boolean>\",\n  \"theme_configuration\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"timezone\": \"<string>\",\n  \"tint_color\": \"<string>\",\n  \"username\": \"<string>\",\n  \"web_css\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "07308f0c-6888-48ac-92a2-41246d79d9b1",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"announcement_bar_background_color\": \"<string>\",\n  \"announcement_bar_text\": \"<string>\",\n  \"announcement_bar_visibility\": \"free_only\",\n  \"archive_theme\": \"modern\",\n  \"auditing_mode\": \"aggressive\",\n  \"css\": \"<string>\",\n  \"custom_churn_email_body\": \"<string>\",\n  \"custom_churn_email_subject\": \"<string>\",\n  \"custom_churn_email_template\": \"classic\",\n  \"custom_email_template\": \"<string>\",\n  \"custom_expired_trial_notification_body\": \"<string>\",\n  \"custom_expired_trial_notification_subject\": \"<string>\",\n  \"custom_expired_trial_notification_template\": \"custom\",\n  \"custom_gift_subscription_email_body\": \"<string>\",\n  \"custom_gift_subscription_email_subject\": \"<string>\",\n  \"custom_gift_subscription_email_template\": \"naked\",\n  \"custom_gift_unsubscription_email_body\": \"<string>\",\n  \"custom_gift_unsubscription_email_subject\": \"<string>\",\n  \"custom_gift_unsubscription_email_template\": \"classic\",\n  \"custom_premium_confirmation_email_body\": \"<string>\",\n  \"custom_premium_confirmation_email_subject\": \"<string>\",\n  \"custom_premium_confirmation_email_template\": \"custom\",\n  \"custom_subscription_confirmation_email_subject\": \"<string>\",\n  \"custom_subscription_confirmation_email_text\": \"<string>\",\n  \"custom_subscription_confirmation_email_template\": \"naked\",\n  \"custom_subscription_confirmation_reminder_email_subject\": \"<string>\",\n  \"custom_subscription_confirmation_reminder_email_text\": \"<string>\",\n  \"custom_subscription_confirmed_email_subject\": \"<string>\",\n  \"custom_subscription_confirmed_email_text\": \"<string>\",\n  \"description\": \"<string>\",\n  \"domain\": \"<string>\",\n  \"email_address\": \"<email>\",\n  \"email_domain\": \"<string>\",\n  \"email_theme_configuration\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"enabled_features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"footer\": \"<string>\",\n  \"from_name\": \"<string>\",\n  \"header\": \"<string>\",\n  \"icon\": \"<string>\",\n  \"icon_alt_text\": \"<string>\",\n  \"image\": \"<string>\",\n  \"locale\": \"en-CA\",\n  \"metadata\": {\n    \"key_0\": 9702,\n    \"key_1\": 9782.416650024623\n  },\n  \"name\": \"<string>\",\n  \"reply_to_address\": \"<email>\",\n  \"socials\": [\n    {\n      \"type\": \"generic\",\n      \"url\": \"string\",\n      \"label\": \"string\"\n    },\n    {\n      \"type\": \"vimeo\",\n      \"url\": \"string\",\n      \"label\": \"string\"\n    }\n  ],\n  \"subscription_confirmation_redirect_url\": \"<string>\",\n  \"subscription_redirect_url\": \"<string>\",\n  \"template\": \"plaintext\",\n  \"test_mode\": \"<boolean>\",\n  \"theme_configuration\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"timezone\": \"<string>\",\n  \"tint_color\": \"<string>\",\n  \"username\": \"<string>\",\n  \"web_css\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"creation_date\": \"2015-01-25T20:35:50.549Z\",\n  \"api_key\": \"831fb13c-e901-8e86-b530-92079fe4c362\",\n  \"description\": \"string\",\n  \"name\": \"string\",\n  \"username\": \"string\",\n  \"announcement_bar_background_color\": \"\",\n  \"announcement_bar_text\": \"\",\n  \"announcement_bar_visibility\": \"disabled\",\n  \"archive_theme\": \"modern\",\n  \"auditing_mode\": \"enabled\",\n  \"css\": \"\",\n  \"custom_churn_email_body\": \"\",\n  \"custom_churn_email_subject\": \"\",\n  \"custom_churn_email_template\": \"plaintext\",\n  \"custom_email_template\": \"string\",\n  \"custom_expired_trial_notification_body\": \"\",\n  \"custom_expired_trial_notification_subject\": \"\",\n  \"custom_expired_trial_notification_template\": \"naked\",\n  \"custom_gift_subscription_email_body\": \"\",\n  \"custom_gift_subscription_email_subject\": \"\",\n  \"custom_gift_subscription_email_template\": \"naked\",\n  \"custom_gift_unsubscription_email_body\": \"\",\n  \"custom_gift_unsubscription_email_subject\": \"\",\n  \"custom_gift_unsubscription_email_template\": \"modern\",\n  \"custom_premium_confirmation_email_body\": \"\",\n  \"custom_premium_confirmation_email_subject\": \"\",\n  \"custom_premium_confirmation_email_template\": \"classic\",\n  \"custom_subscription_confirmation_email_subject\": \"\",\n  \"custom_subscription_confirmation_email_template\": \"naked\",\n  \"custom_subscription_confirmation_email_text\": \"\",\n  \"custom_subscription_confirmation_reminder_email_subject\": \"\",\n  \"custom_subscription_confirmation_reminder_email_text\": \"\",\n  \"custom_subscription_confirmed_email_subject\": \"\",\n  \"custom_subscription_confirmed_email_text\": \"\",\n  \"domain\": \"\",\n  \"email_address\": \"\",\n  \"email_domain\": \"\",\n  \"email_theme_configuration\": {},\n  \"footer\": \"\",\n  \"from_name\": \"\",\n  \"header\": \"\",\n  \"hosting_domain_status\": \"none\",\n  \"icon\": \"string\",\n  \"icon_alt_text\": \"\",\n  \"image\": \"string\",\n  \"locale\": \"en\",\n  \"metadata\": {},\n  \"reply_to_address\": \"\",\n  \"sending_domain_status\": \"none\",\n  \"sort\": \"creation_date\",\n  \"subscription_confirmation_redirect_url\": \"\",\n  \"subscription_redirect_url\": \"\",\n  \"template\": \"modern\",\n  \"test_mode\": false,\n  \"theme_configuration\": {},\n  \"timezone\": \"Etc/UTC\",\n  \"tint_color\": \"#0069FF\",\n  \"web_css\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a4ab6393-bdd8-4d80-a0c3-705b06466327",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"announcement_bar_background_color\": \"<string>\",\n  \"announcement_bar_text\": \"<string>\",\n  \"announcement_bar_visibility\": \"free_only\",\n  \"archive_theme\": \"modern\",\n  \"auditing_mode\": \"aggressive\",\n  \"css\": \"<string>\",\n  \"custom_churn_email_body\": \"<string>\",\n  \"custom_churn_email_subject\": \"<string>\",\n  \"custom_churn_email_template\": \"classic\",\n  \"custom_email_template\": \"<string>\",\n  \"custom_expired_trial_notification_body\": \"<string>\",\n  \"custom_expired_trial_notification_subject\": \"<string>\",\n  \"custom_expired_trial_notification_template\": \"custom\",\n  \"custom_gift_subscription_email_body\": \"<string>\",\n  \"custom_gift_subscription_email_subject\": \"<string>\",\n  \"custom_gift_subscription_email_template\": \"naked\",\n  \"custom_gift_unsubscription_email_body\": \"<string>\",\n  \"custom_gift_unsubscription_email_subject\": \"<string>\",\n  \"custom_gift_unsubscription_email_template\": \"classic\",\n  \"custom_premium_confirmation_email_body\": \"<string>\",\n  \"custom_premium_confirmation_email_subject\": \"<string>\",\n  \"custom_premium_confirmation_email_template\": \"custom\",\n  \"custom_subscription_confirmation_email_subject\": \"<string>\",\n  \"custom_subscription_confirmation_email_text\": \"<string>\",\n  \"custom_subscription_confirmation_email_template\": \"naked\",\n  \"custom_subscription_confirmation_reminder_email_subject\": \"<string>\",\n  \"custom_subscription_confirmation_reminder_email_text\": \"<string>\",\n  \"custom_subscription_confirmed_email_subject\": \"<string>\",\n  \"custom_subscription_confirmed_email_text\": \"<string>\",\n  \"description\": \"<string>\",\n  \"domain\": \"<string>\",\n  \"email_address\": \"<email>\",\n  \"email_domain\": \"<string>\",\n  \"email_theme_configuration\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"enabled_features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"footer\": \"<string>\",\n  \"from_name\": \"<string>\",\n  \"header\": \"<string>\",\n  \"icon\": \"<string>\",\n  \"icon_alt_text\": \"<string>\",\n  \"image\": \"<string>\",\n  \"locale\": \"en-CA\",\n  \"metadata\": {\n    \"key_0\": 9702,\n    \"key_1\": 9782.416650024623\n  },\n  \"name\": \"<string>\",\n  \"reply_to_address\": \"<email>\",\n  \"socials\": [\n    {\n      \"type\": \"generic\",\n      \"url\": \"string\",\n      \"label\": \"string\"\n    },\n    {\n      \"type\": \"vimeo\",\n      \"url\": \"string\",\n      \"label\": \"string\"\n    }\n  ],\n  \"subscription_confirmation_redirect_url\": \"<string>\",\n  \"subscription_redirect_url\": \"<string>\",\n  \"template\": \"plaintext\",\n  \"test_mode\": \"<boolean>\",\n  \"theme_configuration\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"timezone\": \"<string>\",\n  \"tint_color\": \"<string>\",\n  \"username\": \"<string>\",\n  \"web_css\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "148bdf0f-fb1e-4139-8b46-e60a6ff3073c",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"announcement_bar_background_color\": \"<string>\",\n  \"announcement_bar_text\": \"<string>\",\n  \"announcement_bar_visibility\": \"free_only\",\n  \"archive_theme\": \"modern\",\n  \"auditing_mode\": \"aggressive\",\n  \"css\": \"<string>\",\n  \"custom_churn_email_body\": \"<string>\",\n  \"custom_churn_email_subject\": \"<string>\",\n  \"custom_churn_email_template\": \"classic\",\n  \"custom_email_template\": \"<string>\",\n  \"custom_expired_trial_notification_body\": \"<string>\",\n  \"custom_expired_trial_notification_subject\": \"<string>\",\n  \"custom_expired_trial_notification_template\": \"custom\",\n  \"custom_gift_subscription_email_body\": \"<string>\",\n  \"custom_gift_subscription_email_subject\": \"<string>\",\n  \"custom_gift_subscription_email_template\": \"naked\",\n  \"custom_gift_unsubscription_email_body\": \"<string>\",\n  \"custom_gift_unsubscription_email_subject\": \"<string>\",\n  \"custom_gift_unsubscription_email_template\": \"classic\",\n  \"custom_premium_confirmation_email_body\": \"<string>\",\n  \"custom_premium_confirmation_email_subject\": \"<string>\",\n  \"custom_premium_confirmation_email_template\": \"custom\",\n  \"custom_subscription_confirmation_email_subject\": \"<string>\",\n  \"custom_subscription_confirmation_email_text\": \"<string>\",\n  \"custom_subscription_confirmation_email_template\": \"naked\",\n  \"custom_subscription_confirmation_reminder_email_subject\": \"<string>\",\n  \"custom_subscription_confirmation_reminder_email_text\": \"<string>\",\n  \"custom_subscription_confirmed_email_subject\": \"<string>\",\n  \"custom_subscription_confirmed_email_text\": \"<string>\",\n  \"description\": \"<string>\",\n  \"domain\": \"<string>\",\n  \"email_address\": \"<email>\",\n  \"email_domain\": \"<string>\",\n  \"email_theme_configuration\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"enabled_features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"footer\": \"<string>\",\n  \"from_name\": \"<string>\",\n  \"header\": \"<string>\",\n  \"icon\": \"<string>\",\n  \"icon_alt_text\": \"<string>\",\n  \"image\": \"<string>\",\n  \"locale\": \"en-CA\",\n  \"metadata\": {\n    \"key_0\": 9702,\n    \"key_1\": 9782.416650024623\n  },\n  \"name\": \"<string>\",\n  \"reply_to_address\": \"<email>\",\n  \"socials\": [\n    {\n      \"type\": \"generic\",\n      \"url\": \"string\",\n      \"label\": \"string\"\n    },\n    {\n      \"type\": \"vimeo\",\n      \"url\": \"string\",\n      \"label\": \"string\"\n    }\n  ],\n  \"subscription_confirmation_redirect_url\": \"<string>\",\n  \"subscription_redirect_url\": \"<string>\",\n  \"template\": \"plaintext\",\n  \"test_mode\": \"<boolean>\",\n  \"theme_configuration\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"timezone\": \"<string>\",\n  \"tint_color\": \"<string>\",\n  \"username\": \"<string>\",\n  \"web_css\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "03e5d5e5-e7e2-404d-91df-1d1af96f8f5d",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"announcement_bar_background_color\": \"<string>\",\n  \"announcement_bar_text\": \"<string>\",\n  \"announcement_bar_visibility\": \"free_only\",\n  \"archive_theme\": \"modern\",\n  \"auditing_mode\": \"aggressive\",\n  \"css\": \"<string>\",\n  \"custom_churn_email_body\": \"<string>\",\n  \"custom_churn_email_subject\": \"<string>\",\n  \"custom_churn_email_template\": \"classic\",\n  \"custom_email_template\": \"<string>\",\n  \"custom_expired_trial_notification_body\": \"<string>\",\n  \"custom_expired_trial_notification_subject\": \"<string>\",\n  \"custom_expired_trial_notification_template\": \"custom\",\n  \"custom_gift_subscription_email_body\": \"<string>\",\n  \"custom_gift_subscription_email_subject\": \"<string>\",\n  \"custom_gift_subscription_email_template\": \"naked\",\n  \"custom_gift_unsubscription_email_body\": \"<string>\",\n  \"custom_gift_unsubscription_email_subject\": \"<string>\",\n  \"custom_gift_unsubscription_email_template\": \"classic\",\n  \"custom_premium_confirmation_email_body\": \"<string>\",\n  \"custom_premium_confirmation_email_subject\": \"<string>\",\n  \"custom_premium_confirmation_email_template\": \"custom\",\n  \"custom_subscription_confirmation_email_subject\": \"<string>\",\n  \"custom_subscription_confirmation_email_text\": \"<string>\",\n  \"custom_subscription_confirmation_email_template\": \"naked\",\n  \"custom_subscription_confirmation_reminder_email_subject\": \"<string>\",\n  \"custom_subscription_confirmation_reminder_email_text\": \"<string>\",\n  \"custom_subscription_confirmed_email_subject\": \"<string>\",\n  \"custom_subscription_confirmed_email_text\": \"<string>\",\n  \"description\": \"<string>\",\n  \"domain\": \"<string>\",\n  \"email_address\": \"<email>\",\n  \"email_domain\": \"<string>\",\n  \"email_theme_configuration\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"enabled_features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"footer\": \"<string>\",\n  \"from_name\": \"<string>\",\n  \"header\": \"<string>\",\n  \"icon\": \"<string>\",\n  \"icon_alt_text\": \"<string>\",\n  \"image\": \"<string>\",\n  \"locale\": \"en-CA\",\n  \"metadata\": {\n    \"key_0\": 9702,\n    \"key_1\": 9782.416650024623\n  },\n  \"name\": \"<string>\",\n  \"reply_to_address\": \"<email>\",\n  \"socials\": [\n    {\n      \"type\": \"generic\",\n      \"url\": \"string\",\n      \"label\": \"string\"\n    },\n    {\n      \"type\": \"vimeo\",\n      \"url\": \"string\",\n      \"label\": \"string\"\n    }\n  ],\n  \"subscription_confirmation_redirect_url\": \"<string>\",\n  \"subscription_redirect_url\": \"<string>\",\n  \"template\": \"plaintext\",\n  \"test_mode\": \"<boolean>\",\n  \"theme_configuration\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"timezone\": \"<string>\",\n  \"tint_color\": \"<string>\",\n  \"username\": \"<string>\",\n  \"web_css\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fa85e50b-739e-48f5-8a6c-c34b50f4bde5",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"announcement_bar_background_color\": \"<string>\",\n  \"announcement_bar_text\": \"<string>\",\n  \"announcement_bar_visibility\": \"free_only\",\n  \"archive_theme\": \"modern\",\n  \"auditing_mode\": \"aggressive\",\n  \"css\": \"<string>\",\n  \"custom_churn_email_body\": \"<string>\",\n  \"custom_churn_email_subject\": \"<string>\",\n  \"custom_churn_email_template\": \"classic\",\n  \"custom_email_template\": \"<string>\",\n  \"custom_expired_trial_notification_body\": \"<string>\",\n  \"custom_expired_trial_notification_subject\": \"<string>\",\n  \"custom_expired_trial_notification_template\": \"custom\",\n  \"custom_gift_subscription_email_body\": \"<string>\",\n  \"custom_gift_subscription_email_subject\": \"<string>\",\n  \"custom_gift_subscription_email_template\": \"naked\",\n  \"custom_gift_unsubscription_email_body\": \"<string>\",\n  \"custom_gift_unsubscription_email_subject\": \"<string>\",\n  \"custom_gift_unsubscription_email_template\": \"classic\",\n  \"custom_premium_confirmation_email_body\": \"<string>\",\n  \"custom_premium_confirmation_email_subject\": \"<string>\",\n  \"custom_premium_confirmation_email_template\": \"custom\",\n  \"custom_subscription_confirmation_email_subject\": \"<string>\",\n  \"custom_subscription_confirmation_email_text\": \"<string>\",\n  \"custom_subscription_confirmation_email_template\": \"naked\",\n  \"custom_subscription_confirmation_reminder_email_subject\": \"<string>\",\n  \"custom_subscription_confirmation_reminder_email_text\": \"<string>\",\n  \"custom_subscription_confirmed_email_subject\": \"<string>\",\n  \"custom_subscription_confirmed_email_text\": \"<string>\",\n  \"description\": \"<string>\",\n  \"domain\": \"<string>\",\n  \"email_address\": \"<email>\",\n  \"email_domain\": \"<string>\",\n  \"email_theme_configuration\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"enabled_features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"footer\": \"<string>\",\n  \"from_name\": \"<string>\",\n  \"header\": \"<string>\",\n  \"icon\": \"<string>\",\n  \"icon_alt_text\": \"<string>\",\n  \"image\": \"<string>\",\n  \"locale\": \"en-CA\",\n  \"metadata\": {\n    \"key_0\": 9702,\n    \"key_1\": 9782.416650024623\n  },\n  \"name\": \"<string>\",\n  \"reply_to_address\": \"<email>\",\n  \"socials\": [\n    {\n      \"type\": \"generic\",\n      \"url\": \"string\",\n      \"label\": \"string\"\n    },\n    {\n      \"type\": \"vimeo\",\n      \"url\": \"string\",\n      \"label\": \"string\"\n    }\n  ],\n  \"subscription_confirmation_redirect_url\": \"<string>\",\n  \"subscription_redirect_url\": \"<string>\",\n  \"template\": \"plaintext\",\n  \"test_mode\": \"<boolean>\",\n  \"theme_configuration\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"timezone\": \"<string>\",\n  \"tint_color\": \"<string>\",\n  \"username\": \"<string>\",\n  \"web_css\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec175f47-e35c-4574-9f52-66ef76240ab4",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"announcement_bar_background_color\": \"<string>\",\n  \"announcement_bar_text\": \"<string>\",\n  \"announcement_bar_visibility\": \"free_only\",\n  \"archive_theme\": \"modern\",\n  \"auditing_mode\": \"aggressive\",\n  \"css\": \"<string>\",\n  \"custom_churn_email_body\": \"<string>\",\n  \"custom_churn_email_subject\": \"<string>\",\n  \"custom_churn_email_template\": \"classic\",\n  \"custom_email_template\": \"<string>\",\n  \"custom_expired_trial_notification_body\": \"<string>\",\n  \"custom_expired_trial_notification_subject\": \"<string>\",\n  \"custom_expired_trial_notification_template\": \"custom\",\n  \"custom_gift_subscription_email_body\": \"<string>\",\n  \"custom_gift_subscription_email_subject\": \"<string>\",\n  \"custom_gift_subscription_email_template\": \"naked\",\n  \"custom_gift_unsubscription_email_body\": \"<string>\",\n  \"custom_gift_unsubscription_email_subject\": \"<string>\",\n  \"custom_gift_unsubscription_email_template\": \"classic\",\n  \"custom_premium_confirmation_email_body\": \"<string>\",\n  \"custom_premium_confirmation_email_subject\": \"<string>\",\n  \"custom_premium_confirmation_email_template\": \"custom\",\n  \"custom_subscription_confirmation_email_subject\": \"<string>\",\n  \"custom_subscription_confirmation_email_text\": \"<string>\",\n  \"custom_subscription_confirmation_email_template\": \"naked\",\n  \"custom_subscription_confirmation_reminder_email_subject\": \"<string>\",\n  \"custom_subscription_confirmation_reminder_email_text\": \"<string>\",\n  \"custom_subscription_confirmed_email_subject\": \"<string>\",\n  \"custom_subscription_confirmed_email_text\": \"<string>\",\n  \"description\": \"<string>\",\n  \"domain\": \"<string>\",\n  \"email_address\": \"<email>\",\n  \"email_domain\": \"<string>\",\n  \"email_theme_configuration\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"enabled_features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"footer\": \"<string>\",\n  \"from_name\": \"<string>\",\n  \"header\": \"<string>\",\n  \"icon\": \"<string>\",\n  \"icon_alt_text\": \"<string>\",\n  \"image\": \"<string>\",\n  \"locale\": \"en-CA\",\n  \"metadata\": {\n    \"key_0\": 9702,\n    \"key_1\": 9782.416650024623\n  },\n  \"name\": \"<string>\",\n  \"reply_to_address\": \"<email>\",\n  \"socials\": [\n    {\n      \"type\": \"generic\",\n      \"url\": \"string\",\n      \"label\": \"string\"\n    },\n    {\n      \"type\": \"vimeo\",\n      \"url\": \"string\",\n      \"label\": \"string\"\n    }\n  ],\n  \"subscription_confirmation_redirect_url\": \"<string>\",\n  \"subscription_redirect_url\": \"<string>\",\n  \"template\": \"plaintext\",\n  \"test_mode\": \"<boolean>\",\n  \"theme_configuration\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"timezone\": \"<string>\",\n  \"tint_color\": \"<string>\",\n  \"username\": \"<string>\",\n  \"web_css\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4abf12df-c3a2-4c4f-b3bb-435b6bb8984e",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"announcement_bar_background_color\": \"<string>\",\n  \"announcement_bar_text\": \"<string>\",\n  \"announcement_bar_visibility\": \"free_only\",\n  \"archive_theme\": \"modern\",\n  \"auditing_mode\": \"aggressive\",\n  \"css\": \"<string>\",\n  \"custom_churn_email_body\": \"<string>\",\n  \"custom_churn_email_subject\": \"<string>\",\n  \"custom_churn_email_template\": \"classic\",\n  \"custom_email_template\": \"<string>\",\n  \"custom_expired_trial_notification_body\": \"<string>\",\n  \"custom_expired_trial_notification_subject\": \"<string>\",\n  \"custom_expired_trial_notification_template\": \"custom\",\n  \"custom_gift_subscription_email_body\": \"<string>\",\n  \"custom_gift_subscription_email_subject\": \"<string>\",\n  \"custom_gift_subscription_email_template\": \"naked\",\n  \"custom_gift_unsubscription_email_body\": \"<string>\",\n  \"custom_gift_unsubscription_email_subject\": \"<string>\",\n  \"custom_gift_unsubscription_email_template\": \"classic\",\n  \"custom_premium_confirmation_email_body\": \"<string>\",\n  \"custom_premium_confirmation_email_subject\": \"<string>\",\n  \"custom_premium_confirmation_email_template\": \"custom\",\n  \"custom_subscription_confirmation_email_subject\": \"<string>\",\n  \"custom_subscription_confirmation_email_text\": \"<string>\",\n  \"custom_subscription_confirmation_email_template\": \"naked\",\n  \"custom_subscription_confirmation_reminder_email_subject\": \"<string>\",\n  \"custom_subscription_confirmation_reminder_email_text\": \"<string>\",\n  \"custom_subscription_confirmed_email_subject\": \"<string>\",\n  \"custom_subscription_confirmed_email_text\": \"<string>\",\n  \"description\": \"<string>\",\n  \"domain\": \"<string>\",\n  \"email_address\": \"<email>\",\n  \"email_domain\": \"<string>\",\n  \"email_theme_configuration\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"enabled_features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"footer\": \"<string>\",\n  \"from_name\": \"<string>\",\n  \"header\": \"<string>\",\n  \"icon\": \"<string>\",\n  \"icon_alt_text\": \"<string>\",\n  \"image\": \"<string>\",\n  \"locale\": \"en-CA\",\n  \"metadata\": {\n    \"key_0\": 9702,\n    \"key_1\": 9782.416650024623\n  },\n  \"name\": \"<string>\",\n  \"reply_to_address\": \"<email>\",\n  \"socials\": [\n    {\n      \"type\": \"generic\",\n      \"url\": \"string\",\n      \"label\": \"string\"\n    },\n    {\n      \"type\": \"vimeo\",\n      \"url\": \"string\",\n      \"label\": \"string\"\n    }\n  ],\n  \"subscription_confirmation_redirect_url\": \"<string>\",\n  \"subscription_redirect_url\": \"<string>\",\n  \"template\": \"plaintext\",\n  \"test_mode\": \"<boolean>\",\n  \"theme_configuration\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"timezone\": \"<string>\",\n  \"tint_color\": \"<string>\",\n  \"username\": \"<string>\",\n  \"web_css\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"type\": \"string\",\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a823ceb0-5b9c-4492-8d0f-a81029a9c59e",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"announcement_bar_background_color\": \"<string>\",\n  \"announcement_bar_text\": \"<string>\",\n  \"announcement_bar_visibility\": \"free_only\",\n  \"archive_theme\": \"modern\",\n  \"auditing_mode\": \"aggressive\",\n  \"css\": \"<string>\",\n  \"custom_churn_email_body\": \"<string>\",\n  \"custom_churn_email_subject\": \"<string>\",\n  \"custom_churn_email_template\": \"classic\",\n  \"custom_email_template\": \"<string>\",\n  \"custom_expired_trial_notification_body\": \"<string>\",\n  \"custom_expired_trial_notification_subject\": \"<string>\",\n  \"custom_expired_trial_notification_template\": \"custom\",\n  \"custom_gift_subscription_email_body\": \"<string>\",\n  \"custom_gift_subscription_email_subject\": \"<string>\",\n  \"custom_gift_subscription_email_template\": \"naked\",\n  \"custom_gift_unsubscription_email_body\": \"<string>\",\n  \"custom_gift_unsubscription_email_subject\": \"<string>\",\n  \"custom_gift_unsubscription_email_template\": \"classic\",\n  \"custom_premium_confirmation_email_body\": \"<string>\",\n  \"custom_premium_confirmation_email_subject\": \"<string>\",\n  \"custom_premium_confirmation_email_template\": \"custom\",\n  \"custom_subscription_confirmation_email_subject\": \"<string>\",\n  \"custom_subscription_confirmation_email_text\": \"<string>\",\n  \"custom_subscription_confirmation_email_template\": \"naked\",\n  \"custom_subscription_confirmation_reminder_email_subject\": \"<string>\",\n  \"custom_subscription_confirmation_reminder_email_text\": \"<string>\",\n  \"custom_subscription_confirmed_email_subject\": \"<string>\",\n  \"custom_subscription_confirmed_email_text\": \"<string>\",\n  \"description\": \"<string>\",\n  \"domain\": \"<string>\",\n  \"email_address\": \"<email>\",\n  \"email_domain\": \"<string>\",\n  \"email_theme_configuration\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"enabled_features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"footer\": \"<string>\",\n  \"from_name\": \"<string>\",\n  \"header\": \"<string>\",\n  \"icon\": \"<string>\",\n  \"icon_alt_text\": \"<string>\",\n  \"image\": \"<string>\",\n  \"locale\": \"en-CA\",\n  \"metadata\": {\n    \"key_0\": 9702,\n    \"key_1\": 9782.416650024623\n  },\n  \"name\": \"<string>\",\n  \"reply_to_address\": \"<email>\",\n  \"socials\": [\n    {\n      \"type\": \"generic\",\n      \"url\": \"string\",\n      \"label\": \"string\"\n    },\n    {\n      \"type\": \"vimeo\",\n      \"url\": \"string\",\n      \"label\": \"string\"\n    }\n  ],\n  \"subscription_confirmation_redirect_url\": \"<string>\",\n  \"subscription_redirect_url\": \"<string>\",\n  \"template\": \"plaintext\",\n  \"test_mode\": \"<boolean>\",\n  \"theme_configuration\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"timezone\": \"<string>\",\n  \"tint_color\": \"<string>\",\n  \"username\": \"<string>\",\n  \"web_css\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "6701"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests permitted per minute.",
+                  "key": "X-RateLimit-Limit",
+                  "value": "6701"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests remaining in the current window.",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "6701"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp at which the window resets.",
+                  "key": "X-RateLimit-Reset",
+                  "value": "6701"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e4789f6b-2091-4ad7-acb7-84621483e2a1",
+          "name": "Delete Newsletter",
+          "request": {
+            "name": "Delete Newsletter",
+            "description": {
+              "content": "Delete a newsletter",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "newsletters",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ac135510-33d5-4df8-b5f1-561ee6336f57",
+              "name": "No Content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "69d365e2-4200-486f-a2bf-d04b47b826ed",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a7619fed-742c-4a17-a468-db3f14cb6f95",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a615f403-b0b1-428c-a9fb-8a8b86658dfe",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "70068e19-b497-405d-812f-a51b0c03c18c",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2cb8c27b-c854-4719-b8e0-e01c1f10d17d",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "6701"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests permitted per minute.",
+                  "key": "X-RateLimit-Limit",
+                  "value": "6701"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests remaining in the current window.",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "6701"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp at which the window resets.",
+                  "key": "X-RateLimit-Reset",
+                  "value": "6701"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2d28283e-ae7f-4707-9cbd-c3742be11529",
+          "name": "Retrieve Sending Domain",
+          "request": {
+            "name": "Retrieve Sending Domain",
+            "description": {
+              "content": "Retrieve the DNS verification status and required records for a newsletter's custom sending domain. While `is_checking` is true, a background re-verification is in flight; poll until it flips to false. Pass `force=true` to trigger a re-check.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "newsletters",
+                ":id",
+                "sending-domain"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "force",
+                  "value": "false",
+                  "description": "When true, trigger a fresh DNS re-verification instead of serving the last-known record."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4309b854-16dc-4f53-8b66-3851a58e039d",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id",
+                    "sending-domain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"domain\": \"string\",\n  \"status\": \"invalid\",\n  \"warnings\": [],\n  \"requirements\": [\n    {\n      \"record_type\": \"string\",\n      \"name\": \"string\",\n      \"is_valid\": true,\n      \"required_value\": \"string\",\n      \"current_values\": [\n        \"string\",\n        \"string\"\n      ],\n      \"context\": \"manual\"\n    },\n    {\n      \"record_type\": \"string\",\n      \"name\": \"string\",\n      \"is_valid\": false,\n      \"required_value\": \"string\",\n      \"current_values\": [\n        \"string\",\n        \"string\"\n      ],\n      \"context\": \"manual\"\n    }\n  ],\n  \"existing_mail_provider\": \"string\",\n  \"detected_dns_provider\": {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"apex_alias_support\": \"string\",\n    \"wording_kind\": \"string\",\n    \"nameserver_regexes\": [\n      \"string\",\n      \"string\"\n    ],\n    \"support_doc_url\": \"string\",\n    \"side_notes\": \"string\",\n    \"buttondown_guide_url\": \"string\",\n    \"supports_nameserver_delegation\": true\n  },\n  \"checked_date\": \"1952-05-06T18:02:01.637Z\",\n  \"is_checking\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "42527a21-734c-465e-9421-7be2aa4466e9",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id",
+                    "sending-domain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "93d43482-5e1d-409b-b396-5240eddc85a9",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id",
+                    "sending-domain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a5add4c-2b0d-46f7-bacf-51137e4ed71d",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id",
+                    "sending-domain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8b1dd647-47bc-40a9-b289-505bba5c2249",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id",
+                    "sending-domain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0310bb43-926d-4711-a58c-b56cdb0ab168",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id",
+                    "sending-domain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e52bb7aa-bb43-434f-8e28-d5ce6ea33682",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id",
+                    "sending-domain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "6701"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests permitted per minute.",
+                  "key": "X-RateLimit-Limit",
+                  "value": "6701"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests remaining in the current window.",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "6701"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp at which the window resets.",
+                  "key": "X-RateLimit-Reset",
+                  "value": "6701"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4220087c-54d0-4480-b827-5c5b2e6af690",
+          "name": "Retrieve Hosting Domain",
+          "request": {
+            "name": "Retrieve Hosting Domain",
+            "description": {
+              "content": "Retrieve the DNS verification status for a newsletter's custom hosting domain. This synchronously re-verifies the domain's DNS records.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "newsletters",
+                ":id",
+                "hosting-domain"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0331a278-4052-4785-9ab3-9ca15bfa6535",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id",
+                    "hosting-domain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"domain\": \"string\",\n  \"record_type\": \"string\",\n  \"data\": [\n    \"string\",\n    \"string\"\n  ],\n  \"status\": \"valid\",\n  \"nameservers\": [\n    \"string\",\n    \"string\"\n  ],\n  \"apex_alias_provider\": {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"apex_alias_support\": \"string\",\n    \"wording_kind\": \"string\",\n    \"nameserver_regexes\": [\n      \"string\",\n      \"string\"\n    ],\n    \"support_doc_url\": \"string\",\n    \"side_notes\": \"string\",\n    \"buttondown_guide_url\": \"string\",\n    \"supports_nameserver_delegation\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "30376d48-c1d8-4cd8-b0bd-c4e9704faa0b",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id",
+                    "hosting-domain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5bfd9f71-3916-4d64-96f6-df316b52e4a7",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id",
+                    "hosting-domain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fe14c413-f6b2-481d-9cfb-0e0d26ca44ee",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id",
+                    "hosting-domain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "426199b7-5517-482f-959c-56443fc658c6",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id",
+                    "hosting-domain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "beb32dc8-921a-4851-9aa5-0875591fea8f",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newsletters",
+                    ":id",
+                    "hosting-domain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "6701"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests permitted per minute.",
+                  "key": "X-RateLimit-Limit",
+                  "value": "6701"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests remaining in the current window.",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "6701"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp at which the window resets.",
+                  "key": "X-RateLimit-Reset",
+                  "value": "6701"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.buttondown.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "9f36f1ff-2ee9-4010-a3d4-8e6a5ef226ac",
+    "name": "Buttondown Newsletters API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction) for guides and examples.",
+      "type": "text/plain"
+    }
+  }
+}

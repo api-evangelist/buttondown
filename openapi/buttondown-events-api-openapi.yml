@@ -1,0 +1,1684 @@
+openapi: 3.1.0
+info:
+  title: Buttondown Events API
+  version: 1.0.0
+  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction)
+    for guides and examples.
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://api.buttondown.com/v1
+security:
+- ApiKeyAuth: []
+tags:
+- name: Events
+paths:
+  /events:
+    get:
+      operationId: list_events
+      summary: List Events
+      parameters:
+      - in: query
+        name: event_type
+        schema:
+          description: If provided, only return events of the given type (e.g. `delivered`, `opened`, `clicked`).
+          $ref: '#/components/schemas/EmailEventType'
+        required: false
+        description: If provided, only return events of the given type (e.g. `delivered`, `opened`, `clicked`).
+      - in: query
+        name: ordering
+        schema:
+          allOf:
+          - enum:
+            - creation_date
+            - -creation_date
+            title: Ordering
+            type: string
+          default: -creation_date
+          description: The ordering to apply to the results.
+        required: false
+        description: The ordering to apply to the results.
+      - in: query
+        name: expand
+        schema:
+          description: 'If provided, expand the given field. (Only supported field: ''subscriber'').'
+          items:
+            enum:
+            - automation
+            - subscriber
+            - email
+            type: string
+          title: Expand
+          type: array
+        required: false
+        description: 'If provided, expand the given field. (Only supported field: ''subscriber'').'
+      - in: query
+        name: email_id
+        schema:
+          description: If provided, only return events for the given email.
+          title: Email Id
+          type: string
+        required: false
+        description: If provided, only return events for the given email.
+      - in: query
+        name: automation_id
+        schema:
+          description: If provided, only return events for the given automation.
+          title: Automation Id
+          type: string
+        required: false
+        description: If provided, only return events for the given automation.
+      - in: query
+        name: subscriber_id
+        schema:
+          description: If provided, only return events for the given subscriber.
+          title: Subscriber Id
+          type: string
+        required: false
+        description: If provided, only return events for the given subscriber.
+      - in: query
+        name: page
+        required: false
+        description: The page number of the paginated response.
+        schema:
+          type: integer
+          title: Page
+          description: The page number of the paginated response.
+          default: 1
+          example: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailEventPage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: List all events
+      tags:
+      - Events
+      security:
+      - ApiKeyAuth: []
+  /events/{id}:
+    get:
+      operationId: get_event
+      summary: Get Event
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      - in: query
+        name: expand
+        schema:
+          description: 'If provided, expand the given field. (Only supported field: ''subscriber'').'
+          items:
+            enum:
+            - automation
+            - subscriber
+            - email
+            type: string
+          title: Expand
+          type: array
+        required: false
+        description: 'If provided, expand the given field. (Only supported field: ''subscriber'').'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailEvent'
+          links: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Retrieve a specific event by its ID
+      tags:
+      - Events
+      security:
+      - ApiKeyAuth: []
+components:
+  schemas:
+    Action:
+      description: An action to perform when the automation's trigger fires.
+      properties:
+        type:
+          $ref: '#/components/schemas/AutomationActionType'
+          description: The type of action to perform.
+        metadata:
+          additionalProperties: true
+          description: Configuration specific to the action type.
+          title: Metadata
+          type: object
+        timing:
+          anyOf:
+          - $ref: '#/components/schemas/Timing'
+          - type: 'null'
+          description: When to execute this action. Defaults to immediate if not specified.
+      required:
+      - type
+      - metadata
+      title: Action
+      type: object
+    Analytics:
+      properties:
+        recipients:
+          default: 0
+          description: The number of subscribers the email was dispatched to.
+          title: Recipients
+          type: integer
+        deliveries:
+          default: 0
+          description: The number of successful deliveries (recipients minus failures).
+          title: Deliveries
+          type: integer
+        opens:
+          default: 0
+          description: The number of unique opens recorded.
+          title: Opens
+          type: integer
+        clicks:
+          default: 0
+          description: The number of unique link clicks recorded.
+          title: Clicks
+          type: integer
+        temporary_failures:
+          default: 0
+          description: The number of temporary delivery failures (e.g. soft bounces).
+          title: Temporary Failures
+          type: integer
+        permanent_failures:
+          default: 0
+          description: The number of permanent delivery failures (e.g. hard bounces).
+          title: Permanent Failures
+          type: integer
+        unsubscriptions:
+          default: 0
+          description: The number of subscribers who unsubscribed after receiving this email.
+          title: Unsubscriptions
+          type: integer
+        complaints:
+          default: 0
+          description: The number of spam complaints recorded against this email.
+          title: Complaints
+          type: integer
+        survey_responses:
+          default: 0
+          description: The number of survey responses submitted from this email.
+          title: Survey Responses
+          type: integer
+        webmentions:
+          default: 0
+          description: The number of inbound webmentions received for this email.
+          title: Webmentions
+          type: integer
+        page_views_lifetime:
+          default: 0
+          description: The total number of archive page views for this email since publication.
+          title: Page Views Lifetime
+          type: integer
+        page_views_30:
+          default: 0
+          description: The number of archive page views in the last 30 days.
+          title: Page Views 30
+          type: integer
+        page_views_7:
+          default: 0
+          description: The number of archive page views in the last 7 days.
+          title: Page Views 7
+          type: integer
+        subscriptions:
+          default: 0
+          description: The number of new subscribers attributed to this email.
+          title: Subscriptions
+          type: integer
+        paid_subscriptions:
+          default: 0
+          description: The number of new paid subscribers attributed to this email.
+          title: Paid Subscriptions
+          type: integer
+        replies:
+          default: 0
+          description: The number of reply emails received from subscribers.
+          title: Replies
+          type: integer
+        comments:
+          default: 0
+          description: The number of comments posted on this email.
+          title: Comments
+          type: integer
+        social_mentions:
+          default: 0
+          description: The number of social media mentions of this email.
+          title: Social Mentions
+          type: integer
+        temporary_failure_breakdown:
+          description: Breakdown of temporary failures by reason code, sorted by count descending.
+          items:
+            $ref: '#/components/schemas/FailureBreakdownItem'
+          title: Temporary Failure Breakdown
+          type: array
+        permanent_failure_breakdown:
+          description: Breakdown of permanent failures by reason code, sorted by count descending.
+          items:
+            $ref: '#/components/schemas/FailureBreakdownItem'
+          title: Permanent Failure Breakdown
+          type: array
+      title: Analytics
+      type: object
+    ArchivalMode:
+      description: 'Governs who can view this email in the archive.
+
+
+        `ARCHIVE_ONLY` is the odd one out: the email is publicly archived but
+
+        is not email content at all (e.g. an imported blog post), so it is
+
+        excluded from email-rendering contexts like "recent issues" widgets.'
+      enum:
+      - archive_only
+      - disabled
+      - enabled
+      - enabled_for_paid_subscribers
+      - enabled_for_subscribers
+      title: ArchivalMode
+      type: string
+    Automation:
+      description: A rule that automatically performs actions in response to events.
+      properties:
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        name:
+          description: The name of the automation.
+          title: Name
+          type: string
+        status:
+          $ref: '#/components/schemas/AutomationStatus'
+          description: Whether the automation is enabled or disabled.
+        trigger:
+          $ref: '#/components/schemas/ExternalEventType'
+          description: The event that causes this automation to run.
+        actions:
+          description: The actions to perform when the trigger fires.
+          items:
+            $ref: '#/components/schemas/Action'
+          title: Actions
+          type: array
+        filters:
+          $ref: '#/components/schemas/FilterGroup'
+          description: Conditions that must be met for the automation to run.
+        metadata:
+          additionalProperties: true
+          description: Additional metadata for the automation.
+          title: Metadata
+          type: object
+        should_evaluate_filter_after_delay:
+          description: If true, filters are re-evaluated after the delay has passed.
+          title: Should Evaluate Filter After Delay
+          type: boolean
+      required:
+      - id
+      - creation_date
+      - name
+      - status
+      - trigger
+      - actions
+      - filters
+      - metadata
+      - should_evaluate_filter_after_delay
+      title: Automation
+      type: object
+    AutomationActionType:
+      description: The action that is triggered when the automation is successfully run.
+      enum:
+      - add_tags
+      - remove_tags
+      - send_email
+      - add_metadata
+      - remove_metadata
+      - change_email_address
+      - gift_premium_subscription
+      - ungift_premium_subscription
+      - send_discord_invitation
+      - send_github_invitation
+      - create_subscriber
+      - unsubscribe_subscriber
+      - shopify_unsubscribe
+      - shopify_resubscribe
+      - shopify_set_tags
+      - shopify_create_customer
+      - send_notification
+      - forward_reply
+      - create_arena_post
+      - create_bluesky_post
+      - create_linkedin_post
+      - create_mastodon_post
+      - create_tumblr_post
+      - create_twitter_post
+      - create_export
+      - create_gift_subscriber
+      - send_post_request
+      - send_confirmation_reminder
+      - update_email_type
+      title: ActionType
+      type: string
+    AutomationStatus:
+      enum:
+      - active
+      - inactive
+      title: Status
+      type: string
+      description: An enumeration.
+    Callout:
+      description: 'Surfacing-time flags about an email that the UI uses to render contextual
+
+        callouts (e.g. in the analytics panel). Computed on read; not persisted.'
+      enum:
+      - first_send_on_sending_domain
+      title: Callout
+      type: string
+    Delay:
+      description: Configuration for how long to wait before executing the automation's action.
+      properties:
+        value:
+          description: The number of time units to delay.
+          title: Value
+          type: string
+        unit:
+          description: The unit of time for the delay.
+          enum:
+          - minutes
+          - hours
+          - days
+          - weeks
+          title: Unit
+          type: string
+        time_of_day:
+          anyOf:
+          - enum:
+            - morning
+            - evening
+            - ''
+            type: string
+          - type: 'null'
+          description: If set, the action will be executed at this time of day after the delay has passed.
+          title: Time Of Day
+      required:
+      - value
+      - unit
+      title: Delay
+      type: object
+    Email:
+      description: 'Emails are why you''re here on Buttondown, right?
+
+        Creating an email via the API is just like creating one in the interface;
+
+        it will instantly trigger sending actual emails,
+
+        based on the tags and email type you provide.
+
+
+        Relevant changes to the schema:
+
+
+        - [2024-08-15](https://docs.buttondown.com/api-changelog-2024-08-15): unshipped the `included_tags` and `excluded_tags`
+        fields.
+
+        - [2024-12-30](https://docs.buttondown.com/api-changelog-2024-12-30): unshipped the `is_comments_disabled` field,
+        and replaced it with a more flexible `commenting_mode` field.
+
+        - [2025-09-23](https://docs.buttondown.com/api-changelog-2025-09-23): increased the maximum length of the `subject`
+        field from 1000 to 2000 characters.'
+      properties:
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        absolute_url:
+          description: The canonical web URL of the email on the newsletter's archive.
+          title: Absolute Url
+          type: string
+        analytics:
+          anyOf:
+          - $ref: '#/components/schemas/Analytics'
+          - type: 'null'
+          description: Aggregate analytics for the email. Null until the email has been sent.
+        callouts:
+          description: A list of callouts that apply to this email — surfaced in the UI alongside analytics to flag context
+            the reader should know about (e.g., first send on a custom sending domain).
+          items:
+            $ref: '#/components/schemas/Callout'
+          title: Callouts
+          type: array
+        attachments:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          description: A list of attachment IDs present on the email. (See [Attachments](https://docs.buttondown.com/api-attachments-introduction)
+            for more information.)
+          title: Attachments
+        body:
+          description: 'The body of the email, in either HTML or markdown format. Buttondown attempts to intelligently detect
+            the format of the body automatically, but you can also specify the format explicitly by prepending the text with
+            the `buttondown-editor-mode` comment: `<!-- buttondown-editor-mode: fancy -->` or `<!-- buttondown-editor-mode:
+            plaintext -->`.'
+          title: Body
+          type: string
+        canonical_url:
+          description: The URL of the original source of the content.
+          title: Canonical Url
+          type: string
+        commenting_mode:
+          $ref: '#/components/schemas/EmailCommentingMode'
+          description: Controls whether subscribers can comment on this email.
+        description:
+          description: A human-readable description of the email, used for archives and SEO.
+          title: Description
+          type: string
+        archival_mode:
+          $ref: '#/components/schemas/ArchivalMode'
+          description: Controls who can view this email in the archive.
+        email_type:
+          allOf:
+          - $ref: '#/components/schemas/EmailType'
+          default: public
+          deprecated: true
+          description: 'The type of email. Defaults to `PUBLIC`. Deprecated: this is a legacy single-axis view derived from
+            `archival_mode` (archive visibility) and `filters` (audience); prefer setting those directly. Because it is derived,
+            it does not always round-trip: writing it alongside an explicit `archival_mode` that disagrees will report the
+            value implied by the two underlying fields, and writing a value that already matches the derived one is a no-op.'
+        featured:
+          description: Designated whether or not this email should be highlighted within the archives.
+          title: Featured
+          type: boolean
+        filters:
+          $ref: '#/components/schemas/FilterGroup'
+          description: Tag-based filter rules determining which subscribers receive this email.
+        image:
+          description: A primary image URL used when previewing the email on the web or in other contexts.
+          title: Image
+          type: string
+        metadata:
+          additionalProperties: true
+          default: {}
+          description: A structured key-value blob that you can use to store arbitrary data on the object. Metadata can be
+            nested — you can store objects and arrays within your metadata. (You can [read more about metadata.](https://docs.buttondown.com/metadata))
+          title: Metadata
+          type: object
+        modification_date:
+          description: The date and time at which the object was last modified.
+          format: date-time
+          title: Modification Date
+          type: string
+        publish_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: The date and time at which the email should be published in the future (for scheduled emails), or the
+            date and time at which the email was published (for sent emails).
+          title: Publish Date
+        related_email_ids:
+          description: A list of email IDs that are related to this email. Related emails are shown at the bottom of the email
+            and archive pages.
+          items:
+            type: string
+          title: Related Email Ids
+          type: array
+        secondary_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: 'An informal ''number'' for the email, used in some templates (''This was issue #123'').'
+          title: Secondary Id
+        should_trigger_pay_per_email_billing:
+          description: Whether this email should trigger pay-per-email billing for paid subscribers. Use this to differentiate
+            between free updates and premium newsletters.
+          title: Should Trigger Pay Per Email Billing
+          type: boolean
+        slug:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: A short, human-readable identifier for the email, used in the archive URL.
+          example: welcome-to-the-newsletter
+          title: Slug
+        source:
+          $ref: '#/components/schemas/EmailSource'
+          description: The source of the email.
+          example: app
+        status:
+          $ref: '#/components/schemas/EmailStatus'
+          description: The current status of the email.
+          example: draft
+        subject:
+          description: The subject line for the email.
+          maxLength: 2000
+          title: Subject
+          type: string
+        suppression_reason:
+          anyOf:
+          - $ref: '#/components/schemas/EmailSuppressionReason'
+          - type: 'null'
+          description: If the email has been suppressed from sending, the reason why.
+        template:
+          anyOf:
+          - $ref: '#/components/schemas/NewsletterEmailTemplate'
+          - type: 'null'
+          description: If present, this template overrides your newsletter's default email template.
+      required:
+      - id
+      - creation_date
+      - absolute_url
+      - body
+      - canonical_url
+      - commenting_mode
+      - description
+      - archival_mode
+      - featured
+      - filters
+      - image
+      - modification_date
+      - related_email_ids
+      - should_trigger_pay_per_email_billing
+      - source
+      - status
+      - subject
+      title: Email
+      type: object
+    EmailCommentingMode:
+      description: 'Governs who can comment on this email.
+
+
+        This enum replaces the `is_comments_disabled` field, which has been deprecated. (Also note that this field may be
+        superseded by newsletter-level settings; for instance, "enabled" is an invalid and inert value if the newsletter itself
+        has comments disabled.)'
+      enum:
+      - disabled
+      - enabled
+      - enabled_for_paid_subscribers
+      title: CommentingMode
+      type: string
+    EmailEvent:
+      properties:
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        subscriber_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The ID of the subscriber the event is attributed to, if any.
+          title: Subscriber Id
+        email_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The ID of the email the event is attributed to, if any.
+          title: Email Id
+        automation_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The ID of the automation that sent the email, if any.
+          title: Automation Id
+        metadata:
+          additionalProperties:
+            type: string
+          description: Event-type-specific metadata (e.g. clicked URL, bounce reason).
+          title: Metadata
+          type: object
+        event_type:
+          $ref: '#/components/schemas/EmailEventType'
+          description: The type of event (e.g. `delivered`, `opened`, `clicked`, `unsubscribed`).
+        subscriber:
+          anyOf:
+          - $ref: '#/components/schemas/Subscriber'
+          - type: 'null'
+        email:
+          anyOf:
+          - $ref: '#/components/schemas/Email'
+          - type: 'null'
+        automation:
+          anyOf:
+          - $ref: '#/components/schemas/Automation'
+          - type: 'null'
+      required:
+      - id
+      - creation_date
+      - metadata
+      - event_type
+      title: EmailEvent
+      type: object
+    EmailEventPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/EmailEvent'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[EmailEvent]
+      type: object
+    EmailEventType:
+      description: The type of a subscriber event, such as a delivery, open, click, or reply.
+      enum:
+      - bounced
+      - clicked
+      - complained
+      - delivered
+      - opened
+      - rejected
+      - replied
+      - unsubscribed
+      title: EmailEventType
+      type: string
+    EmailSource:
+      description: 'Represents the original provenance of an email. This value is not exposed
+
+        to subscribers, but does determine some behavior of the email (e.g. whether
+
+        or not analytics can be calculated.)'
+      enum:
+      - api
+      - import
+      - app
+      - external_feed
+      - smtp
+      title: Source
+      type: string
+    EmailStatus:
+      description: 'Represents the state of an email.
+
+
+        No action is required to move from one state or another; Buttondown
+
+        internally handles the transitions, and exposing the status is for
+
+        observability purposes only.'
+      enum:
+      - draft
+      - managed_by_rss
+      - about_to_send
+      - scheduled
+      - in_flight
+      - paused
+      - deleted
+      - errored
+      - sent
+      - imported
+      - throttled
+      - resending
+      - transactional
+      - suppressed
+      title: Status
+      type: string
+    EmailSuppressionReason:
+      description: Represents the reason an email was suppressed.
+      enum:
+      - law_enforcement
+      - internal_auditing
+      title: SuppressionReason
+      type: string
+    EmailTransition:
+      properties:
+        date:
+          description: When the email address change took effect.
+          format: date-time
+          title: Date
+          type: string
+        old_email_address:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The subscriber's previous email address, or null for the initial address.
+          title: Old Email Address
+        new_email_address:
+          description: The subscriber's email address after the transition.
+          title: New Email Address
+          type: string
+      required:
+      - date
+      - new_email_address
+      title: EmailTransition
+      type: object
+    EmailType:
+      description: 'The legacy single-axis representation of an email''s audience and
+
+        archive visibility. No longer stored: `filters` owns the audience
+
+        axis and `archival_mode` owns the archive axis, and the deprecated
+
+        API field is derived from those (see `email_type` below).'
+      enum:
+      - public
+      - private
+      - premium
+      - free
+      - churned
+      - archival
+      title: Type
+      type: string
+    ErrorMessage:
+      properties:
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
+            how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage
+      type: object
+    ExternalEventType:
+      description: 'Various types of events that are recorded by Buttondown, both in terms of exogenous systems
+
+        like Stripe and Memberful, and endogenous ones like email opens and clicks. (In general, if anything
+
+        important ever happens that could be relevant to your newsletter, we have an event type for it!)
+
+
+        These event types power lots of things within Buttondown. They''re used to trigger automations, webhooks,
+
+        and analytics.
+
+
+        (Note that the `/v1/events` API speaks an older, shorter vocabulary for subscriber engagement —
+
+        `clicked` rather than `subscriber.clicked` — a relic of a previous events system. Each of those
+
+        names maps onto one of the `subscriber.*` types below.)
+
+
+        In general, our event namespacing tries to hew to the following pattern:
+
+
+        `<source>.<object>.<action>`
+
+
+        When wondering which object we are referring to, default to the _more granular_ object.
+
+
+        For instance, an email being sent to a subscriber is `subscriber.delivered`, not `email.sent`.'
+      enum:
+      - advertising_slot.inquiry
+      - advertising_slot.purchased
+      - automation.invoked
+      - date.day.started
+      - date.month.started
+      - date.week.started
+      - date.year.started
+      - bigcommerce.customer.created
+      - bigcommerce.customer.updated
+      - bigcommerce.order.created
+      - bigcommerce.order.updated
+      - email.created
+      - email.deleted
+      - email.send.started
+      - email.sent
+      - email.status.changed
+      - email.updated
+      - external_feed_item.created
+      - export.completed
+      - export.created
+      - export.failed
+      - firewall.blocked
+      - mention.created
+      - memberful.member.updated
+      - memberful.subscription.created
+      - memberful.subscription.deleted
+      - note.created
+      - note.deleted
+      - patreon.member.updated
+      - patreon.membership.created
+      - patreon.membership.deleted
+      - shopify.customer.created
+      - shopify.customer.updated
+      - social_mention.created
+      - stripe.checkout.session.completed
+      - stripe.customer.updated
+      - stripe.invoice.upcoming
+      - stripe.subscription.activated
+      - stripe.subscription.churning
+      - stripe.subscription.deactivated
+      - subscriber.activation_bounced
+      - subscriber.activation_clicked
+      - subscriber.activation_complained
+      - subscriber.activation_deferred
+      - subscriber.activation_delivered
+      - subscriber.activation_opened
+      - subscriber.activation_rejected
+      - subscriber.bounced
+      - subscriber.changed_email
+      - subscriber.churned
+      - subscriber.clicked
+      - subscriber.commented
+      - subscriber.complained
+      - subscriber.confirmed
+      - subscriber.created
+      - subscriber.deferred
+      - subscriber.deleted
+      - subscriber.delivered
+      - subscriber.opened
+      - subscriber.paid
+      - subscriber.paused
+      - subscriber.resumed
+      - subscriber.referred
+      - subscriber.referred.paid
+      - subscriber.rejected
+      - subscriber.replied
+      - subscriber.sent
+      - subscriber.responded_to_survey
+      - subscriber.tags.changed
+      - subscriber.trial_ended
+      - subscriber.trial_started
+      - subscriber.type.changed
+      - subscriber.unsubscribed
+      - subscriber.updated
+      - subscriber.viewed_checkout_page
+      - survey.cleared_responses
+      - survey.created
+      - survey.deleted
+      - survey.updated
+      - form.created
+      - form.deleted
+      - form.updated
+      title: Type
+      type: string
+    FailureBreakdownItem:
+      description: A single failure reason with its count.
+      properties:
+        code:
+          description: The failure reason code (e.g. 'hard_bounce', 'spam')
+          title: Code
+          type: string
+        count:
+          description: Number of failures with this reason
+          title: Count
+          type: integer
+      required:
+      - code
+      - count
+      title: FailureBreakdownItem
+      type: object
+    Filter:
+      description: "A filter is a single condition that can be evaluated against a [Subscriber](/api-subscribers-retrieve).\
+        \ It has a field, an operator, and a value:\n\n```json\n{\n    \"field\": \"subscriber.tags\",\n    \"operator\":\
+        \ \"contains\",\n    \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40j\"\n}\n```\n\nThe field is the path to the field\
+        \ on the subscriber to evaluate. The operator is the operator to use when evaluating the filter. The value is the\
+        \ value to compare the field to. Tag filters require the tag's ID (either a UUID or TypeID), not its name."
+      properties:
+        field:
+          title: Field
+          type: string
+        operator:
+          $ref: '#/components/schemas/Operator'
+        value:
+          title: Value
+          type: string
+      required:
+      - field
+      - operator
+      - value
+      title: Filter
+      type: object
+    FilterGroup:
+      description: "Buttondown's filtering schema can be used for multiple things:\n\n- Filtering [the audience of an email](/api-emails-create)\
+        \ to a specific subset\n- Creating [finely-tuned automations](/api-automation-introduction)\n\nFilters are fractal;\
+        \ they can be nested in groups, and groups can be nested in other groups. This is accomplished through a tree-like\
+        \ structure. Every \"FilterGroup\" has a \"predicate\" field, which is either \"and\" or \"or\", which determines\
+        \ how the filters and groups within the group are combined, a \"groups\" field, which is a list of \"FilterGroup\"\
+        \ objects (that's that recursive bit!), and a \"filters\" field, which are the leaf-level filters themselves.\n\n\
+        Let's say you want a simple filter: all subscribers who have a tag whose ID is `sub_tag_0j6hb7h40j6hb7h40j6hb7h40j`.\
+        \ You can do that like this:\n\n```json\n{\n    \"filters\": [{\"field\": \"subscriber.tags\", \"operator\": \"contains\"\
+        , \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40j\"}],\n    \"groups\": [],\n    \"predicate\": \"and\"\n}\n```\n\n\
+        Now, let's say you want to filter for subscribers who have that tag and a tag whose ID is `sub_tag_0j6hb7h40j6hb7h40j6hb7h40k`.\
+        \ You can do that like this:\n\n```json\n{\n    \"filters\": [{\"field\": \"subscriber.tags\", \"operator\": \"contains\"\
+        , \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40j\"}, {\"field\": \"subscriber.tags\", \"operator\": \"contains\"\
+        , \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40k\"}],\n    \"groups\": [],\n    \"predicate\": \"and\"\n}\n```\n\n\
+        If you wanted to change that `and` to an `or`, you can do that like this:\n\n```json\n{\n    \"filters\": [{\"field\"\
+        : \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40j\"}, {\"field\"\
+        : \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40k\"}],\n    \"groups\"\
+        : [],\n    \"predicate\": \"or\"\n}\n```\n\nNow, let's say you want to filter for subscribers who have the first tag\
+        \ _or_ both the second tag and a third tag whose ID is `sub_tag_0j6hb7h40j6hb7h40j6hb7h40m`. This is where the whole\
+        \ nested thing comes in handy. You can do that like this:\n\n```json\n{\n    \"filters\": [{\"field\": \"subscriber.tags\"\
+        , \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40j\"}],\n    \"groups\": [\n        {\n\
+        \            \"filters\": [{\"field\": \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40k\"\
+        }, {\"field\": \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40m\"\
+        }],\n            \"groups\": [],\n            \"predicate\": \"and\"\n        }\n    ],\n    \"predicate\": \"or\"\
+        \n}\n```\n\nYou can read more about the specific filter construction in the [Filter documentation](/api-emails-filter)."
+      properties:
+        filters:
+          description: The leaf-level filters to apply to the audience.
+          items:
+            $ref: '#/components/schemas/Filter'
+          title: Filters
+          type: array
+        groups:
+          description: The nested groups to apply to the audience.
+          items:
+            $ref: '#/components/schemas/FilterGroup'
+          title: Groups
+          type: array
+        predicate:
+          description: The logical operator to use when combining filters (either 'and' or 'or').
+          enum:
+          - and
+          - or
+          title: Predicate
+          type: string
+      required:
+      - filters
+      - groups
+      - predicate
+      title: FilterGroup
+      type: object
+    FirewallReason:
+      properties:
+        code:
+          $ref: '#/components/schemas/FirewallReasonCode'
+          description: The code of the firewall facet that flagged this subscriber.
+        reason:
+          description: Human-readable explanation for why we flagged the subscriber.
+          title: Reason
+          type: string
+      required:
+      - code
+      - reason
+      title: FirewallReason
+      type: object
+    FirewallReasonCode:
+      enum:
+      - email_address_capital_letters
+      - email_address_cleantalk_score
+      - email_address_contains_prohibited_string
+      - email_address_domain_burst
+      - email_address_esp_suppression
+      - email_address_extant_subscriber_count
+      - email_address_gmail_word_numbers
+      - email_address_has_gravatar
+      - email_address_is_honeypot
+      - email_address_length
+      - email_address_local_part_has_many_periods
+      - email_address_many_consonants_in_a_row
+      - email_address_mx_record_is_valid
+      - email_address_noreply_local_part
+      - email_address_null_characters
+      - email_address_peaceful_domain
+      - email_address_plus_single_number
+      - email_address_plus_variant_accounts
+      - email_address_previous_evaluation
+      - email_address_prohibited_via_domain
+      - email_address_regex
+      - email_address_sandbox_test
+      - email_address_shannon_entropy
+      - email_address_tied_to_account
+      - email_address_typo
+      - embedded_form_honeypot
+      - fingerprint_missing
+      - ip_address_cleantalk_score
+      - ip_address_country_risk
+      - ip_address_datacenter
+      - ip_address_extant_subscriber_count
+      - ip_address_peaceful
+      - ip_address_previous_evaluation
+      - ip_address_prohibited
+      - metadata_has_garbage
+      - newsletter_age
+      - newsletter_has_customized_transactional_email
+      - newsletter_has_prohibited_string
+      - newsletter_status
+      - project_honeypot
+      - referrer_url_prohibited
+      - registration_without_prior_page_visit
+      - subscriber_import_provenance
+      - subscriber_import_source
+      - text_contains_malicious_url
+      - text_contains_prohibited_string
+      - turnstile_response_token_is_valid
+      - user_agent_known
+      - username_shannon_entropy
+      title: FirewallReasonCode
+      type: string
+      description: An enumeration.
+    NewsletterEmailTemplate:
+      description: 'Represents the template of an email.
+
+
+        Each template has a different layout/style; you can view screenshots and examples [in the docs](https://docs.buttondown.com/customizing-email-design#buttondowns-default-templates).'
+      enum:
+      - classic
+      - custom
+      - modern
+      - plaintext
+      - naked
+      title: EmailTemplate
+      type: string
+    Operator:
+      enum:
+      - equals
+      - not_equals
+      - contains
+      - not_contains
+      - is_empty
+      - is_not_empty
+      - greater_than
+      - less_than
+      title: Operator
+      type: string
+      description: An enumeration.
+    StripeCoupon:
+      description: 'Coupons let you offer discounts to subscribers who pay for your newsletter.
+
+        Buttondown''s coupons are backed by Stripe, so each coupon maps to a coupon
+
+        on your connected Stripe account. Use them to run promotions—for example, a
+
+        percentage off a paid subscription.'
+      properties:
+        coupon_id:
+          description: The Stripe coupon ID (e.g. `coupon_...`).
+          title: Coupon Id
+          type: string
+        percent_off:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The percentage discount applied by the coupon, if any.
+          title: Percent Off
+        amount_off:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: The fixed amount discount applied by the coupon, in the smallest currency unit (e.g. cents), if any.
+          title: Amount Off
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The display name of the coupon.
+          title: Name
+      required:
+      - coupon_id
+      title: StripeCoupon
+      type: object
+    Subscriber:
+      description: 'Subscribers are the main way you collect email addresses and
+
+        recipients on Buttondown. They''re what you see on your
+
+        [subscribers page](https://buttondown.com/subscribers).
+
+
+        Relevant changes to the schema:
+
+
+        - [2024-08-01](https://docs.buttondown.com/api-changelog-2024-08-01): renamed `subscriber_type` and `email` to `type`
+        and `email_address` respectively.
+
+        - [2024-07-13](https://docs.buttondown.com/api-changelog-2024-08-01): removed `external_url` in favor of `absolute_url`.'
+      properties:
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        avatar_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: URL of the subscriber's avatar image (e.g. a Gravatar URL), if available.
+          title: Avatar Url
+        bounce_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: The date of the subscriber's most recent bounce event. May be set even if the subscriber has not yet
+            been marked as undeliverable.
+          title: Bounce Date
+        bounce_reason:
+          anyOf:
+          - $ref: '#/components/schemas/SubscriberUndeliverabilityReason'
+          - type: 'null'
+          description: The reason of the subscriber's most recent bounce event. May be set even if the subscriber has not
+            yet been marked as undeliverable.
+        churn_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: When the subscriber cancelled their paid subscription, if applicable.
+          title: Churn Date
+        commenting_disabled:
+          default: false
+          description: Whether this subscriber is prevented from commenting.
+          title: Commenting Disabled
+          type: boolean
+        country:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The ISO 3166-1 alpha-2 country code inferred from the subscriber's IP address at signup, if available.
+          example: US
+          title: Country
+        email_address:
+          description: The email address of the subscriber.
+          example: telemachus@buttondown.email
+          title: Email Address
+          type: string
+        gift_subscription_end_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: When the subscriber's gift subscription expires, if applicable.
+          title: Gift Subscription End Date
+        gift_subscription_message:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: A custom message that was sent to the subscriber when the gift subscription was created.
+          title: Gift Subscription Message
+        ip_address:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The IP address recorded when the subscriber signed up, if available.
+          title: Ip Address
+        last_click_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: When the subscriber most recently clicked a link in an email.
+          title: Last Click Date
+        last_open_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: When the subscriber most recently opened an email.
+          title: Last Open Date
+        delivered_count:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: The number of distinct emails — both broadcasts and automation sends — delivered to this subscriber.
+            Cached and refreshed periodically, so it may lag recent activity.
+          example: 12
+          title: Delivered Count
+        open_count:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: The subscriber's open count.
+          example: 7
+          title: Open Count
+        clicked_count:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: The subscriber's clicked count.
+          example: 3
+          title: Clicked Count
+        open_rate:
+          anyOf:
+          - type: number
+          - type: 'null'
+          description: The subscriber's open rate, computed from engagement counts. Null if delivered_count is 0 or null.
+          example: 0.5833
+          title: Open Rate
+        click_rate:
+          anyOf:
+          - type: number
+          - type: 'null'
+          description: The subscriber's click rate, computed from engagement counts. Null if delivered_count is 0 or null.
+          example: 0.25
+          title: Click Rate
+        metadata:
+          additionalProperties: true
+          default: {}
+          description: A structured key-value blob that you can use to store arbitrary data on the object. Metadata can be
+            nested — you can store objects and arrays within your metadata. (You can [read more about metadata.](https://docs.buttondown.com/metadata))
+          title: Metadata
+          type: object
+        notes:
+          default: ''
+          description: Any notes you want to attach to the subscriber. These are not publicly visible.
+          title: Notes
+          type: string
+        purchased_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The email address of the individual who purchased this subscription on behalf of the subscriber.
+          title: Purchased By
+        purchased_message:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: A custom message that was sent to the subscriber when the subscription was purchased on behalf of the
+            subscriber.
+          title: Purchased Message
+        referral_code:
+          description: The subscriber's unique referral code, used to attribute referred signups.
+          title: Referral Code
+          type: string
+        referrer_url:
+          default: ''
+          description: The URL the subscriber was referred from (e.g. where they submitted the subscription form).
+          title: Referrer Url
+          type: string
+        risk_score:
+          anyOf:
+          - type: number
+          - type: 'null'
+          description: The risk score of the subscriber. Positive numbers represent a higher risk; negative numbers represent
+            a lower risk.
+          title: Risk Score
+        secondary_id:
+          description: A human-readable sequential identifier, unique within the newsletter.
+          title: Secondary Id
+          type: integer
+        source:
+          $ref: '#/components/schemas/SubscriberSource'
+          description: Where the subscriber signed up from (e.g. `api`, `import`, `form`).
+        stripe_coupon:
+          anyOf:
+          - $ref: '#/components/schemas/StripeCoupon'
+          - type: 'null'
+          description: The Stripe coupon applied to the subscriber's paid subscription, if any.
+        stripe_customer_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The Stripe customer ID associated with the subscriber, if any.
+          title: Stripe Customer Id
+        subscriber_import_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The ID of the [subscriber import](https://docs.buttondown.com/importing-subscribers) that created this
+            subscriber, if any.
+          title: Subscriber Import Id
+        tags:
+          description: A list of [tag](https://docs.buttondown.com/api-tags-introduction) names applied to the subscriber.
+            Tags that don't already exist will be created, which requires a plan that includes tags (Basic or higher).
+          items:
+            type: string
+          title: Tags
+          type: array
+        transitions:
+          default: []
+          description: The history of subscriber type transitions (e.g. `regular` → `premium`).
+          items:
+            $ref: '#/components/schemas/Transition'
+          title: Transitions
+          type: array
+        email_transitions:
+          default: []
+          description: The history of email address changes for this subscriber.
+          items:
+            $ref: '#/components/schemas/EmailTransition'
+          title: Email Transitions
+          type: array
+        form_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The ID of the [registration form](https://docs.buttondown.com/registration-forms) the subscriber signed
+            up through, if any.
+          title: Form Id
+        firewall_reasons:
+          description: Information collected by Buttondown's firewall about this subscriber. See [the firewall](https://docs.buttondown.com/firewall)
+            for more information.
+          items:
+            $ref: '#/components/schemas/FirewallReason'
+          title: Firewall Reasons
+          type: array
+        type:
+          $ref: '#/components/schemas/SubscriberType'
+          description: 'The subscriber''s lifecycle state. One of: `blocked` (blocked by the newsletter), `churned` (previously
+            paid, subscription ended), `churning` (paying but won''t renew), `complained` (marked an email as spam), `gifted`
+            (granted free premium access by the newsletter), `past_due` (paid subscription with an overdue invoice), `paused`
+            (premium subscription paused), `premium` (paying subscriber), `regular` (active free subscriber), `removed` (removed
+            by the newsletter), `trialed` (temporarily enrolled in premium), `unactivated` (pending double opt-in confirmation),
+            `undeliverable` (determined undeliverable), `unpaid` (has not paid yet), `unsubscribed` (voluntarily unsubscribed),
+            `upcoming` (paid subscription that has not started yet). Subscribers with `premium`, `gifted`, `trialed`, or `churning`
+            have access to premium content; use these to distinguish paid from free subscribers.'
+        undeliverability_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: When the subscriber was marked as undeliverable, if applicable.
+          title: Undeliverability Date
+        undeliverability_reason:
+          anyOf:
+          - $ref: '#/components/schemas/SubscriberUndeliverabilityReason'
+          - type: 'null'
+          description: The reason the subscriber is undeliverable. (Only populated for undeliverable subscribers.)
+        unsubscription_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: When the subscriber unsubscribed, if applicable.
+          title: Unsubscription Date
+        unsubscription_reason:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Free-text reason the subscriber unsubscribed, if provided.
+          title: Unsubscription Reason
+        upgrade_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: When the subscriber upgraded to a paid subscription, if applicable.
+          title: Upgrade Date
+        utm_campaign:
+          description: The UTM campaign the subscriber was attributed to at signup.
+          title: Utm Campaign
+          type: string
+        utm_medium:
+          description: The UTM medium the subscriber was attributed to at signup.
+          title: Utm Medium
+          type: string
+        utm_source:
+          description: The UTM source the subscriber was attributed to at signup.
+          title: Utm Source
+          type: string
+        stripe_customer:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          description: If expanded, the Stripe customer associated with this subscriber.
+          title: Stripe Customer
+        stripe_subscription:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          description: If expanded, the Stripe subscription backing this subscriber's paid subscription.
+          title: Stripe Subscription
+      required:
+      - id
+      - creation_date
+      - email_address
+      - referral_code
+      - secondary_id
+      - source
+      - tags
+      - type
+      - utm_campaign
+      - utm_medium
+      - utm_source
+      title: Subscriber
+      type: object
+    SubscriberSource:
+      description: 'Represents the original provenance of a subscriber. This value is not exposed
+
+        to subscribers; it''s only used for internal tracking purposes and governs some
+
+        of the behavior of the subscriber (i.e. whether or not to require double
+
+        opt-in.)'
+      enum:
+      - admin
+      - api
+      - carrd
+      - comment
+      - embedded_form
+      - form
+      - import
+      - memberful
+      - netlify
+      - organic
+      - patreon
+      - shopify
+      - stripe
+      - user
+      - zapier
+      title: Source
+      type: string
+    SubscriberType:
+      description: 'Represents the state of a subscriber and what emails they
+
+        should or should not be receiving. This type is meant to be fully expressive
+
+        so as to consolidate the logic of determining what emails a subscriber should
+
+        receive into a single place.
+
+
+        Note that the only types that can be set programmatically are REGULAR, UNSUBSCRIBED,
+
+        GIFTED and UNPAID. All other types are meant to be user-visible and cannot
+
+        be set programmatically.'
+      enum:
+      - blocked
+      - complained
+      - churning
+      - churned
+      - gifted
+      - unactivated
+      - unpaid
+      - undeliverable
+      - premium
+      - past_due
+      - paused
+      - regular
+      - removed
+      - trialed
+      - unsubscribed
+      - upcoming
+      title: Type
+      type: string
+    SubscriberUndeliverabilityReason:
+      description: "The reason Buttondown has marked the subscriber as undeliverable.\nUndeliverable subscribers are not sent\
+        \ emails, and may be periodically removed from the system (or restored, if the reason is no longer valid.)\n\nThese\
+        \ reasons are grouped into three categories:\n- PermanentFailure (\"Failed (recipient)\"): Address-based issues where\
+        \ the recipient is truly unreachable.\n  Includes: HARD_BOUNCE\n- MessageFailure (\"Failed (message)\"): Message/sender\
+        \ problems where future emails may succeed.\n  Includes: ACCESS_DENIED, AUTHENTICATION_ISSUE, DELIVERY_EXPIRED, DOMAIN_BLOCKED,\
+        \ EMAIL_BLOCKED,\n            IP_BLOCKED, ON_ESP_DENYLIST, OUT_OF_STORAGE, PROBLEMATIC_URL, SPAM\n- Deferral (not\
+        \ shown to customers): Transient delivery issues that will be retried.\n  Includes: RATE_LIMITED, TRANSIENT"
+      enum:
+      - access_denied
+      - authentication_issue
+      - delivery_expired
+      - domain_blocked
+      - email_blocked
+      - hard_bounce
+      - ip_blocked
+      - ip_undeliverable
+      - malformed
+      - on_esp_denylist
+      - other
+      - out_of_storage
+      - problematic_url
+      - rate_limited
+      - spam
+      - transient
+      - disabled
+      - does_not_exist
+      - spf_failed
+      - unreachable
+      title: UndeliverabilityReason
+      type: string
+    Timing:
+      description: Controls when an automation's action executes after the trigger fires.
+      properties:
+        time:
+          description: Whether the action should execute immediately or after a delay.
+          enum:
+          - immediate
+          - delay
+          title: Time
+          type: string
+        delay:
+          anyOf:
+          - $ref: '#/components/schemas/Delay'
+          - type: 'null'
+          description: The delay configuration. Required when `time` is `delay`; null when `time` is `immediate`.
+      required:
+      - time
+      title: Timing
+      type: object
+    Transition:
+      properties:
+        date:
+          description: When the subscriber transitioned to `type`.
+          format: date-time
+          title: Date
+          type: string
+        type:
+          $ref: '#/components/schemas/SubscriberType'
+          description: The subscriber type the subscriber transitioned to at `date`.
+      required:
+      - date
+      - type
+      title: Transition
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: API key passed as 'Token <your-api-key>' in the Authorization header.

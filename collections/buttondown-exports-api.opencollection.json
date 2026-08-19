@@ -1,0 +1,96 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Buttondown Exports API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Exports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Exports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/exports",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number of the paginated response."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List all exports"
+        },
+        {
+          "info": {
+            "name": "Create Export",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/exports",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a new data export"
+        },
+        {
+          "info": {
+            "name": "Retrieve Export",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/exports/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve a specific export by its ID"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

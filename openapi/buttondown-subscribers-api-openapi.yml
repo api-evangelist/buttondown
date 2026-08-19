@@ -1,121 +1,2584 @@
 openapi: 3.1.0
 info:
-  title: Buttondown Emails Subscribers API
-  version: '1.0'
-  description: Minimal OpenAPI 3.1 description of the Buttondown newsletter platform API. Covers core RESTful resources for subscribers, emails, tags, newsletters, and webhooks. Derived from the public Buttondown documentation.
-  x-generated-from: https://docs.buttondown.com/api
-  x-generated-by: claude-crawl-2026-05-08
+  title: Buttondown Subscribers API
+  version: 1.0.0
+  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction)
+    for guides and examples.
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
 servers:
-- url: https://api.buttondown.email/v1
-  description: Production
+- url: https://api.buttondown.com/v1
 security:
-- apiKeyAuth: []
+- ApiKeyAuth: []
 tags:
 - name: Subscribers
 paths:
   /subscribers:
-    get:
-      tags:
-      - Subscribers
-      summary: List all subscribers
-      operationId: listSubscribers
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginatedList'
     post:
-      tags:
-      - Subscribers
-      summary: Create a subscriber
-      operationId: createSubscriber
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Resource'
+      operationId: create_subscriber
+      summary: Create Subscriber
+      parameters:
+      - in: header
+        name: X-Buttondown-Collision-Behavior
+        schema:
+          default: no_op
+          description: "The behavior to apply when a subscriber with the same email address already exists.\nDefaults to \"\
+            no_op\", which will return a 400 error if a subscriber with the same email address already exists. Other values\
+            \ include:\n\n- \"overwrite\", which will overwrite the existing subscriber's data with the new one. This cannot\
+            \ change terminal subscriber types (unsubscribed, blocked, complained, undeliverable); those requests return a\
+            \ 400.\n- \"add\", which will merge the new subscriber data into the existing one. For unsubscribed subscribers,\
+            \ this also resubscribes them as regular.\n        "
+          $ref: '#/components/schemas/CollisionBehavior'
+        required: false
+        description: "The behavior to apply when a subscriber with the same email address already exists.\nDefaults to \"\
+          no_op\", which will return a 400 error if a subscriber with the same email address already exists. Other values\
+          \ include:\n\n- \"overwrite\", which will overwrite the existing subscriber's data with the new one. This cannot\
+          \ change terminal subscriber types (unsubscribed, blocked, complained, undeliverable); those requests return a 400.\n\
+          - \"add\", which will merge the new subscriber data into the existing one. For unsubscribed subscribers, this also\
+          \ resubscribes them as regular.\n        "
+      - in: header
+        name: X-Buttondown-Bypass-Firewall
+        schema:
+          default: false
+          description: Bypass the firewall for this subscriber creation. Subject to aggressive rate limiting (5 per hour per
+            newsletter).
+          title: X-Buttondown-Bypass-Firewall
+          type: boolean
+        required: false
+        description: Bypass the firewall for this subscriber creation. Subject to aggressive rate limiting (5 per hour per
+          newsletter).
       responses:
         '201':
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Resource'
-  /subscribers/{id}:
-    parameters:
-    - $ref: '#/components/parameters/IdParam'
-    get:
-      tags:
-      - Subscribers
-      summary: Retrieve a subscriber
-      operationId: getSubscriber
-      responses:
-        '200':
-          description: OK
+                $ref: '#/components/schemas/Subscriber'
+        '400':
+          description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Resource'
-    patch:
+                $ref: '#/components/schemas/ErrorMessage_ValidationErrorCode_'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Create a new subscriber
       tags:
       - Subscribers
-      summary: Update a subscriber
-      operationId: updateSubscriber
       requestBody:
-        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Resource'
+              $ref: '#/components/schemas/SubscriberInput'
+        required: true
+      security:
+      - ApiKeyAuth: []
+    get:
+      operationId: list_subscribers
+      summary: List Subscribers
+      parameters:
+      - in: query
+        name: bounce_date__end
+        schema:
+          description: If provided, only return subscribers who last bounced on or before the given date.
+          title: Bounce Date  End
+          format: date
+          type: string
+        required: false
+        description: If provided, only return subscribers who last bounced on or before the given date.
+      - in: query
+        name: bounce_date__start
+        schema:
+          description: If provided, only return subscribers who last bounced on or after the given date.
+          title: Bounce Date  Start
+          format: date
+          type: string
+        required: false
+        description: If provided, only return subscribers who last bounced on or after the given date.
+      - in: query
+        name: bounce_reason
+        schema:
+          description: If provided, only return subscribers with the given bounce reason(s).
+          title: Bounce Reason
+          items:
+            $ref: '#/components/schemas/SubscriberUndeliverabilityReason'
+          type: array
+        required: false
+        description: If provided, only return subscribers with the given bounce reason(s).
+      - in: query
+        name: churn_date__end
+        schema:
+          description: If provided, only return subscribers who churned on or before the given date.
+          title: Churn Date  End
+          format: date
+          type: string
+        required: false
+        description: If provided, only return subscribers who churned on or before the given date.
+      - in: query
+        name: churn_date__start
+        schema:
+          description: If provided, only return subscribers who churned on or after the given date.
+          title: Churn Date  Start
+          format: date
+          type: string
+        required: false
+        description: If provided, only return subscribers who churned on or after the given date.
+      - in: query
+        name: coupon
+        schema:
+          description: If provided, only return subscribers with the given coupon ID(s).
+          title: Coupon
+          items:
+            type: string
+          type: array
+        required: false
+        description: If provided, only return subscribers with the given coupon ID(s).
+      - in: query
+        name: current_price
+        schema:
+          description: If provided, only return subscribers who are currently subscribed to the given price ID(s).
+          title: Current Price
+          items:
+            type: string
+          type: array
+        required: false
+        description: If provided, only return subscribers who are currently subscribed to the given price ID(s).
+      - in: query
+        name: date__end
+        schema:
+          description: If provided, only return subscribers created before the given date.
+          title: Date  End
+          format: date
+          type: string
+        required: false
+        description: If provided, only return subscribers created before the given date.
+      - in: query
+        name: date__start
+        schema:
+          description: If provided, only return subscribers created on or after the given date.
+          title: Date  Start
+          format: date
+          type: string
+        required: false
+        description: If provided, only return subscribers created on or after the given date.
+      - in: query
+        name: domain
+        schema:
+          description: If provided, only return subscribers whose email domain matches the given domain(s).
+          example:
+          - gmail.com
+          title: Domain
+          items:
+            type: string
+          type: array
+        required: false
+        description: If provided, only return subscribers whose email domain matches the given domain(s).
+        example:
+        - gmail.com
+      - in: query
+        name: email_address
+        schema:
+          anyOf:
+          - type: string
+          - items:
+              type: string
+            type: array
+          description: If provided, only return subscribers whose email address contains the given string.
+          title: Email Address
+        required: false
+        description: If provided, only return subscribers whose email address contains the given string.
+      - in: query
+        name: expand
+        schema:
+          description: 'If provided, expand the given field. (Supported: ''stripe_customer'', ''stripe_subscription''.)'
+          items:
+            enum:
+            - stripe_customer
+            - stripe_subscription
+            type: string
+          title: Expand
+          type: array
+        required: false
+        description: 'If provided, expand the given field. (Supported: ''stripe_customer'', ''stripe_subscription''.)'
+      - in: query
+        name: form
+        schema:
+          description: If provided, only return subscribers that came through the given [form(s)](https://docs.buttondown.com/registration-forms).
+          example:
+          - form_abc123
+          title: Form
+          items:
+            type: string
+          type: array
+        required: false
+        description: If provided, only return subscribers that came through the given [form(s)](https://docs.buttondown.com/registration-forms).
+        example:
+        - form_abc123
+      - in: query
+        name: ids
+        schema:
+          description: If provided, only return subscribers with the given IDs.
+          title: Ids
+          items:
+            type: string
+          type: array
+        required: false
+        description: If provided, only return subscribers with the given IDs.
+      - in: query
+        name: ip_address
+        schema:
+          description: If provided, only return subscribers with the given IP address(es).
+          title: Ip Address
+          items:
+            format: ipvanyaddress
+            type: string
+          type: array
+        required: false
+        description: If provided, only return subscribers with the given IP address(es).
+      - in: query
+        name: last_click_date__end
+        schema:
+          description: If provided, only return subscribers whose last click was on or before the given date.
+          title: Last Click Date  End
+          format: date
+          type: string
+        required: false
+        description: If provided, only return subscribers whose last click was on or before the given date.
+      - in: query
+        name: last_click_date__start
+        schema:
+          description: If provided, only return subscribers whose last click was on or after the given date.
+          title: Last Click Date  Start
+          format: date
+          type: string
+        required: false
+        description: If provided, only return subscribers whose last click was on or after the given date.
+      - in: query
+        name: last_open_date__end
+        schema:
+          description: If provided, only return subscribers whose last open was on or before the given date.
+          title: Last Open Date  End
+          format: date
+          type: string
+        required: false
+        description: If provided, only return subscribers whose last open was on or before the given date.
+      - in: query
+        name: last_open_date__start
+        schema:
+          description: If provided, only return subscribers whose last open was on or after the given date.
+          title: Last Open Date  Start
+          format: date
+          type: string
+        required: false
+        description: If provided, only return subscribers whose last open was on or after the given date.
+      - in: query
+        name: -domain
+        schema:
+          description: If provided, only return subscribers whose email domain does not match the given domain(s).
+          example:
+          - gmail.com
+          title: -Domain
+          items:
+            type: string
+          type: array
+        required: false
+        description: If provided, only return subscribers whose email domain does not match the given domain(s).
+        example:
+        - gmail.com
+      - in: query
+        name: -tag
+        schema:
+          description: If provided, only return subscribers without the given [tag](https://docs.buttondown.com/api-tags-introduction).
+          example: vip
+          title: -Tag
+          type: string
+        required: false
+        description: If provided, only return subscribers without the given [tag](https://docs.buttondown.com/api-tags-introduction).
+        example: vip
+      - in: query
+        name: -type
+        schema:
+          description: If provided, only return subscribers without the given type.
+          title: -Type
+          items:
+            $ref: '#/components/schemas/SubscriberType'
+          type: array
+        required: false
+        description: If provided, only return subscribers without the given type.
+      - in: query
+        name: ordering
+        schema:
+          default: -creation_date
+          description: The ordering to apply to the results.
+          example: -creation_date
+          title: Ordering
+          type: string
+        required: false
+        description: The ordering to apply to the results.
+        example: -creation_date
+      - in: query
+        name: price
+        schema:
+          description: If provided, only return subscribers who have at one point subscribed to the given price ID(s).
+          title: Price
+          items:
+            type: string
+          type: array
+        required: false
+        description: If provided, only return subscribers who have at one point subscribed to the given price ID(s).
+      - in: query
+        name: referral_code
+        schema:
+          description: If provided, only return subscribers with the given referral code(s).
+          title: Referral Code
+          items:
+            type: string
+          type: array
+        required: false
+        description: If provided, only return subscribers with the given referral code(s).
+      - in: query
+        name: referrer_url
+        schema:
+          description: If provided, only return subscribers whose referrer URL(s) contain the given string.
+          title: Referrer Url
+          items:
+            type: string
+          type: array
+        required: false
+        description: If provided, only return subscribers whose referrer URL(s) contain the given string.
+      - in: query
+        name: open_rate__end
+        schema:
+          description: If provided, only return subscribers with an open rate less than or equal to the given value.
+          title: Open Rate  End
+          type: number
+        required: false
+        description: If provided, only return subscribers with an open rate less than or equal to the given value.
+      - in: query
+        name: open_rate__start
+        schema:
+          description: If provided, only return subscribers with an open rate greater than or equal to the given value.
+          title: Open Rate  Start
+          type: number
+        required: false
+        description: If provided, only return subscribers with an open rate greater than or equal to the given value.
+      - in: query
+        name: click_rate__end
+        schema:
+          description: If provided, only return subscribers with a click rate less than or equal to the given value.
+          title: Click Rate  End
+          type: number
+        required: false
+        description: If provided, only return subscribers with a click rate less than or equal to the given value.
+      - in: query
+        name: click_rate__start
+        schema:
+          description: If provided, only return subscribers with a click rate greater than or equal to the given value.
+          title: Click Rate  Start
+          type: number
+        required: false
+        description: If provided, only return subscribers with a click rate greater than or equal to the given value.
+      - in: query
+        name: risk_score__end
+        schema:
+          description: If provided, only return subscribers with a [risk score](https://docs.buttondown.com/firewall) less
+            than or equal to the given value.
+          title: Risk Score  End
+          type: number
+        required: false
+        description: If provided, only return subscribers with a [risk score](https://docs.buttondown.com/firewall) less than
+          or equal to the given value.
+      - in: query
+        name: risk_score__start
+        schema:
+          description: If provided, only return subscribers with a [risk score](https://docs.buttondown.com/firewall) greater
+            than or equal to the given value.
+          title: Risk Score  Start
+          type: number
+        required: false
+        description: If provided, only return subscribers with a [risk score](https://docs.buttondown.com/firewall) greater
+          than or equal to the given value.
+      - in: query
+        name: source
+        schema:
+          description: If provided, only return subscribers with the given source(s).
+          example:
+          - api
+          title: Source
+          items:
+            $ref: '#/components/schemas/SubscriberSource'
+          type: array
+        required: false
+        description: If provided, only return subscribers with the given source(s).
+        example:
+        - api
+      - in: query
+        name: subscriber_import
+        schema:
+          description: If provided, only return subscribers that were imported by the given subscriber import.
+          example:
+          - import_abc123
+          title: Subscriber Import
+          items:
+            type: string
+          type: array
+        required: false
+        description: If provided, only return subscribers that were imported by the given subscriber import.
+        example:
+        - import_abc123
+      - in: query
+        name: tag
+        schema:
+          description: If provided, only return subscribers with the given [tag(s)](https://docs.buttondown.com/api-tags-introduction).
+          title: Tag
+          items:
+            type: string
+          type: array
+        required: false
+        description: If provided, only return subscribers with the given [tag(s)](https://docs.buttondown.com/api-tags-introduction).
+      - in: query
+        name: type
+        schema:
+          description: If provided, only return subscribers with the given type.
+          title: Type
+          example:
+          - regular
+          items:
+            $ref: '#/components/schemas/SubscriberType'
+          type: array
+        required: false
+        description: If provided, only return subscribers with the given type.
+        example:
+        - regular
+      - in: query
+        name: undeliverability_date__end
+        schema:
+          description: If provided, only return subscribers who became undeliverable on or before the given date.
+          title: Undeliverability Date  End
+          format: date
+          type: string
+        required: false
+        description: If provided, only return subscribers who became undeliverable on or before the given date.
+      - in: query
+        name: undeliverability_date__start
+        schema:
+          description: If provided, only return subscribers who became undeliverable on or after the given date.
+          title: Undeliverability Date  Start
+          format: date
+          type: string
+        required: false
+        description: If provided, only return subscribers who became undeliverable on or after the given date.
+      - in: query
+        name: undeliverability_reason
+        schema:
+          description: If provided, only return subscribers with the given undeliverability reason(s).
+          title: Undeliverability Reason
+          items:
+            $ref: '#/components/schemas/SubscriberUndeliverabilityReason'
+          type: array
+        required: false
+        description: If provided, only return subscribers with the given undeliverability reason(s).
+      - in: query
+        name: unsubscription_date__end
+        schema:
+          description: If provided, only return subscribers who unsubscribed on or before the given date.
+          title: Unsubscription Date  End
+          format: date
+          type: string
+        required: false
+        description: If provided, only return subscribers who unsubscribed on or before the given date.
+      - in: query
+        name: unsubscription_date__start
+        schema:
+          description: If provided, only return subscribers who unsubscribed on or after the given date.
+          title: Unsubscription Date  Start
+          format: date
+          type: string
+        required: false
+        description: If provided, only return subscribers who unsubscribed on or after the given date.
+      - in: query
+        name: unsubscription_reason
+        schema:
+          description: If provided, only return subscribers with the given unsubscription reason(s).
+          example:
+          - no longer interested
+          title: Unsubscription Reason
+          items:
+            type: string
+          type: array
+        required: false
+        description: If provided, only return subscribers with the given unsubscription reason(s).
+        example:
+        - no longer interested
+      - in: query
+        name: upgrade_date__end
+        schema:
+          description: If provided, only return subscribers who upgraded on or before the given date.
+          title: Upgrade Date  End
+          format: date
+          type: string
+        required: false
+        description: If provided, only return subscribers who upgraded on or before the given date.
+      - in: query
+        name: upgrade_date__start
+        schema:
+          description: If provided, only return subscribers who upgraded on or after the given date.
+          title: Upgrade Date  Start
+          format: date
+          type: string
+        required: false
+        description: If provided, only return subscribers who upgraded on or after the given date.
+      - in: query
+        name: utm_campaign
+        schema:
+          description: If provided, only return subscribers with the given UTM campaign(s).
+          example:
+          - paid_campaign_2024
+          title: Utm Campaign
+          items:
+            type: string
+          type: array
+        required: false
+        description: If provided, only return subscribers with the given UTM campaign(s).
+        example:
+        - paid_campaign_2024
+      - in: query
+        name: utm_medium
+        schema:
+          description: If provided, only return subscribers with the given UTM medium(s).
+          example:
+          - paid_campaign_2024
+          title: Utm Medium
+          items:
+            type: string
+          type: array
+        required: false
+        description: If provided, only return subscribers with the given UTM medium(s).
+        example:
+        - paid_campaign_2024
+      - in: query
+        name: utm_source
+        schema:
+          description: If provided, only return subscribers with the given UTM source(s).
+          example:
+          - paid_campaign_2024
+          title: Utm Source
+          items:
+            type: string
+          type: array
+        required: false
+        description: If provided, only return subscribers with the given UTM source(s).
+        example:
+        - paid_campaign_2024
+      - in: query
+        name: page
+        required: false
+        description: The page number of the paginated response.
+        schema:
+          type: integer
+          title: Page
+          description: The page number of the paginated response.
+          default: 1
+          example: 1
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Resource'
-    delete:
+                $ref: '#/components/schemas/SubscriberPage'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage_ListSubscribersErrorCode_'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: List all subscribers
       tags:
       - Subscribers
-      summary: Delete a subscriber
-      operationId: deleteSubscriber
+      security:
+      - ApiKeyAuth: []
+  /subscribers/{id_or_email}:
+    get:
+      operationId: retrieve_subscriber
+      summary: Retrieve Subscriber
+      parameters:
+      - in: path
+        name: id_or_email
+        schema:
+          title: Id Or Email
+          type: string
+        required: true
+      - in: query
+        name: expand
+        schema:
+          default: []
+          description: If provided, expand the given field.
+          items:
+            enum:
+            - stripe_customer
+            - stripe_subscription
+            type: string
+          title: Expand
+          type: array
+        required: false
+        description: If provided, expand the given field.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscriber'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Retrieve a specific subscriber by their ID or email address
+      tags:
+      - Subscribers
+      security:
+      - ApiKeyAuth: []
+    delete:
+      operationId: delete_subscriber
+      summary: Delete Subscriber
+      parameters:
+      - in: path
+        name: id_or_email
+        schema:
+          title: Id Or Email
+          type: string
+        required: true
       responses:
         '204':
-          description: Deleted
+          description: No Content
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Delete a subscriber
+      tags:
+      - Subscribers
+      security:
+      - ApiKeyAuth: []
+    patch:
+      operationId: update_subscriber
+      summary: Update Subscriber
+      parameters:
+      - in: path
+        name: id_or_email
+        schema:
+          title: Id Or Email
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscriber'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage_UpdateSubscriberErrorCode_'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Update a subscriber's properties
+      tags:
+      - Subscribers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriberUpdateInput'
+        required: true
+      security:
+      - ApiKeyAuth: []
+  /subscribers/{id_or_email}/send-reminder:
+    post:
+      operationId: send_reminder
+      summary: Send Reminder
+      parameters:
+      - in: path
+        name: id_or_email
+        schema:
+          title: Id Or Email
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Send a confirmation reminder email to an unactivated subscriber
+      tags:
+      - Subscribers
+      security:
+      - ApiKeyAuth: []
+  /subscribers/{id_or_email}/send-magic-link:
+    post:
+      operationId: send_magic_link_to_subscriber
+      summary: Send Magic Link To Subscriber
+      parameters:
+      - in: path
+        name: id_or_email
+        schema:
+          title: Id Or Email
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Send a magic link email to a subscriber
+      tags:
+      - Subscribers
+      security:
+      - ApiKeyAuth: []
+  /subscribers/{id_or_email}/emails/{email_id}:
+    post:
+      operationId: send_email_to
+      summary: Send Email To
+      parameters:
+      - in: path
+        name: id_or_email
+        schema:
+          title: Id Or Email
+          type: string
+        required: true
+      - in: path
+        name: email_id
+        schema:
+          title: Email Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Send a specific email to a specific subscriber
+      tags:
+      - Subscribers
+      security:
+      - ApiKeyAuth: []
+  /subscribers/{id_or_email}/referrals:
+    get:
+      operationId: get_referrals
+      summary: Get Referrals
+      parameters:
+      - in: path
+        name: id_or_email
+        schema:
+          title: Id Or Email
+          type: string
+        required: true
+      - in: query
+        name: page
+        required: false
+        description: The page number of the paginated response.
+        schema:
+          type: integer
+          title: Page
+          description: The page number of the paginated response.
+          default: 1
+          example: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriberPage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: List subscribers referred by a specific subscriber
+      tags:
+      - Subscribers
+      security:
+      - ApiKeyAuth: []
+  /subscribers/{id_or_email}/automations:
+    get:
+      operationId: get_automations
+      summary: Get Automations
+      parameters:
+      - in: path
+        name: id_or_email
+        schema:
+          title: Id Or Email
+          type: string
+        required: true
+      - in: query
+        name: page
+        required: false
+        description: The page number of the paginated response.
+        schema:
+          type: integer
+          title: Page
+          description: The page number of the paginated response.
+          default: 1
+          example: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AutomationForSubscriberPage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: List automation attempts for a specific subscriber
+      tags:
+      - Subscribers
+      security:
+      - ApiKeyAuth: []
+  /subscribers/{id_or_email}/automations/{automation_attempt_id}:
+    patch:
+      operationId: update_automation_attempt
+      summary: Update Automation Attempt
+      parameters:
+      - in: path
+        name: id_or_email
+        schema:
+          title: Id Or Email
+          type: string
+        required: true
+      - in: path
+        name: automation_attempt_id
+        schema:
+          title: Automation Attempt Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AutomationForSubscriber'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage_UpdateAutomationAttemptErrorCode_'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Update the status of an automation attempt for a subscriber
+      tags:
+      - Subscribers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AutomationAttemptUpdateInput'
+        required: true
+      security:
+      - ApiKeyAuth: []
+  /subscribers/{id_or_email}/stripe-subscriptions:
+    get:
+      operationId: get_stripe_subscriptions
+      summary: Get Stripe Subscriptions
+      parameters:
+      - in: path
+        name: id_or_email
+        schema:
+          title: Id Or Email
+          type: string
+        required: true
+      - in: query
+        name: page
+        required: false
+        description: The page number of the paginated response.
+        schema:
+          type: integer
+          title: Page
+          description: The page number of the paginated response.
+          default: 1
+          example: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StripeSubscriptionPage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: List Stripe subscriptions for a specific subscriber
+      tags:
+      - Subscribers
+      security:
+      - ApiKeyAuth: []
 components:
   schemas:
-    PaginatedList:
-      type: object
+    AutomationAttemptStatus:
+      type: string
+      enum:
+      - unprocessed
+      - processed
+      - failed
+      - pending
+      - skipped
+      title: AutomationAttemptStatus
+      description: An enumeration.
+    AutomationAttemptUpdateInput:
+      additionalProperties: false
       properties:
-        count:
-          type: integer
-        next:
+        status:
+          const: skipped
+          description: The status to set for the automation attempt. Only 'skipped' is allowed.
+          title: Status
           type: string
-          nullable: true
-        previous:
-          type: string
-          nullable: true
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Resource'
-      additionalProperties: true
-    Resource:
+      required:
+      - status
+      title: AutomationAttemptUpdateInput
       type: object
-      additionalProperties: true
-  parameters:
-    IdParam:
-      name: id
-      in: path
-      required: true
-      schema:
-        type: string
+    AutomationForSubscriber:
+      properties:
+        id:
+          description: The ID of this automation attempt.
+          title: Id
+          type: string
+        name:
+          description: The name of the automation that was triggered.
+          title: Name
+          type: string
+        status:
+          $ref: '#/components/schemas/AutomationAttemptStatus'
+          description: The status of the automation attempt (e.g. `pending`, `completed`, `skipped`).
+        automation_id:
+          description: The ID of the automation that was triggered.
+          title: Automation Id
+          type: string
+        execution_date:
+          description: When the automation attempt is scheduled to execute (or executed).
+          format: date-time
+          title: Execution Date
+          type: string
+        actions:
+          description: The resolved actions the automation will take for this subscriber.
+          items:
+            additionalProperties: true
+            type: object
+          title: Actions
+          type: array
+      required:
+      - id
+      - name
+      - status
+      - automation_id
+      - execution_date
+      - actions
+      title: AutomationForSubscriber
+      type: object
+    AutomationForSubscriberPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/AutomationForSubscriber'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[AutomationForSubscriber]
+      type: object
+    CollisionBehavior:
+      enum:
+      - no_op
+      - add
+      - overwrite
+      - fail
+      title: CollisionBehavior
+      type: string
+      description: An enumeration.
+    EmailTransition:
+      properties:
+        date:
+          description: When the email address change took effect.
+          format: date-time
+          title: Date
+          type: string
+        old_email_address:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The subscriber's previous email address, or null for the initial address.
+          title: Old Email Address
+        new_email_address:
+          description: The subscriber's email address after the transition.
+          title: New Email Address
+          type: string
+      required:
+      - date
+      - new_email_address
+      title: EmailTransition
+      type: object
+    Empty:
+      properties: {}
+      title: Empty
+      type: object
+    ErrorMessage:
+      properties:
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
+            how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage
+      type: object
+    ErrorMessage_ListSubscribersErrorCode_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/ListSubscribersErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
+            how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[ListSubscribersErrorCode]
+      type: object
+    ErrorMessage_UpdateAutomationAttemptErrorCode_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/UpdateAutomationAttemptErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
+            how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[UpdateAutomationAttemptErrorCode]
+      type: object
+    ErrorMessage_UpdateSubscriberErrorCode_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/UpdateSubscriberErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
+            how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[UpdateSubscriberErrorCode]
+      type: object
+    ErrorMessage_ValidationErrorCode_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/SubscriberInputValidationErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
+            how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[SubscriberInput.ValidationErrorCode]
+      type: object
+    FirewallReason:
+      properties:
+        code:
+          $ref: '#/components/schemas/FirewallReasonCode'
+          description: The code of the firewall facet that flagged this subscriber.
+        reason:
+          description: Human-readable explanation for why we flagged the subscriber.
+          title: Reason
+          type: string
+      required:
+      - code
+      - reason
+      title: FirewallReason
+      type: object
+    FirewallReasonCode:
+      enum:
+      - email_address_capital_letters
+      - email_address_cleantalk_score
+      - email_address_contains_prohibited_string
+      - email_address_domain_burst
+      - email_address_esp_suppression
+      - email_address_extant_subscriber_count
+      - email_address_gmail_word_numbers
+      - email_address_has_gravatar
+      - email_address_is_honeypot
+      - email_address_length
+      - email_address_local_part_has_many_periods
+      - email_address_many_consonants_in_a_row
+      - email_address_mx_record_is_valid
+      - email_address_noreply_local_part
+      - email_address_null_characters
+      - email_address_peaceful_domain
+      - email_address_plus_single_number
+      - email_address_plus_variant_accounts
+      - email_address_previous_evaluation
+      - email_address_prohibited_via_domain
+      - email_address_regex
+      - email_address_sandbox_test
+      - email_address_shannon_entropy
+      - email_address_tied_to_account
+      - email_address_typo
+      - embedded_form_honeypot
+      - fingerprint_missing
+      - ip_address_cleantalk_score
+      - ip_address_country_risk
+      - ip_address_datacenter
+      - ip_address_extant_subscriber_count
+      - ip_address_peaceful
+      - ip_address_previous_evaluation
+      - ip_address_prohibited
+      - metadata_has_garbage
+      - newsletter_age
+      - newsletter_has_customized_transactional_email
+      - newsletter_has_prohibited_string
+      - newsletter_status
+      - project_honeypot
+      - referrer_url_prohibited
+      - registration_without_prior_page_visit
+      - subscriber_import_provenance
+      - subscriber_import_source
+      - text_contains_malicious_url
+      - text_contains_prohibited_string
+      - turnstile_response_token_is_valid
+      - user_agent_known
+      - username_shannon_entropy
+      title: FirewallReasonCode
+      type: string
+      description: An enumeration.
+    ListSubscribersErrorCode:
+      description: 'Represents the type of error that occurred when listing subscribers.
+
+
+        Human-readable error messages are provided in the `detail` field of the response;
+
+        these values are meant to be parseable by code or client logic.'
+      enum:
+      - invalid_tag
+      - date_invalid
+      - invalid_ordering
+      title: ListSubscribersErrorCode
+      type: string
+    StripeCoupon:
+      description: 'Coupons let you offer discounts to subscribers who pay for your newsletter.
+
+        Buttondown''s coupons are backed by Stripe, so each coupon maps to a coupon
+
+        on your connected Stripe account. Use them to run promotions—for example, a
+
+        percentage off a paid subscription.'
+      properties:
+        coupon_id:
+          description: The Stripe coupon ID (e.g. `coupon_...`).
+          title: Coupon Id
+          type: string
+        percent_off:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The percentage discount applied by the coupon, if any.
+          title: Percent Off
+        amount_off:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: The fixed amount discount applied by the coupon, in the smallest currency unit (e.g. cents), if any.
+          title: Amount Off
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The display name of the coupon.
+          title: Name
+      required:
+      - coupon_id
+      title: StripeCoupon
+      type: object
+    StripeSubscription:
+      properties:
+        subscription_id:
+          description: The Stripe subscription ID (e.g. `sub_...`).
+          title: Subscription Id
+          type: string
+        url:
+          description: A deep link to the subscription in the Stripe dashboard.
+          title: Url
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        ending_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: When the subscription ended, or null if still active.
+          title: Ending Date
+        amount:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: The subscription amount in the smallest currency unit (e.g. cents). Null for tiered-pricing plans.
+          title: Amount
+        currency:
+          description: The three-letter ISO currency code (e.g. `usd`).
+          title: Currency
+          type: string
+        cadence:
+          description: The billing cadence (e.g. `month`, `year`).
+          title: Cadence
+          type: string
+        status:
+          description: The Stripe subscription status (e.g. `active`, `canceled`, `past_due`).
+          title: Status
+          type: string
+        application_fee_percent:
+          anyOf:
+          - type: number
+          - type: 'null'
+          description: The application fee percent for the subscription.
+          title: Application Fee Percent
+        source:
+          anyOf:
+          - enum:
+            - substack
+            - buttondown
+            type: string
+          - type: 'null'
+          description: Buttondown attempts to detect the source of a subscription, but this is not always possible.
+          title: Source
+        product:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The name of the product which the subscriber is subscribed to. (You can override this by setting the
+            `buttondown_template_facing_id` metadata on the product in Stripe.)
+          title: Product
+      required:
+      - subscription_id
+      - url
+      - creation_date
+      - currency
+      - cadence
+      - status
+      title: StripeSubscription
+      type: object
+    StripeSubscriptionPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/StripeSubscription'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[UnexpandableStripeSubscription]
+      type: object
+    Subscriber:
+      description: 'Subscribers are the main way you collect email addresses and
+
+        recipients on Buttondown. They''re what you see on your
+
+        [subscribers page](https://buttondown.com/subscribers).
+
+
+        Relevant changes to the schema:
+
+
+        - [2024-08-01](https://docs.buttondown.com/api-changelog-2024-08-01): renamed `subscriber_type` and `email` to `type`
+        and `email_address` respectively.
+
+        - [2024-07-13](https://docs.buttondown.com/api-changelog-2024-08-01): removed `external_url` in favor of `absolute_url`.'
+      properties:
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        avatar_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: URL of the subscriber's avatar image (e.g. a Gravatar URL), if available.
+          title: Avatar Url
+        bounce_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: The date of the subscriber's most recent bounce event. May be set even if the subscriber has not yet
+            been marked as undeliverable.
+          title: Bounce Date
+        bounce_reason:
+          anyOf:
+          - $ref: '#/components/schemas/SubscriberUndeliverabilityReason'
+          - type: 'null'
+          description: The reason of the subscriber's most recent bounce event. May be set even if the subscriber has not
+            yet been marked as undeliverable.
+        churn_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: When the subscriber cancelled their paid subscription, if applicable.
+          title: Churn Date
+        commenting_disabled:
+          default: false
+          description: Whether this subscriber is prevented from commenting.
+          title: Commenting Disabled
+          type: boolean
+        country:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The ISO 3166-1 alpha-2 country code inferred from the subscriber's IP address at signup, if available.
+          example: US
+          title: Country
+        email_address:
+          description: The email address of the subscriber.
+          example: telemachus@buttondown.email
+          title: Email Address
+          type: string
+        gift_subscription_end_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: When the subscriber's gift subscription expires, if applicable.
+          title: Gift Subscription End Date
+        gift_subscription_message:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: A custom message that was sent to the subscriber when the gift subscription was created.
+          title: Gift Subscription Message
+        ip_address:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The IP address recorded when the subscriber signed up, if available.
+          title: Ip Address
+        last_click_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: When the subscriber most recently clicked a link in an email.
+          title: Last Click Date
+        last_open_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: When the subscriber most recently opened an email.
+          title: Last Open Date
+        delivered_count:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: The number of distinct emails — both broadcasts and automation sends — delivered to this subscriber.
+            Cached and refreshed periodically, so it may lag recent activity.
+          example: 12
+          title: Delivered Count
+        open_count:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: The subscriber's open count.
+          example: 7
+          title: Open Count
+        clicked_count:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: The subscriber's clicked count.
+          example: 3
+          title: Clicked Count
+        open_rate:
+          anyOf:
+          - type: number
+          - type: 'null'
+          description: The subscriber's open rate, computed from engagement counts. Null if delivered_count is 0 or null.
+          example: 0.5833
+          title: Open Rate
+        click_rate:
+          anyOf:
+          - type: number
+          - type: 'null'
+          description: The subscriber's click rate, computed from engagement counts. Null if delivered_count is 0 or null.
+          example: 0.25
+          title: Click Rate
+        metadata:
+          additionalProperties: true
+          default: {}
+          description: A structured key-value blob that you can use to store arbitrary data on the object. Metadata can be
+            nested — you can store objects and arrays within your metadata. (You can [read more about metadata.](https://docs.buttondown.com/metadata))
+          title: Metadata
+          type: object
+        notes:
+          default: ''
+          description: Any notes you want to attach to the subscriber. These are not publicly visible.
+          title: Notes
+          type: string
+        purchased_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The email address of the individual who purchased this subscription on behalf of the subscriber.
+          title: Purchased By
+        purchased_message:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: A custom message that was sent to the subscriber when the subscription was purchased on behalf of the
+            subscriber.
+          title: Purchased Message
+        referral_code:
+          description: The subscriber's unique referral code, used to attribute referred signups.
+          title: Referral Code
+          type: string
+        referrer_url:
+          default: ''
+          description: The URL the subscriber was referred from (e.g. where they submitted the subscription form).
+          title: Referrer Url
+          type: string
+        risk_score:
+          anyOf:
+          - type: number
+          - type: 'null'
+          description: The risk score of the subscriber. Positive numbers represent a higher risk; negative numbers represent
+            a lower risk.
+          title: Risk Score
+        secondary_id:
+          description: A human-readable sequential identifier, unique within the newsletter.
+          title: Secondary Id
+          type: integer
+        source:
+          $ref: '#/components/schemas/SubscriberSource'
+          description: Where the subscriber signed up from (e.g. `api`, `import`, `form`).
+        stripe_coupon:
+          anyOf:
+          - $ref: '#/components/schemas/StripeCoupon'
+          - type: 'null'
+          description: The Stripe coupon applied to the subscriber's paid subscription, if any.
+        stripe_customer_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The Stripe customer ID associated with the subscriber, if any.
+          title: Stripe Customer Id
+        subscriber_import_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The ID of the [subscriber import](https://docs.buttondown.com/importing-subscribers) that created this
+            subscriber, if any.
+          title: Subscriber Import Id
+        tags:
+          description: A list of [tag](https://docs.buttondown.com/api-tags-introduction) names applied to the subscriber.
+            Tags that don't already exist will be created, which requires a plan that includes tags (Basic or higher).
+          items:
+            type: string
+          title: Tags
+          type: array
+        transitions:
+          default: []
+          description: The history of subscriber type transitions (e.g. `regular` → `premium`).
+          items:
+            $ref: '#/components/schemas/Transition'
+          title: Transitions
+          type: array
+        email_transitions:
+          default: []
+          description: The history of email address changes for this subscriber.
+          items:
+            $ref: '#/components/schemas/EmailTransition'
+          title: Email Transitions
+          type: array
+        form_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The ID of the [registration form](https://docs.buttondown.com/registration-forms) the subscriber signed
+            up through, if any.
+          title: Form Id
+        firewall_reasons:
+          description: Information collected by Buttondown's firewall about this subscriber. See [the firewall](https://docs.buttondown.com/firewall)
+            for more information.
+          items:
+            $ref: '#/components/schemas/FirewallReason'
+          title: Firewall Reasons
+          type: array
+        type:
+          $ref: '#/components/schemas/SubscriberType'
+          description: 'The subscriber''s lifecycle state. One of: `blocked` (blocked by the newsletter), `churned` (previously
+            paid, subscription ended), `churning` (paying but won''t renew), `complained` (marked an email as spam), `gifted`
+            (granted free premium access by the newsletter), `past_due` (paid subscription with an overdue invoice), `paused`
+            (premium subscription paused), `premium` (paying subscriber), `regular` (active free subscriber), `removed` (removed
+            by the newsletter), `trialed` (temporarily enrolled in premium), `unactivated` (pending double opt-in confirmation),
+            `undeliverable` (determined undeliverable), `unpaid` (has not paid yet), `unsubscribed` (voluntarily unsubscribed),
+            `upcoming` (paid subscription that has not started yet). Subscribers with `premium`, `gifted`, `trialed`, or `churning`
+            have access to premium content; use these to distinguish paid from free subscribers.'
+        undeliverability_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: When the subscriber was marked as undeliverable, if applicable.
+          title: Undeliverability Date
+        undeliverability_reason:
+          anyOf:
+          - $ref: '#/components/schemas/SubscriberUndeliverabilityReason'
+          - type: 'null'
+          description: The reason the subscriber is undeliverable. (Only populated for undeliverable subscribers.)
+        unsubscription_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: When the subscriber unsubscribed, if applicable.
+          title: Unsubscription Date
+        unsubscription_reason:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Free-text reason the subscriber unsubscribed, if provided.
+          title: Unsubscription Reason
+        upgrade_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: When the subscriber upgraded to a paid subscription, if applicable.
+          title: Upgrade Date
+        utm_campaign:
+          description: The UTM campaign the subscriber was attributed to at signup.
+          title: Utm Campaign
+          type: string
+        utm_medium:
+          description: The UTM medium the subscriber was attributed to at signup.
+          title: Utm Medium
+          type: string
+        utm_source:
+          description: The UTM source the subscriber was attributed to at signup.
+          title: Utm Source
+          type: string
+        stripe_customer:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          description: If expanded, the Stripe customer associated with this subscriber.
+          title: Stripe Customer
+        stripe_subscription:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          description: If expanded, the Stripe subscription backing this subscriber's paid subscription.
+          title: Stripe Subscription
+      required:
+      - id
+      - creation_date
+      - email_address
+      - referral_code
+      - secondary_id
+      - source
+      - tags
+      - type
+      - utm_campaign
+      - utm_medium
+      - utm_source
+      title: Subscriber
+      type: object
+    SubscriberInput:
+      additionalProperties: false
+      properties:
+        email_address:
+          description: The email address of the subscriber.
+          example: telemachus@buttondown.email
+          maxLength: 254
+          pattern: ^[a-zA-Z0-9.'_%+\-!]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$
+          title: Email Address
+          type: string
+          format: email
+        notes:
+          default: ''
+          description: Any notes you want to attach to the subscriber. These are not publicly visible.
+          example: One of our first subscribers!
+          title: Notes
+          type: string
+        metadata:
+          additionalProperties: true
+          default: {}
+          description: A structured key-value blob that you can use to store arbitrary data on the object. Metadata can be
+            nested — you can store objects and arrays within your metadata. (You can [read more about metadata.](https://docs.buttondown.com/metadata))
+          title: Metadata
+          type: object
+        tags:
+          default: []
+          description: A list of [tag](https://docs.buttondown.com/api-tags-introduction) names applied to the subscriber.
+            Tags that don't already exist will be created, which requires a plan that includes tags (Basic or higher).
+          items:
+            type: string
+          title: Tags
+          type: array
+        referrer_url:
+          default: ''
+          description: The URL the subscriber was referred from (e.g. where they submitted the subscription form).
+          title: Referrer Url
+          type: string
+        utm_campaign:
+          default: ''
+          description: The UTM campaign the subscriber was attributed to at signup.
+          maxLength: 300
+          title: Utm Campaign
+          type: string
+        utm_medium:
+          default: ''
+          description: The UTM medium the subscriber was attributed to at signup.
+          maxLength: 300
+          title: Utm Medium
+          type: string
+        utm_source:
+          default: ''
+          description: The UTM source the subscriber was attributed to at signup.
+          maxLength: 300
+          title: Utm Source
+          type: string
+        referring_subscriber_id:
+          anyOf:
+          - pattern: ^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|(?:sub)_(?:[0-7][0-9abcdefghjkmnpqrstvwxyz]{25}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}))$
+            type: string
+          - type: 'null'
+          description: The ID of the subscriber that referred this subscriber.
+          title: Referring Subscriber Id
+        type:
+          anyOf:
+          - $ref: '#/components/schemas/SubscriberType'
+          - type: 'null'
+          description: 'The subscriber''s lifecycle state. One of: `blocked` (blocked by the newsletter), `churned` (previously
+            paid, subscription ended), `churning` (paying but won''t renew), `complained` (marked an email as spam), `gifted`
+            (granted free premium access by the newsletter), `past_due` (paid subscription with an overdue invoice), `paused`
+            (premium subscription paused), `premium` (paying subscriber), `regular` (active free subscriber), `removed` (removed
+            by the newsletter), `trialed` (temporarily enrolled in premium), `unactivated` (pending double opt-in confirmation),
+            `undeliverable` (determined undeliverable), `unpaid` (has not paid yet), `unsubscribed` (voluntarily unsubscribed),
+            `upcoming` (paid subscription that has not started yet). Subscribers with `premium`, `gifted`, `trialed`, or `churning`
+            have access to premium content; use these to distinguish paid from free subscribers.'
+          example: regular
+        ip_address:
+          anyOf:
+          - format: ipvanyaddress
+            type: string
+          - type: 'null'
+          description: The IP address of the subscriber. If provided, we will use this IP address to determine the subscriber's
+            location and validate their legitimacy.
+          example: 127.0.0.1
+          title: Ip Address
+      required:
+      - email_address
+      title: SubscriberInput
+      type: object
+    SubscriberInputValidationErrorCode:
+      description: 'Represents the type of error that occurred when validating subscriber input.
+
+
+        Human-readable error messages are provided in the `detail` field of the response;
+
+        these values are meant to be parseable by code or client logic.'
+      enum:
+      - currency_mismatch
+      - email_already_exists
+      - email_blocked
+      - email_empty
+      - email_invalid
+      - invalid_input
+      - ip_address_spammy
+      - metadata_invalid
+      - newsletter_not_accepting_subscribers
+      - payment_failed
+      - promo_code_invalid
+      - rate_limited
+      - subscriber_already_exists
+      - subscriber_blocked
+      - subscriber_id_invalid
+      - subscriber_suppressed
+      - tag_invalid
+      title: ValidationErrorCode
+      type: string
+    SubscriberPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/Subscriber'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[Subscriber]
+      type: object
+    SubscriberSource:
+      description: 'Represents the original provenance of a subscriber. This value is not exposed
+
+        to subscribers; it''s only used for internal tracking purposes and governs some
+
+        of the behavior of the subscriber (i.e. whether or not to require double
+
+        opt-in.)'
+      enum:
+      - admin
+      - api
+      - carrd
+      - comment
+      - embedded_form
+      - form
+      - import
+      - memberful
+      - netlify
+      - organic
+      - patreon
+      - shopify
+      - stripe
+      - user
+      - zapier
+      title: Source
+      type: string
+    SubscriberType:
+      description: 'Represents the state of a subscriber and what emails they
+
+        should or should not be receiving. This type is meant to be fully expressive
+
+        so as to consolidate the logic of determining what emails a subscriber should
+
+        receive into a single place.
+
+
+        Note that the only types that can be set programmatically are REGULAR, UNSUBSCRIBED,
+
+        GIFTED and UNPAID. All other types are meant to be user-visible and cannot
+
+        be set programmatically.'
+      enum:
+      - blocked
+      - complained
+      - churning
+      - churned
+      - gifted
+      - unactivated
+      - unpaid
+      - undeliverable
+      - premium
+      - past_due
+      - paused
+      - regular
+      - removed
+      - trialed
+      - unsubscribed
+      - upcoming
+      title: Type
+      type: string
+    SubscriberUndeliverabilityReason:
+      description: "The reason Buttondown has marked the subscriber as undeliverable.\nUndeliverable subscribers are not sent\
+        \ emails, and may be periodically removed from the system (or restored, if the reason is no longer valid.)\n\nThese\
+        \ reasons are grouped into three categories:\n- PermanentFailure (\"Failed (recipient)\"): Address-based issues where\
+        \ the recipient is truly unreachable.\n  Includes: HARD_BOUNCE\n- MessageFailure (\"Failed (message)\"): Message/sender\
+        \ problems where future emails may succeed.\n  Includes: ACCESS_DENIED, AUTHENTICATION_ISSUE, DELIVERY_EXPIRED, DOMAIN_BLOCKED,\
+        \ EMAIL_BLOCKED,\n            IP_BLOCKED, ON_ESP_DENYLIST, OUT_OF_STORAGE, PROBLEMATIC_URL, SPAM\n- Deferral (not\
+        \ shown to customers): Transient delivery issues that will be retried.\n  Includes: RATE_LIMITED, TRANSIENT"
+      enum:
+      - access_denied
+      - authentication_issue
+      - delivery_expired
+      - domain_blocked
+      - email_blocked
+      - hard_bounce
+      - ip_blocked
+      - ip_undeliverable
+      - malformed
+      - on_esp_denylist
+      - other
+      - out_of_storage
+      - problematic_url
+      - rate_limited
+      - spam
+      - transient
+      - disabled
+      - does_not_exist
+      - spf_failed
+      - unreachable
+      title: UndeliverabilityReason
+      type: string
+    SubscriberUpdateInput:
+      additionalProperties: false
+      properties:
+        commenting_disabled:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          description: Whether this subscriber is prevented from commenting.
+          title: Commenting Disabled
+        email_address:
+          anyOf:
+          - maxLength: 254
+            pattern: ^[a-zA-Z0-9.'_%+\-!]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$
+            type: string
+            format: email
+          - type: 'null'
+          description: The email address of the subscriber.
+          example: telemachus@buttondown.email
+          title: Email Address
+        notes:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Any notes you want to attach to the subscriber. These are not publicly visible.
+          example: One of our first subscribers!
+          title: Notes
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          default: {}
+          description: A structured key-value blob that you can use to store arbitrary data on the object. Metadata can be
+            nested — you can store objects and arrays within your metadata. (You can [read more about metadata.](https://docs.buttondown.com/metadata))
+          title: Metadata
+        tags:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          description: A list of [tag](https://docs.buttondown.com/api-tags-introduction) names applied to the subscriber.
+            Tags that don't already exist will be created, which requires a plan that includes tags (Basic or higher).
+          title: Tags
+        referrer_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: ''
+          description: The URL the subscriber was referred from (e.g. where they submitted the subscription form).
+          title: Referrer Url
+        type:
+          anyOf:
+          - $ref: '#/components/schemas/SubscriberType'
+          - type: 'null'
+          description: 'The subscriber''s lifecycle state. One of: `blocked` (blocked by the newsletter), `churned` (previously
+            paid, subscription ended), `churning` (paying but won''t renew), `complained` (marked an email as spam), `gifted`
+            (granted free premium access by the newsletter), `past_due` (paid subscription with an overdue invoice), `paused`
+            (premium subscription paused), `premium` (paying subscriber), `regular` (active free subscriber), `removed` (removed
+            by the newsletter), `trialed` (temporarily enrolled in premium), `unactivated` (pending double opt-in confirmation),
+            `undeliverable` (determined undeliverable), `unpaid` (has not paid yet), `unsubscribed` (voluntarily unsubscribed),
+            `upcoming` (paid subscription that has not started yet). Subscribers with `premium`, `gifted`, `trialed`, or `churning`
+            have access to premium content; use these to distinguish paid from free subscribers.'
+        unsubscription_reason:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Free-text reason the subscriber unsubscribed, if provided.
+          title: Unsubscription Reason
+        email_which_prompted_unsubscription_id:
+          anyOf:
+          - pattern: ^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|(?:em)_(?:[0-7][0-9abcdefghjkmnpqrstvwxyz]{25}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}))$
+            type: string
+          - type: 'null'
+          description: The ID of the email that prompted the subscriber to unsubscribe, if any.
+          title: Email Which Prompted Unsubscription Id
+      title: SubscriberUpdateInput
+      type: object
+    Transition:
+      properties:
+        date:
+          description: When the subscriber transitioned to `type`.
+          format: date-time
+          title: Date
+          type: string
+        type:
+          $ref: '#/components/schemas/SubscriberType'
+          description: The subscriber type the subscriber transitioned to at `date`.
+      required:
+      - date
+      - type
+      title: Transition
+      type: object
+    UpdateAutomationAttemptErrorCode:
+      description: 'Represents the type of error that occurred when updating an automation attempt.
+
+
+        Human-readable error messages are provided in the `detail` field of the response;
+
+        these values are meant to be parseable by code or client logic.'
+      enum:
+      - automation_attempt_not_found
+      - invalid_status
+      title: UpdateAutomationAttemptErrorCode
+      type: string
+    UpdateSubscriberErrorCode:
+      description: 'Represents the type of error that occurred when updating a subscriber.
+
+
+        Human-readable error messages are provided in the `detail` field of the response;
+
+        these values are meant to be parseable by code or client logic.'
+      enum:
+      - email_already_exists
+      - email_invalid
+      - email_has_been_changed_too_many_times
+      - firewall_blocked
+      - metadata_invalid
+      - subscriber_type_invalid
+      - tag_invalid
+      title: UpdateSubscriberErrorCode
+      type: string
+    ValidationErrorDetail:
+      properties:
+        type:
+          description: The type of validation error.
+          title: Type
+          type: string
+        loc:
+          description: The location of the error in the request.
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Loc
+          type: array
+        msg:
+          description: A human-readable error message.
+          title: Msg
+          type: string
+      required:
+      - type
+      - loc
+      - msg
+      title: ValidationErrorDetail
+      type: object
+    ValidationErrorMessage:
+      properties:
+        detail:
+          description: A list of validation errors.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          title: Detail
+          type: array
+      required:
+      - detail
+      title: ValidationErrorMessage
+      type: object
   securitySchemes:
-    apiKeyAuth:
+    ApiKeyAuth:
       type: apiKey
       in: header
       name: Authorization
-      description: API token in the form `Token <api-key>`.
+      description: API key passed as 'Token <your-api-key>' in the Authorization header.

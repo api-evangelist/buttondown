@@ -2,7 +2,7 @@
   "opencollection": "1.0.0",
   "info": {
     "name": "Buttondown API",
-    "version": "1.0"
+    "version": "1.0.0"
   },
   "request": {
     "auth": {
@@ -15,93 +15,436 @@
   "items": [
     {
       "info": {
-        "name": "Subscribers",
+        "name": "Accounts",
         "type": "folder"
       },
       "items": [
         {
           "info": {
-            "name": "List all subscribers",
+            "name": "Get Account",
             "type": "http"
           },
           "http": {
             "method": "GET",
-            "url": "https://api.buttondown.email/v1/subscribers"
+            "url": "https://api.buttondown.com/v1/accounts/me"
           },
-          "docs": "List all subscribers"
+          "docs": "Retrieve the account associated with the current API key"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Advertising Units",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Advertising Units",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/advertising_units"
+          },
+          "docs": "List all advertising units"
         },
         {
           "info": {
-            "name": "Create a subscriber",
+            "name": "Create Advertising Unit",
             "type": "http"
           },
           "http": {
             "method": "POST",
-            "url": "https://api.buttondown.email/v1/subscribers",
-            "body": {
-              "type": "json",
-              "data": "{}"
-            }
+            "url": "https://api.buttondown.com/v1/advertising_units"
           },
-          "docs": "Create a subscriber"
+          "docs": "Create a new advertising unit"
         },
         {
           "info": {
-            "name": "Retrieve a subscriber",
-            "type": "http"
-          },
-          "http": {
-            "method": "GET",
-            "url": "https://api.buttondown.email/v1/subscribers/:id",
-            "params": [
-              {
-                "name": "id",
-                "value": "",
-                "type": "path"
-              }
-            ]
-          },
-          "docs": "Retrieve a subscriber"
-        },
-        {
-          "info": {
-            "name": "Update a subscriber",
+            "name": "Update Advertising Unit",
             "type": "http"
           },
           "http": {
             "method": "PATCH",
-            "url": "https://api.buttondown.email/v1/subscribers/:id",
-            "params": [
-              {
-                "name": "id",
-                "value": "",
-                "type": "path"
-              }
-            ],
-            "body": {
-              "type": "json",
-              "data": "{}"
-            }
+            "url": "https://api.buttondown.com/v1/advertising_units/{id}"
           },
-          "docs": "Update a subscriber"
+          "docs": "Update an advertising unit's properties"
         },
         {
           "info": {
-            "name": "Delete a subscriber",
+            "name": "Delete Advertising Unit",
             "type": "http"
           },
           "http": {
             "method": "DELETE",
-            "url": "https://api.buttondown.email/v1/subscribers/:id",
-            "params": [
-              {
-                "name": "id",
-                "value": "",
-                "type": "path"
-              }
-            ]
+            "url": "https://api.buttondown.com/v1/advertising_units/{id}"
           },
-          "docs": "Delete a subscriber"
+          "docs": "Delete an advertising unit"
+        },
+        {
+          "info": {
+            "name": "List Advertising Slots",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/advertising_units/slots"
+          },
+          "docs": "List all advertising slots"
+        },
+        {
+          "info": {
+            "name": "Update Advertising Slot",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.buttondown.com/v1/advertising_units/slots/{id}"
+          },
+          "docs": "Update an advertising slot's sponsor content"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "API Requests",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve Api Request",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/api_requests/{id}"
+          },
+          "docs": "Retrieve a specific API request by its ID"
+        },
+        {
+          "info": {
+            "name": "List Api Requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/api_requests"
+          },
+          "docs": "List all API requests"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Attachments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/attachments"
+          },
+          "docs": "Upload a new attachment"
+        },
+        {
+          "info": {
+            "name": "List Attachments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/attachments"
+          },
+          "docs": "List all attachments"
+        },
+        {
+          "info": {
+            "name": "Retrieve Attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/attachments/{id}"
+          },
+          "docs": "Retrieve an attachment"
+        },
+        {
+          "info": {
+            "name": "Delete Attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.buttondown.com/v1/attachments/{id}"
+          },
+          "docs": "Delete an attachment"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Automations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Automations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/automations"
+          },
+          "docs": "List all automations"
+        },
+        {
+          "info": {
+            "name": "Create Automation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/automations"
+          },
+          "docs": "Create a new automation"
+        },
+        {
+          "info": {
+            "name": "Retrieve Automation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/automations/{id}"
+          },
+          "docs": "Retrieve a specific automation by its ID"
+        },
+        {
+          "info": {
+            "name": "Update Automation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.buttondown.com/v1/automations/{id}"
+          },
+          "docs": "Update an automation's properties"
+        },
+        {
+          "info": {
+            "name": "Delete Automation",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.buttondown.com/v1/automations/{id}"
+          },
+          "docs": "Delete an automation"
+        },
+        {
+          "info": {
+            "name": "Invoke Automation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/automations/{id}/invoke"
+          },
+          "docs": "Manually trigger an automation"
+        },
+        {
+          "info": {
+            "name": "Retrieve Automation Analytics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/automations/{id}/analytics"
+          },
+          "docs": "Retrieve analytics data for an automation"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Books",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Book",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/books"
+          },
+          "docs": "Create a new book"
+        },
+        {
+          "info": {
+            "name": "List Books",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/books"
+          },
+          "docs": "List all books for the authenticated newsletter"
+        },
+        {
+          "info": {
+            "name": "Retrieve Book",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/books/{id}"
+          },
+          "docs": "Retrieve a specific book by its ID"
+        },
+        {
+          "info": {
+            "name": "Update Book",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.buttondown.com/v1/books/{id}"
+          },
+          "docs": "Update a book's properties"
+        },
+        {
+          "info": {
+            "name": "Delete Book",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.buttondown.com/v1/books/{id}"
+          },
+          "docs": "Delete a book"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Bulk Actions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Bulk Action",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/bulk_actions"
+          },
+          "docs": "Create a new bulk action"
+        },
+        {
+          "info": {
+            "name": "Retrieve Bulk Action",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/bulk_actions/{id}"
+          },
+          "docs": "Retrieve the status of a bulk action"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Comments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/comments"
+          },
+          "docs": "Create a new comment or reply to an existing comment. If subscriber_id is provided, the comment is attributed to that subscriber; otherwise it is attributed to the newsletter author."
+        },
+        {
+          "info": {
+            "name": "List Comments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/comments"
+          },
+          "docs": "List all comments"
+        },
+        {
+          "info": {
+            "name": "Retrieve Comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/comments/{id}"
+          },
+          "docs": "Retrieve a specific comment by its ID"
+        },
+        {
+          "info": {
+            "name": "Update Comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.buttondown.com/v1/comments/{id}"
+          },
+          "docs": "Update a comment's status. Only the newsletter owner can call this."
+        },
+        {
+          "info": {
+            "name": "Delete Comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.buttondown.com/v1/comments/{id}"
+          },
+          "docs": "Delete a comment. Only the comment owner (subscriber) or the newsletter author can delete a comment."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Coupons",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Coupons",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/coupons"
+          },
+          "docs": "List all Stripe coupons"
         }
       ]
     },
@@ -113,99 +456,458 @@
       "items": [
         {
           "info": {
-            "name": "List emails (drafts, scheduled, sent)",
-            "type": "http"
-          },
-          "http": {
-            "method": "GET",
-            "url": "https://api.buttondown.email/v1/emails"
-          },
-          "docs": "List emails (drafts, scheduled, sent)"
-        },
-        {
-          "info": {
-            "name": "Create an email",
+            "name": "Create Email",
             "type": "http"
           },
           "http": {
             "method": "POST",
-            "url": "https://api.buttondown.email/v1/emails",
-            "body": {
-              "type": "json",
-              "data": "{}"
-            }
+            "url": "https://api.buttondown.com/v1/emails"
           },
-          "docs": "Create an email"
+          "docs": "Create a new email"
         },
         {
           "info": {
-            "name": "Retrieve an email",
+            "name": "List Emails",
             "type": "http"
           },
           "http": {
             "method": "GET",
-            "url": "https://api.buttondown.email/v1/emails/:id",
-            "params": [
-              {
-                "name": "id",
-                "value": "",
-                "type": "path"
-              }
-            ]
+            "url": "https://api.buttondown.com/v1/emails"
           },
-          "docs": "Retrieve an email"
+          "docs": "List all emails"
+        },
+        {
+          "info": {
+            "name": "Update Email",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.buttondown.com/v1/emails/{id}"
+          },
+          "docs": "Update an email's properties"
+        },
+        {
+          "info": {
+            "name": "Retrieve Email",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/emails/{id}"
+          },
+          "docs": "Retrieve a specific email by its ID"
+        },
+        {
+          "info": {
+            "name": "Delete Email",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.buttondown.com/v1/emails/{id}"
+          },
+          "docs": "Delete an email"
+        },
+        {
+          "info": {
+            "name": "Retrieve Email History",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/emails/{id}/history"
+          },
+          "docs": "Retrieve the edit history for a specific email"
+        },
+        {
+          "info": {
+            "name": "Retrieve Email History By Id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/emails/{id}/history/body/{history_id}"
+          },
+          "docs": "Retrieve a specific historical version of an email's body"
+        },
+        {
+          "info": {
+            "name": "Retrieve Email Analytics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/emails/{id}/analytics"
+          },
+          "docs": "Retrieve analytics for a specific email"
+        },
+        {
+          "info": {
+            "name": "Retrieve Email Renders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/emails/{id}/renders"
+          },
+          "docs": "Retrieve rendered HTML for a specific email"
+        },
+        {
+          "info": {
+            "name": "Send Draft",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/emails/{id}/send-draft"
+          },
+          "docs": "Send a draft email to specific recipients"
+        },
+        {
+          "info": {
+            "name": "Publish Email",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/emails/{id}/publish"
+          },
+          "docs": "Publish an email"
         }
       ]
     },
     {
       "info": {
-        "name": "Tags",
+        "name": "Events",
         "type": "folder"
       },
       "items": [
         {
           "info": {
-            "name": "List all tags",
+            "name": "List Events",
             "type": "http"
           },
           "http": {
             "method": "GET",
-            "url": "https://api.buttondown.email/v1/tags"
+            "url": "https://api.buttondown.com/v1/events"
           },
-          "docs": "List all tags"
+          "docs": "List all events"
         },
         {
           "info": {
-            "name": "Create a tag",
+            "name": "Get Event",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/events/{id}"
+          },
+          "docs": "Retrieve a specific event by its ID"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Exports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Export",
             "type": "http"
           },
           "http": {
             "method": "POST",
-            "url": "https://api.buttondown.email/v1/tags",
-            "body": {
-              "type": "json",
-              "data": "{}"
-            }
+            "url": "https://api.buttondown.com/v1/exports"
           },
-          "docs": "Create a tag"
+          "docs": "Create a new data export"
         },
         {
           "info": {
-            "name": "Retrieve a tag",
+            "name": "List Exports",
             "type": "http"
           },
           "http": {
             "method": "GET",
-            "url": "https://api.buttondown.email/v1/tags/:id",
-            "params": [
-              {
-                "name": "id",
-                "value": "",
-                "type": "path"
-              }
-            ]
+            "url": "https://api.buttondown.com/v1/exports"
           },
-          "docs": "Retrieve a tag"
+          "docs": "List all exports"
+        },
+        {
+          "info": {
+            "name": "Retrieve Export",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/exports/{id}"
+          },
+          "docs": "Retrieve a specific export by its ID"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "External Feeds",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create External Feed",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/external_feeds"
+          },
+          "docs": "Create a new external feed"
+        },
+        {
+          "info": {
+            "name": "List External Feed",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/external_feeds"
+          },
+          "docs": "List all external feeds"
+        },
+        {
+          "info": {
+            "name": "Update External Feed",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.buttondown.com/v1/external_feeds/{id}"
+          },
+          "docs": "Update an external feed's properties"
+        },
+        {
+          "info": {
+            "name": "Delete External Feed",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.buttondown.com/v1/external_feeds/{id}"
+          },
+          "docs": "Delete an external feed"
+        },
+        {
+          "info": {
+            "name": "Retrieve External Feed",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/external_feeds/{id}"
+          },
+          "docs": "Retrieve a specific external feed by its ID"
+        },
+        {
+          "info": {
+            "name": "Poll Items",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/external_feeds/{id}/items"
+          },
+          "docs": "Poll for new items in an external feed"
+        },
+        {
+          "info": {
+            "name": "Retrieve Items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/external_feeds/{id}/items"
+          },
+          "docs": "Retrieve items from an external feed"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Forms",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Form",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/forms"
+          },
+          "docs": "Create a new form"
+        },
+        {
+          "info": {
+            "name": "List Forms",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/forms"
+          },
+          "docs": "List all forms"
+        },
+        {
+          "info": {
+            "name": "Retrieve Form",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/forms/{id}"
+          },
+          "docs": "Retrieve a specific form by its ID"
+        },
+        {
+          "info": {
+            "name": "Update Form",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.buttondown.com/v1/forms/{id}"
+          },
+          "docs": "Update a form's properties"
+        },
+        {
+          "info": {
+            "name": "Delete Form",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.buttondown.com/v1/forms/{id}"
+          },
+          "docs": "Delete a form"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Images",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/images"
+          },
+          "docs": "Upload an image"
+        },
+        {
+          "info": {
+            "name": "List Images",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/images"
+          },
+          "docs": "List all uploaded images"
+        },
+        {
+          "info": {
+            "name": "Update Image",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.buttondown.com/v1/images/{id}"
+          },
+          "docs": "Update an image's metadata"
+        },
+        {
+          "info": {
+            "name": "Delete Image",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.buttondown.com/v1/images/{id}"
+          },
+          "docs": "Delete an uploaded image"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Imports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Imports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/imports"
+          },
+          "docs": "List all imports"
+        },
+        {
+          "info": {
+            "name": "Create Import",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/imports"
+          },
+          "docs": "Create a new import by uploading a file"
+        },
+        {
+          "info": {
+            "name": "Retrieve Import",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/imports/{id}"
+          },
+          "docs": "Retrieve a specific import by its ID"
+        },
+        {
+          "info": {
+            "name": "Update Import",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.buttondown.com/v1/imports/{id}"
+          },
+          "docs": "Update an import's properties"
+        },
+        {
+          "info": {
+            "name": "Delete Import",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.buttondown.com/v1/imports/{id}"
+          },
+          "docs": "Delete an import"
         }
       ]
     },
@@ -217,14 +919,707 @@
       "items": [
         {
           "info": {
-            "name": "List all newsletters",
+            "name": "List Newsletters",
             "type": "http"
           },
           "http": {
             "method": "GET",
-            "url": "https://api.buttondown.email/v1/newsletters"
+            "url": "https://api.buttondown.com/v1/newsletters"
           },
           "docs": "List all newsletters"
+        },
+        {
+          "info": {
+            "name": "Create Newsletter",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/newsletters"
+          },
+          "docs": "Create a new newsletter"
+        },
+        {
+          "info": {
+            "name": "Retrieve Newsletter",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/newsletters/{id}"
+          },
+          "docs": "Retrieve a specific newsletter by its ID"
+        },
+        {
+          "info": {
+            "name": "Update Newsletter",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.buttondown.com/v1/newsletters/{id}"
+          },
+          "docs": "Update a newsletter's settings"
+        },
+        {
+          "info": {
+            "name": "Delete Newsletter",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.buttondown.com/v1/newsletters/{id}"
+          },
+          "docs": "Delete a newsletter"
+        },
+        {
+          "info": {
+            "name": "Retrieve Sending Domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/newsletters/{id}/sending-domain"
+          },
+          "docs": "Retrieve the DNS verification status and required records for a newsletter's custom sending domain. While `is_checking` is true, a background re-verification is in flight; poll until it flips to false. Pass `force=true` to trigger a re-check."
+        },
+        {
+          "info": {
+            "name": "Retrieve Hosting Domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/newsletters/{id}/hosting-domain"
+          },
+          "docs": "Retrieve the DNS verification status for a newsletter's custom hosting domain. This synchronously re-verifies the domain's DNS records."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Notes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Note Endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/notes"
+          },
+          "docs": "Create a new note"
+        },
+        {
+          "info": {
+            "name": "List Notes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/notes"
+          },
+          "docs": "List all notes"
+        },
+        {
+          "info": {
+            "name": "Delete Note Endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.buttondown.com/v1/notes/{id}"
+          },
+          "docs": "Delete a note"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Ping",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Ping",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/ping"
+          },
+          "docs": "Check if the API is reachable and your credentials are valid"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Prices",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Prices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/prices"
+          },
+          "docs": "List all prices"
+        },
+        {
+          "info": {
+            "name": "Create Price",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/prices"
+          },
+          "docs": "Create a new price"
+        },
+        {
+          "info": {
+            "name": "Delete Price",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.buttondown.com/v1/prices/{price_id}"
+          },
+          "docs": "Archive a price, making it unavailable for new subscriptions. Stripe prices cannot be deleted outright; archiving deactivates the price while leaving existing subscriptions on it untouched."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Public",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search public emails",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/public/emails/{username}"
+          },
+          "docs": "Search and list public emails for a newsletter. No authentication required."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Segments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Segment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/segments"
+          },
+          "docs": "Create a new segment"
+        },
+        {
+          "info": {
+            "name": "List Segments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/segments"
+          },
+          "docs": "List all segments"
+        },
+        {
+          "info": {
+            "name": "Retrieve Segment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/segments/{id}"
+          },
+          "docs": "Retrieve a specific segment by its ID"
+        },
+        {
+          "info": {
+            "name": "Update Segment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.buttondown.com/v1/segments/{id}"
+          },
+          "docs": "Update a segment's properties"
+        },
+        {
+          "info": {
+            "name": "Delete Segment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.buttondown.com/v1/segments/{id}"
+          },
+          "docs": "Delete a segment"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Snippets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Snippet",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/snippets"
+          },
+          "docs": "Create a new snippet"
+        },
+        {
+          "info": {
+            "name": "List Snippets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/snippets"
+          },
+          "docs": "List all snippets"
+        },
+        {
+          "info": {
+            "name": "Retrieve Snippet",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/snippets/{id}"
+          },
+          "docs": "Retrieve a single snippet."
+        },
+        {
+          "info": {
+            "name": "Update Snippet",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.buttondown.com/v1/snippets/{id}"
+          },
+          "docs": "Update a snippet."
+        },
+        {
+          "info": {
+            "name": "Delete Snippet",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.buttondown.com/v1/snippets/{id}"
+          },
+          "docs": "Delete a snippet."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Subscribers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/subscribers"
+          },
+          "docs": "Create a new subscriber"
+        },
+        {
+          "info": {
+            "name": "List Subscribers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/subscribers"
+          },
+          "docs": "List all subscribers"
+        },
+        {
+          "info": {
+            "name": "Retrieve Subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/subscribers/{id_or_email}"
+          },
+          "docs": "Retrieve a specific subscriber by their ID or email address"
+        },
+        {
+          "info": {
+            "name": "Delete Subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.buttondown.com/v1/subscribers/{id_or_email}"
+          },
+          "docs": "Delete a subscriber"
+        },
+        {
+          "info": {
+            "name": "Update Subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.buttondown.com/v1/subscribers/{id_or_email}"
+          },
+          "docs": "Update a subscriber's properties"
+        },
+        {
+          "info": {
+            "name": "Send Reminder",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/subscribers/{id_or_email}/send-reminder"
+          },
+          "docs": "Send a confirmation reminder email to an unactivated subscriber"
+        },
+        {
+          "info": {
+            "name": "Send Magic Link To Subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/subscribers/{id_or_email}/send-magic-link"
+          },
+          "docs": "Send a magic link email to a subscriber"
+        },
+        {
+          "info": {
+            "name": "Send Email To",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/subscribers/{id_or_email}/emails/{email_id}"
+          },
+          "docs": "Send a specific email to a specific subscriber"
+        },
+        {
+          "info": {
+            "name": "Get Referrals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/subscribers/{id_or_email}/referrals"
+          },
+          "docs": "List subscribers referred by a specific subscriber"
+        },
+        {
+          "info": {
+            "name": "Get Automations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/subscribers/{id_or_email}/automations"
+          },
+          "docs": "List automation attempts for a specific subscriber"
+        },
+        {
+          "info": {
+            "name": "Update Automation Attempt",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.buttondown.com/v1/subscribers/{id_or_email}/automations/{automation_attempt_id}"
+          },
+          "docs": "Update the status of an automation attempt for a subscriber"
+        },
+        {
+          "info": {
+            "name": "Get Stripe Subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/subscribers/{id_or_email}/stripe-subscriptions"
+          },
+          "docs": "List Stripe subscriptions for a specific subscriber"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Survey Responses",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve Survey Responses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/survey_responses"
+          },
+          "docs": "List all survey responses"
+        },
+        {
+          "info": {
+            "name": "Create Survey Response",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/survey_responses"
+          },
+          "docs": "Create a new survey response"
+        },
+        {
+          "info": {
+            "name": "Update Survey Response",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.buttondown.com/v1/survey_responses/{id}"
+          },
+          "docs": "Update a survey response's text. Only the response owner (subscriber) can update their response."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Surveys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Survey",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/surveys"
+          },
+          "docs": "Create a new survey"
+        },
+        {
+          "info": {
+            "name": "List Surveys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/surveys"
+          },
+          "docs": "List all surveys"
+        },
+        {
+          "info": {
+            "name": "Retrieve Survey",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/surveys/{id}"
+          },
+          "docs": "Retrieve a specific survey by its ID"
+        },
+        {
+          "info": {
+            "name": "Update Survey",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.buttondown.com/v1/surveys/{id}"
+          },
+          "docs": "Update a survey's properties"
+        },
+        {
+          "info": {
+            "name": "Delete Survey",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.buttondown.com/v1/surveys/{id}"
+          },
+          "docs": "Delete a survey"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Tags",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/tags"
+          },
+          "docs": "Create a new tag"
+        },
+        {
+          "info": {
+            "name": "List Tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/tags"
+          },
+          "docs": "List all tags"
+        },
+        {
+          "info": {
+            "name": "Retrieve Tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/tags/{id}"
+          },
+          "docs": "Retrieve a specific tag by its ID"
+        },
+        {
+          "info": {
+            "name": "Update Tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.buttondown.com/v1/tags/{id}"
+          },
+          "docs": "Update a tag's properties"
+        },
+        {
+          "info": {
+            "name": "Delete Tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.buttondown.com/v1/tags/{id}"
+          },
+          "docs": "Delete a tag"
+        },
+        {
+          "info": {
+            "name": "Retrieve Tag Analytics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/tags/{id}/analytics"
+          },
+          "docs": "Retrieve analytics for a specific tag"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/users"
+          },
+          "docs": "Invite a new user to the newsletter"
+        },
+        {
+          "info": {
+            "name": "List Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/users"
+          },
+          "docs": "List all users"
+        },
+        {
+          "info": {
+            "name": "Retrieve User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/users/{id}"
+          },
+          "docs": "Retrieve a specific user by its ID"
+        },
+        {
+          "info": {
+            "name": "Delete User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.buttondown.com/v1/users/{id}"
+          },
+          "docs": "Delete a user"
+        },
+        {
+          "info": {
+            "name": "Update User",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.buttondown.com/v1/users/{id}"
+          },
+          "docs": "Update a user's properties"
         }
       ]
     },
@@ -236,32 +1631,82 @@
       "items": [
         {
           "info": {
-            "name": "List all webhooks",
+            "name": "Create Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/webhooks"
+          },
+          "docs": "Create a new webhook"
+        },
+        {
+          "info": {
+            "name": "List Webhooks",
             "type": "http"
           },
           "http": {
             "method": "GET",
-            "url": "https://api.buttondown.email/v1/webhooks"
+            "url": "https://api.buttondown.com/v1/webhooks"
           },
           "docs": "List all webhooks"
         },
         {
           "info": {
-            "name": "Create a webhook",
+            "name": "Retrieve Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/webhooks/{id}"
+          },
+          "docs": "Retrieve a specific webhook by its ID"
+        },
+        {
+          "info": {
+            "name": "Update Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.buttondown.com/v1/webhooks/{id}"
+          },
+          "docs": "Update a webhook's properties"
+        },
+        {
+          "info": {
+            "name": "Delete Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.buttondown.com/v1/webhooks/{id}"
+          },
+          "docs": "Delete a webhook"
+        },
+        {
+          "info": {
+            "name": "Retrieve Webhook Attempts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/webhooks/{id}/attempts"
+          },
+          "docs": "Retrieve webhook attempts for a specific webhook"
+        },
+        {
+          "info": {
+            "name": "Test Webhook",
             "type": "http"
           },
           "http": {
             "method": "POST",
-            "url": "https://api.buttondown.email/v1/webhooks",
-            "body": {
-              "type": "json",
-              "data": "{}"
-            }
+            "url": "https://api.buttondown.com/v1/webhooks/{id}/test"
           },
-          "docs": "Create a webhook"
+          "docs": "Send a test event to a webhook"
         }
       ]
     }
-  ],
-  "bundled": true
+  ]
 }

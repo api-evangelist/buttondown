@@ -1,0 +1,646 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Buttondown Subscribers API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Subscribers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Subscribers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/subscribers",
+            "params": [
+              {
+                "name": "bounce_date__end",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers who last bounced on or before the given date."
+              },
+              {
+                "name": "bounce_date__start",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers who last bounced on or after the given date."
+              },
+              {
+                "name": "bounce_reason",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers with the given bounce reason(s)."
+              },
+              {
+                "name": "churn_date__end",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers who churned on or before the given date."
+              },
+              {
+                "name": "churn_date__start",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers who churned on or after the given date."
+              },
+              {
+                "name": "coupon",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers with the given coupon ID(s)."
+              },
+              {
+                "name": "current_price",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers who are currently subscribed to the given price ID(s)."
+              },
+              {
+                "name": "date__end",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers created before the given date."
+              },
+              {
+                "name": "date__start",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers created on or after the given date."
+              },
+              {
+                "name": "domain",
+                "value": "gmail.com",
+                "type": "query",
+                "description": "If provided, only return subscribers whose email domain matches the given domain(s)."
+              },
+              {
+                "name": "email_address",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers whose email address contains the given string."
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "If provided, expand the given field. (Supported: 'stripe_customer', 'stripe_subscription'.)"
+              },
+              {
+                "name": "form",
+                "value": "form_abc123",
+                "type": "query",
+                "description": "If provided, only return subscribers that came through the given [form(s)](https://docs.buttondown.com/registration-forms)."
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers with the given IDs."
+              },
+              {
+                "name": "ip_address",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers with the given IP address(es)."
+              },
+              {
+                "name": "last_click_date__end",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers whose last click was on or before the given date."
+              },
+              {
+                "name": "last_click_date__start",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers whose last click was on or after the given date."
+              },
+              {
+                "name": "last_open_date__end",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers whose last open was on or before the given date."
+              },
+              {
+                "name": "last_open_date__start",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers whose last open was on or after the given date."
+              },
+              {
+                "name": "-domain",
+                "value": "gmail.com",
+                "type": "query",
+                "description": "If provided, only return subscribers whose email domain does not match the given domain(s)."
+              },
+              {
+                "name": "-tag",
+                "value": "vip",
+                "type": "query",
+                "description": "If provided, only return subscribers without the given [tag](https://docs.buttondown.com/api-tags-introduction)."
+              },
+              {
+                "name": "-type",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers without the given type."
+              },
+              {
+                "name": "ordering",
+                "value": "-creation_date",
+                "type": "query",
+                "description": "The ordering to apply to the results."
+              },
+              {
+                "name": "price",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers who have at one point subscribed to the given price ID(s)."
+              },
+              {
+                "name": "referral_code",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers with the given referral code(s)."
+              },
+              {
+                "name": "referrer_url",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers whose referrer URL(s) contain the given string."
+              },
+              {
+                "name": "open_rate__end",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers with an open rate less than or equal to the given value."
+              },
+              {
+                "name": "open_rate__start",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers with an open rate greater than or equal to the given value."
+              },
+              {
+                "name": "click_rate__end",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers with a click rate less than or equal to the given value."
+              },
+              {
+                "name": "click_rate__start",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers with a click rate greater than or equal to the given value."
+              },
+              {
+                "name": "risk_score__end",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers with a [risk score](https://docs.buttondown.com/firewall) less than or equal to the given value."
+              },
+              {
+                "name": "risk_score__start",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers with a [risk score](https://docs.buttondown.com/firewall) greater than or equal to the given value."
+              },
+              {
+                "name": "source",
+                "value": "api",
+                "type": "query",
+                "description": "If provided, only return subscribers with the given source(s)."
+              },
+              {
+                "name": "subscriber_import",
+                "value": "import_abc123",
+                "type": "query",
+                "description": "If provided, only return subscribers that were imported by the given subscriber import."
+              },
+              {
+                "name": "tag",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers with the given [tag(s)](https://docs.buttondown.com/api-tags-introduction)."
+              },
+              {
+                "name": "type",
+                "value": "regular",
+                "type": "query",
+                "description": "If provided, only return subscribers with the given type."
+              },
+              {
+                "name": "undeliverability_date__end",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers who became undeliverable on or before the given date."
+              },
+              {
+                "name": "undeliverability_date__start",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers who became undeliverable on or after the given date."
+              },
+              {
+                "name": "undeliverability_reason",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers with the given undeliverability reason(s)."
+              },
+              {
+                "name": "unsubscription_date__end",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers who unsubscribed on or before the given date."
+              },
+              {
+                "name": "unsubscription_date__start",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers who unsubscribed on or after the given date."
+              },
+              {
+                "name": "unsubscription_reason",
+                "value": "no longer interested",
+                "type": "query",
+                "description": "If provided, only return subscribers with the given unsubscription reason(s)."
+              },
+              {
+                "name": "upgrade_date__end",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers who upgraded on or before the given date."
+              },
+              {
+                "name": "upgrade_date__start",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return subscribers who upgraded on or after the given date."
+              },
+              {
+                "name": "utm_campaign",
+                "value": "paid_campaign_2024",
+                "type": "query",
+                "description": "If provided, only return subscribers with the given UTM campaign(s)."
+              },
+              {
+                "name": "utm_medium",
+                "value": "paid_campaign_2024",
+                "type": "query",
+                "description": "If provided, only return subscribers with the given UTM medium(s)."
+              },
+              {
+                "name": "utm_source",
+                "value": "paid_campaign_2024",
+                "type": "query",
+                "description": "If provided, only return subscribers with the given UTM source(s)."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number of the paginated response."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List all subscribers"
+        },
+        {
+          "info": {
+            "name": "Create Subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/subscribers",
+            "headers": [
+              {
+                "name": "X-Buttondown-Collision-Behavior",
+                "value": ""
+              },
+              {
+                "name": "X-Buttondown-Bypass-Firewall",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a new subscriber"
+        },
+        {
+          "info": {
+            "name": "Retrieve Subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/subscribers/:id_or_email",
+            "params": [
+              {
+                "name": "id_or_email",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "If provided, expand the given field."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve a specific subscriber by their ID or email address"
+        },
+        {
+          "info": {
+            "name": "Update Subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.buttondown.com/v1/subscribers/:id_or_email",
+            "params": [
+              {
+                "name": "id_or_email",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update a subscriber's properties"
+        },
+        {
+          "info": {
+            "name": "Delete Subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.buttondown.com/v1/subscribers/:id_or_email",
+            "params": [
+              {
+                "name": "id_or_email",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete a subscriber"
+        },
+        {
+          "info": {
+            "name": "Send Reminder",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/subscribers/:id_or_email/send-reminder",
+            "params": [
+              {
+                "name": "id_or_email",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Send a confirmation reminder email to an unactivated subscriber"
+        },
+        {
+          "info": {
+            "name": "Send Magic Link To Subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/subscribers/:id_or_email/send-magic-link",
+            "params": [
+              {
+                "name": "id_or_email",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Send a magic link email to a subscriber"
+        },
+        {
+          "info": {
+            "name": "Send Email To",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/subscribers/:id_or_email/emails/:email_id",
+            "params": [
+              {
+                "name": "id_or_email",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "email_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Send a specific email to a specific subscriber"
+        },
+        {
+          "info": {
+            "name": "Get Referrals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/subscribers/:id_or_email/referrals",
+            "params": [
+              {
+                "name": "id_or_email",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number of the paginated response."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List subscribers referred by a specific subscriber"
+        },
+        {
+          "info": {
+            "name": "Get Automations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/subscribers/:id_or_email/automations",
+            "params": [
+              {
+                "name": "id_or_email",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number of the paginated response."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List automation attempts for a specific subscriber"
+        },
+        {
+          "info": {
+            "name": "Update Automation Attempt",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.buttondown.com/v1/subscribers/:id_or_email/automations/:automation_attempt_id",
+            "params": [
+              {
+                "name": "id_or_email",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "automation_attempt_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update the status of an automation attempt for a subscriber"
+        },
+        {
+          "info": {
+            "name": "Get Stripe Subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/subscribers/:id_or_email/stripe-subscriptions",
+            "params": [
+              {
+                "name": "id_or_email",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number of the paginated response."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List Stripe subscriptions for a specific subscriber"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

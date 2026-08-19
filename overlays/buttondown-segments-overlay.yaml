@@ -1,0 +1,30 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Buttondown Segments API
+  version: 1.0.0
+extends: openapi/buttondown-segments-api-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-source: openapi/_original/buttondown-openapi.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: buttondown
+    x-apievangelist-source: https://api.buttondown.com/v1/openapi.json
+    x-apievangelist-harvested: '2026-08-13'
+    x-apievangelist-conventions: conventions/buttondown-conventions.yml
+    x-apievangelist-errors: errors/buttondown-error-codes.yml
+    x-apievangelist-rate-limits: rate-limits/buttondown-rate-limits.yml
+    x-apievangelist-authentication: authentication/buttondown-authentication.yml
+- target: $.servers
+  update:
+  - url: https://api.buttondown.com/v1
+    description: Production
+- target: $.paths.*.*
+  update:
+    x-buttondown-idempotency-header: X-Idempotency-Key
+    x-buttondown-api-version-header: X-API-Version
+    x-buttondown-rate-limit-headers:
+    - X-RateLimit-Limit
+    - X-RateLimit-Remaining
+    - X-RateLimit-Reset

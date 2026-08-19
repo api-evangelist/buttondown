@@ -1,0 +1,3056 @@
+{
+  "item": [
+    {
+      "id": "71ea7f83-f9e4-4fa6-a464-d02a067438e2",
+      "name": "Automations",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c396d16d-7b5f-4665-9805-6f945f89543c",
+          "name": "List Automations",
+          "request": {
+            "name": "List Automations",
+            "description": {
+              "content": "List all automations",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "automations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "The page number of the paginated response."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5e0ccbe6-a738-4c1b-895b-f475c59acc89",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"id\": \"{{ id }}\",\n      \"creation_date\": \"2020-01-01T00:00:00Z\",\n      \"name\": \"Forward replies to support\",\n      \"status\": \"inactive\",\n      \"trigger\": \"subscriber.replied\",\n      \"actions\": [\n        {\n          \"type\": \"forward_reply\",\n          \"metadata\": {\n            \"recipient\": \"support@example.com\"\n          },\n          \"timing\": null\n        }\n      ],\n      \"filters\": {\n        \"filters\": [],\n        \"groups\": [],\n        \"predicate\": \"and\"\n      },\n      \"metadata\": {},\n      \"should_evaluate_filter_after_delay\": false\n    }\n  ],\n  \"next\": null,\n  \"previous\": null,\n  \"count\": 1\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "76fcb724-544c-42a3-a88e-ad62c871f90f",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d9e4f4f-30bd-43f9-9648-f983de9492f3",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "acdb449d-f8ca-467e-942e-ec6febdf0b46",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "25f45aa8-0939-4406-962d-6d1f2ae2f3e4",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cc1354f4-f082-4e07-bef0-1257998f7789",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "8066"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests permitted per minute.",
+                  "key": "X-RateLimit-Limit",
+                  "value": "8066"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests remaining in the current window.",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "8066"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp at which the window resets.",
+                  "key": "X-RateLimit-Reset",
+                  "value": "8066"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f13506b4-017f-4f56-b0a1-206297021458",
+          "name": "Create Automation",
+          "request": {
+            "name": "Create Automation",
+            "description": {
+              "content": "Create a new automation",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "automations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"trigger\": \"<string>\",\n  \"actions\": [\n    {\n      \"type\": \"<string>\",\n      \"metadata\": {\n        \"key_0\": 3569,\n        \"key_1\": 2822.866296285068,\n        \"key_2\": \"string\",\n        \"key_3\": \"string\",\n        \"key_4\": true,\n        \"key_5\": \"string\",\n        \"key_6\": \"string\",\n        \"key_7\": 4309.110140476374,\n        \"key_8\": false,\n        \"key_9\": 3585,\n        \"key_10\": 2352,\n        \"key_11\": \"string\",\n        \"key_12\": \"string\",\n        \"key_13\": 2076.8607929169957,\n        \"key_14\": 4238,\n        \"key_15\": 9724.75686770455,\n        \"key_16\": 2006.5275313065788,\n        \"key_17\": 7145,\n        \"key_18\": 7737,\n        \"key_19\": 804,\n        \"key_20\": 2006.1615826005652,\n        \"key_21\": 9898,\n        \"key_22\": \"string\",\n        \"key_23\": 2815,\n        \"key_24\": 8478,\n        \"key_25\": \"string\",\n        \"key_26\": true,\n        \"key_27\": 2964,\n        \"key_28\": 3034,\n        \"key_29\": 9866.048707362996,\n        \"key_30\": 3805,\n        \"key_31\": true,\n        \"key_32\": \"string\",\n        \"key_33\": false,\n        \"key_34\": \"string\",\n        \"key_35\": true\n      },\n      \"timing\": {\n        \"time\": \"<string>\",\n        \"delay\": {\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unit\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"time_of_day\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"metadata\": {\n        \"key_0\": 3474,\n        \"key_1\": \"string\",\n        \"key_2\": 2424,\n        \"key_3\": 8548,\n        \"key_4\": true,\n        \"key_5\": false,\n        \"key_6\": 1641,\n        \"key_7\": 6239.4739018954715,\n        \"key_8\": false,\n        \"key_9\": false,\n        \"key_10\": \"string\",\n        \"key_11\": 4569,\n        \"key_12\": 4500,\n        \"key_13\": 5231,\n        \"key_14\": 4306.504805674089,\n        \"key_15\": 7375.302748589135,\n        \"key_16\": 3532,\n        \"key_17\": 564,\n        \"key_18\": 7507,\n        \"key_19\": 8790,\n        \"key_20\": 218,\n        \"key_21\": 3148,\n        \"key_22\": 1643,\n        \"key_23\": \"string\",\n        \"key_24\": \"string\",\n        \"key_25\": true,\n        \"key_26\": true,\n        \"key_27\": 7584.307909199168,\n        \"key_28\": \"string\",\n        \"key_29\": 608.6375298514923,\n        \"key_30\": 249,\n        \"key_31\": \"string\",\n        \"key_32\": 6178,\n        \"key_33\": 5624.087275919885,\n        \"key_34\": \"string\",\n        \"key_35\": 4851,\n        \"key_36\": \"string\",\n        \"key_37\": \"string\",\n        \"key_38\": 9223.063724861144,\n        \"key_39\": 9747.376614650864,\n        \"key_40\": 6088.214926705878,\n        \"key_41\": \"string\",\n        \"key_42\": true,\n        \"key_43\": \"string\",\n        \"key_44\": 5475,\n        \"key_45\": 3361.9096632531755,\n        \"key_46\": 8792.723361463528,\n        \"key_47\": 5699,\n        \"key_48\": 714,\n        \"key_49\": \"string\",\n        \"key_50\": 2750,\n        \"key_51\": 4138.358213891423,\n        \"key_52\": \"string\",\n        \"key_53\": 880.4819578860945,\n        \"key_54\": false,\n        \"key_55\": 1197\n      },\n      \"timing\": {\n        \"time\": \"<string>\",\n        \"delay\": {\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unit\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"time_of_day\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    }\n  ],\n  \"filters\": {\n    \"filters\": [\n      {\n        \"field\": \"<string>\",\n        \"operator\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"operator\": \"<string>\",\n        \"value\": \"<string>\"\n      }\n    ],\n    \"groups\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      }\n    ],\n    \"predicate\": \"<string>\"\n  },\n  \"metadata\": {\n    \"key_0\": 9362,\n    \"key_1\": 3702.460445869775,\n    \"key_2\": 3949,\n    \"key_3\": true,\n    \"key_4\": \"string\",\n    \"key_5\": 1618.084946728613,\n    \"key_6\": 4901,\n    \"key_7\": true,\n    \"key_8\": 6833,\n    \"key_9\": false,\n    \"key_10\": 4467,\n    \"key_11\": 6633.155082793334,\n    \"key_12\": 7237.846728534384,\n    \"key_13\": 5464,\n    \"key_14\": 3068.8078326982027,\n    \"key_15\": 6166.749487562049,\n    \"key_16\": 6444.264854428192,\n    \"key_17\": 1962.5640879956652,\n    \"key_18\": 5090.966989154162,\n    \"key_19\": 4238,\n    \"key_20\": 865,\n    \"key_21\": 8506,\n    \"key_22\": \"string\",\n    \"key_23\": false,\n    \"key_24\": 4082.9273906655603\n  },\n  \"should_evaluate_filter_after_delay\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3705e53c-1bad-4fb5-b62a-35ed64aa73e0",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Forward replies to support\",\n  \"trigger\": \"subscriber.replied\",\n  \"filters\": {\n    \"filters\": [],\n    \"groups\": [],\n    \"predicate\": \"and\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"forward_reply\",\n      \"metadata\": {\n        \"recipient\": \"support@example.com\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"{{ id }}\",\n  \"creation_date\": \"2020-01-01T00:00:00Z\",\n  \"name\": \"Forward replies to support\",\n  \"status\": \"inactive\",\n  \"trigger\": \"subscriber.replied\",\n  \"actions\": [\n    {\n      \"type\": \"forward_reply\",\n      \"metadata\": {\n        \"recipient\": \"support@example.com\"\n      },\n      \"timing\": null\n    }\n  ],\n  \"filters\": {\n    \"filters\": [],\n    \"groups\": [],\n    \"predicate\": \"and\"\n  },\n  \"metadata\": {},\n  \"should_evaluate_filter_after_delay\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fec54070-d1ee-4d3f-8e3c-cf99060f60b4",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Forward replies to support\",\n  \"trigger\": \"subscriber.replied\",\n  \"filters\": {\n    \"filters\": [],\n    \"groups\": [],\n    \"predicate\": \"and\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"forward_reply\",\n      \"metadata\": {\n        \"recipient\": \"support@example.com\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"filter_invalid__tag\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "be63f2f5-d8ae-4a6c-935b-15106782322c",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Forward replies to support\",\n  \"trigger\": \"subscriber.replied\",\n  \"filters\": {\n    \"filters\": [],\n    \"groups\": [],\n    \"predicate\": \"and\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"forward_reply\",\n      \"metadata\": {\n        \"recipient\": \"support@example.com\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "42330993-3938-47ab-9a4f-ce44ec32094f",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Forward replies to support\",\n  \"trigger\": \"subscriber.replied\",\n  \"filters\": {\n    \"filters\": [],\n    \"groups\": [],\n    \"predicate\": \"and\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"forward_reply\",\n      \"metadata\": {\n        \"recipient\": \"support@example.com\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "54788c0a-528b-4332-a254-e4c5f055acb9",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Forward replies to support\",\n  \"trigger\": \"subscriber.replied\",\n  \"filters\": {\n    \"filters\": [],\n    \"groups\": [],\n    \"predicate\": \"and\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"forward_reply\",\n      \"metadata\": {\n        \"recipient\": \"support@example.com\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4c6f1df9-7a71-40e3-a49e-9e3678d817d1",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Forward replies to support\",\n  \"trigger\": \"subscriber.replied\",\n  \"filters\": {\n    \"filters\": [],\n    \"groups\": [],\n    \"predicate\": \"and\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"forward_reply\",\n      \"metadata\": {\n        \"recipient\": \"support@example.com\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"type\": \"string\",\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "43ffa81e-f803-4613-bf65-539c0353168c",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Forward replies to support\",\n  \"trigger\": \"subscriber.replied\",\n  \"filters\": {\n    \"filters\": [],\n    \"groups\": [],\n    \"predicate\": \"and\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"forward_reply\",\n      \"metadata\": {\n        \"recipient\": \"support@example.com\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "8066"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests permitted per minute.",
+                  "key": "X-RateLimit-Limit",
+                  "value": "8066"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests remaining in the current window.",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "8066"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp at which the window resets.",
+                  "key": "X-RateLimit-Reset",
+                  "value": "8066"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f29fa6b9-68a6-4db9-937d-f237620e5a25",
+          "name": "Retrieve Automation",
+          "request": {
+            "name": "Retrieve Automation",
+            "description": {
+              "content": "Retrieve a specific automation by its ID",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "automations",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "82a6fc25-5284-4215-8fa8-503478690792",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"{{ id }}\",\n  \"creation_date\": \"2020-01-01T00:00:00Z\",\n  \"name\": \"Forward replies to support\",\n  \"status\": \"inactive\",\n  \"trigger\": \"subscriber.replied\",\n  \"actions\": [\n    {\n      \"type\": \"forward_reply\",\n      \"metadata\": {\n        \"recipient\": \"support@example.com\"\n      },\n      \"timing\": null\n    }\n  ],\n  \"filters\": {\n    \"filters\": [],\n    \"groups\": [],\n    \"predicate\": \"and\"\n  },\n  \"metadata\": {},\n  \"should_evaluate_filter_after_delay\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d6b0d36-79c3-4b77-adb0-8bf3e1601c40",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "25554d7c-df4e-49cf-9bb1-0524bc9c682c",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9bd8e47a-44c1-4a6e-8760-409e0eb6e8c1",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "94203800-85d2-4951-9be7-7c93fc286d77",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4475d19b-7367-4808-9d33-3475ac6d7576",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "8066"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests permitted per minute.",
+                  "key": "X-RateLimit-Limit",
+                  "value": "8066"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests remaining in the current window.",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "8066"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp at which the window resets.",
+                  "key": "X-RateLimit-Reset",
+                  "value": "8066"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3e5414f8-7f55-4796-8804-ddc55de9f54f",
+          "name": "Update Automation",
+          "request": {
+            "name": "Update Automation",
+            "description": {
+              "content": "Update an automation's properties",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "automations",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"status\": \"<string>\",\n  \"trigger\": \"<string>\",\n  \"timing\": {\n    \"time\": \"<string>\",\n    \"delay\": {\n      \"value\": \"<string>\",\n      \"unit\": \"<string>\",\n      \"time_of_day\": \"<string>\"\n    }\n  },\n  \"actions\": [\n    {\n      \"type\": \"<string>\",\n      \"metadata\": {\n        \"key_0\": 4294.822720193166,\n        \"key_1\": false,\n        \"key_2\": \"string\",\n        \"key_3\": true,\n        \"key_4\": \"string\",\n        \"key_5\": false,\n        \"key_6\": 4382,\n        \"key_7\": 993.5856247241181,\n        \"key_8\": 2848,\n        \"key_9\": \"string\",\n        \"key_10\": \"string\",\n        \"key_11\": true,\n        \"key_12\": false,\n        \"key_13\": true,\n        \"key_14\": 8851.47206290982,\n        \"key_15\": \"string\",\n        \"key_16\": 7896.9552886581905,\n        \"key_17\": true,\n        \"key_18\": true,\n        \"key_19\": \"string\",\n        \"key_20\": 8676,\n        \"key_21\": 6156.796263997704,\n        \"key_22\": false,\n        \"key_23\": 3832,\n        \"key_24\": false,\n        \"key_25\": 7617.536787192448,\n        \"key_26\": \"string\",\n        \"key_27\": false,\n        \"key_28\": 3676,\n        \"key_29\": \"string\",\n        \"key_30\": 5577.281469864661,\n        \"key_31\": \"string\",\n        \"key_32\": \"string\",\n        \"key_33\": 2052\n      },\n      \"timing\": {\n        \"time\": \"<string>\",\n        \"delay\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"metadata\": {\n        \"key_0\": \"string\",\n        \"key_1\": 7469,\n        \"key_2\": 1238,\n        \"key_3\": 7792.523162000814,\n        \"key_4\": true,\n        \"key_5\": 3885,\n        \"key_6\": 4034,\n        \"key_7\": \"string\",\n        \"key_8\": 332.9590184736297,\n        \"key_9\": true,\n        \"key_10\": false,\n        \"key_11\": \"string\",\n        \"key_12\": 2710.8511139332336,\n        \"key_13\": \"string\",\n        \"key_14\": 1199,\n        \"key_15\": false,\n        \"key_16\": 4234.578714669245,\n        \"key_17\": \"string\",\n        \"key_18\": \"string\",\n        \"key_19\": 2942,\n        \"key_20\": \"string\",\n        \"key_21\": false,\n        \"key_22\": 4499,\n        \"key_23\": 3073,\n        \"key_24\": true,\n        \"key_25\": 4198,\n        \"key_26\": 6750,\n        \"key_27\": \"string\",\n        \"key_28\": \"string\",\n        \"key_29\": 1474,\n        \"key_30\": 6589,\n        \"key_31\": true,\n        \"key_32\": 5413,\n        \"key_33\": false,\n        \"key_34\": true,\n        \"key_35\": 9840.554289668678,\n        \"key_36\": \"string\",\n        \"key_37\": true,\n        \"key_38\": true,\n        \"key_39\": 3838,\n        \"key_40\": false,\n        \"key_41\": 5123.653451410961,\n        \"key_42\": \"string\",\n        \"key_43\": 617.8392914289121,\n        \"key_44\": 716.3552850933952,\n        \"key_45\": true,\n        \"key_46\": 3773.7113619887673,\n        \"key_47\": true,\n        \"key_48\": 6115,\n        \"key_49\": true,\n        \"key_50\": 4452.66828608202,\n        \"key_51\": \"string\",\n        \"key_52\": 1241.05212457309,\n        \"key_53\": false,\n        \"key_54\": false,\n        \"key_55\": true,\n        \"key_56\": \"string\",\n        \"key_57\": 1985,\n        \"key_58\": 1798,\n        \"key_59\": false,\n        \"key_60\": 7379.941094577352,\n        \"key_61\": 9119.94371170391,\n        \"key_62\": true,\n        \"key_63\": false,\n        \"key_64\": false,\n        \"key_65\": false,\n        \"key_66\": \"string\",\n        \"key_67\": true,\n        \"key_68\": 2903.1003271799837,\n        \"key_69\": 1468,\n        \"key_70\": true,\n        \"key_71\": 6797.308558421801,\n        \"key_72\": 5205.308027920417,\n        \"key_73\": 2047.0505843592157,\n        \"key_74\": 2368.187336095384,\n        \"key_75\": 8514.482560675586,\n        \"key_76\": true,\n        \"key_77\": \"string\",\n        \"key_78\": 6154,\n        \"key_79\": 4031,\n        \"key_80\": 293,\n        \"key_81\": \"string\",\n        \"key_82\": \"string\",\n        \"key_83\": 2200,\n        \"key_84\": true,\n        \"key_85\": false,\n        \"key_86\": \"string\",\n        \"key_87\": \"string\",\n        \"key_88\": \"string\",\n        \"key_89\": 2228.6780707465214,\n        \"key_90\": \"string\",\n        \"key_91\": 4682.422125968371,\n        \"key_92\": true\n      },\n      \"timing\": {\n        \"time\": \"<string>\",\n        \"delay\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    }\n  ],\n  \"filters\": {\n    \"filters\": [\n      {\n        \"field\": \"<string>\",\n        \"operator\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"operator\": \"<string>\",\n        \"value\": \"<string>\"\n      }\n    ],\n    \"groups\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      }\n    ],\n    \"predicate\": \"<string>\"\n  },\n  \"metadata\": {\n    \"key_0\": false,\n    \"key_1\": false,\n    \"key_2\": false,\n    \"key_3\": false,\n    \"key_4\": 4444,\n    \"key_5\": 1127.8352477093213,\n    \"key_6\": 6572,\n    \"key_7\": 5615,\n    \"key_8\": \"string\",\n    \"key_9\": \"string\",\n    \"key_10\": \"string\",\n    \"key_11\": \"string\",\n    \"key_12\": 8446,\n    \"key_13\": \"string\",\n    \"key_14\": false,\n    \"key_15\": true,\n    \"key_16\": 8920,\n    \"key_17\": 4284.423349603284,\n    \"key_18\": 6850,\n    \"key_19\": false,\n    \"key_20\": 927.0908181142134,\n    \"key_21\": \"string\",\n    \"key_22\": false,\n    \"key_23\": \"string\",\n    \"key_24\": \"string\",\n    \"key_25\": \"string\",\n    \"key_26\": \"string\",\n    \"key_27\": false,\n    \"key_28\": 1948,\n    \"key_29\": true,\n    \"key_30\": \"string\",\n    \"key_31\": true,\n    \"key_32\": true,\n    \"key_33\": false,\n    \"key_34\": false,\n    \"key_35\": \"string\",\n    \"key_36\": false\n  },\n  \"should_evaluate_filter_after_delay\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e59dfbd8-6755-44cf-9f0d-658c5071bd89",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"status\": \"active\",\n  \"trigger\": \"subscriber.resumed\",\n  \"timing\": {\n    \"time\": \"delay\",\n    \"delay\": {\n      \"value\": \"string\",\n      \"unit\": \"days\",\n      \"time_of_day\": \"evening\"\n    }\n  },\n  \"actions\": [\n    {\n      \"type\": \"ungift_premium_subscription\",\n      \"metadata\": {\n        \"key_0\": 3643.6598510320905,\n        \"key_1\": 7727.358943397677,\n        \"key_2\": false,\n        \"key_3\": 2052.949312697464,\n        \"key_4\": 7444.374575510775,\n        \"key_5\": 1492,\n        \"key_6\": false,\n        \"key_7\": false,\n        \"key_8\": \"string\",\n        \"key_9\": 1608,\n        \"key_10\": \"string\",\n        \"key_11\": \"string\",\n        \"key_12\": 9993.312299413896,\n        \"key_13\": \"string\",\n        \"key_14\": 7587.233172824142,\n        \"key_15\": \"string\",\n        \"key_16\": 1308.5771086171571,\n        \"key_17\": true,\n        \"key_18\": true,\n        \"key_19\": false,\n        \"key_20\": 1965,\n        \"key_21\": 8343,\n        \"key_22\": 1870,\n        \"key_23\": true,\n        \"key_24\": 2861.0389544480795,\n        \"key_25\": 5596.9757761761975,\n        \"key_26\": true,\n        \"key_27\": true,\n        \"key_28\": true,\n        \"key_29\": 9082,\n        \"key_30\": 58,\n        \"key_31\": \"string\",\n        \"key_32\": 8666.595138422661,\n        \"key_33\": 2828.057451816606,\n        \"key_34\": false,\n        \"key_35\": 1770.4445951889659,\n        \"key_36\": 8460,\n        \"key_37\": 9368.415138727334,\n        \"key_38\": 7196,\n        \"key_39\": \"string\",\n        \"key_40\": \"string\",\n        \"key_41\": true,\n        \"key_42\": \"string\",\n        \"key_43\": 8204.032490078627,\n        \"key_44\": 3427.1419986435826,\n        \"key_45\": 8143.288511233987,\n        \"key_46\": 9379.784728416882,\n        \"key_47\": 633,\n        \"key_48\": 5360,\n        \"key_49\": 6106,\n        \"key_50\": \"string\",\n        \"key_51\": \"string\",\n        \"key_52\": false,\n        \"key_53\": 1458.608580456322,\n        \"key_54\": 6738,\n        \"key_55\": 3480.8915331929015,\n        \"key_56\": 9961,\n        \"key_57\": true,\n        \"key_58\": \"string\",\n        \"key_59\": true,\n        \"key_60\": \"string\",\n        \"key_61\": \"string\",\n        \"key_62\": 456.7880916418532,\n        \"key_63\": \"string\",\n        \"key_64\": false,\n        \"key_65\": 2626.4124636658835,\n        \"key_66\": \"string\",\n        \"key_67\": 1581,\n        \"key_68\": \"string\",\n        \"key_69\": true,\n        \"key_70\": 8404.561123967113,\n        \"key_71\": 8965.601423120814,\n        \"key_72\": 3186,\n        \"key_73\": true,\n        \"key_74\": 7696.575421117303\n      },\n      \"timing\": {\n        \"time\": \"immediate\",\n        \"delay\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    {\n      \"type\": \"create_mastodon_post\",\n      \"metadata\": {\n        \"key_0\": true,\n        \"key_1\": true,\n        \"key_2\": 2204.4243230463812,\n        \"key_3\": \"string\",\n        \"key_4\": \"string\",\n        \"key_5\": 60.3704611968503,\n        \"key_6\": 7517.321055100431,\n        \"key_7\": 5095,\n        \"key_8\": 6479.545294146054,\n        \"key_9\": true,\n        \"key_10\": 634.2328929724227,\n        \"key_11\": false,\n        \"key_12\": 6858.191931130453,\n        \"key_13\": true,\n        \"key_14\": false,\n        \"key_15\": \"string\",\n        \"key_16\": 1490,\n        \"key_17\": false,\n        \"key_18\": 7045,\n        \"key_19\": 324.36183569171664,\n        \"key_20\": \"string\",\n        \"key_21\": 7152.759810287182,\n        \"key_22\": 6908,\n        \"key_23\": 9704.181663758287,\n        \"key_24\": 8935.882801996231,\n        \"key_25\": true,\n        \"key_26\": 3526,\n        \"key_27\": \"string\",\n        \"key_28\": 7652.927157611258,\n        \"key_29\": 9265.394146227123,\n        \"key_30\": \"string\",\n        \"key_31\": 556.7961589852988,\n        \"key_32\": 2598,\n        \"key_33\": 887,\n        \"key_34\": false,\n        \"key_35\": 5579,\n        \"key_36\": 3949.1237122980015,\n        \"key_37\": 2352.0218621973654,\n        \"key_38\": \"string\",\n        \"key_39\": true,\n        \"key_40\": 7426.247010075729,\n        \"key_41\": \"string\",\n        \"key_42\": true,\n        \"key_43\": 8495.247222927484,\n        \"key_44\": \"string\",\n        \"key_45\": \"string\",\n        \"key_46\": 2946.5423613097296,\n        \"key_47\": false,\n        \"key_48\": false,\n        \"key_49\": 8855,\n        \"key_50\": \"string\",\n        \"key_51\": true,\n        \"key_52\": 6425.177816465607,\n        \"key_53\": 5132,\n        \"key_54\": 8227.816205355068,\n        \"key_55\": false,\n        \"key_56\": 3072,\n        \"key_57\": 503,\n        \"key_58\": \"string\",\n        \"key_59\": true,\n        \"key_60\": 269,\n        \"key_61\": \"string\",\n        \"key_62\": true,\n        \"key_63\": false,\n        \"key_64\": 939,\n        \"key_65\": 4012,\n        \"key_66\": 7563,\n        \"key_67\": true,\n        \"key_68\": \"string\",\n        \"key_69\": true,\n        \"key_70\": \"string\",\n        \"key_71\": 8872,\n        \"key_72\": true,\n        \"key_73\": 3337.752565101427,\n        \"key_74\": 7819.9986786257305,\n        \"key_75\": false,\n        \"key_76\": false,\n        \"key_77\": \"string\",\n        \"key_78\": false,\n        \"key_79\": false,\n        \"key_80\": 4418,\n        \"key_81\": 3421.545563168399,\n        \"key_82\": true,\n        \"key_83\": \"string\",\n        \"key_84\": 4443.275942674693,\n        \"key_85\": 3390.0982735319494,\n        \"key_86\": 7349,\n        \"key_87\": false,\n        \"key_88\": 3664.459903199758,\n        \"key_89\": 5967.571811791717\n      },\n      \"timing\": {\n        \"time\": \"delay\",\n        \"delay\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    }\n  ],\n  \"filters\": {\n    \"filters\": [\n      {\n        \"field\": \"string\",\n        \"operator\": \"less_than\",\n        \"value\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"operator\": \"is_not_empty\",\n        \"value\": \"string\"\n      }\n    ],\n    \"groups\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      }\n    ],\n    \"predicate\": \"or\"\n  },\n  \"metadata\": {\n    \"key_0\": \"string\",\n    \"key_1\": false,\n    \"key_2\": 6635,\n    \"key_3\": 1406,\n    \"key_4\": \"string\",\n    \"key_5\": \"string\",\n    \"key_6\": \"string\",\n    \"key_7\": \"string\",\n    \"key_8\": 336,\n    \"key_9\": false,\n    \"key_10\": false,\n    \"key_11\": 5670,\n    \"key_12\": false\n  },\n  \"should_evaluate_filter_after_delay\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"creation_date\": \"2014-07-07T10:57:27.409Z\",\n  \"name\": \"string\",\n  \"status\": \"inactive\",\n  \"trigger\": \"form.created\",\n  \"actions\": [\n    {\n      \"type\": \"create_gift_subscriber\",\n      \"metadata\": {\n        \"key_0\": 9320.508350946693,\n        \"key_1\": true,\n        \"key_2\": 306\n      },\n      \"timing\": {\n        \"time\": \"immediate\",\n        \"delay\": {\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unit\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"time_of_day\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    },\n    {\n      \"type\": \"create_bluesky_post\",\n      \"metadata\": {\n        \"key_0\": \"string\",\n        \"key_1\": 8660\n      },\n      \"timing\": {\n        \"time\": \"delay\",\n        \"delay\": {\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unit\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"time_of_day\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    }\n  ],\n  \"filters\": {\n    \"filters\": [\n      {\n        \"field\": \"string\",\n        \"operator\": \"equals\",\n        \"value\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"operator\": \"not_equals\",\n        \"value\": \"string\"\n      }\n    ],\n    \"groups\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      }\n    ],\n    \"predicate\": \"or\"\n  },\n  \"metadata\": {\n    \"key_0\": \"string\"\n  },\n  \"should_evaluate_filter_after_delay\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "556a2343-de36-4c97-89ba-023ed4bb7a43",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"status\": \"active\",\n  \"trigger\": \"subscriber.resumed\",\n  \"timing\": {\n    \"time\": \"delay\",\n    \"delay\": {\n      \"value\": \"string\",\n      \"unit\": \"days\",\n      \"time_of_day\": \"evening\"\n    }\n  },\n  \"actions\": [\n    {\n      \"type\": \"ungift_premium_subscription\",\n      \"metadata\": {\n        \"key_0\": 3643.6598510320905,\n        \"key_1\": 7727.358943397677,\n        \"key_2\": false,\n        \"key_3\": 2052.949312697464,\n        \"key_4\": 7444.374575510775,\n        \"key_5\": 1492,\n        \"key_6\": false,\n        \"key_7\": false,\n        \"key_8\": \"string\",\n        \"key_9\": 1608,\n        \"key_10\": \"string\",\n        \"key_11\": \"string\",\n        \"key_12\": 9993.312299413896,\n        \"key_13\": \"string\",\n        \"key_14\": 7587.233172824142,\n        \"key_15\": \"string\",\n        \"key_16\": 1308.5771086171571,\n        \"key_17\": true,\n        \"key_18\": true,\n        \"key_19\": false,\n        \"key_20\": 1965,\n        \"key_21\": 8343,\n        \"key_22\": 1870,\n        \"key_23\": true,\n        \"key_24\": 2861.0389544480795,\n        \"key_25\": 5596.9757761761975,\n        \"key_26\": true,\n        \"key_27\": true,\n        \"key_28\": true,\n        \"key_29\": 9082,\n        \"key_30\": 58,\n        \"key_31\": \"string\",\n        \"key_32\": 8666.595138422661,\n        \"key_33\": 2828.057451816606,\n        \"key_34\": false,\n        \"key_35\": 1770.4445951889659,\n        \"key_36\": 8460,\n        \"key_37\": 9368.415138727334,\n        \"key_38\": 7196,\n        \"key_39\": \"string\",\n        \"key_40\": \"string\",\n        \"key_41\": true,\n        \"key_42\": \"string\",\n        \"key_43\": 8204.032490078627,\n        \"key_44\": 3427.1419986435826,\n        \"key_45\": 8143.288511233987,\n        \"key_46\": 9379.784728416882,\n        \"key_47\": 633,\n        \"key_48\": 5360,\n        \"key_49\": 6106,\n        \"key_50\": \"string\",\n        \"key_51\": \"string\",\n        \"key_52\": false,\n        \"key_53\": 1458.608580456322,\n        \"key_54\": 6738,\n        \"key_55\": 3480.8915331929015,\n        \"key_56\": 9961,\n        \"key_57\": true,\n        \"key_58\": \"string\",\n        \"key_59\": true,\n        \"key_60\": \"string\",\n        \"key_61\": \"string\",\n        \"key_62\": 456.7880916418532,\n        \"key_63\": \"string\",\n        \"key_64\": false,\n        \"key_65\": 2626.4124636658835,\n        \"key_66\": \"string\",\n        \"key_67\": 1581,\n        \"key_68\": \"string\",\n        \"key_69\": true,\n        \"key_70\": 8404.561123967113,\n        \"key_71\": 8965.601423120814,\n        \"key_72\": 3186,\n        \"key_73\": true,\n        \"key_74\": 7696.575421117303\n      },\n      \"timing\": {\n        \"time\": \"immediate\",\n        \"delay\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    {\n      \"type\": \"create_mastodon_post\",\n      \"metadata\": {\n        \"key_0\": true,\n        \"key_1\": true,\n        \"key_2\": 2204.4243230463812,\n        \"key_3\": \"string\",\n        \"key_4\": \"string\",\n        \"key_5\": 60.3704611968503,\n        \"key_6\": 7517.321055100431,\n        \"key_7\": 5095,\n        \"key_8\": 6479.545294146054,\n        \"key_9\": true,\n        \"key_10\": 634.2328929724227,\n        \"key_11\": false,\n        \"key_12\": 6858.191931130453,\n        \"key_13\": true,\n        \"key_14\": false,\n        \"key_15\": \"string\",\n        \"key_16\": 1490,\n        \"key_17\": false,\n        \"key_18\": 7045,\n        \"key_19\": 324.36183569171664,\n        \"key_20\": \"string\",\n        \"key_21\": 7152.759810287182,\n        \"key_22\": 6908,\n        \"key_23\": 9704.181663758287,\n        \"key_24\": 8935.882801996231,\n        \"key_25\": true,\n        \"key_26\": 3526,\n        \"key_27\": \"string\",\n        \"key_28\": 7652.927157611258,\n        \"key_29\": 9265.394146227123,\n        \"key_30\": \"string\",\n        \"key_31\": 556.7961589852988,\n        \"key_32\": 2598,\n        \"key_33\": 887,\n        \"key_34\": false,\n        \"key_35\": 5579,\n        \"key_36\": 3949.1237122980015,\n        \"key_37\": 2352.0218621973654,\n        \"key_38\": \"string\",\n        \"key_39\": true,\n        \"key_40\": 7426.247010075729,\n        \"key_41\": \"string\",\n        \"key_42\": true,\n        \"key_43\": 8495.247222927484,\n        \"key_44\": \"string\",\n        \"key_45\": \"string\",\n        \"key_46\": 2946.5423613097296,\n        \"key_47\": false,\n        \"key_48\": false,\n        \"key_49\": 8855,\n        \"key_50\": \"string\",\n        \"key_51\": true,\n        \"key_52\": 6425.177816465607,\n        \"key_53\": 5132,\n        \"key_54\": 8227.816205355068,\n        \"key_55\": false,\n        \"key_56\": 3072,\n        \"key_57\": 503,\n        \"key_58\": \"string\",\n        \"key_59\": true,\n        \"key_60\": 269,\n        \"key_61\": \"string\",\n        \"key_62\": true,\n        \"key_63\": false,\n        \"key_64\": 939,\n        \"key_65\": 4012,\n        \"key_66\": 7563,\n        \"key_67\": true,\n        \"key_68\": \"string\",\n        \"key_69\": true,\n        \"key_70\": \"string\",\n        \"key_71\": 8872,\n        \"key_72\": true,\n        \"key_73\": 3337.752565101427,\n        \"key_74\": 7819.9986786257305,\n        \"key_75\": false,\n        \"key_76\": false,\n        \"key_77\": \"string\",\n        \"key_78\": false,\n        \"key_79\": false,\n        \"key_80\": 4418,\n        \"key_81\": 3421.545563168399,\n        \"key_82\": true,\n        \"key_83\": \"string\",\n        \"key_84\": 4443.275942674693,\n        \"key_85\": 3390.0982735319494,\n        \"key_86\": 7349,\n        \"key_87\": false,\n        \"key_88\": 3664.459903199758,\n        \"key_89\": 5967.571811791717\n      },\n      \"timing\": {\n        \"time\": \"delay\",\n        \"delay\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    }\n  ],\n  \"filters\": {\n    \"filters\": [\n      {\n        \"field\": \"string\",\n        \"operator\": \"less_than\",\n        \"value\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"operator\": \"is_not_empty\",\n        \"value\": \"string\"\n      }\n    ],\n    \"groups\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      }\n    ],\n    \"predicate\": \"or\"\n  },\n  \"metadata\": {\n    \"key_0\": \"string\",\n    \"key_1\": false,\n    \"key_2\": 6635,\n    \"key_3\": 1406,\n    \"key_4\": \"string\",\n    \"key_5\": \"string\",\n    \"key_6\": \"string\",\n    \"key_7\": \"string\",\n    \"key_8\": 336,\n    \"key_9\": false,\n    \"key_10\": false,\n    \"key_11\": 5670,\n    \"key_12\": false\n  },\n  \"should_evaluate_filter_after_delay\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "07c8511e-5418-4f7b-806f-5242c5c4068c",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"status\": \"active\",\n  \"trigger\": \"subscriber.resumed\",\n  \"timing\": {\n    \"time\": \"delay\",\n    \"delay\": {\n      \"value\": \"string\",\n      \"unit\": \"days\",\n      \"time_of_day\": \"evening\"\n    }\n  },\n  \"actions\": [\n    {\n      \"type\": \"ungift_premium_subscription\",\n      \"metadata\": {\n        \"key_0\": 3643.6598510320905,\n        \"key_1\": 7727.358943397677,\n        \"key_2\": false,\n        \"key_3\": 2052.949312697464,\n        \"key_4\": 7444.374575510775,\n        \"key_5\": 1492,\n        \"key_6\": false,\n        \"key_7\": false,\n        \"key_8\": \"string\",\n        \"key_9\": 1608,\n        \"key_10\": \"string\",\n        \"key_11\": \"string\",\n        \"key_12\": 9993.312299413896,\n        \"key_13\": \"string\",\n        \"key_14\": 7587.233172824142,\n        \"key_15\": \"string\",\n        \"key_16\": 1308.5771086171571,\n        \"key_17\": true,\n        \"key_18\": true,\n        \"key_19\": false,\n        \"key_20\": 1965,\n        \"key_21\": 8343,\n        \"key_22\": 1870,\n        \"key_23\": true,\n        \"key_24\": 2861.0389544480795,\n        \"key_25\": 5596.9757761761975,\n        \"key_26\": true,\n        \"key_27\": true,\n        \"key_28\": true,\n        \"key_29\": 9082,\n        \"key_30\": 58,\n        \"key_31\": \"string\",\n        \"key_32\": 8666.595138422661,\n        \"key_33\": 2828.057451816606,\n        \"key_34\": false,\n        \"key_35\": 1770.4445951889659,\n        \"key_36\": 8460,\n        \"key_37\": 9368.415138727334,\n        \"key_38\": 7196,\n        \"key_39\": \"string\",\n        \"key_40\": \"string\",\n        \"key_41\": true,\n        \"key_42\": \"string\",\n        \"key_43\": 8204.032490078627,\n        \"key_44\": 3427.1419986435826,\n        \"key_45\": 8143.288511233987,\n        \"key_46\": 9379.784728416882,\n        \"key_47\": 633,\n        \"key_48\": 5360,\n        \"key_49\": 6106,\n        \"key_50\": \"string\",\n        \"key_51\": \"string\",\n        \"key_52\": false,\n        \"key_53\": 1458.608580456322,\n        \"key_54\": 6738,\n        \"key_55\": 3480.8915331929015,\n        \"key_56\": 9961,\n        \"key_57\": true,\n        \"key_58\": \"string\",\n        \"key_59\": true,\n        \"key_60\": \"string\",\n        \"key_61\": \"string\",\n        \"key_62\": 456.7880916418532,\n        \"key_63\": \"string\",\n        \"key_64\": false,\n        \"key_65\": 2626.4124636658835,\n        \"key_66\": \"string\",\n        \"key_67\": 1581,\n        \"key_68\": \"string\",\n        \"key_69\": true,\n        \"key_70\": 8404.561123967113,\n        \"key_71\": 8965.601423120814,\n        \"key_72\": 3186,\n        \"key_73\": true,\n        \"key_74\": 7696.575421117303\n      },\n      \"timing\": {\n        \"time\": \"immediate\",\n        \"delay\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    {\n      \"type\": \"create_mastodon_post\",\n      \"metadata\": {\n        \"key_0\": true,\n        \"key_1\": true,\n        \"key_2\": 2204.4243230463812,\n        \"key_3\": \"string\",\n        \"key_4\": \"string\",\n        \"key_5\": 60.3704611968503,\n        \"key_6\": 7517.321055100431,\n        \"key_7\": 5095,\n        \"key_8\": 6479.545294146054,\n        \"key_9\": true,\n        \"key_10\": 634.2328929724227,\n        \"key_11\": false,\n        \"key_12\": 6858.191931130453,\n        \"key_13\": true,\n        \"key_14\": false,\n        \"key_15\": \"string\",\n        \"key_16\": 1490,\n        \"key_17\": false,\n        \"key_18\": 7045,\n        \"key_19\": 324.36183569171664,\n        \"key_20\": \"string\",\n        \"key_21\": 7152.759810287182,\n        \"key_22\": 6908,\n        \"key_23\": 9704.181663758287,\n        \"key_24\": 8935.882801996231,\n        \"key_25\": true,\n        \"key_26\": 3526,\n        \"key_27\": \"string\",\n        \"key_28\": 7652.927157611258,\n        \"key_29\": 9265.394146227123,\n        \"key_30\": \"string\",\n        \"key_31\": 556.7961589852988,\n        \"key_32\": 2598,\n        \"key_33\": 887,\n        \"key_34\": false,\n        \"key_35\": 5579,\n        \"key_36\": 3949.1237122980015,\n        \"key_37\": 2352.0218621973654,\n        \"key_38\": \"string\",\n        \"key_39\": true,\n        \"key_40\": 7426.247010075729,\n        \"key_41\": \"string\",\n        \"key_42\": true,\n        \"key_43\": 8495.247222927484,\n        \"key_44\": \"string\",\n        \"key_45\": \"string\",\n        \"key_46\": 2946.5423613097296,\n        \"key_47\": false,\n        \"key_48\": false,\n        \"key_49\": 8855,\n        \"key_50\": \"string\",\n        \"key_51\": true,\n        \"key_52\": 6425.177816465607,\n        \"key_53\": 5132,\n        \"key_54\": 8227.816205355068,\n        \"key_55\": false,\n        \"key_56\": 3072,\n        \"key_57\": 503,\n        \"key_58\": \"string\",\n        \"key_59\": true,\n        \"key_60\": 269,\n        \"key_61\": \"string\",\n        \"key_62\": true,\n        \"key_63\": false,\n        \"key_64\": 939,\n        \"key_65\": 4012,\n        \"key_66\": 7563,\n        \"key_67\": true,\n        \"key_68\": \"string\",\n        \"key_69\": true,\n        \"key_70\": \"string\",\n        \"key_71\": 8872,\n        \"key_72\": true,\n        \"key_73\": 3337.752565101427,\n        \"key_74\": 7819.9986786257305,\n        \"key_75\": false,\n        \"key_76\": false,\n        \"key_77\": \"string\",\n        \"key_78\": false,\n        \"key_79\": false,\n        \"key_80\": 4418,\n        \"key_81\": 3421.545563168399,\n        \"key_82\": true,\n        \"key_83\": \"string\",\n        \"key_84\": 4443.275942674693,\n        \"key_85\": 3390.0982735319494,\n        \"key_86\": 7349,\n        \"key_87\": false,\n        \"key_88\": 3664.459903199758,\n        \"key_89\": 5967.571811791717\n      },\n      \"timing\": {\n        \"time\": \"delay\",\n        \"delay\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    }\n  ],\n  \"filters\": {\n    \"filters\": [\n      {\n        \"field\": \"string\",\n        \"operator\": \"less_than\",\n        \"value\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"operator\": \"is_not_empty\",\n        \"value\": \"string\"\n      }\n    ],\n    \"groups\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      }\n    ],\n    \"predicate\": \"or\"\n  },\n  \"metadata\": {\n    \"key_0\": \"string\",\n    \"key_1\": false,\n    \"key_2\": 6635,\n    \"key_3\": 1406,\n    \"key_4\": \"string\",\n    \"key_5\": \"string\",\n    \"key_6\": \"string\",\n    \"key_7\": \"string\",\n    \"key_8\": 336,\n    \"key_9\": false,\n    \"key_10\": false,\n    \"key_11\": 5670,\n    \"key_12\": false\n  },\n  \"should_evaluate_filter_after_delay\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0a7ad428-614c-4d0e-881a-dca4fefc5a09",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"status\": \"active\",\n  \"trigger\": \"subscriber.resumed\",\n  \"timing\": {\n    \"time\": \"delay\",\n    \"delay\": {\n      \"value\": \"string\",\n      \"unit\": \"days\",\n      \"time_of_day\": \"evening\"\n    }\n  },\n  \"actions\": [\n    {\n      \"type\": \"ungift_premium_subscription\",\n      \"metadata\": {\n        \"key_0\": 3643.6598510320905,\n        \"key_1\": 7727.358943397677,\n        \"key_2\": false,\n        \"key_3\": 2052.949312697464,\n        \"key_4\": 7444.374575510775,\n        \"key_5\": 1492,\n        \"key_6\": false,\n        \"key_7\": false,\n        \"key_8\": \"string\",\n        \"key_9\": 1608,\n        \"key_10\": \"string\",\n        \"key_11\": \"string\",\n        \"key_12\": 9993.312299413896,\n        \"key_13\": \"string\",\n        \"key_14\": 7587.233172824142,\n        \"key_15\": \"string\",\n        \"key_16\": 1308.5771086171571,\n        \"key_17\": true,\n        \"key_18\": true,\n        \"key_19\": false,\n        \"key_20\": 1965,\n        \"key_21\": 8343,\n        \"key_22\": 1870,\n        \"key_23\": true,\n        \"key_24\": 2861.0389544480795,\n        \"key_25\": 5596.9757761761975,\n        \"key_26\": true,\n        \"key_27\": true,\n        \"key_28\": true,\n        \"key_29\": 9082,\n        \"key_30\": 58,\n        \"key_31\": \"string\",\n        \"key_32\": 8666.595138422661,\n        \"key_33\": 2828.057451816606,\n        \"key_34\": false,\n        \"key_35\": 1770.4445951889659,\n        \"key_36\": 8460,\n        \"key_37\": 9368.415138727334,\n        \"key_38\": 7196,\n        \"key_39\": \"string\",\n        \"key_40\": \"string\",\n        \"key_41\": true,\n        \"key_42\": \"string\",\n        \"key_43\": 8204.032490078627,\n        \"key_44\": 3427.1419986435826,\n        \"key_45\": 8143.288511233987,\n        \"key_46\": 9379.784728416882,\n        \"key_47\": 633,\n        \"key_48\": 5360,\n        \"key_49\": 6106,\n        \"key_50\": \"string\",\n        \"key_51\": \"string\",\n        \"key_52\": false,\n        \"key_53\": 1458.608580456322,\n        \"key_54\": 6738,\n        \"key_55\": 3480.8915331929015,\n        \"key_56\": 9961,\n        \"key_57\": true,\n        \"key_58\": \"string\",\n        \"key_59\": true,\n        \"key_60\": \"string\",\n        \"key_61\": \"string\",\n        \"key_62\": 456.7880916418532,\n        \"key_63\": \"string\",\n        \"key_64\": false,\n        \"key_65\": 2626.4124636658835,\n        \"key_66\": \"string\",\n        \"key_67\": 1581,\n        \"key_68\": \"string\",\n        \"key_69\": true,\n        \"key_70\": 8404.561123967113,\n        \"key_71\": 8965.601423120814,\n        \"key_72\": 3186,\n        \"key_73\": true,\n        \"key_74\": 7696.575421117303\n      },\n      \"timing\": {\n        \"time\": \"immediate\",\n        \"delay\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    {\n      \"type\": \"create_mastodon_post\",\n      \"metadata\": {\n        \"key_0\": true,\n        \"key_1\": true,\n        \"key_2\": 2204.4243230463812,\n        \"key_3\": \"string\",\n        \"key_4\": \"string\",\n        \"key_5\": 60.3704611968503,\n        \"key_6\": 7517.321055100431,\n        \"key_7\": 5095,\n        \"key_8\": 6479.545294146054,\n        \"key_9\": true,\n        \"key_10\": 634.2328929724227,\n        \"key_11\": false,\n        \"key_12\": 6858.191931130453,\n        \"key_13\": true,\n        \"key_14\": false,\n        \"key_15\": \"string\",\n        \"key_16\": 1490,\n        \"key_17\": false,\n        \"key_18\": 7045,\n        \"key_19\": 324.36183569171664,\n        \"key_20\": \"string\",\n        \"key_21\": 7152.759810287182,\n        \"key_22\": 6908,\n        \"key_23\": 9704.181663758287,\n        \"key_24\": 8935.882801996231,\n        \"key_25\": true,\n        \"key_26\": 3526,\n        \"key_27\": \"string\",\n        \"key_28\": 7652.927157611258,\n        \"key_29\": 9265.394146227123,\n        \"key_30\": \"string\",\n        \"key_31\": 556.7961589852988,\n        \"key_32\": 2598,\n        \"key_33\": 887,\n        \"key_34\": false,\n        \"key_35\": 5579,\n        \"key_36\": 3949.1237122980015,\n        \"key_37\": 2352.0218621973654,\n        \"key_38\": \"string\",\n        \"key_39\": true,\n        \"key_40\": 7426.247010075729,\n        \"key_41\": \"string\",\n        \"key_42\": true,\n        \"key_43\": 8495.247222927484,\n        \"key_44\": \"string\",\n        \"key_45\": \"string\",\n        \"key_46\": 2946.5423613097296,\n        \"key_47\": false,\n        \"key_48\": false,\n        \"key_49\": 8855,\n        \"key_50\": \"string\",\n        \"key_51\": true,\n        \"key_52\": 6425.177816465607,\n        \"key_53\": 5132,\n        \"key_54\": 8227.816205355068,\n        \"key_55\": false,\n        \"key_56\": 3072,\n        \"key_57\": 503,\n        \"key_58\": \"string\",\n        \"key_59\": true,\n        \"key_60\": 269,\n        \"key_61\": \"string\",\n        \"key_62\": true,\n        \"key_63\": false,\n        \"key_64\": 939,\n        \"key_65\": 4012,\n        \"key_66\": 7563,\n        \"key_67\": true,\n        \"key_68\": \"string\",\n        \"key_69\": true,\n        \"key_70\": \"string\",\n        \"key_71\": 8872,\n        \"key_72\": true,\n        \"key_73\": 3337.752565101427,\n        \"key_74\": 7819.9986786257305,\n        \"key_75\": false,\n        \"key_76\": false,\n        \"key_77\": \"string\",\n        \"key_78\": false,\n        \"key_79\": false,\n        \"key_80\": 4418,\n        \"key_81\": 3421.545563168399,\n        \"key_82\": true,\n        \"key_83\": \"string\",\n        \"key_84\": 4443.275942674693,\n        \"key_85\": 3390.0982735319494,\n        \"key_86\": 7349,\n        \"key_87\": false,\n        \"key_88\": 3664.459903199758,\n        \"key_89\": 5967.571811791717\n      },\n      \"timing\": {\n        \"time\": \"delay\",\n        \"delay\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    }\n  ],\n  \"filters\": {\n    \"filters\": [\n      {\n        \"field\": \"string\",\n        \"operator\": \"less_than\",\n        \"value\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"operator\": \"is_not_empty\",\n        \"value\": \"string\"\n      }\n    ],\n    \"groups\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      }\n    ],\n    \"predicate\": \"or\"\n  },\n  \"metadata\": {\n    \"key_0\": \"string\",\n    \"key_1\": false,\n    \"key_2\": 6635,\n    \"key_3\": 1406,\n    \"key_4\": \"string\",\n    \"key_5\": \"string\",\n    \"key_6\": \"string\",\n    \"key_7\": \"string\",\n    \"key_8\": 336,\n    \"key_9\": false,\n    \"key_10\": false,\n    \"key_11\": 5670,\n    \"key_12\": false\n  },\n  \"should_evaluate_filter_after_delay\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "11dc6721-9461-4cde-9714-f7bb9dd87e63",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"status\": \"active\",\n  \"trigger\": \"subscriber.resumed\",\n  \"timing\": {\n    \"time\": \"delay\",\n    \"delay\": {\n      \"value\": \"string\",\n      \"unit\": \"days\",\n      \"time_of_day\": \"evening\"\n    }\n  },\n  \"actions\": [\n    {\n      \"type\": \"ungift_premium_subscription\",\n      \"metadata\": {\n        \"key_0\": 3643.6598510320905,\n        \"key_1\": 7727.358943397677,\n        \"key_2\": false,\n        \"key_3\": 2052.949312697464,\n        \"key_4\": 7444.374575510775,\n        \"key_5\": 1492,\n        \"key_6\": false,\n        \"key_7\": false,\n        \"key_8\": \"string\",\n        \"key_9\": 1608,\n        \"key_10\": \"string\",\n        \"key_11\": \"string\",\n        \"key_12\": 9993.312299413896,\n        \"key_13\": \"string\",\n        \"key_14\": 7587.233172824142,\n        \"key_15\": \"string\",\n        \"key_16\": 1308.5771086171571,\n        \"key_17\": true,\n        \"key_18\": true,\n        \"key_19\": false,\n        \"key_20\": 1965,\n        \"key_21\": 8343,\n        \"key_22\": 1870,\n        \"key_23\": true,\n        \"key_24\": 2861.0389544480795,\n        \"key_25\": 5596.9757761761975,\n        \"key_26\": true,\n        \"key_27\": true,\n        \"key_28\": true,\n        \"key_29\": 9082,\n        \"key_30\": 58,\n        \"key_31\": \"string\",\n        \"key_32\": 8666.595138422661,\n        \"key_33\": 2828.057451816606,\n        \"key_34\": false,\n        \"key_35\": 1770.4445951889659,\n        \"key_36\": 8460,\n        \"key_37\": 9368.415138727334,\n        \"key_38\": 7196,\n        \"key_39\": \"string\",\n        \"key_40\": \"string\",\n        \"key_41\": true,\n        \"key_42\": \"string\",\n        \"key_43\": 8204.032490078627,\n        \"key_44\": 3427.1419986435826,\n        \"key_45\": 8143.288511233987,\n        \"key_46\": 9379.784728416882,\n        \"key_47\": 633,\n        \"key_48\": 5360,\n        \"key_49\": 6106,\n        \"key_50\": \"string\",\n        \"key_51\": \"string\",\n        \"key_52\": false,\n        \"key_53\": 1458.608580456322,\n        \"key_54\": 6738,\n        \"key_55\": 3480.8915331929015,\n        \"key_56\": 9961,\n        \"key_57\": true,\n        \"key_58\": \"string\",\n        \"key_59\": true,\n        \"key_60\": \"string\",\n        \"key_61\": \"string\",\n        \"key_62\": 456.7880916418532,\n        \"key_63\": \"string\",\n        \"key_64\": false,\n        \"key_65\": 2626.4124636658835,\n        \"key_66\": \"string\",\n        \"key_67\": 1581,\n        \"key_68\": \"string\",\n        \"key_69\": true,\n        \"key_70\": 8404.561123967113,\n        \"key_71\": 8965.601423120814,\n        \"key_72\": 3186,\n        \"key_73\": true,\n        \"key_74\": 7696.575421117303\n      },\n      \"timing\": {\n        \"time\": \"immediate\",\n        \"delay\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    {\n      \"type\": \"create_mastodon_post\",\n      \"metadata\": {\n        \"key_0\": true,\n        \"key_1\": true,\n        \"key_2\": 2204.4243230463812,\n        \"key_3\": \"string\",\n        \"key_4\": \"string\",\n        \"key_5\": 60.3704611968503,\n        \"key_6\": 7517.321055100431,\n        \"key_7\": 5095,\n        \"key_8\": 6479.545294146054,\n        \"key_9\": true,\n        \"key_10\": 634.2328929724227,\n        \"key_11\": false,\n        \"key_12\": 6858.191931130453,\n        \"key_13\": true,\n        \"key_14\": false,\n        \"key_15\": \"string\",\n        \"key_16\": 1490,\n        \"key_17\": false,\n        \"key_18\": 7045,\n        \"key_19\": 324.36183569171664,\n        \"key_20\": \"string\",\n        \"key_21\": 7152.759810287182,\n        \"key_22\": 6908,\n        \"key_23\": 9704.181663758287,\n        \"key_24\": 8935.882801996231,\n        \"key_25\": true,\n        \"key_26\": 3526,\n        \"key_27\": \"string\",\n        \"key_28\": 7652.927157611258,\n        \"key_29\": 9265.394146227123,\n        \"key_30\": \"string\",\n        \"key_31\": 556.7961589852988,\n        \"key_32\": 2598,\n        \"key_33\": 887,\n        \"key_34\": false,\n        \"key_35\": 5579,\n        \"key_36\": 3949.1237122980015,\n        \"key_37\": 2352.0218621973654,\n        \"key_38\": \"string\",\n        \"key_39\": true,\n        \"key_40\": 7426.247010075729,\n        \"key_41\": \"string\",\n        \"key_42\": true,\n        \"key_43\": 8495.247222927484,\n        \"key_44\": \"string\",\n        \"key_45\": \"string\",\n        \"key_46\": 2946.5423613097296,\n        \"key_47\": false,\n        \"key_48\": false,\n        \"key_49\": 8855,\n        \"key_50\": \"string\",\n        \"key_51\": true,\n        \"key_52\": 6425.177816465607,\n        \"key_53\": 5132,\n        \"key_54\": 8227.816205355068,\n        \"key_55\": false,\n        \"key_56\": 3072,\n        \"key_57\": 503,\n        \"key_58\": \"string\",\n        \"key_59\": true,\n        \"key_60\": 269,\n        \"key_61\": \"string\",\n        \"key_62\": true,\n        \"key_63\": false,\n        \"key_64\": 939,\n        \"key_65\": 4012,\n        \"key_66\": 7563,\n        \"key_67\": true,\n        \"key_68\": \"string\",\n        \"key_69\": true,\n        \"key_70\": \"string\",\n        \"key_71\": 8872,\n        \"key_72\": true,\n        \"key_73\": 3337.752565101427,\n        \"key_74\": 7819.9986786257305,\n        \"key_75\": false,\n        \"key_76\": false,\n        \"key_77\": \"string\",\n        \"key_78\": false,\n        \"key_79\": false,\n        \"key_80\": 4418,\n        \"key_81\": 3421.545563168399,\n        \"key_82\": true,\n        \"key_83\": \"string\",\n        \"key_84\": 4443.275942674693,\n        \"key_85\": 3390.0982735319494,\n        \"key_86\": 7349,\n        \"key_87\": false,\n        \"key_88\": 3664.459903199758,\n        \"key_89\": 5967.571811791717\n      },\n      \"timing\": {\n        \"time\": \"delay\",\n        \"delay\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    }\n  ],\n  \"filters\": {\n    \"filters\": [\n      {\n        \"field\": \"string\",\n        \"operator\": \"less_than\",\n        \"value\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"operator\": \"is_not_empty\",\n        \"value\": \"string\"\n      }\n    ],\n    \"groups\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      }\n    ],\n    \"predicate\": \"or\"\n  },\n  \"metadata\": {\n    \"key_0\": \"string\",\n    \"key_1\": false,\n    \"key_2\": 6635,\n    \"key_3\": 1406,\n    \"key_4\": \"string\",\n    \"key_5\": \"string\",\n    \"key_6\": \"string\",\n    \"key_7\": \"string\",\n    \"key_8\": 336,\n    \"key_9\": false,\n    \"key_10\": false,\n    \"key_11\": 5670,\n    \"key_12\": false\n  },\n  \"should_evaluate_filter_after_delay\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "125f148e-eb92-4d32-8e20-d02960620c2a",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"status\": \"active\",\n  \"trigger\": \"subscriber.resumed\",\n  \"timing\": {\n    \"time\": \"delay\",\n    \"delay\": {\n      \"value\": \"string\",\n      \"unit\": \"days\",\n      \"time_of_day\": \"evening\"\n    }\n  },\n  \"actions\": [\n    {\n      \"type\": \"ungift_premium_subscription\",\n      \"metadata\": {\n        \"key_0\": 3643.6598510320905,\n        \"key_1\": 7727.358943397677,\n        \"key_2\": false,\n        \"key_3\": 2052.949312697464,\n        \"key_4\": 7444.374575510775,\n        \"key_5\": 1492,\n        \"key_6\": false,\n        \"key_7\": false,\n        \"key_8\": \"string\",\n        \"key_9\": 1608,\n        \"key_10\": \"string\",\n        \"key_11\": \"string\",\n        \"key_12\": 9993.312299413896,\n        \"key_13\": \"string\",\n        \"key_14\": 7587.233172824142,\n        \"key_15\": \"string\",\n        \"key_16\": 1308.5771086171571,\n        \"key_17\": true,\n        \"key_18\": true,\n        \"key_19\": false,\n        \"key_20\": 1965,\n        \"key_21\": 8343,\n        \"key_22\": 1870,\n        \"key_23\": true,\n        \"key_24\": 2861.0389544480795,\n        \"key_25\": 5596.9757761761975,\n        \"key_26\": true,\n        \"key_27\": true,\n        \"key_28\": true,\n        \"key_29\": 9082,\n        \"key_30\": 58,\n        \"key_31\": \"string\",\n        \"key_32\": 8666.595138422661,\n        \"key_33\": 2828.057451816606,\n        \"key_34\": false,\n        \"key_35\": 1770.4445951889659,\n        \"key_36\": 8460,\n        \"key_37\": 9368.415138727334,\n        \"key_38\": 7196,\n        \"key_39\": \"string\",\n        \"key_40\": \"string\",\n        \"key_41\": true,\n        \"key_42\": \"string\",\n        \"key_43\": 8204.032490078627,\n        \"key_44\": 3427.1419986435826,\n        \"key_45\": 8143.288511233987,\n        \"key_46\": 9379.784728416882,\n        \"key_47\": 633,\n        \"key_48\": 5360,\n        \"key_49\": 6106,\n        \"key_50\": \"string\",\n        \"key_51\": \"string\",\n        \"key_52\": false,\n        \"key_53\": 1458.608580456322,\n        \"key_54\": 6738,\n        \"key_55\": 3480.8915331929015,\n        \"key_56\": 9961,\n        \"key_57\": true,\n        \"key_58\": \"string\",\n        \"key_59\": true,\n        \"key_60\": \"string\",\n        \"key_61\": \"string\",\n        \"key_62\": 456.7880916418532,\n        \"key_63\": \"string\",\n        \"key_64\": false,\n        \"key_65\": 2626.4124636658835,\n        \"key_66\": \"string\",\n        \"key_67\": 1581,\n        \"key_68\": \"string\",\n        \"key_69\": true,\n        \"key_70\": 8404.561123967113,\n        \"key_71\": 8965.601423120814,\n        \"key_72\": 3186,\n        \"key_73\": true,\n        \"key_74\": 7696.575421117303\n      },\n      \"timing\": {\n        \"time\": \"immediate\",\n        \"delay\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    {\n      \"type\": \"create_mastodon_post\",\n      \"metadata\": {\n        \"key_0\": true,\n        \"key_1\": true,\n        \"key_2\": 2204.4243230463812,\n        \"key_3\": \"string\",\n        \"key_4\": \"string\",\n        \"key_5\": 60.3704611968503,\n        \"key_6\": 7517.321055100431,\n        \"key_7\": 5095,\n        \"key_8\": 6479.545294146054,\n        \"key_9\": true,\n        \"key_10\": 634.2328929724227,\n        \"key_11\": false,\n        \"key_12\": 6858.191931130453,\n        \"key_13\": true,\n        \"key_14\": false,\n        \"key_15\": \"string\",\n        \"key_16\": 1490,\n        \"key_17\": false,\n        \"key_18\": 7045,\n        \"key_19\": 324.36183569171664,\n        \"key_20\": \"string\",\n        \"key_21\": 7152.759810287182,\n        \"key_22\": 6908,\n        \"key_23\": 9704.181663758287,\n        \"key_24\": 8935.882801996231,\n        \"key_25\": true,\n        \"key_26\": 3526,\n        \"key_27\": \"string\",\n        \"key_28\": 7652.927157611258,\n        \"key_29\": 9265.394146227123,\n        \"key_30\": \"string\",\n        \"key_31\": 556.7961589852988,\n        \"key_32\": 2598,\n        \"key_33\": 887,\n        \"key_34\": false,\n        \"key_35\": 5579,\n        \"key_36\": 3949.1237122980015,\n        \"key_37\": 2352.0218621973654,\n        \"key_38\": \"string\",\n        \"key_39\": true,\n        \"key_40\": 7426.247010075729,\n        \"key_41\": \"string\",\n        \"key_42\": true,\n        \"key_43\": 8495.247222927484,\n        \"key_44\": \"string\",\n        \"key_45\": \"string\",\n        \"key_46\": 2946.5423613097296,\n        \"key_47\": false,\n        \"key_48\": false,\n        \"key_49\": 8855,\n        \"key_50\": \"string\",\n        \"key_51\": true,\n        \"key_52\": 6425.177816465607,\n        \"key_53\": 5132,\n        \"key_54\": 8227.816205355068,\n        \"key_55\": false,\n        \"key_56\": 3072,\n        \"key_57\": 503,\n        \"key_58\": \"string\",\n        \"key_59\": true,\n        \"key_60\": 269,\n        \"key_61\": \"string\",\n        \"key_62\": true,\n        \"key_63\": false,\n        \"key_64\": 939,\n        \"key_65\": 4012,\n        \"key_66\": 7563,\n        \"key_67\": true,\n        \"key_68\": \"string\",\n        \"key_69\": true,\n        \"key_70\": \"string\",\n        \"key_71\": 8872,\n        \"key_72\": true,\n        \"key_73\": 3337.752565101427,\n        \"key_74\": 7819.9986786257305,\n        \"key_75\": false,\n        \"key_76\": false,\n        \"key_77\": \"string\",\n        \"key_78\": false,\n        \"key_79\": false,\n        \"key_80\": 4418,\n        \"key_81\": 3421.545563168399,\n        \"key_82\": true,\n        \"key_83\": \"string\",\n        \"key_84\": 4443.275942674693,\n        \"key_85\": 3390.0982735319494,\n        \"key_86\": 7349,\n        \"key_87\": false,\n        \"key_88\": 3664.459903199758,\n        \"key_89\": 5967.571811791717\n      },\n      \"timing\": {\n        \"time\": \"delay\",\n        \"delay\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    }\n  ],\n  \"filters\": {\n    \"filters\": [\n      {\n        \"field\": \"string\",\n        \"operator\": \"less_than\",\n        \"value\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"operator\": \"is_not_empty\",\n        \"value\": \"string\"\n      }\n    ],\n    \"groups\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      }\n    ],\n    \"predicate\": \"or\"\n  },\n  \"metadata\": {\n    \"key_0\": \"string\",\n    \"key_1\": false,\n    \"key_2\": 6635,\n    \"key_3\": 1406,\n    \"key_4\": \"string\",\n    \"key_5\": \"string\",\n    \"key_6\": \"string\",\n    \"key_7\": \"string\",\n    \"key_8\": 336,\n    \"key_9\": false,\n    \"key_10\": false,\n    \"key_11\": 5670,\n    \"key_12\": false\n  },\n  \"should_evaluate_filter_after_delay\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6385712e-5b4f-44eb-8c2f-0578e212b5cb",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"status\": \"active\",\n  \"trigger\": \"subscriber.resumed\",\n  \"timing\": {\n    \"time\": \"delay\",\n    \"delay\": {\n      \"value\": \"string\",\n      \"unit\": \"days\",\n      \"time_of_day\": \"evening\"\n    }\n  },\n  \"actions\": [\n    {\n      \"type\": \"ungift_premium_subscription\",\n      \"metadata\": {\n        \"key_0\": 3643.6598510320905,\n        \"key_1\": 7727.358943397677,\n        \"key_2\": false,\n        \"key_3\": 2052.949312697464,\n        \"key_4\": 7444.374575510775,\n        \"key_5\": 1492,\n        \"key_6\": false,\n        \"key_7\": false,\n        \"key_8\": \"string\",\n        \"key_9\": 1608,\n        \"key_10\": \"string\",\n        \"key_11\": \"string\",\n        \"key_12\": 9993.312299413896,\n        \"key_13\": \"string\",\n        \"key_14\": 7587.233172824142,\n        \"key_15\": \"string\",\n        \"key_16\": 1308.5771086171571,\n        \"key_17\": true,\n        \"key_18\": true,\n        \"key_19\": false,\n        \"key_20\": 1965,\n        \"key_21\": 8343,\n        \"key_22\": 1870,\n        \"key_23\": true,\n        \"key_24\": 2861.0389544480795,\n        \"key_25\": 5596.9757761761975,\n        \"key_26\": true,\n        \"key_27\": true,\n        \"key_28\": true,\n        \"key_29\": 9082,\n        \"key_30\": 58,\n        \"key_31\": \"string\",\n        \"key_32\": 8666.595138422661,\n        \"key_33\": 2828.057451816606,\n        \"key_34\": false,\n        \"key_35\": 1770.4445951889659,\n        \"key_36\": 8460,\n        \"key_37\": 9368.415138727334,\n        \"key_38\": 7196,\n        \"key_39\": \"string\",\n        \"key_40\": \"string\",\n        \"key_41\": true,\n        \"key_42\": \"string\",\n        \"key_43\": 8204.032490078627,\n        \"key_44\": 3427.1419986435826,\n        \"key_45\": 8143.288511233987,\n        \"key_46\": 9379.784728416882,\n        \"key_47\": 633,\n        \"key_48\": 5360,\n        \"key_49\": 6106,\n        \"key_50\": \"string\",\n        \"key_51\": \"string\",\n        \"key_52\": false,\n        \"key_53\": 1458.608580456322,\n        \"key_54\": 6738,\n        \"key_55\": 3480.8915331929015,\n        \"key_56\": 9961,\n        \"key_57\": true,\n        \"key_58\": \"string\",\n        \"key_59\": true,\n        \"key_60\": \"string\",\n        \"key_61\": \"string\",\n        \"key_62\": 456.7880916418532,\n        \"key_63\": \"string\",\n        \"key_64\": false,\n        \"key_65\": 2626.4124636658835,\n        \"key_66\": \"string\",\n        \"key_67\": 1581,\n        \"key_68\": \"string\",\n        \"key_69\": true,\n        \"key_70\": 8404.561123967113,\n        \"key_71\": 8965.601423120814,\n        \"key_72\": 3186,\n        \"key_73\": true,\n        \"key_74\": 7696.575421117303\n      },\n      \"timing\": {\n        \"time\": \"immediate\",\n        \"delay\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    {\n      \"type\": \"create_mastodon_post\",\n      \"metadata\": {\n        \"key_0\": true,\n        \"key_1\": true,\n        \"key_2\": 2204.4243230463812,\n        \"key_3\": \"string\",\n        \"key_4\": \"string\",\n        \"key_5\": 60.3704611968503,\n        \"key_6\": 7517.321055100431,\n        \"key_7\": 5095,\n        \"key_8\": 6479.545294146054,\n        \"key_9\": true,\n        \"key_10\": 634.2328929724227,\n        \"key_11\": false,\n        \"key_12\": 6858.191931130453,\n        \"key_13\": true,\n        \"key_14\": false,\n        \"key_15\": \"string\",\n        \"key_16\": 1490,\n        \"key_17\": false,\n        \"key_18\": 7045,\n        \"key_19\": 324.36183569171664,\n        \"key_20\": \"string\",\n        \"key_21\": 7152.759810287182,\n        \"key_22\": 6908,\n        \"key_23\": 9704.181663758287,\n        \"key_24\": 8935.882801996231,\n        \"key_25\": true,\n        \"key_26\": 3526,\n        \"key_27\": \"string\",\n        \"key_28\": 7652.927157611258,\n        \"key_29\": 9265.394146227123,\n        \"key_30\": \"string\",\n        \"key_31\": 556.7961589852988,\n        \"key_32\": 2598,\n        \"key_33\": 887,\n        \"key_34\": false,\n        \"key_35\": 5579,\n        \"key_36\": 3949.1237122980015,\n        \"key_37\": 2352.0218621973654,\n        \"key_38\": \"string\",\n        \"key_39\": true,\n        \"key_40\": 7426.247010075729,\n        \"key_41\": \"string\",\n        \"key_42\": true,\n        \"key_43\": 8495.247222927484,\n        \"key_44\": \"string\",\n        \"key_45\": \"string\",\n        \"key_46\": 2946.5423613097296,\n        \"key_47\": false,\n        \"key_48\": false,\n        \"key_49\": 8855,\n        \"key_50\": \"string\",\n        \"key_51\": true,\n        \"key_52\": 6425.177816465607,\n        \"key_53\": 5132,\n        \"key_54\": 8227.816205355068,\n        \"key_55\": false,\n        \"key_56\": 3072,\n        \"key_57\": 503,\n        \"key_58\": \"string\",\n        \"key_59\": true,\n        \"key_60\": 269,\n        \"key_61\": \"string\",\n        \"key_62\": true,\n        \"key_63\": false,\n        \"key_64\": 939,\n        \"key_65\": 4012,\n        \"key_66\": 7563,\n        \"key_67\": true,\n        \"key_68\": \"string\",\n        \"key_69\": true,\n        \"key_70\": \"string\",\n        \"key_71\": 8872,\n        \"key_72\": true,\n        \"key_73\": 3337.752565101427,\n        \"key_74\": 7819.9986786257305,\n        \"key_75\": false,\n        \"key_76\": false,\n        \"key_77\": \"string\",\n        \"key_78\": false,\n        \"key_79\": false,\n        \"key_80\": 4418,\n        \"key_81\": 3421.545563168399,\n        \"key_82\": true,\n        \"key_83\": \"string\",\n        \"key_84\": 4443.275942674693,\n        \"key_85\": 3390.0982735319494,\n        \"key_86\": 7349,\n        \"key_87\": false,\n        \"key_88\": 3664.459903199758,\n        \"key_89\": 5967.571811791717\n      },\n      \"timing\": {\n        \"time\": \"delay\",\n        \"delay\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    }\n  ],\n  \"filters\": {\n    \"filters\": [\n      {\n        \"field\": \"string\",\n        \"operator\": \"less_than\",\n        \"value\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"operator\": \"is_not_empty\",\n        \"value\": \"string\"\n      }\n    ],\n    \"groups\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      }\n    ],\n    \"predicate\": \"or\"\n  },\n  \"metadata\": {\n    \"key_0\": \"string\",\n    \"key_1\": false,\n    \"key_2\": 6635,\n    \"key_3\": 1406,\n    \"key_4\": \"string\",\n    \"key_5\": \"string\",\n    \"key_6\": \"string\",\n    \"key_7\": \"string\",\n    \"key_8\": 336,\n    \"key_9\": false,\n    \"key_10\": false,\n    \"key_11\": 5670,\n    \"key_12\": false\n  },\n  \"should_evaluate_filter_after_delay\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"type\": \"string\",\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2caa427e-59a9-41c2-a1d1-8e02b2c87577",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"status\": \"active\",\n  \"trigger\": \"subscriber.resumed\",\n  \"timing\": {\n    \"time\": \"delay\",\n    \"delay\": {\n      \"value\": \"string\",\n      \"unit\": \"days\",\n      \"time_of_day\": \"evening\"\n    }\n  },\n  \"actions\": [\n    {\n      \"type\": \"ungift_premium_subscription\",\n      \"metadata\": {\n        \"key_0\": 3643.6598510320905,\n        \"key_1\": 7727.358943397677,\n        \"key_2\": false,\n        \"key_3\": 2052.949312697464,\n        \"key_4\": 7444.374575510775,\n        \"key_5\": 1492,\n        \"key_6\": false,\n        \"key_7\": false,\n        \"key_8\": \"string\",\n        \"key_9\": 1608,\n        \"key_10\": \"string\",\n        \"key_11\": \"string\",\n        \"key_12\": 9993.312299413896,\n        \"key_13\": \"string\",\n        \"key_14\": 7587.233172824142,\n        \"key_15\": \"string\",\n        \"key_16\": 1308.5771086171571,\n        \"key_17\": true,\n        \"key_18\": true,\n        \"key_19\": false,\n        \"key_20\": 1965,\n        \"key_21\": 8343,\n        \"key_22\": 1870,\n        \"key_23\": true,\n        \"key_24\": 2861.0389544480795,\n        \"key_25\": 5596.9757761761975,\n        \"key_26\": true,\n        \"key_27\": true,\n        \"key_28\": true,\n        \"key_29\": 9082,\n        \"key_30\": 58,\n        \"key_31\": \"string\",\n        \"key_32\": 8666.595138422661,\n        \"key_33\": 2828.057451816606,\n        \"key_34\": false,\n        \"key_35\": 1770.4445951889659,\n        \"key_36\": 8460,\n        \"key_37\": 9368.415138727334,\n        \"key_38\": 7196,\n        \"key_39\": \"string\",\n        \"key_40\": \"string\",\n        \"key_41\": true,\n        \"key_42\": \"string\",\n        \"key_43\": 8204.032490078627,\n        \"key_44\": 3427.1419986435826,\n        \"key_45\": 8143.288511233987,\n        \"key_46\": 9379.784728416882,\n        \"key_47\": 633,\n        \"key_48\": 5360,\n        \"key_49\": 6106,\n        \"key_50\": \"string\",\n        \"key_51\": \"string\",\n        \"key_52\": false,\n        \"key_53\": 1458.608580456322,\n        \"key_54\": 6738,\n        \"key_55\": 3480.8915331929015,\n        \"key_56\": 9961,\n        \"key_57\": true,\n        \"key_58\": \"string\",\n        \"key_59\": true,\n        \"key_60\": \"string\",\n        \"key_61\": \"string\",\n        \"key_62\": 456.7880916418532,\n        \"key_63\": \"string\",\n        \"key_64\": false,\n        \"key_65\": 2626.4124636658835,\n        \"key_66\": \"string\",\n        \"key_67\": 1581,\n        \"key_68\": \"string\",\n        \"key_69\": true,\n        \"key_70\": 8404.561123967113,\n        \"key_71\": 8965.601423120814,\n        \"key_72\": 3186,\n        \"key_73\": true,\n        \"key_74\": 7696.575421117303\n      },\n      \"timing\": {\n        \"time\": \"immediate\",\n        \"delay\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    {\n      \"type\": \"create_mastodon_post\",\n      \"metadata\": {\n        \"key_0\": true,\n        \"key_1\": true,\n        \"key_2\": 2204.4243230463812,\n        \"key_3\": \"string\",\n        \"key_4\": \"string\",\n        \"key_5\": 60.3704611968503,\n        \"key_6\": 7517.321055100431,\n        \"key_7\": 5095,\n        \"key_8\": 6479.545294146054,\n        \"key_9\": true,\n        \"key_10\": 634.2328929724227,\n        \"key_11\": false,\n        \"key_12\": 6858.191931130453,\n        \"key_13\": true,\n        \"key_14\": false,\n        \"key_15\": \"string\",\n        \"key_16\": 1490,\n        \"key_17\": false,\n        \"key_18\": 7045,\n        \"key_19\": 324.36183569171664,\n        \"key_20\": \"string\",\n        \"key_21\": 7152.759810287182,\n        \"key_22\": 6908,\n        \"key_23\": 9704.181663758287,\n        \"key_24\": 8935.882801996231,\n        \"key_25\": true,\n        \"key_26\": 3526,\n        \"key_27\": \"string\",\n        \"key_28\": 7652.927157611258,\n        \"key_29\": 9265.394146227123,\n        \"key_30\": \"string\",\n        \"key_31\": 556.7961589852988,\n        \"key_32\": 2598,\n        \"key_33\": 887,\n        \"key_34\": false,\n        \"key_35\": 5579,\n        \"key_36\": 3949.1237122980015,\n        \"key_37\": 2352.0218621973654,\n        \"key_38\": \"string\",\n        \"key_39\": true,\n        \"key_40\": 7426.247010075729,\n        \"key_41\": \"string\",\n        \"key_42\": true,\n        \"key_43\": 8495.247222927484,\n        \"key_44\": \"string\",\n        \"key_45\": \"string\",\n        \"key_46\": 2946.5423613097296,\n        \"key_47\": false,\n        \"key_48\": false,\n        \"key_49\": 8855,\n        \"key_50\": \"string\",\n        \"key_51\": true,\n        \"key_52\": 6425.177816465607,\n        \"key_53\": 5132,\n        \"key_54\": 8227.816205355068,\n        \"key_55\": false,\n        \"key_56\": 3072,\n        \"key_57\": 503,\n        \"key_58\": \"string\",\n        \"key_59\": true,\n        \"key_60\": 269,\n        \"key_61\": \"string\",\n        \"key_62\": true,\n        \"key_63\": false,\n        \"key_64\": 939,\n        \"key_65\": 4012,\n        \"key_66\": 7563,\n        \"key_67\": true,\n        \"key_68\": \"string\",\n        \"key_69\": true,\n        \"key_70\": \"string\",\n        \"key_71\": 8872,\n        \"key_72\": true,\n        \"key_73\": 3337.752565101427,\n        \"key_74\": 7819.9986786257305,\n        \"key_75\": false,\n        \"key_76\": false,\n        \"key_77\": \"string\",\n        \"key_78\": false,\n        \"key_79\": false,\n        \"key_80\": 4418,\n        \"key_81\": 3421.545563168399,\n        \"key_82\": true,\n        \"key_83\": \"string\",\n        \"key_84\": 4443.275942674693,\n        \"key_85\": 3390.0982735319494,\n        \"key_86\": 7349,\n        \"key_87\": false,\n        \"key_88\": 3664.459903199758,\n        \"key_89\": 5967.571811791717\n      },\n      \"timing\": {\n        \"time\": \"delay\",\n        \"delay\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    }\n  ],\n  \"filters\": {\n    \"filters\": [\n      {\n        \"field\": \"string\",\n        \"operator\": \"less_than\",\n        \"value\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"operator\": \"is_not_empty\",\n        \"value\": \"string\"\n      }\n    ],\n    \"groups\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      }\n    ],\n    \"predicate\": \"or\"\n  },\n  \"metadata\": {\n    \"key_0\": \"string\",\n    \"key_1\": false,\n    \"key_2\": 6635,\n    \"key_3\": 1406,\n    \"key_4\": \"string\",\n    \"key_5\": \"string\",\n    \"key_6\": \"string\",\n    \"key_7\": \"string\",\n    \"key_8\": 336,\n    \"key_9\": false,\n    \"key_10\": false,\n    \"key_11\": 5670,\n    \"key_12\": false\n  },\n  \"should_evaluate_filter_after_delay\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "8066"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests permitted per minute.",
+                  "key": "X-RateLimit-Limit",
+                  "value": "8066"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests remaining in the current window.",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "8066"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp at which the window resets.",
+                  "key": "X-RateLimit-Reset",
+                  "value": "8066"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8147ab27-075c-4e88-8be7-9f9962f61794",
+          "name": "Delete Automation",
+          "request": {
+            "name": "Delete Automation",
+            "description": {
+              "content": "Delete an automation",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "automations",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9caff4a5-6745-4ecf-a3c6-cca1d5ec8771",
+              "name": "No Content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fe104ac7-1ded-4853-8e31-2079ef541c65",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "090aab8f-5672-4298-93b5-9b37cf6bea8a",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "593bd496-14a4-4a5c-8ff5-dbccb5a8a69b",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "359cf5f0-7b36-42ca-a261-04b58c35642c",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "16fd56ec-09de-4e0f-a904-c0852a1b1012",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "8066"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests permitted per minute.",
+                  "key": "X-RateLimit-Limit",
+                  "value": "8066"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests remaining in the current window.",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "8066"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp at which the window resets.",
+                  "key": "X-RateLimit-Reset",
+                  "value": "8066"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c9e9b10f-8fc7-4c02-b0d2-a82b74362810",
+          "name": "Invoke Automation",
+          "request": {
+            "name": "Invoke Automation",
+            "description": {
+              "content": "Manually trigger an automation",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "automations",
+                ":id",
+                "invoke"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4448ebf2-0fa2-426f-8df2-7964b8532d9d",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id",
+                    "invoke"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0a530596-8e38-419d-8509-81dbac992853",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id",
+                    "invoke"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "302b5929-c205-4911-95f0-61920323af66",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id",
+                    "invoke"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3a6246e6-98b1-4d0a-8653-0a6d95c8a965",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id",
+                    "invoke"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dab19502-1cce-4526-84c3-eb855291a24c",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id",
+                    "invoke"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cb5732f5-d843-44b5-8f13-062a2f392ca2",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id",
+                    "invoke"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "29d4d327-0eb9-4d32-9eba-1586c84741be",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id",
+                    "invoke"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "8066"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests permitted per minute.",
+                  "key": "X-RateLimit-Limit",
+                  "value": "8066"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests remaining in the current window.",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "8066"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp at which the window resets.",
+                  "key": "X-RateLimit-Reset",
+                  "value": "8066"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "965186b5-1f32-4fcc-9c15-d4bd2fe9c2b2",
+          "name": "Retrieve Automation Analytics",
+          "request": {
+            "name": "Retrieve Automation Analytics",
+            "description": {
+              "content": "Retrieve analytics data for an automation",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "automations",
+                ":id",
+                "analytics"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2e11e8b2-968d-4583-9b28-b4023eccf12b",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id",
+                    "analytics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"recipients\": 0,\n  \"deliveries\": 0,\n  \"opens\": 0,\n  \"clicks\": 0,\n  \"temporary_failures\": 0,\n  \"permanent_failures\": 0,\n  \"unsubscriptions\": 0,\n  \"complaints\": 0,\n  \"survey_responses\": 0,\n  \"webmentions\": 0,\n  \"page_views_lifetime\": 0,\n  \"page_views_30\": 0,\n  \"page_views_7\": 0,\n  \"subscriptions\": 0,\n  \"paid_subscriptions\": 0,\n  \"replies\": 0,\n  \"comments\": 0,\n  \"social_mentions\": 0,\n  \"temporary_failure_breakdown\": [\n    {\n      \"code\": \"string\",\n      \"count\": 1006\n    },\n    {\n      \"code\": \"string\",\n      \"count\": 6513\n    }\n  ],\n  \"permanent_failure_breakdown\": [\n    {\n      \"code\": \"string\",\n      \"count\": 4524\n    },\n    {\n      \"code\": \"string\",\n      \"count\": 9829\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ecabc0f6-8321-4a08-bbe1-3478c65cca70",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id",
+                    "analytics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a08422a8-5535-46ee-b083-8bb65923f127",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id",
+                    "analytics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "43674b98-1f77-4ea6-a1f3-8acf9295f847",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id",
+                    "analytics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c1c7ed79-1830-4375-90ea-a9ed405774ac",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id",
+                    "analytics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "646f12c1-ada3-4dfa-bf4d-c5383fe18ca6",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":id",
+                    "analytics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "8066"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests permitted per minute.",
+                  "key": "X-RateLimit-Limit",
+                  "value": "8066"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests remaining in the current window.",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "8066"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp at which the window resets.",
+                  "key": "X-RateLimit-Reset",
+                  "value": "8066"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.buttondown.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "7ce2c9f9-c3d0-41c4-8f0d-8d77185e85bd",
+    "name": "Buttondown Automations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction) for guides and examples.",
+      "type": "text/plain"
+    }
+  }
+}

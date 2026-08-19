@@ -1,0 +1,1586 @@
+openapi: 3.1.0
+info:
+  title: Buttondown External Feeds API
+  version: 1.0.0
+  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction)
+    for guides and examples.
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://api.buttondown.com/v1
+security:
+- ApiKeyAuth: []
+tags:
+- name: External Feeds
+paths:
+  /external_feeds:
+    post:
+      operationId: create_external_feed
+      summary: Create External Feed
+      parameters: []
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalFeed'
+          links:
+            retrieve_external_feed:
+              operationId: retrieve_external_feed
+              parameters:
+                path.id: $response.body#/id
+            update_external_feed:
+              operationId: update_external_feed
+              parameters:
+                path.id: $response.body#/id
+            delete_external_feed:
+              operationId: delete_external_feed
+              parameters:
+                path.id: $response.body#/id
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Create a new external feed
+      tags:
+      - External Feeds
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExternalFeedInput'
+        required: true
+      security:
+      - ApiKeyAuth: []
+    get:
+      operationId: list_external_feed
+      summary: List External Feed
+      parameters:
+      - in: query
+        name: page
+        required: false
+        description: The page number of the paginated response.
+        schema:
+          type: integer
+          title: Page
+          description: The page number of the paginated response.
+          default: 1
+          example: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalFeedPage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: List all external feeds
+      tags:
+      - External Feeds
+      security:
+      - ApiKeyAuth: []
+  /external_feeds/{id}:
+    patch:
+      operationId: update_external_feed
+      summary: Update External Feed
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalFeed'
+          links:
+            retrieve_external_feed:
+              operationId: retrieve_external_feed
+              parameters:
+                path.id: $response.body#/id
+            delete_external_feed:
+              operationId: delete_external_feed
+              parameters:
+                path.id: $response.body#/id
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Update an external feed's properties
+      tags:
+      - External Feeds
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExternalFeedUpdateInput'
+        required: true
+      security:
+      - ApiKeyAuth: []
+    delete:
+      operationId: delete_external_feed
+      summary: Delete External Feed
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      responses:
+        '204':
+          description: No Content
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Delete an external feed
+      tags:
+      - External Feeds
+      security:
+      - ApiKeyAuth: []
+    get:
+      operationId: retrieve_external_feed
+      summary: Retrieve External Feed
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalFeed'
+          links:
+            update_external_feed:
+              operationId: update_external_feed
+              parameters:
+                path.id: $response.body#/id
+            delete_external_feed:
+              operationId: delete_external_feed
+              parameters:
+                path.id: $response.body#/id
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Retrieve a specific external feed by its ID
+      tags:
+      - External Feeds
+      security:
+      - ApiKeyAuth: []
+  /external_feeds/{id}/items:
+    post:
+      operationId: poll_items
+      summary: Poll Items
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Poll for new items in an external feed
+      tags:
+      - External Feeds
+      security:
+      - ApiKeyAuth: []
+    get:
+      operationId: retrieve_items
+      summary: Retrieve Items
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      - in: query
+        name: expand
+        schema:
+          description: If provided, expand the given field.
+          items:
+            const: email
+            type: string
+          title: Expand
+          type: array
+        required: false
+        description: If provided, expand the given field.
+      - in: query
+        name: page
+        required: false
+        description: The page number of the paginated response.
+        schema:
+          type: integer
+          title: Page
+          description: The page number of the paginated response.
+          default: 1
+          example: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalFeedItemPage'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Retrieve items from an external feed
+      tags:
+      - External Feeds
+      security:
+      - ApiKeyAuth: []
+components:
+  schemas:
+    Analytics:
+      properties:
+        recipients:
+          default: 0
+          description: The number of subscribers the email was dispatched to.
+          title: Recipients
+          type: integer
+        deliveries:
+          default: 0
+          description: The number of successful deliveries (recipients minus failures).
+          title: Deliveries
+          type: integer
+        opens:
+          default: 0
+          description: The number of unique opens recorded.
+          title: Opens
+          type: integer
+        clicks:
+          default: 0
+          description: The number of unique link clicks recorded.
+          title: Clicks
+          type: integer
+        temporary_failures:
+          default: 0
+          description: The number of temporary delivery failures (e.g. soft bounces).
+          title: Temporary Failures
+          type: integer
+        permanent_failures:
+          default: 0
+          description: The number of permanent delivery failures (e.g. hard bounces).
+          title: Permanent Failures
+          type: integer
+        unsubscriptions:
+          default: 0
+          description: The number of subscribers who unsubscribed after receiving this email.
+          title: Unsubscriptions
+          type: integer
+        complaints:
+          default: 0
+          description: The number of spam complaints recorded against this email.
+          title: Complaints
+          type: integer
+        survey_responses:
+          default: 0
+          description: The number of survey responses submitted from this email.
+          title: Survey Responses
+          type: integer
+        webmentions:
+          default: 0
+          description: The number of inbound webmentions received for this email.
+          title: Webmentions
+          type: integer
+        page_views_lifetime:
+          default: 0
+          description: The total number of archive page views for this email since publication.
+          title: Page Views Lifetime
+          type: integer
+        page_views_30:
+          default: 0
+          description: The number of archive page views in the last 30 days.
+          title: Page Views 30
+          type: integer
+        page_views_7:
+          default: 0
+          description: The number of archive page views in the last 7 days.
+          title: Page Views 7
+          type: integer
+        subscriptions:
+          default: 0
+          description: The number of new subscribers attributed to this email.
+          title: Subscriptions
+          type: integer
+        paid_subscriptions:
+          default: 0
+          description: The number of new paid subscribers attributed to this email.
+          title: Paid Subscriptions
+          type: integer
+        replies:
+          default: 0
+          description: The number of reply emails received from subscribers.
+          title: Replies
+          type: integer
+        comments:
+          default: 0
+          description: The number of comments posted on this email.
+          title: Comments
+          type: integer
+        social_mentions:
+          default: 0
+          description: The number of social media mentions of this email.
+          title: Social Mentions
+          type: integer
+        temporary_failure_breakdown:
+          description: Breakdown of temporary failures by reason code, sorted by count descending.
+          items:
+            $ref: '#/components/schemas/FailureBreakdownItem'
+          title: Temporary Failure Breakdown
+          type: array
+        permanent_failure_breakdown:
+          description: Breakdown of permanent failures by reason code, sorted by count descending.
+          items:
+            $ref: '#/components/schemas/FailureBreakdownItem'
+          title: Permanent Failure Breakdown
+          type: array
+      title: Analytics
+      type: object
+    ArchivalMode:
+      description: 'Governs who can view this email in the archive.
+
+
+        `ARCHIVE_ONLY` is the odd one out: the email is publicly archived but
+
+        is not email content at all (e.g. an imported blog post), so it is
+
+        excluded from email-rendering contexts like "recent issues" widgets.'
+      enum:
+      - archive_only
+      - disabled
+      - enabled
+      - enabled_for_paid_subscribers
+      - enabled_for_subscribers
+      title: ArchivalMode
+      type: string
+    CadenceMetadata:
+      additionalProperties: false
+      properties:
+        time:
+          anyOf:
+          - pattern: ^([01]?[0-9]|2[0-3])$
+            type: string
+          - type: 'null'
+          description: Hour of the day (0-23, as a string) when emails should be generated.
+          title: Time
+          example: '9'
+        weekday:
+          anyOf:
+          - enum:
+            - monday
+            - tuesday
+            - wednesday
+            - thursday
+            - friday
+            - saturday
+            - sunday
+            type: string
+          - type: 'null'
+          description: Day of the week when emails should be generated. Required when cadence is `weekly`.
+          title: Weekday
+        monthday:
+          anyOf:
+          - enum:
+            - monday
+            - tuesday
+            - wednesday
+            - thursday
+            - friday
+            - saturday
+            - sunday
+            - firstday
+            - lastday
+            type: string
+          - pattern: ^([1-9]|[12][0-9]|3[01])$
+            type: string
+          - type: 'null'
+          description: Day of the month when emails should be generated. Accepts a numeric day (`1`-`31`, clamped to the last
+            day for shorter months), a weekday name (first such day of the month), `firstday`, or `lastday`. Required when
+            cadence is `monthly`.
+          title: Monthday
+      title: CadenceMetadata
+      type: object
+    Callout:
+      description: 'Surfacing-time flags about an email that the UI uses to render contextual
+
+        callouts (e.g. in the analytics panel). Computed on read; not persisted.'
+      enum:
+      - first_send_on_sending_domain
+      title: Callout
+      type: string
+    Email:
+      description: 'Emails are why you''re here on Buttondown, right?
+
+        Creating an email via the API is just like creating one in the interface;
+
+        it will instantly trigger sending actual emails,
+
+        based on the tags and email type you provide.
+
+
+        Relevant changes to the schema:
+
+
+        - [2024-08-15](https://docs.buttondown.com/api-changelog-2024-08-15): unshipped the `included_tags` and `excluded_tags`
+        fields.
+
+        - [2024-12-30](https://docs.buttondown.com/api-changelog-2024-12-30): unshipped the `is_comments_disabled` field,
+        and replaced it with a more flexible `commenting_mode` field.
+
+        - [2025-09-23](https://docs.buttondown.com/api-changelog-2025-09-23): increased the maximum length of the `subject`
+        field from 1000 to 2000 characters.'
+      properties:
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        absolute_url:
+          description: The canonical web URL of the email on the newsletter's archive.
+          title: Absolute Url
+          type: string
+        analytics:
+          anyOf:
+          - $ref: '#/components/schemas/Analytics'
+          - type: 'null'
+          description: Aggregate analytics for the email. Null until the email has been sent.
+        callouts:
+          description: A list of callouts that apply to this email — surfaced in the UI alongside analytics to flag context
+            the reader should know about (e.g., first send on a custom sending domain).
+          items:
+            $ref: '#/components/schemas/Callout'
+          title: Callouts
+          type: array
+        attachments:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          description: A list of attachment IDs present on the email. (See [Attachments](https://docs.buttondown.com/api-attachments-introduction)
+            for more information.)
+          title: Attachments
+        body:
+          description: 'The body of the email, in either HTML or markdown format. Buttondown attempts to intelligently detect
+            the format of the body automatically, but you can also specify the format explicitly by prepending the text with
+            the `buttondown-editor-mode` comment: `<!-- buttondown-editor-mode: fancy -->` or `<!-- buttondown-editor-mode:
+            plaintext -->`.'
+          title: Body
+          type: string
+        canonical_url:
+          description: The URL of the original source of the content.
+          title: Canonical Url
+          type: string
+        commenting_mode:
+          $ref: '#/components/schemas/EmailCommentingMode'
+          description: Controls whether subscribers can comment on this email.
+        description:
+          description: A human-readable description of the email, used for archives and SEO.
+          title: Description
+          type: string
+        archival_mode:
+          $ref: '#/components/schemas/ArchivalMode'
+          description: Controls who can view this email in the archive.
+        email_type:
+          allOf:
+          - $ref: '#/components/schemas/EmailType'
+          default: public
+          deprecated: true
+          description: 'The type of email. Defaults to `PUBLIC`. Deprecated: this is a legacy single-axis view derived from
+            `archival_mode` (archive visibility) and `filters` (audience); prefer setting those directly. Because it is derived,
+            it does not always round-trip: writing it alongside an explicit `archival_mode` that disagrees will report the
+            value implied by the two underlying fields, and writing a value that already matches the derived one is a no-op.'
+        featured:
+          description: Designated whether or not this email should be highlighted within the archives.
+          title: Featured
+          type: boolean
+        filters:
+          $ref: '#/components/schemas/FilterGroup'
+          description: Tag-based filter rules determining which subscribers receive this email.
+        image:
+          description: A primary image URL used when previewing the email on the web or in other contexts.
+          title: Image
+          type: string
+        metadata:
+          additionalProperties: true
+          default: {}
+          description: A structured key-value blob that you can use to store arbitrary data on the object. Metadata can be
+            nested — you can store objects and arrays within your metadata. (You can [read more about metadata.](https://docs.buttondown.com/metadata))
+          title: Metadata
+          type: object
+        modification_date:
+          description: The date and time at which the object was last modified.
+          format: date-time
+          title: Modification Date
+          type: string
+        publish_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: The date and time at which the email should be published in the future (for scheduled emails), or the
+            date and time at which the email was published (for sent emails).
+          title: Publish Date
+        related_email_ids:
+          description: A list of email IDs that are related to this email. Related emails are shown at the bottom of the email
+            and archive pages.
+          items:
+            type: string
+          title: Related Email Ids
+          type: array
+        secondary_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: 'An informal ''number'' for the email, used in some templates (''This was issue #123'').'
+          title: Secondary Id
+        should_trigger_pay_per_email_billing:
+          description: Whether this email should trigger pay-per-email billing for paid subscribers. Use this to differentiate
+            between free updates and premium newsletters.
+          title: Should Trigger Pay Per Email Billing
+          type: boolean
+        slug:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: A short, human-readable identifier for the email, used in the archive URL.
+          example: welcome-to-the-newsletter
+          title: Slug
+        source:
+          $ref: '#/components/schemas/EmailSource'
+          description: The source of the email.
+          example: app
+        status:
+          $ref: '#/components/schemas/EmailStatus'
+          description: The current status of the email.
+          example: draft
+        subject:
+          description: The subject line for the email.
+          maxLength: 2000
+          title: Subject
+          type: string
+        suppression_reason:
+          anyOf:
+          - $ref: '#/components/schemas/EmailSuppressionReason'
+          - type: 'null'
+          description: If the email has been suppressed from sending, the reason why.
+        template:
+          anyOf:
+          - $ref: '#/components/schemas/NewsletterEmailTemplate'
+          - type: 'null'
+          description: If present, this template overrides your newsletter's default email template.
+      required:
+      - id
+      - creation_date
+      - absolute_url
+      - body
+      - canonical_url
+      - commenting_mode
+      - description
+      - archival_mode
+      - featured
+      - filters
+      - image
+      - modification_date
+      - related_email_ids
+      - should_trigger_pay_per_email_billing
+      - source
+      - status
+      - subject
+      title: Email
+      type: object
+    EmailCommentingMode:
+      description: 'Governs who can comment on this email.
+
+
+        This enum replaces the `is_comments_disabled` field, which has been deprecated. (Also note that this field may be
+        superseded by newsletter-level settings; for instance, "enabled" is an invalid and inert value if the newsletter itself
+        has comments disabled.)'
+      enum:
+      - disabled
+      - enabled
+      - enabled_for_paid_subscribers
+      title: CommentingMode
+      type: string
+    EmailSource:
+      description: 'Represents the original provenance of an email. This value is not exposed
+
+        to subscribers, but does determine some behavior of the email (e.g. whether
+
+        or not analytics can be calculated.)'
+      enum:
+      - api
+      - import
+      - app
+      - external_feed
+      - smtp
+      title: Source
+      type: string
+    EmailStatus:
+      description: 'Represents the state of an email.
+
+
+        No action is required to move from one state or another; Buttondown
+
+        internally handles the transitions, and exposing the status is for
+
+        observability purposes only.'
+      enum:
+      - draft
+      - managed_by_rss
+      - about_to_send
+      - scheduled
+      - in_flight
+      - paused
+      - deleted
+      - errored
+      - sent
+      - imported
+      - throttled
+      - resending
+      - transactional
+      - suppressed
+      title: Status
+      type: string
+    EmailSuppressionReason:
+      description: Represents the reason an email was suppressed.
+      enum:
+      - law_enforcement
+      - internal_auditing
+      title: SuppressionReason
+      type: string
+    EmailType:
+      description: 'The legacy single-axis representation of an email''s audience and
+
+        archive visibility. No longer stored: `filters` owns the audience
+
+        axis and `archival_mode` owns the archive axis, and the deprecated
+
+        API field is derived from those (see `email_type` below).'
+      enum:
+      - public
+      - private
+      - premium
+      - free
+      - churned
+      - archival
+      title: Type
+      type: string
+    Empty:
+      properties: {}
+      title: Empty
+      type: object
+    ErrorMessage:
+      properties:
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
+            how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage
+      type: object
+    ExternalFeed:
+      description: 'An automation is a one-to-one mapping between an external RSS feed and an action
+
+        to be performed when new items are detected in that feed. Right now, Buttondown offers
+
+        two actions:
+
+
+        - Send an email
+
+        - Create an email but save it as a draft to be sent out manually
+
+
+        The automation is configured with a cadence, which is the frequency at which the
+
+        automation will be run. The cadence can be one of the following:
+
+
+        - Run the automation every time a new item is detected in the feed
+
+        - Run the automation once per week
+
+        - Run the automation once per month'
+      properties:
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        last_checked_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: The most recent date and time this feed was checked for new items.
+          title: Last Checked Date
+        status:
+          $ref: '#/components/schemas/ExternalFeedAutomationStatus'
+          description: The current status of the external feed automation.
+        behavior:
+          $ref: '#/components/schemas/ExternalFeedAutomationBehavior'
+          description: Whether feed items are sent immediately or drafted for manual review.
+        cadence:
+          $ref: '#/components/schemas/ExternalFeedAutomationCadence'
+          description: How frequently this feed should create or draft emails.
+          example: daily
+        cadence_metadata:
+          additionalProperties:
+            type: string
+          description: Additional scheduling details for the selected cadence. `time` is required for `daily`/`weekly`/`monthly`
+            cadences; `weekday` is required for `weekly`; `monthday` is required for `monthly`. See the [cadence metadata
+            reference](https://docs.buttondown.com/api-external-feed-cadence-metadata) for allowed values.
+          title: Cadence Metadata
+          type: object
+        filters:
+          $ref: '#/components/schemas/FilterGroup'
+          description: Tag-based filtering rules used to decide which subscribers receive feed-generated emails.
+        url:
+          description: The URL of the RSS feed to poll for new items.
+          title: Url
+          type: string
+        subject:
+          description: The subject line template for emails generated from this feed.
+          title: Subject
+          type: string
+        body:
+          description: The body template for emails generated from this feed.
+          title: Body
+          type: string
+        label:
+          description: An optional internal label for this feed.
+          title: Label
+          type: string
+        metadata:
+          additionalProperties: true
+          description: Metadata to be passed to emails rendered by this RSS feed.
+          title: Metadata
+          type: object
+          example:
+            foo: bar
+        skip_old_items:
+          description: Skip items with publish date older than one day from when they're discovered
+          title: Skip Old Items
+          type: boolean
+      required:
+      - id
+      - creation_date
+      - status
+      - behavior
+      - cadence
+      - cadence_metadata
+      - filters
+      - url
+      - subject
+      - body
+      - label
+      - skip_old_items
+      title: ExternalFeed
+      type: object
+    ExternalFeedAutomationBehavior:
+      enum:
+      - draft
+      - emails
+      title: Behavior
+      type: string
+      description: An enumeration.
+    ExternalFeedAutomationCadence:
+      enum:
+      - every
+      - daily
+      - weekly
+      - monthly
+      title: Cadence
+      type: string
+      description: An enumeration.
+    ExternalFeedAutomationStatus:
+      type: string
+      enum:
+      - active
+      - failing
+      - inactive
+      - deleted
+      title: ExternalFeedAutomationStatus
+      description: Represents the status of the automation, and whether or not it is active. Inactive automations will not
+        be processed. Deleted automations will not be processed.
+    ExternalFeedInput:
+      additionalProperties: false
+      properties:
+        url:
+          description: The URL of the RSS feed to poll for new items.
+          maxLength: 2000
+          minLength: 1
+          title: Url
+          type: string
+          example: http://lorem-rss.herokuapp.com/feed
+        behavior:
+          $ref: '#/components/schemas/ExternalFeedAutomationBehavior'
+          description: The [behavior](https://docs.buttondown.com/api-external-feed-behavior) of the external feed.
+          example: draft
+        cadence:
+          $ref: '#/components/schemas/ExternalFeedAutomationCadence'
+          description: How frequently this feed should create or draft emails.
+          example: daily
+        cadence_metadata:
+          allOf:
+          - $ref: '#/components/schemas/CadenceMetadata'
+          description: Additional scheduling details for the selected cadence. `time` is required for `daily`/`weekly`/`monthly`
+            cadences; `weekday` is required for `weekly`; `monthday` is required for `monthly`. See the [cadence metadata
+            reference](https://docs.buttondown.com/api-external-feed-cadence-metadata) for allowed values.
+        filters:
+          $ref: '#/components/schemas/FilterGroup'
+          description: Tag-based filtering rules used to decide which subscribers receive feed-generated emails.
+        subject:
+          description: The subject line template for emails generated from this feed.
+          maxLength: 255
+          minLength: 1
+          title: Subject
+          type: string
+        body:
+          description: The body template for emails generated from this feed.
+          minLength: 1
+          title: Body
+          type: string
+        label:
+          default: ''
+          description: An optional internal label for this feed.
+          maxLength: 255
+          title: Label
+          type: string
+        metadata:
+          additionalProperties: true
+          description: Metadata to be passed to emails rendered by this RSS feed.
+          title: Metadata
+          type: object
+          example:
+            foo: bar
+        skip_old_items:
+          default: false
+          description: Skip items with publish date older than one day from when they're discovered
+          title: Skip Old Items
+          type: boolean
+      required:
+      - url
+      - behavior
+      - cadence
+      - filters
+      - subject
+      - body
+      title: ExternalFeedInput
+      type: object
+    ExternalFeedItem:
+      description: 'An external feed item is a single item in an external RSS feed. It is created
+
+        automatically by Buttondown when a new item is detected in an external feed. External feed
+
+        items are immutable and cannot be modified or deleted.'
+      properties:
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        status:
+          $ref: '#/components/schemas/ExternalFeedItemStatus'
+          description: The processing status of this feed item.
+        url:
+          description: The canonical URL of the feed item.
+          title: Url
+          type: string
+        publish_date:
+          description: The publication date parsed from the feed item.
+          format: date-time
+          title: Publish Date
+          type: string
+        title:
+          description: The title of the feed item.
+          title: Title
+          type: string
+        description:
+          description: The description excerpt parsed from the feed item.
+          title: Description
+          type: string
+        content:
+          description: The full content parsed from the feed item.
+          title: Content
+          type: string
+        author:
+          description: The author name parsed from the feed item.
+          title: Author
+          type: string
+        email_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The ID of the generated email for this feed item, if one exists.
+          title: Email Id
+        email:
+          anyOf:
+          - $ref: '#/components/schemas/Email'
+          - type: 'null'
+          description: If expanded, the email generated from this feed item.
+      required:
+      - id
+      - creation_date
+      - status
+      - url
+      - publish_date
+      - title
+      - description
+      - content
+      - author
+      title: ExternalFeedItem
+      type: object
+    ExternalFeedItemPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/ExternalFeedItem'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[ExternalFeedItem]
+      type: object
+    ExternalFeedItemStatus:
+      description: The status of a given item (meaning a distinct URL) within an RSS feed.
+      enum:
+      - unprocessed
+      - irrelevant
+      - errored
+      - skipped
+      - queued
+      - processed
+      title: Status
+      type: string
+    ExternalFeedPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/ExternalFeed'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[ExternalFeed]
+      type: object
+    ExternalFeedUpdateInput:
+      additionalProperties: false
+      properties:
+        behavior:
+          anyOf:
+          - $ref: '#/components/schemas/ExternalFeedAutomationBehavior'
+            description: The [behavior](https://docs.buttondown.com/api-external-feed-behavior) of the external feed.
+            example: draft
+          - type: 'null'
+        cadence:
+          anyOf:
+          - $ref: '#/components/schemas/ExternalFeedAutomationCadence'
+            description: How frequently this feed should create or draft emails.
+            example: daily
+          - type: 'null'
+        cadence_metadata:
+          anyOf:
+          - $ref: '#/components/schemas/CadenceMetadata'
+          - type: 'null'
+          description: Additional scheduling details for the selected cadence. `time` is required for `daily`/`weekly`/`monthly`
+            cadences; `weekday` is required for `weekly`; `monthday` is required for `monthly`. See the [cadence metadata
+            reference](https://docs.buttondown.com/api-external-feed-cadence-metadata) for allowed values.
+        filters:
+          anyOf:
+          - $ref: '#/components/schemas/FilterGroup'
+            description: Tag-based filtering rules used to decide which subscribers receive feed-generated emails.
+          - type: 'null'
+        subject:
+          anyOf:
+          - description: The subject line template for emails generated from this feed.
+            maxLength: 255
+            minLength: 1
+            type: string
+          - type: 'null'
+          title: Subject
+        body:
+          anyOf:
+          - description: The body template for emails generated from this feed.
+            minLength: 1
+            type: string
+          - type: 'null'
+          title: Body
+        label:
+          anyOf:
+          - maxLength: 255
+            type: string
+          - type: 'null'
+          description: An optional internal label for this feed.
+          title: Label
+        status:
+          anyOf:
+          - enum:
+            - active
+            - failing
+            - inactive
+            type: string
+          - type: 'null'
+          description: The current status of the external feed automation.
+          title: Status
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          description: Metadata to be passed to emails rendered by this RSS feed.
+          title: Metadata
+          example:
+            foo: bar
+        skip_old_items:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          description: Skip items with publish date older than one day from when they're discovered
+          title: Skip Old Items
+      title: ExternalFeedUpdateInput
+      type: object
+    FailureBreakdownItem:
+      description: A single failure reason with its count.
+      properties:
+        code:
+          description: The failure reason code (e.g. 'hard_bounce', 'spam')
+          title: Code
+          type: string
+        count:
+          description: Number of failures with this reason
+          title: Count
+          type: integer
+      required:
+      - code
+      - count
+      title: FailureBreakdownItem
+      type: object
+    Filter:
+      description: "A filter is a single condition that can be evaluated against a [Subscriber](/api-subscribers-retrieve).\
+        \ It has a field, an operator, and a value:\n\n```json\n{\n    \"field\": \"subscriber.tags\",\n    \"operator\":\
+        \ \"contains\",\n    \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40j\"\n}\n```\n\nThe field is the path to the field\
+        \ on the subscriber to evaluate. The operator is the operator to use when evaluating the filter. The value is the\
+        \ value to compare the field to. Tag filters require the tag's ID (either a UUID or TypeID), not its name."
+      properties:
+        field:
+          title: Field
+          type: string
+        operator:
+          $ref: '#/components/schemas/Operator'
+        value:
+          title: Value
+          type: string
+      required:
+      - field
+      - operator
+      - value
+      title: Filter
+      type: object
+    FilterGroup:
+      description: "Buttondown's filtering schema can be used for multiple things:\n\n- Filtering [the audience of an email](/api-emails-create)\
+        \ to a specific subset\n- Creating [finely-tuned automations](/api-automation-introduction)\n\nFilters are fractal;\
+        \ they can be nested in groups, and groups can be nested in other groups. This is accomplished through a tree-like\
+        \ structure. Every \"FilterGroup\" has a \"predicate\" field, which is either \"and\" or \"or\", which determines\
+        \ how the filters and groups within the group are combined, a \"groups\" field, which is a list of \"FilterGroup\"\
+        \ objects (that's that recursive bit!), and a \"filters\" field, which are the leaf-level filters themselves.\n\n\
+        Let's say you want a simple filter: all subscribers who have a tag whose ID is `sub_tag_0j6hb7h40j6hb7h40j6hb7h40j`.\
+        \ You can do that like this:\n\n```json\n{\n    \"filters\": [{\"field\": \"subscriber.tags\", \"operator\": \"contains\"\
+        , \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40j\"}],\n    \"groups\": [],\n    \"predicate\": \"and\"\n}\n```\n\n\
+        Now, let's say you want to filter for subscribers who have that tag and a tag whose ID is `sub_tag_0j6hb7h40j6hb7h40j6hb7h40k`.\
+        \ You can do that like this:\n\n```json\n{\n    \"filters\": [{\"field\": \"subscriber.tags\", \"operator\": \"contains\"\
+        , \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40j\"}, {\"field\": \"subscriber.tags\", \"operator\": \"contains\"\
+        , \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40k\"}],\n    \"groups\": [],\n    \"predicate\": \"and\"\n}\n```\n\n\
+        If you wanted to change that `and` to an `or`, you can do that like this:\n\n```json\n{\n    \"filters\": [{\"field\"\
+        : \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40j\"}, {\"field\"\
+        : \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40k\"}],\n    \"groups\"\
+        : [],\n    \"predicate\": \"or\"\n}\n```\n\nNow, let's say you want to filter for subscribers who have the first tag\
+        \ _or_ both the second tag and a third tag whose ID is `sub_tag_0j6hb7h40j6hb7h40j6hb7h40m`. This is where the whole\
+        \ nested thing comes in handy. You can do that like this:\n\n```json\n{\n    \"filters\": [{\"field\": \"subscriber.tags\"\
+        , \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40j\"}],\n    \"groups\": [\n        {\n\
+        \            \"filters\": [{\"field\": \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40k\"\
+        }, {\"field\": \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40m\"\
+        }],\n            \"groups\": [],\n            \"predicate\": \"and\"\n        }\n    ],\n    \"predicate\": \"or\"\
+        \n}\n```\n\nYou can read more about the specific filter construction in the [Filter documentation](/api-emails-filter)."
+      properties:
+        filters:
+          description: The leaf-level filters to apply to the audience.
+          items:
+            $ref: '#/components/schemas/Filter'
+          title: Filters
+          type: array
+        groups:
+          description: The nested groups to apply to the audience.
+          items:
+            $ref: '#/components/schemas/FilterGroup'
+          title: Groups
+          type: array
+        predicate:
+          description: The logical operator to use when combining filters (either 'and' or 'or').
+          enum:
+          - and
+          - or
+          title: Predicate
+          type: string
+      required:
+      - filters
+      - groups
+      - predicate
+      title: FilterGroup
+      type: object
+    NewsletterEmailTemplate:
+      description: 'Represents the template of an email.
+
+
+        Each template has a different layout/style; you can view screenshots and examples [in the docs](https://docs.buttondown.com/customizing-email-design#buttondowns-default-templates).'
+      enum:
+      - classic
+      - custom
+      - modern
+      - plaintext
+      - naked
+      title: EmailTemplate
+      type: string
+    Operator:
+      enum:
+      - equals
+      - not_equals
+      - contains
+      - not_contains
+      - is_empty
+      - is_not_empty
+      - greater_than
+      - less_than
+      title: Operator
+      type: string
+      description: An enumeration.
+    ValidationErrorDetail:
+      properties:
+        type:
+          description: The type of validation error.
+          title: Type
+          type: string
+        loc:
+          description: The location of the error in the request.
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Loc
+          type: array
+        msg:
+          description: A human-readable error message.
+          title: Msg
+          type: string
+      required:
+      - type
+      - loc
+      - msg
+      title: ValidationErrorDetail
+      type: object
+    ValidationErrorMessage:
+      properties:
+        detail:
+          description: A list of validation errors.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          title: Detail
+          type: array
+      required:
+      - detail
+      title: ValidationErrorMessage
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: API key passed as 'Token <your-api-key>' in the Authorization header.

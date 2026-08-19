@@ -1,0 +1,464 @@
+openapi: 3.1.0
+info:
+  title: Buttondown Attachments API
+  version: 1.0.0
+  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction)
+    for guides and examples.
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://api.buttondown.com/v1
+security:
+- ApiKeyAuth: []
+tags:
+- name: Attachments
+paths:
+  /attachments:
+    post:
+      operationId: create_attachment
+      summary: Create Attachment
+      parameters: []
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attachment'
+          links:
+            retrieve_attachment:
+              operationId: retrieve_attachment
+              parameters:
+                path.id: $response.body#/id
+            delete_attachment:
+              operationId: delete_attachment
+              parameters:
+                path.id: $response.body#/id
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Upload a new attachment
+      tags:
+      - Attachments
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                file:
+                  format: binary
+                  title: File
+                  type: string
+                name:
+                  anyOf:
+                  - type: string
+                  - type: 'null'
+                  title: Name
+              required:
+              - file
+              title: MultiPartBodyParams
+              type: object
+        required: true
+      security:
+      - ApiKeyAuth: []
+    get:
+      operationId: list_attachments
+      summary: List Attachments
+      parameters:
+      - in: query
+        name: ids
+        schema:
+          description: If provided, only return attachments matching the given IDs.
+          example:
+          - att_01h8xg4j3k2m1n0p9q8r7s6t5v
+          title: Ids
+          items:
+            maxLength: 50
+            pattern: ^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|(?:att)_(?:[0-7][0-9abcdefghjkmnpqrstvwxyz]{25}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}))$
+            type: string
+          type: array
+        required: false
+        description: If provided, only return attachments matching the given IDs.
+        example:
+        - att_01h8xg4j3k2m1n0p9q8r7s6t5v
+      - in: query
+        name: page_size
+        schema:
+          default: 100
+          description: The number of results per page.
+          title: Page Size
+          maximum: 1000
+          minimum: 1
+          type: integer
+        required: false
+        description: The number of results per page.
+      - in: query
+        name: page
+        required: false
+        description: The page number of the paginated response.
+        schema:
+          type: integer
+          title: Page
+          description: The page number of the paginated response.
+          default: 1
+          example: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttachmentPage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: List all attachments
+      tags:
+      - Attachments
+      security:
+      - ApiKeyAuth: []
+  /attachments/{id}:
+    get:
+      operationId: retrieve_attachment
+      summary: Retrieve Attachment
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attachment'
+          links:
+            delete_attachment:
+              operationId: delete_attachment
+              parameters:
+                path.id: $response.body#/id
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Retrieve an attachment
+      tags:
+      - Attachments
+      security:
+      - ApiKeyAuth: []
+    delete:
+      operationId: delete_attachment
+      summary: Delete Attachment
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      responses:
+        '204':
+          description: No Content
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Delete an attachment
+      tags:
+      - Attachments
+      security:
+      - ApiKeyAuth: []
+components:
+  schemas:
+    Attachment:
+      description: 'Attachments are files that can be included with your emails. Buttondown allows
+
+        you to upload attachments to its secure S3 bucket and attach them to your emails.
+
+        Supported file types include documents, images, audio files, and more.'
+      properties:
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        name:
+          description: The name of the attachment.
+          example: newsletter-guide.pdf
+          maxLength: 255
+          title: Name
+          type: string
+        file:
+          description: The URL of the attachment file.
+          example: https://buttondown.s3.amazonaws.com/attachments/newsletter-guide.pdf
+          title: File
+          type: string
+        size:
+          description: The size of the attachment in bytes.
+          example: 1000
+          minimum: 0
+          title: Size
+          type: integer
+      required:
+      - id
+      - creation_date
+      - name
+      - file
+      - size
+      title: Attachment
+      type: object
+    AttachmentPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/Attachment'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[Attachment]
+      type: object
+    ErrorMessage:
+      properties:
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
+            how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage
+      type: object
+    ValidationErrorDetail:
+      properties:
+        type:
+          description: The type of validation error.
+          title: Type
+          type: string
+        loc:
+          description: The location of the error in the request.
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Loc
+          type: array
+        msg:
+          description: A human-readable error message.
+          title: Msg
+          type: string
+      required:
+      - type
+      - loc
+      - msg
+      title: ValidationErrorDetail
+      type: object
+    ValidationErrorMessage:
+      properties:
+        detail:
+          description: A list of validation errors.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          title: Detail
+          type: array
+      required:
+      - detail
+      title: ValidationErrorMessage
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: API key passed as 'Token <your-api-key>' in the Authorization header.

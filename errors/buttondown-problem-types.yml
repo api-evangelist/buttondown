@@ -1,0 +1,118 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/_original/buttondown-openapi.json + https://docs.buttondown.com/api-error-codes
+format: vendor
+note: Buttondown does not use RFC 9457 application/problem+json. Coded errors return {code, detail, metadata} as
+  application/json; schema-validation failures return 422 with a detail[] array of {type, loc, msg}. See errors/buttondown-error-codes.yml
+  for the machine-parseable code registry.
+envelopes:
+- name: ErrorMessage
+  media_type: application/json
+  fields:
+  - code
+  - detail
+  - metadata
+  description: Coded error. metadata may carry a documentation_url key linking to the remedy.
+- name: ValidationErrorMessage
+  media_type: application/json
+  status: 422
+  fields:
+  - detail[]
+  description: Schema-validation failure; detail[] holds one {type, loc, msg} entry per invalid field.
+problems:
+- status: 400
+  title: Bad Request
+  schemas:
+  - ErrorMessage
+  - ErrorMessage_ArchivePriceErrorCode_
+  - ErrorMessage_AutomationCreationErrorCode_
+  - ErrorMessage_CreateExportErrorCode_
+  - ErrorMessage_CreateFormErrorCode_
+  - ErrorMessage_CreateImportErrorCode_
+  - ErrorMessage_CreateNewsletterErrorCode_
+  - ErrorMessage_CreatePriceErrorCode_
+  - ErrorMessage_CreateSurveyErrorCode_
+  - ErrorMessage_CreateSurveyResponseErrorCode_
+  - ErrorMessage_EmailCreationErrorCode_
+  - ErrorMessage_EmailListErrorCode_
+  - ErrorMessage_Failure_
+  - ErrorMessage_ListPricesErrorCode_
+  - ErrorMessage_ListSubscribersErrorCode_
+  - ErrorMessage_SegmentErrorCode_
+  - ErrorMessage_TagErrorCode_
+  - ErrorMessage_UpdateAutomationAttemptErrorCode_
+  - ErrorMessage_UpdateSubscriberErrorCode_
+  - ErrorMessage_UpdateSurveyErrorCode_
+  - ErrorMessage_ValidationErrorCode_
+  operation_count: 70
+  example_operations:
+  - create_advertising_unit
+  - create_automation
+  - create_book
+  - create_bulk_action
+  - create_comment
+- status: 401
+  title: Unauthorized
+  schemas:
+  - ErrorMessage
+  operation_count: 131
+  example_operations:
+  - create_advertising_unit
+  - create_attachment
+  - create_automation
+  - create_book
+  - create_bulk_action
+- status: 403
+  title: Forbidden
+  schemas:
+  - ErrorMessage
+  operation_count: 122
+  example_operations:
+  - create_advertising_unit
+  - create_attachment
+  - create_automation
+  - create_book
+  - create_bulk_action
+- status: 404
+  title: Not Found
+  schemas:
+  - ErrorMessage
+  operation_count: 87
+  example_operations:
+  - create_comment
+  - create_survey_response
+  - create_user
+  - delete_advertising_unit
+  - delete_attachment
+- status: 409
+  title: Conflict
+  schemas: []
+  operation_count: 117
+  example_operations:
+  - create_advertising_unit
+  - create_attachment
+  - create_automation
+  - create_book
+  - create_bulk_action
+- status: 422
+  title: Unprocessable Entity
+  schemas:
+  - ValidationErrorMessage
+  operation_count: 58
+  example_operations:
+  - create_attachment
+  - create_automation
+  - create_book
+  - create_comment
+  - create_email
+- status: 429
+  title: Too Many Requests
+  schemas:
+  - ErrorMessage
+  operation_count: 133
+  example_operations:
+  - create_advertising_unit
+  - create_attachment
+  - create_automation
+  - create_book
+  - create_bulk_action

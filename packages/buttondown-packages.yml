@@ -1,0 +1,86 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://registry.npmjs.org/ (search + per-package metadata), https://pypi.org/pypi/,
+  https://rubygems.org/api/v1/search.json, https://crates.io/api/v1/crates,
+  https://packagist.org/search.json, https://github.com/buttondown
+description: >-
+  Buttondown publishes exactly one first-party package: the @buttondown/cli npm package, which
+  is a content-sync CLI rather than a server-side API client library. There is no first-party
+  SDK on npm, PyPI, RubyGems, crates.io, Packagist, Maven Central, NuGet or pkg.go.dev — the
+  documented integration path is raw HTTP against the REST API. Every other Buttondown-named
+  package found on a registry is third-party.
+packages:
+  - language: javascript
+    registry: npm
+    name: "@buttondown/cli"
+    url: https://www.npmjs.com/package/@buttondown/cli
+    repository: https://github.com/buttondown/cli
+    install: npm install -g @buttondown/cli
+    binary: buttondown
+    official: true
+    kind: cli
+    license: MIT
+    version: 1.0.9
+    published: '2025-10-30'
+    note: >-
+      Latest published npm version is 1.0.9 (2025-10-30); the package.json on the repo's main
+      branch already reads 1.1.0, so the newest work is unreleased. Ships the `buttondown` binary
+      for login/pull/push/create against https://api.buttondown.com/v1.
+third_party:
+  - language: javascript
+    registry: npm
+    name: buttondown
+    url: https://www.npmjs.com/package/buttondown
+    official: false
+    version: 1.1.2
+    published: '2021-10-03'
+    note: Community Node.js API wrapper; last released 2021, four years behind the current API surface.
+  - language: javascript
+    registry: npm
+    name: buttondown-mcp
+    url: https://www.npmjs.com/package/buttondown-mcp
+    official: false
+    version: 1.2.0
+    published: '2026-02-10'
+    note: Community MCP server for the Buttondown API. Not published or endorsed by Buttondown.
+  - language: javascript
+    registry: npm
+    name: buttondown-client
+    url: https://www.npmjs.com/package/buttondown-client
+    official: false
+    version: 0.1.1
+    published: '2021-01-29'
+    note: Community generated TypeScript client.
+  - language: php
+    registry: packagist
+    name: juststeveking/laravel-buttondown-email
+    url: https://packagist.org/packages/juststeveking/laravel-buttondown-email
+    official: false
+    version: null
+    published: null
+    note: >-
+      Community Laravel integration. Version not read — Packagist search results do not carry
+      release metadata and the package endpoint was not queried in this pass.
+  - language: php
+    registry: packagist
+    name: studioespresso/craft-buttondown
+    url: https://packagist.org/packages/studioespresso/craft-buttondown
+    official: false
+    version: null
+    published: null
+    note: Community Craft CMS plugin. Version not read; see note above.
+registries_checked:
+  - {registry: npm, first_party_found: 1}
+  - {registry: pypi, first_party_found: 0, note: "buttondown, buttondown-api and pybuttondown all 404"}
+  - {registry: rubygems, first_party_found: 0, note: search returned zero gems}
+  - {registry: crates.io, first_party_found: 0}
+  - {registry: packagist, first_party_found: 0}
+  - {registry: maven-central, first_party_found: 0}
+  - {registry: nuget, first_party_found: 0}
+  - {registry: pkg.go.dev, first_party_found: 0}
+summary:
+  official_count: 1
+  official_sdk_count: 0
+  official_cli_count: 1
+  third_party_count: 5

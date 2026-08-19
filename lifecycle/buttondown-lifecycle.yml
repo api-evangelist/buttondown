@@ -1,0 +1,74 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://docs.buttondown.com/api-versioning, https://docs.buttondown.com/api-changelog,
+  https://status.buttondown.com, https://github.com/buttondown/openapi/releases
+description: >-
+  How the Buttondown API changes over time, and what a consumer is told about it. Buttondown runs a
+  date-based API version train with an explicit backwards-incompatibility definition, a per-newsletter
+  version pin, and a dated public API changelog. It publishes no formal SLA and no Sunset/Deprecation
+  header contract.
+versioning:
+  scheme: date
+  current: '2026-04-01'
+  request_header: X-API-Version
+  pinning:
+    supported: true
+    scope: newsletter
+    location: https://buttondown.com/settings
+    description: >-
+      Each newsletter carries a pinned API version used when a request omits X-API-Version. With no
+      pin, requests resolve to the latest version.
+  breaking_change_definition:
+    - Renaming or removing fields from an object
+    - Removing or renaming an endpoint
+    - Changing the type of a field
+    - Changing whether a field is required
+    - Changing logic within an endpoint
+  docs: https://docs.buttondown.com/api-versioning
+deprecation:
+  policy_url: https://docs.buttondown.com/api-versioning
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    Buttondown does not publish RFC 8594 Sunset or Deprecation headers. Its deprecation contract is
+    the version train itself: a breaking change ships as a new dated version and consumers stay on
+    their pinned version. Exceptions are announced in the API changelog — the 2026-06-23 unified
+    event-store migration is an example of a deliberately breaking change shipped WITHOUT a new API
+    version, with the reasoning stated in the entry.
+  deprecated_operations: []
+changelog:
+  url: https://docs.buttondown.com/api-changelog
+  rss: https://buttondown.com/rss/changelog.xml
+  product_changelog: https://buttondown.com/changelog
+  entries_published: 63
+  earliest: '2020-12-09'
+  latest: '2026-08-08'
+  artifact: changelog/buttondown-changelog.yml
+spec_releases:
+  repository: https://github.com/buttondown/openapi
+  releases_url: https://github.com/buttondown/openapi/releases
+  note: >-
+    The OpenAPI spec repository carries a single tagged release (v1, 2022-12-07); the spec itself is
+    updated continuously on main and served live at https://api.buttondown.com/v1/openapi.json.
+status_page:
+  url: https://status.buttondown.com
+  machine_readable: https://status.buttondown.com/api/v2/summary.json
+  components:
+    - Subscriber-facing app
+    - Author-facing app
+    - API
+    - Emails
+    - Automations
+  note: >-
+    apis.yml previously pointed at https://buttondown.statuspage.io/, which still resolves;
+    status.buttondown.com is the host Buttondown links from its own footer and llms.txt.
+  incident_transparency: >-
+    Buttondown publishes named public postmortems on its blog (for example the 2026-07-23
+    api.buttondown.email inaccessible postmortem), which are mirrored into blogs/ in this repo.
+sla:
+  published: false
+  note: >-
+    No uptime SLA document was found. The status page publishes rolling per-component uptime
+    percentages (API at 100% over the May–Aug 2026 window observed on 2026-08-13) but does not
+    commit to a target.

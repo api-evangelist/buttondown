@@ -1,0 +1,282 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.buttondown.com/events-and-webhooks-introduction, https://github.com/buttondown/openapi (enums.json
+  ExternalEventType), and the `webhooks` block of https://api.buttondown.com/v1/openapi.json
+spec_type: Webhooks
+asyncapi_published: false
+description: 'Buttondown publishes no AsyncAPI document, but it does describe its event surface machine-readably
+  in two places: an OpenAPI 3.1 `webhooks` block declaring the outbound POST and its WebhookEvent payload, and an
+  enums.json in its public OpenAPI repo enumerating all 82 event types with descriptions. This artifact is that
+  catalog, captured verbatim.'
+delivery:
+  transport: https
+  method: POST
+  content_type: application/json
+  payload_schema: WebhookEvent
+  payload_fields:
+  - name: id
+    description: The unique TypeID of the event that triggered this delivery (ext_evt_ prefix).
+  - name: event_type
+    description: One of the ExternalEventType values below.
+  - name: data
+    description: Event-specific metadata; shape varies by event_type. Multi-newsletter accounts also receive a newsletter
+      ID to disambiguate.
+  signing:
+    header: X-Buttondown-Signature
+    algorithm: sha256=<hmac>
+    computed_over: the raw request body, keyed with the webhook's signing key
+    optional: true
+    note: Signature is present only when the webhook has a signing key configured.
+  acknowledgement: Any 2xx status acknowledges receipt.
+  failure_policy: Five consecutive non-2xx responses disable the webhook.
+  attempt_log:
+    operation: retrieve_webhook_attempts
+    path: /webhooks/{id}/attempts
+  test_delivery:
+    operation: test_webhook
+    path: /webhooks/{id}/test
+management_operations:
+- create_webhook
+- list_webhooks
+- retrieve_webhook
+- update_webhook
+- delete_webhook
+- retrieve_webhook_attempts
+- test_webhook
+event_store:
+  readable: true
+  operations:
+  - list_events
+  - get_event
+  description: The same unified event store that powers webhooks is readable over REST at GET /v1/events and GET
+    /v1/events/{id}, so an integration can poll or backfill rather than only receive.
+event_count: 82
+families:
+- family: advertising_slot
+  count: 2
+  events:
+  - name: advertising_slot.inquiry
+    description: Whenever a sponsor submits an inquiry for an advertising slot.
+  - name: advertising_slot.purchased
+    description: Whenever an advertising slot in your newsletter is purchased.
+- family: automation
+  count: 1
+  events:
+  - name: automation.invoked
+    description: Whenever an automation is manually invoked (e.g. by a webhook or API call).
+- family: bigcommerce
+  count: 4
+  events:
+  - name: bigcommerce.customer.created
+    description: Whenever a new customer is synced from BigCommerce.
+  - name: bigcommerce.customer.updated
+    description: Whenever a customer's data is updated in BigCommerce.
+  - name: bigcommerce.order.created
+    description: Whenever a new order is synced from BigCommerce.
+  - name: bigcommerce.order.updated
+    description: Whenever an order's data is updated in BigCommerce.
+- family: date
+  count: 4
+  events:
+  - name: date.day.started
+    description: Whenever a new day starts. This event is fired at midnight UTC.
+  - name: date.month.started
+    description: Whenever a new month starts. This event is fired at midnight UTC on the first day of each month.
+  - name: date.week.started
+    description: Whenever a new week starts. This event is fired at midnight UTC on Monday.
+  - name: date.year.started
+    description: Whenever a new year starts. This event is fired at midnight UTC on January 1st.
+- family: email
+  count: 6
+  events:
+  - name: email.created
+    description: Whenever a new email is created and begins delivery. Note that event happens immediately before
+      the emails themselves are sent.
+  - name: email.deleted
+    description: Whenever an email has been deleted.
+  - name: email.send.started
+    description: Whenever an email starts sending. This fires as soon as the send is underway, before any recipient
+      has been delivered to — useful for cross-posting, which otherwise waits for the whole send to finish.
+  - name: email.sent
+    description: Whenever an email has finished its delivery. Note that event happens immediately after all emails
+      have been sent, but some email events may not have finished processing.
+  - name: email.status.changed
+    description: Whenever an email's status has changed (e.g. from 'draft' to 'sent'.) The `metadata` field will
+      contain the previous and new statii in 'old_value' and 'new_value' respectively.
+  - name: email.updated
+    description: Whenever an email's content or metadata has been updated.
+- family: export
+  count: 3
+  events:
+  - name: export.completed
+    description: Whenever an export is completed.
+  - name: export.created
+    description: Whenever an export is created.
+  - name: export.failed
+    description: Whenever an export fails.
+- family: external_feed_item
+  count: 1
+  events:
+  - name: external_feed_item.created
+    description: Whenever a new item is created in an [RSS feed](https://docs.buttondown.com/rss-to-email).
+- family: firewall
+  count: 1
+  events:
+  - name: firewall.blocked
+    description: Represents an incoming request that was blocked by the [firewall](https://docs.buttondown.com/firewall).
+- family: form
+  count: 3
+  events:
+  - name: form.created
+    description: Whenever a new form is created.
+  - name: form.deleted
+    description: Whenever a form has been deleted.
+  - name: form.updated
+    description: Whenever a form's content or metadata has been updated.
+- family: memberful
+  count: 3
+  events:
+  - name: memberful.member.updated
+    description: Whenever a member changes their email address in Memberful.
+  - name: memberful.subscription.created
+    description: Whenever a new subscription is created in Memberful.
+  - name: memberful.subscription.deleted
+    description: Whenever a subscription is deleted in Memberful.
+- family: mention
+  count: 1
+  events:
+  - name: mention.created
+    description: Whenever your newsletter is mentioned elsewhere.
+- family: note
+  count: 2
+  events:
+  - name: note.created
+    description: Whenever a note is created.
+  - name: note.deleted
+    description: Whenever a note is deleted.
+- family: patreon
+  count: 3
+  events:
+  - name: patreon.member.updated
+    description: Whenever a member changes their email address in Patreon.
+  - name: patreon.membership.created
+    description: Whenever a new membership is created in Patreon.
+  - name: patreon.membership.deleted
+    description: Whenever a membership is deleted in Patreon.
+- family: shopify
+  count: 2
+  events:
+  - name: shopify.customer.created
+    description: Whenever a new customer is created in Shopify.
+  - name: shopify.customer.updated
+    description: Whenever a customer changes their email address in Shopify.
+- family: social_mention
+  count: 1
+  events:
+  - name: social_mention.created
+    description: Whenever your newsletter is mentioned on another website such as Reddit, Twitter, Bluesky, etc.
+- family: stripe
+  count: 6
+  events:
+  - name: stripe.checkout.session.completed
+    description: Whenever a Stripe checkout session is completed successfully.
+  - name: stripe.customer.updated
+    description: Whenever a customer changes their email address in Stripe.
+  - name: stripe.invoice.upcoming
+    description: When a paid subscriber's subscription is approaching its renewal date, mapped from Stripe's `invoice.upcoming`
+      webhook. Lets you message subscribers before they're charged again.
+  - name: stripe.subscription.activated
+    description: Whenever a subscription is activated in Stripe.
+  - name: stripe.subscription.churning
+    description: Whenever a subscription is churning in Stripe.
+  - name: stripe.subscription.deactivated
+    description: Whenever a subscription is deactivated in Stripe.
+- family: subscriber
+  count: 35
+  events:
+  - name: subscriber.activation_bounced
+    description: When a subscriber's confirmation (opt-in) email bounced.
+  - name: subscriber.activation_clicked
+    description: When a subscriber clicked a link in their confirmation (opt-in) email.
+  - name: subscriber.activation_complained
+    description: When a subscriber marked their confirmation (opt-in) email as spam.
+  - name: subscriber.activation_deferred
+    description: When a subscriber's confirmation (opt-in) email was deferred (a transient delivery failure the
+      provider will retry).
+  - name: subscriber.activation_delivered
+    description: When a subscriber's confirmation (opt-in) email was successfully delivered.
+  - name: subscriber.activation_opened
+    description: When a subscriber opened their confirmation (opt-in) email.
+  - name: subscriber.activation_rejected
+    description: When a subscriber's confirmation (opt-in) email was rejected (a permanent delivery failure).
+  - name: subscriber.bounced
+    description: Whenever a subscriber's email is bounced.
+  - name: subscriber.changed_email
+    description: When a subscriber's email address has been changed.
+  - name: subscriber.churned
+    description: When a subscriber has unenrolled from your newsletter's paid offering.
+  - name: subscriber.clicked
+    description: When a subscriber has clicked a link in one of your emails.
+  - name: subscriber.commented
+    description: When a subscriber has commented on one of your emails.
+  - name: subscriber.complained
+    description: Whenever a subscriber has complained about one of your emails.
+  - name: subscriber.confirmed
+    description: When a subscriber has confirmed that they are enrolled in your newsletter. (For newsletters without
+      double opt-in, this event is created immediately after `subscriber.created`.)
+  - name: subscriber.created
+    description: Whenever a new subscriber is created.
+  - name: subscriber.deferred
+    description: When a subscriber's email was deferred (a transient delivery failure the email provider will retry).
+  - name: subscriber.deleted
+    description: When a subscriber has been deleted from your newsletter.
+  - name: subscriber.delivered
+    description: Whenever a subscriber's email is successfully delivered.
+  - name: subscriber.opened
+    description: When a subscriber has opened one of your emails.
+  - name: subscriber.paid
+    description: When a subscriber has enrolled in your newsletter's paid offering.
+  - name: subscriber.paused
+    description: When a subscriber has paused their subscription.
+  - name: subscriber.referred
+    description: When a subscriber has referred someone to your newsletter.
+  - name: subscriber.referred.paid
+    description: When a subscriber's referral has converted to a paid subscription.
+  - name: subscriber.rejected
+    description: Whenever a subscriber (or their email provider) has rejected an email from your newsletter. Buttondown
+      takes rejections seriously, and will likely block the subscriber's email address from future emails and/or
+      mark them as undeliverable.
+  - name: subscriber.replied
+    description: Whenever a subscriber has replied to one of your emails.
+  - name: subscriber.responded_to_survey
+    description: When a subscriber has responded to a survey in your newsletter.
+  - name: subscriber.resumed
+    description: When a subscriber has resumed their subscription after pausing it.
+  - name: subscriber.sent
+    description: Whenever an email has been sent to a subscriber.
+  - name: subscriber.tags.changed
+    description: When a subscriber's tags have been modified.
+  - name: subscriber.trial_ended
+    description: When the trial has ended for a subscriber.
+  - name: subscriber.trial_started
+    description: When the trial has started for a subscriber. (For newsletters with automatic free trials, this
+      will be created immediately after `subscriber.confirmed`.)
+  - name: subscriber.type.changed
+    description: When a subscriber's type has been changed.
+  - name: subscriber.unsubscribed
+    description: When a subscriber has manually unsubscribed from your newsletter.
+  - name: subscriber.updated
+    description: When a subscriber's notes or metadata has changed.
+  - name: subscriber.viewed_checkout_page
+    description: When a subscriber has viewed your checkout page.
+- family: survey
+  count: 4
+  events:
+  - name: survey.cleared_responses
+    description: Whenever a survey's responses have been cleared.
+  - name: survey.created
+    description: Whenever a new survey is created.
+  - name: survey.deleted
+    description: Whenever a survey has been deleted.
+  - name: survey.updated
+    description: Whenever a survey's content or metadata has been updated.

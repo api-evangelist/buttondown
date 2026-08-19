@@ -1,0 +1,1724 @@
+{
+  "item": [
+    {
+      "id": "7129c9bb-d7a0-4c3d-bbb5-d0670cec4cb1",
+      "name": "Survey Responses",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7a9087b1-6ed3-4e23-9915-d144946f8a02",
+          "name": "Retrieve Survey Responses",
+          "request": {
+            "name": "Retrieve Survey Responses",
+            "description": {
+              "content": "List all survey responses",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "survey_responses"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "email_id",
+                  "value": "<string>",
+                  "description": "If provided, only return responses submitted from the given email ID(s)."
+                },
+                {
+                  "disabled": false,
+                  "key": "email_id",
+                  "value": "<string>",
+                  "description": "If provided, only return responses submitted from the given email ID(s)."
+                },
+                {
+                  "disabled": false,
+                  "key": "automation_id",
+                  "value": "<string>",
+                  "description": "If provided, only return responses submitted from the given automation ID(s)."
+                },
+                {
+                  "disabled": false,
+                  "key": "automation_id",
+                  "value": "<string>",
+                  "description": "If provided, only return responses submitted from the given automation ID(s)."
+                },
+                {
+                  "disabled": false,
+                  "key": "subscriber_id",
+                  "value": "<string>",
+                  "description": "If provided, only return responses made by the given [subscriber(s)](https://docs.buttondown.com/api-subscribers-introduction)."
+                },
+                {
+                  "disabled": false,
+                  "key": "subscriber_id",
+                  "value": "<string>",
+                  "description": "If provided, only return responses made by the given [subscriber(s)](https://docs.buttondown.com/api-subscribers-introduction)."
+                },
+                {
+                  "disabled": false,
+                  "key": "source",
+                  "value": "<string>",
+                  "description": "If provided, only return responses submitted from the given arbitrary source string(s)."
+                },
+                {
+                  "disabled": false,
+                  "key": "source",
+                  "value": "<string>",
+                  "description": "If provided, only return responses submitted from the given arbitrary source string(s)."
+                },
+                {
+                  "disabled": false,
+                  "key": "survey_id",
+                  "value": "<string>",
+                  "description": "If provided, only return responses made to the given [survey(s)](https://docs.buttondown.com/api-surveys-introduction)."
+                },
+                {
+                  "disabled": false,
+                  "key": "survey_id",
+                  "value": "<string>",
+                  "description": "If provided, only return responses made to the given [survey(s)](https://docs.buttondown.com/api-surveys-introduction)."
+                },
+                {
+                  "disabled": false,
+                  "key": "creation_date__start",
+                  "value": "<date>",
+                  "description": "If provided, only return responses made after the given date."
+                },
+                {
+                  "disabled": false,
+                  "key": "creation_date__end",
+                  "value": "<date>",
+                  "description": "If provided, only return responses made before the given date."
+                },
+                {
+                  "disabled": false,
+                  "key": "expand",
+                  "value": "<string>",
+                  "description": "If provided, expand the given field."
+                },
+                {
+                  "disabled": false,
+                  "key": "expand",
+                  "value": "<string>",
+                  "description": "If provided, expand the given field."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "The page number of the paginated response."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4bf5134d-5ec3-41e1-9783-f15102e1c0d3",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "survey_responses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email_id",
+                      "value": "em_01jv2m9q8r7s6t5w4x3y2z1abc"
+                    },
+                    {
+                      "key": "automation_id",
+                      "value": "aut_01jv2m9q8r7s6t5w4x3y2z1abc"
+                    },
+                    {
+                      "key": "subscriber_id",
+                      "value": "sub_01jv2m9q8r7s6t5w4x3y2z1abc"
+                    },
+                    {
+                      "key": "source",
+                      "value": "landing-page"
+                    },
+                    {
+                      "key": "survey_id",
+                      "value": "srv_01jv2m9q8r7s6t5w4x3y2z1abc"
+                    },
+                    {
+                      "key": "creation_date__start",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "creation_date__end",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"id\": \"string\",\n      \"creation_date\": \"1946-09-07T16:54:45.519Z\",\n      \"answer\": \"string\",\n      \"text\": \"string\",\n      \"survey_id\": \"string\",\n      \"subscriber_id\": \"string\",\n      \"email_id\": \"string\",\n      \"automation_id\": \"string\",\n      \"source\": \"string\",\n      \"subscriber\": {\n        \"id\": \"string\",\n        \"creation_date\": \"1993-07-29T15:51:13.357Z\",\n        \"email_address\": \"telemachus@buttondown.email\",\n        \"referral_code\": \"string\",\n        \"secondary_id\": 3998,\n        \"source\": \"organic\",\n        \"tags\": [\n          \"string\",\n          \"string\"\n        ],\n        \"type\": \"churned\",\n        \"utm_campaign\": \"string\",\n        \"utm_medium\": \"string\",\n        \"utm_source\": \"string\",\n        \"avatar_url\": \"string\",\n        \"bounce_date\": \"1984-09-06T05:58:41.214Z\",\n        \"bounce_reason\": \"domain_blocked\",\n        \"churn_date\": \"2015-08-12T22:06:52.092Z\",\n        \"commenting_disabled\": false,\n        \"country\": \"string\",\n        \"gift_subscription_end_date\": \"2012-02-06T14:58:35.050Z\",\n        \"gift_subscription_message\": \"string\",\n        \"ip_address\": \"string\",\n        \"last_click_date\": \"2019-09-02T04:23:19.715Z\",\n        \"last_open_date\": \"1999-10-26T03:33:35.780Z\",\n        \"delivered_count\": 6277,\n        \"open_count\": 9344,\n        \"clicked_count\": 9342,\n        \"open_rate\": 5229.986411041886,\n        \"click_rate\": 8126.28008592977,\n        \"metadata\": {},\n        \"notes\": \"\",\n        \"purchased_by\": \"string\",\n        \"purchased_message\": \"string\",\n        \"referrer_url\": \"\",\n        \"risk_score\": 2915.646311427804,\n        \"stripe_coupon\": {\n          \"coupon_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"percent_off\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_off\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"stripe_customer_id\": \"string\",\n        \"subscriber_import_id\": \"string\",\n        \"form_id\": \"string\",\n        \"firewall_reasons\": [\n          {\n            \"code\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"reason\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"code\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"reason\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"undeliverability_date\": \"1974-03-16T19:05:47.225Z\",\n        \"undeliverability_reason\": \"out_of_storage\",\n        \"unsubscription_date\": \"1982-06-30T17:55:41.012Z\",\n        \"unsubscription_reason\": \"string\",\n        \"upgrade_date\": \"1948-04-25T16:23:30.391Z\",\n        \"stripe_customer\": {\n          \"key_0\": 7686.612894068911,\n          \"key_1\": 756.3630232663232\n        },\n        \"stripe_subscription\": {\n          \"key_0\": true\n        }\n      },\n      \"survey\": {\n        \"id\": \"string\",\n        \"creation_date\": \"1983-09-22T06:24:34.320Z\",\n        \"identifier\": \"string\",\n        \"question\": \"string\",\n        \"response_count\": 9456,\n        \"answers\": [\n          \"string\",\n          \"string\"\n        ],\n        \"notes\": \"string\",\n        \"randomize_answers\": false,\n        \"response_cadence\": \"once\",\n        \"status\": \"inactive\",\n        \"is_freeform_response_enabled\": false,\n        \"input_type\": \"radio\"\n      },\n      \"email\": {\n        \"id\": \"string\",\n        \"creation_date\": \"1981-04-06T15:25:47.170Z\",\n        \"absolute_url\": \"string\",\n        \"body\": \"string\",\n        \"canonical_url\": \"string\",\n        \"commenting_mode\": \"enabled\",\n        \"description\": \"string\",\n        \"archival_mode\": \"enabled_for_subscribers\",\n        \"featured\": true,\n        \"filters\": {\n          \"filters\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"groups\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"predicate\": \"and\"\n        },\n        \"image\": \"string\",\n        \"modification_date\": \"1958-04-06T23:50:05.687Z\",\n        \"related_email_ids\": [\n          \"string\",\n          \"string\"\n        ],\n        \"should_trigger_pay_per_email_billing\": true,\n        \"source\": \"app\",\n        \"status\": \"draft\",\n        \"subject\": \"string\",\n        \"analytics\": {\n          \"recipients\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deliveries\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"opens\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"clicks\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"temporary_failures\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"permanent_failures\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unsubscriptions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"complaints\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"survey_responses\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"webmentions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"page_views_lifetime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"page_views_30\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"page_views_7\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"subscriptions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paid_subscriptions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"replies\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"comments\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"social_mentions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"temporary_failure_breakdown\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"permanent_failure_breakdown\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"callouts\": [\n          \"first_send_on_sending_domain\",\n          \"first_send_on_sending_domain\"\n        ],\n        \"attachments\": [\n          \"string\",\n          \"string\"\n        ],\n        \"email_type\": \"public\",\n        \"metadata\": {},\n        \"publish_date\": \"1951-10-19T08:48:35.934Z\",\n        \"secondary_id\": 7221,\n        \"slug\": \"string\",\n        \"suppression_reason\": \"law_enforcement\",\n        \"template\": \"modern\"\n      },\n      \"automation\": {\n        \"id\": \"string\",\n        \"creation_date\": \"1982-08-08T09:40:28.273Z\",\n        \"name\": \"string\",\n        \"status\": \"active\",\n        \"trigger\": \"subscriber.activation_rejected\",\n        \"actions\": [\n          {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"metadata\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"timing\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"metadata\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"timing\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"filters\": {\n          \"filters\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"groups\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"predicate\": \"or\"\n        },\n        \"metadata\": {\n          \"key_0\": 8363.559388998698,\n          \"key_1\": \"string\"\n        },\n        \"should_evaluate_filter_after_delay\": true\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"creation_date\": \"1959-05-30T16:46:38.517Z\",\n      \"answer\": \"string\",\n      \"text\": \"string\",\n      \"survey_id\": \"string\",\n      \"subscriber_id\": \"string\",\n      \"email_id\": \"string\",\n      \"automation_id\": \"string\",\n      \"source\": \"string\",\n      \"subscriber\": {\n        \"id\": \"string\",\n        \"creation_date\": \"1956-11-19T20:49:42.826Z\",\n        \"email_address\": \"telemachus@buttondown.email\",\n        \"referral_code\": \"string\",\n        \"secondary_id\": 5126,\n        \"source\": \"stripe\",\n        \"tags\": [\n          \"string\",\n          \"string\"\n        ],\n        \"type\": \"upcoming\",\n        \"utm_campaign\": \"string\",\n        \"utm_medium\": \"string\",\n        \"utm_source\": \"string\",\n        \"avatar_url\": \"string\",\n        \"bounce_date\": \"2025-03-22T10:49:51.699Z\",\n        \"bounce_reason\": \"transient\",\n        \"churn_date\": \"1964-08-02T02:12:20.872Z\",\n        \"commenting_disabled\": false,\n        \"country\": \"string\",\n        \"gift_subscription_end_date\": \"1978-05-24T05:02:58.664Z\",\n        \"gift_subscription_message\": \"string\",\n        \"ip_address\": \"string\",\n        \"last_click_date\": \"1988-01-20T21:22:32.849Z\",\n        \"last_open_date\": \"1980-06-26T05:19:08.697Z\",\n        \"delivered_count\": 2737,\n        \"open_count\": 3217,\n        \"clicked_count\": 9264,\n        \"open_rate\": 9494.555417862513,\n        \"click_rate\": 4279.532843428203,\n        \"metadata\": {},\n        \"notes\": \"\",\n        \"purchased_by\": \"string\",\n        \"purchased_message\": \"string\",\n        \"referrer_url\": \"\",\n        \"risk_score\": 8623.192865137988,\n        \"stripe_coupon\": {\n          \"coupon_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"percent_off\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_off\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"stripe_customer_id\": \"string\",\n        \"subscriber_import_id\": \"string\",\n        \"form_id\": \"string\",\n        \"firewall_reasons\": [\n          {\n            \"code\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"reason\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"code\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"reason\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"undeliverability_date\": \"1993-12-12T18:51:25.567Z\",\n        \"undeliverability_reason\": \"disabled\",\n        \"unsubscription_date\": \"2023-06-03T09:55:09.881Z\",\n        \"unsubscription_reason\": \"string\",\n        \"upgrade_date\": \"1953-03-28T17:08:14.267Z\",\n        \"stripe_customer\": {\n          \"key_0\": \"string\"\n        },\n        \"stripe_subscription\": {\n          \"key_0\": 9841,\n          \"key_1\": \"string\"\n        }\n      },\n      \"survey\": {\n        \"id\": \"string\",\n        \"creation_date\": \"2012-09-11T19:54:56.717Z\",\n        \"identifier\": \"string\",\n        \"question\": \"string\",\n        \"response_count\": 2790,\n        \"answers\": [\n          \"string\",\n          \"string\"\n        ],\n        \"notes\": \"string\",\n        \"randomize_answers\": true,\n        \"response_cadence\": \"once_per_email\",\n        \"status\": \"inactive\",\n        \"is_freeform_response_enabled\": true,\n        \"input_type\": \"radio\"\n      },\n      \"email\": {\n        \"id\": \"string\",\n        \"creation_date\": \"1951-10-22T11:26:01.982Z\",\n        \"absolute_url\": \"string\",\n        \"body\": \"string\",\n        \"canonical_url\": \"string\",\n        \"commenting_mode\": \"enabled_for_paid_subscribers\",\n        \"description\": \"string\",\n        \"archival_mode\": \"enabled\",\n        \"featured\": false,\n        \"filters\": {\n          \"filters\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"groups\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"predicate\": \"and\"\n        },\n        \"image\": \"string\",\n        \"modification_date\": \"2016-02-23T16:46:31.387Z\",\n        \"related_email_ids\": [\n          \"string\",\n          \"string\"\n        ],\n        \"should_trigger_pay_per_email_billing\": false,\n        \"source\": \"app\",\n        \"status\": \"draft\",\n        \"subject\": \"string\",\n        \"analytics\": {\n          \"recipients\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deliveries\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"opens\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"clicks\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"temporary_failures\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"permanent_failures\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unsubscriptions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"complaints\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"survey_responses\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"webmentions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"page_views_lifetime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"page_views_30\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"page_views_7\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"subscriptions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paid_subscriptions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"replies\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"comments\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"social_mentions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"temporary_failure_breakdown\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"permanent_failure_breakdown\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"callouts\": [\n          \"first_send_on_sending_domain\",\n          \"first_send_on_sending_domain\"\n        ],\n        \"attachments\": [\n          \"string\",\n          \"string\"\n        ],\n        \"email_type\": \"public\",\n        \"metadata\": {},\n        \"publish_date\": \"1980-08-31T17:26:15.439Z\",\n        \"secondary_id\": 7635,\n        \"slug\": \"string\",\n        \"suppression_reason\": \"law_enforcement\",\n        \"template\": \"custom\"\n      },\n      \"automation\": {\n        \"id\": \"string\",\n        \"creation_date\": \"1996-07-13T17:24:09.183Z\",\n        \"name\": \"string\",\n        \"status\": \"active\",\n        \"trigger\": \"export.completed\",\n        \"actions\": [\n          {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"metadata\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"timing\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"metadata\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"timing\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"filters\": {\n          \"filters\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"groups\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"predicate\": \"and\"\n        },\n        \"metadata\": {\n          \"key_0\": 574,\n          \"key_1\": 5753\n        },\n        \"should_evaluate_filter_after_delay\": true\n      }\n    }\n  ],\n  \"count\": 8196,\n  \"next\": \"string\",\n  \"previous\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "574ba8f3-5411-4977-bc55-d35552925389",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "survey_responses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email_id",
+                      "value": "em_01jv2m9q8r7s6t5w4x3y2z1abc"
+                    },
+                    {
+                      "key": "automation_id",
+                      "value": "aut_01jv2m9q8r7s6t5w4x3y2z1abc"
+                    },
+                    {
+                      "key": "subscriber_id",
+                      "value": "sub_01jv2m9q8r7s6t5w4x3y2z1abc"
+                    },
+                    {
+                      "key": "source",
+                      "value": "landing-page"
+                    },
+                    {
+                      "key": "survey_id",
+                      "value": "srv_01jv2m9q8r7s6t5w4x3y2z1abc"
+                    },
+                    {
+                      "key": "creation_date__start",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "creation_date__end",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e4aa0f83-4050-4c6a-ab32-32d8a9885154",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "survey_responses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email_id",
+                      "value": "em_01jv2m9q8r7s6t5w4x3y2z1abc"
+                    },
+                    {
+                      "key": "automation_id",
+                      "value": "aut_01jv2m9q8r7s6t5w4x3y2z1abc"
+                    },
+                    {
+                      "key": "subscriber_id",
+                      "value": "sub_01jv2m9q8r7s6t5w4x3y2z1abc"
+                    },
+                    {
+                      "key": "source",
+                      "value": "landing-page"
+                    },
+                    {
+                      "key": "survey_id",
+                      "value": "srv_01jv2m9q8r7s6t5w4x3y2z1abc"
+                    },
+                    {
+                      "key": "creation_date__start",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "creation_date__end",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "efab1e1f-5bf4-4f5a-9e88-d7555be492c2",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "survey_responses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email_id",
+                      "value": "em_01jv2m9q8r7s6t5w4x3y2z1abc"
+                    },
+                    {
+                      "key": "automation_id",
+                      "value": "aut_01jv2m9q8r7s6t5w4x3y2z1abc"
+                    },
+                    {
+                      "key": "subscriber_id",
+                      "value": "sub_01jv2m9q8r7s6t5w4x3y2z1abc"
+                    },
+                    {
+                      "key": "source",
+                      "value": "landing-page"
+                    },
+                    {
+                      "key": "survey_id",
+                      "value": "srv_01jv2m9q8r7s6t5w4x3y2z1abc"
+                    },
+                    {
+                      "key": "creation_date__start",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "creation_date__end",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2297a2a2-4474-4ce2-b91a-9b7a42aaa0d0",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "survey_responses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email_id",
+                      "value": "em_01jv2m9q8r7s6t5w4x3y2z1abc"
+                    },
+                    {
+                      "key": "automation_id",
+                      "value": "aut_01jv2m9q8r7s6t5w4x3y2z1abc"
+                    },
+                    {
+                      "key": "subscriber_id",
+                      "value": "sub_01jv2m9q8r7s6t5w4x3y2z1abc"
+                    },
+                    {
+                      "key": "source",
+                      "value": "landing-page"
+                    },
+                    {
+                      "key": "survey_id",
+                      "value": "srv_01jv2m9q8r7s6t5w4x3y2z1abc"
+                    },
+                    {
+                      "key": "creation_date__start",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "creation_date__end",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"type\": \"string\",\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "87199695-be63-4680-b8d5-83e45532a3b7",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "survey_responses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email_id",
+                      "value": "em_01jv2m9q8r7s6t5w4x3y2z1abc"
+                    },
+                    {
+                      "key": "automation_id",
+                      "value": "aut_01jv2m9q8r7s6t5w4x3y2z1abc"
+                    },
+                    {
+                      "key": "subscriber_id",
+                      "value": "sub_01jv2m9q8r7s6t5w4x3y2z1abc"
+                    },
+                    {
+                      "key": "source",
+                      "value": "landing-page"
+                    },
+                    {
+                      "key": "survey_id",
+                      "value": "srv_01jv2m9q8r7s6t5w4x3y2z1abc"
+                    },
+                    {
+                      "key": "creation_date__start",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "creation_date__end",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "745"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests permitted per minute.",
+                  "key": "X-RateLimit-Limit",
+                  "value": "745"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests remaining in the current window.",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "745"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp at which the window resets.",
+                  "key": "X-RateLimit-Reset",
+                  "value": "745"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4c3d5332-ca01-4fa1-b05d-f361246a7694",
+          "name": "Create Survey Response",
+          "request": {
+            "name": "Create Survey Response",
+            "description": {
+              "content": "Create a new survey response",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "survey_responses"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subscriber_id\": \"<string>\",\n  \"survey_id\": \"<string>\",\n  \"email_id\": \"<string>\",\n  \"answer\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "442e3ccd-e32d-48c9-9642-1ac11a94c718",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "survey_responses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscriber_id\": \"<string>\",\n  \"survey_id\": \"<string>\",\n  \"email_id\": \"em_01jv2m9q8r7s6t5w4x3y2z1abc\",\n  \"answer\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"creation_date\": \"1996-04-12T04:10:39.936Z\",\n  \"answer\": \"string\",\n  \"text\": \"string\",\n  \"survey_id\": \"string\",\n  \"subscriber_id\": \"string\",\n  \"email_id\": \"string\",\n  \"automation_id\": \"string\",\n  \"source\": \"string\",\n  \"subscriber\": {\n    \"id\": \"string\",\n    \"creation_date\": \"2008-03-25T00:51:39.409Z\",\n    \"email_address\": \"telemachus@buttondown.email\",\n    \"referral_code\": \"string\",\n    \"secondary_id\": 7080,\n    \"source\": \"organic\",\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"type\": \"complained\",\n    \"utm_campaign\": \"string\",\n    \"utm_medium\": \"string\",\n    \"utm_source\": \"string\",\n    \"avatar_url\": \"string\",\n    \"bounce_date\": \"1993-09-01T08:53:21.390Z\",\n    \"bounce_reason\": \"out_of_storage\",\n    \"churn_date\": \"1982-05-17T04:56:13.609Z\",\n    \"commenting_disabled\": false,\n    \"country\": \"string\",\n    \"gift_subscription_end_date\": \"2023-10-01T07:17:28.447Z\",\n    \"gift_subscription_message\": \"string\",\n    \"ip_address\": \"string\",\n    \"last_click_date\": \"1953-03-12T08:40:20.447Z\",\n    \"last_open_date\": \"1972-08-14T19:29:33.947Z\",\n    \"delivered_count\": 7285,\n    \"open_count\": 191,\n    \"clicked_count\": 3506,\n    \"open_rate\": 4652.611785642866,\n    \"click_rate\": 1148.8329632127281,\n    \"metadata\": {},\n    \"notes\": \"\",\n    \"purchased_by\": \"string\",\n    \"purchased_message\": \"string\",\n    \"referrer_url\": \"\",\n    \"risk_score\": 9005.749696267958,\n    \"stripe_coupon\": {\n      \"coupon_id\": \"string\",\n      \"percent_off\": \"string\",\n      \"amount_off\": 4098,\n      \"name\": \"string\"\n    },\n    \"stripe_customer_id\": \"string\",\n    \"subscriber_import_id\": \"string\",\n    \"form_id\": \"string\",\n    \"firewall_reasons\": [\n      {\n        \"code\": \"ip_address_previous_evaluation\",\n        \"reason\": \"string\"\n      },\n      {\n        \"code\": \"subscriber_import_provenance\",\n        \"reason\": \"string\"\n      }\n    ],\n    \"undeliverability_date\": \"1981-05-28T22:47:12.777Z\",\n    \"undeliverability_reason\": \"delivery_expired\",\n    \"unsubscription_date\": \"2001-06-26T03:41:21.819Z\",\n    \"unsubscription_reason\": \"string\",\n    \"upgrade_date\": \"1963-05-19T04:35:03.210Z\",\n    \"stripe_customer\": {\n      \"key_0\": 4813.781949763417\n    },\n    \"stripe_subscription\": {\n      \"key_0\": 3331,\n      \"key_1\": 8810,\n      \"key_2\": 1599.8338014102865,\n      \"key_3\": true\n    }\n  },\n  \"survey\": {\n    \"id\": \"string\",\n    \"creation_date\": \"1953-08-09T07:24:17.779Z\",\n    \"identifier\": \"string\",\n    \"question\": \"string\",\n    \"response_count\": 9055,\n    \"answers\": [\n      \"string\",\n      \"string\"\n    ],\n    \"notes\": \"string\",\n    \"randomize_answers\": true,\n    \"response_cadence\": \"once_per_email\",\n    \"status\": \"inactive\",\n    \"is_freeform_response_enabled\": false,\n    \"input_type\": \"text\"\n  },\n  \"email\": {\n    \"id\": \"string\",\n    \"creation_date\": \"2014-08-20T19:57:49.065Z\",\n    \"absolute_url\": \"string\",\n    \"body\": \"string\",\n    \"canonical_url\": \"string\",\n    \"commenting_mode\": \"enabled_for_paid_subscribers\",\n    \"description\": \"string\",\n    \"archival_mode\": \"enabled_for_paid_subscribers\",\n    \"featured\": true,\n    \"filters\": {\n      \"filters\": [\n        {\n          \"field\": \"string\",\n          \"operator\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": \"string\"\n        },\n        {\n          \"field\": \"string\",\n          \"operator\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": \"string\"\n        }\n      ],\n      \"groups\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n        }\n      ],\n      \"predicate\": \"and\"\n    },\n    \"image\": \"string\",\n    \"modification_date\": \"1949-08-30T20:45:00.568Z\",\n    \"related_email_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"should_trigger_pay_per_email_billing\": false,\n    \"source\": \"app\",\n    \"status\": \"draft\",\n    \"subject\": \"string\",\n    \"analytics\": {\n      \"recipients\": 0,\n      \"deliveries\": 0,\n      \"opens\": 0,\n      \"clicks\": 0,\n      \"temporary_failures\": 0,\n      \"permanent_failures\": 0,\n      \"unsubscriptions\": 0,\n      \"complaints\": 0,\n      \"survey_responses\": 0,\n      \"webmentions\": 0,\n      \"page_views_lifetime\": 0,\n      \"page_views_30\": 0,\n      \"page_views_7\": 0,\n      \"subscriptions\": 0,\n      \"paid_subscriptions\": 0,\n      \"replies\": 0,\n      \"comments\": 0,\n      \"social_mentions\": 0,\n      \"temporary_failure_breakdown\": [\n        {\n          \"code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"count\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"count\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"permanent_failure_breakdown\": [\n        {\n          \"code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"count\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"count\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ]\n    },\n    \"callouts\": [\n      \"first_send_on_sending_domain\",\n      \"first_send_on_sending_domain\"\n    ],\n    \"attachments\": [\n      \"string\",\n      \"string\"\n    ],\n    \"email_type\": \"public\",\n    \"metadata\": {},\n    \"publish_date\": \"1957-03-17T00:14:11.420Z\",\n    \"secondary_id\": 6851,\n    \"slug\": \"string\",\n    \"suppression_reason\": \"internal_auditing\",\n    \"template\": \"custom\"\n  },\n  \"automation\": {\n    \"id\": \"string\",\n    \"creation_date\": \"1969-07-15T11:37:20.828Z\",\n    \"name\": \"string\",\n    \"status\": \"active\",\n    \"trigger\": \"subscriber.opened\",\n    \"actions\": [\n      {\n        \"type\": \"shopify_create_customer\",\n        \"metadata\": {\n          \"key_0\": 4341.230875117688,\n          \"key_1\": \"string\"\n        },\n        \"timing\": {\n          \"time\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"delay\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"type\": \"add_metadata\",\n        \"metadata\": {\n          \"key_0\": false\n        },\n        \"timing\": {\n          \"time\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"delay\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"filters\": {\n      \"filters\": [\n        {\n          \"field\": \"string\",\n          \"operator\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": \"string\"\n        },\n        {\n          \"field\": \"string\",\n          \"operator\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": \"string\"\n        }\n      ],\n      \"groups\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n        }\n      ],\n      \"predicate\": \"or\"\n    },\n    \"metadata\": {\n      \"key_0\": 2099,\n      \"key_1\": true,\n      \"key_2\": \"string\",\n      \"key_3\": 8880,\n      \"key_4\": 8051.918756244868\n    },\n    \"should_evaluate_filter_after_delay\": false\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b4704bb8-f0d0-4661-9d30-a6eac1fbd674",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "survey_responses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscriber_id\": \"<string>\",\n  \"survey_id\": \"<string>\",\n  \"email_id\": \"em_01jv2m9q8r7s6t5w4x3y2z1abc\",\n  \"answer\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"invalid_input\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1dd908b9-7f54-4b35-98f6-3ab49879b50e",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "survey_responses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscriber_id\": \"<string>\",\n  \"survey_id\": \"<string>\",\n  \"email_id\": \"em_01jv2m9q8r7s6t5w4x3y2z1abc\",\n  \"answer\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0fc61478-c10c-4d22-ba5c-17fb0326b08c",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "survey_responses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscriber_id\": \"<string>\",\n  \"survey_id\": \"<string>\",\n  \"email_id\": \"em_01jv2m9q8r7s6t5w4x3y2z1abc\",\n  \"answer\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "19c7823c-249d-48f6-a626-61354c1d2820",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "survey_responses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscriber_id\": \"<string>\",\n  \"survey_id\": \"<string>\",\n  \"email_id\": \"em_01jv2m9q8r7s6t5w4x3y2z1abc\",\n  \"answer\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e033647-0a93-4c6a-9089-6b74cc34289b",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "survey_responses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscriber_id\": \"<string>\",\n  \"survey_id\": \"<string>\",\n  \"email_id\": \"em_01jv2m9q8r7s6t5w4x3y2z1abc\",\n  \"answer\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fdbcba9a-b8e3-4ddc-8e83-6102e5af369f",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "survey_responses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscriber_id\": \"<string>\",\n  \"survey_id\": \"<string>\",\n  \"email_id\": \"em_01jv2m9q8r7s6t5w4x3y2z1abc\",\n  \"answer\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"type\": \"string\",\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f0f8c06-7265-45fa-9497-9b7a10ea6a3a",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "survey_responses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscriber_id\": \"<string>\",\n  \"survey_id\": \"<string>\",\n  \"email_id\": \"em_01jv2m9q8r7s6t5w4x3y2z1abc\",\n  \"answer\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "745"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests permitted per minute.",
+                  "key": "X-RateLimit-Limit",
+                  "value": "745"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests remaining in the current window.",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "745"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp at which the window resets.",
+                  "key": "X-RateLimit-Reset",
+                  "value": "745"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4eab4de3-909c-41e2-9f74-657fd514daab",
+          "name": "Update Survey Response",
+          "request": {
+            "name": "Update Survey Response",
+            "description": {
+              "content": "Update a survey response's text. Only the response owner (subscriber) can update their response.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "survey_responses",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bcc61ec4-7d93-42d0-900f-b8bba89a88a4",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "survey_responses",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"text\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"creation_date\": \"1996-04-12T04:10:39.936Z\",\n  \"answer\": \"string\",\n  \"text\": \"string\",\n  \"survey_id\": \"string\",\n  \"subscriber_id\": \"string\",\n  \"email_id\": \"string\",\n  \"automation_id\": \"string\",\n  \"source\": \"string\",\n  \"subscriber\": {\n    \"id\": \"string\",\n    \"creation_date\": \"2008-03-25T00:51:39.409Z\",\n    \"email_address\": \"telemachus@buttondown.email\",\n    \"referral_code\": \"string\",\n    \"secondary_id\": 7080,\n    \"source\": \"organic\",\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"type\": \"complained\",\n    \"utm_campaign\": \"string\",\n    \"utm_medium\": \"string\",\n    \"utm_source\": \"string\",\n    \"avatar_url\": \"string\",\n    \"bounce_date\": \"1993-09-01T08:53:21.390Z\",\n    \"bounce_reason\": \"out_of_storage\",\n    \"churn_date\": \"1982-05-17T04:56:13.609Z\",\n    \"commenting_disabled\": false,\n    \"country\": \"string\",\n    \"gift_subscription_end_date\": \"2023-10-01T07:17:28.447Z\",\n    \"gift_subscription_message\": \"string\",\n    \"ip_address\": \"string\",\n    \"last_click_date\": \"1953-03-12T08:40:20.447Z\",\n    \"last_open_date\": \"1972-08-14T19:29:33.947Z\",\n    \"delivered_count\": 7285,\n    \"open_count\": 191,\n    \"clicked_count\": 3506,\n    \"open_rate\": 4652.611785642866,\n    \"click_rate\": 1148.8329632127281,\n    \"metadata\": {},\n    \"notes\": \"\",\n    \"purchased_by\": \"string\",\n    \"purchased_message\": \"string\",\n    \"referrer_url\": \"\",\n    \"risk_score\": 9005.749696267958,\n    \"stripe_coupon\": {\n      \"coupon_id\": \"string\",\n      \"percent_off\": \"string\",\n      \"amount_off\": 4098,\n      \"name\": \"string\"\n    },\n    \"stripe_customer_id\": \"string\",\n    \"subscriber_import_id\": \"string\",\n    \"form_id\": \"string\",\n    \"firewall_reasons\": [\n      {\n        \"code\": \"ip_address_previous_evaluation\",\n        \"reason\": \"string\"\n      },\n      {\n        \"code\": \"subscriber_import_provenance\",\n        \"reason\": \"string\"\n      }\n    ],\n    \"undeliverability_date\": \"1981-05-28T22:47:12.777Z\",\n    \"undeliverability_reason\": \"delivery_expired\",\n    \"unsubscription_date\": \"2001-06-26T03:41:21.819Z\",\n    \"unsubscription_reason\": \"string\",\n    \"upgrade_date\": \"1963-05-19T04:35:03.210Z\",\n    \"stripe_customer\": {\n      \"key_0\": 4813.781949763417\n    },\n    \"stripe_subscription\": {\n      \"key_0\": 3331,\n      \"key_1\": 8810,\n      \"key_2\": 1599.8338014102865,\n      \"key_3\": true\n    }\n  },\n  \"survey\": {\n    \"id\": \"string\",\n    \"creation_date\": \"1953-08-09T07:24:17.779Z\",\n    \"identifier\": \"string\",\n    \"question\": \"string\",\n    \"response_count\": 9055,\n    \"answers\": [\n      \"string\",\n      \"string\"\n    ],\n    \"notes\": \"string\",\n    \"randomize_answers\": true,\n    \"response_cadence\": \"once_per_email\",\n    \"status\": \"inactive\",\n    \"is_freeform_response_enabled\": false,\n    \"input_type\": \"text\"\n  },\n  \"email\": {\n    \"id\": \"string\",\n    \"creation_date\": \"2014-08-20T19:57:49.065Z\",\n    \"absolute_url\": \"string\",\n    \"body\": \"string\",\n    \"canonical_url\": \"string\",\n    \"commenting_mode\": \"enabled_for_paid_subscribers\",\n    \"description\": \"string\",\n    \"archival_mode\": \"enabled_for_paid_subscribers\",\n    \"featured\": true,\n    \"filters\": {\n      \"filters\": [\n        {\n          \"field\": \"string\",\n          \"operator\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": \"string\"\n        },\n        {\n          \"field\": \"string\",\n          \"operator\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": \"string\"\n        }\n      ],\n      \"groups\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n        }\n      ],\n      \"predicate\": \"and\"\n    },\n    \"image\": \"string\",\n    \"modification_date\": \"1949-08-30T20:45:00.568Z\",\n    \"related_email_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"should_trigger_pay_per_email_billing\": false,\n    \"source\": \"app\",\n    \"status\": \"draft\",\n    \"subject\": \"string\",\n    \"analytics\": {\n      \"recipients\": 0,\n      \"deliveries\": 0,\n      \"opens\": 0,\n      \"clicks\": 0,\n      \"temporary_failures\": 0,\n      \"permanent_failures\": 0,\n      \"unsubscriptions\": 0,\n      \"complaints\": 0,\n      \"survey_responses\": 0,\n      \"webmentions\": 0,\n      \"page_views_lifetime\": 0,\n      \"page_views_30\": 0,\n      \"page_views_7\": 0,\n      \"subscriptions\": 0,\n      \"paid_subscriptions\": 0,\n      \"replies\": 0,\n      \"comments\": 0,\n      \"social_mentions\": 0,\n      \"temporary_failure_breakdown\": [\n        {\n          \"code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"count\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"count\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"permanent_failure_breakdown\": [\n        {\n          \"code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"count\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"count\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ]\n    },\n    \"callouts\": [\n      \"first_send_on_sending_domain\",\n      \"first_send_on_sending_domain\"\n    ],\n    \"attachments\": [\n      \"string\",\n      \"string\"\n    ],\n    \"email_type\": \"public\",\n    \"metadata\": {},\n    \"publish_date\": \"1957-03-17T00:14:11.420Z\",\n    \"secondary_id\": 6851,\n    \"slug\": \"string\",\n    \"suppression_reason\": \"internal_auditing\",\n    \"template\": \"custom\"\n  },\n  \"automation\": {\n    \"id\": \"string\",\n    \"creation_date\": \"1969-07-15T11:37:20.828Z\",\n    \"name\": \"string\",\n    \"status\": \"active\",\n    \"trigger\": \"subscriber.opened\",\n    \"actions\": [\n      {\n        \"type\": \"shopify_create_customer\",\n        \"metadata\": {\n          \"key_0\": 4341.230875117688,\n          \"key_1\": \"string\"\n        },\n        \"timing\": {\n          \"time\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"delay\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"type\": \"add_metadata\",\n        \"metadata\": {\n          \"key_0\": false\n        },\n        \"timing\": {\n          \"time\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"delay\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"filters\": {\n      \"filters\": [\n        {\n          \"field\": \"string\",\n          \"operator\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": \"string\"\n        },\n        {\n          \"field\": \"string\",\n          \"operator\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": \"string\"\n        }\n      ],\n      \"groups\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n        }\n      ],\n      \"predicate\": \"or\"\n    },\n    \"metadata\": {\n      \"key_0\": 2099,\n      \"key_1\": true,\n      \"key_2\": \"string\",\n      \"key_3\": 8880,\n      \"key_4\": 8051.918756244868\n    },\n    \"should_evaluate_filter_after_delay\": false\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fb40eb9a-6584-42ca-b227-1f6b3c693481",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "survey_responses",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"text\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9bf8dd0c-80c5-4017-8dfd-a214e2984470",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "survey_responses",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"text\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2eaf9aef-6859-4766-869f-b6eebdd84e7e",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "survey_responses",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"text\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2c2b7808-6058-48af-a7d6-206d4311b23b",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "survey_responses",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"text\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "08a33b6c-e7f8-4615-b85a-db07b7bcae21",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "survey_responses",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"text\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"type\": \"string\",\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b3310893-e92d-47e6-baae-9bbb1218c8cf",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "survey_responses",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"text\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "745"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests permitted per minute.",
+                  "key": "X-RateLimit-Limit",
+                  "value": "745"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests remaining in the current window.",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "745"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp at which the window resets.",
+                  "key": "X-RateLimit-Reset",
+                  "value": "745"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.buttondown.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "2aec3a1e-fd02-4720-adef-575074521d95",
+    "name": "Buttondown Survey Responses API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction) for guides and examples.",
+      "type": "text/plain"
+    }
+  }
+}

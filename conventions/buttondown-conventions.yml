@@ -1,0 +1,145 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://docs.buttondown.com/api-authentication, https://docs.buttondown.com/api-idempotency-keys,
+  https://docs.buttondown.com/api-pagination, https://docs.buttondown.com/api-rate-limits,
+  https://docs.buttondown.com/api-error-codes, https://docs.buttondown.com/api-versioning,
+  and openapi/_original/buttondown-openapi.json
+description: >-
+  Cross-cutting request/response semantics for the Buttondown REST API — the rules an agent has to
+  follow to call it correctly, independent of any single endpoint.
+base_url: https://api.buttondown.com/v1
+
+authentication:
+  style: api-key
+  transport: header
+  header: Authorization
+  format: "Token <your-api-key>"
+  note: >-
+    Note the trailing space after `Token`. Keys are managed at https://buttondown.com/keys, and each
+    key carries independent per-area permissions (read | write | none). See
+    authentication/buttondown-authentication.yml.
+  multi_tenant_header:
+    name: Buttondown-Context
+    value: newsletter UUID
+    description: >-
+      When authenticating with a platform account's key, scopes the request to one of the newsletters
+      that account owns. Must be the newsletter's ID, not its username; an unresolvable value fails
+      with 401 authentication_invalid rather than falling back to a default newsletter.
+    docs: https://docs.buttondown.com/api-authentication
+
+idempotency:
+  supported: true
+  header: X-Idempotency-Key
+  scope: any request
+  key_format: >-
+    A randomly generated string of up to 200 characters, such as a UUID.
+  behavior: >-
+    A repeated request carrying the same idempotency key returns the same response as the first
+    request, so a retried create does not produce a duplicate resource.
+  retention: >-
+    Not published as a fixed window. Instead, the stored response body is retrievable via
+    GET /v1/api_requests/{id}: the response_data field is populated only for requests that carried
+    an X-Idempotency-Key, and is omitted for requests that did not.
+  inspiration: Modeled on Stripe's idempotent requests.
+  docs: https://docs.buttondown.com/api-idempotency-keys
+
+pagination:
+  style: page-number
+  request:
+    params:
+      - {name: page, in: query, description: "1-based page number; omitted means page 1"}
+  response:
+    envelope: object
+    fields:
+      - {name: count, description: total number of matching records}
+      - {name: next, description: absolute URL of the next page, or null on the last page}
+      - {name: previous, description: absolute URL of the previous page, or null on the first page}
+      - {name: results, description: the array of records for this page}
+  link_header:
+    supported: true
+    spec: RFC 5988
+    example: 'Link: <https://api.buttondown.com/v1/subscribers?page=3>; rel="next", <https://api.buttondown.com/v1/subscribers?page=1>; rel="prev"'
+    note: rel="prev" is absent on the first page and rel="next" is absent on the last page.
+  docs: https://docs.buttondown.com/api-pagination
+
+filtering:
+  supported: true
+  style: query-parameters
+  note: >-
+    Pagination is documented as a subset of filtering; list endpoints accept resource-specific
+    query filters (tags, dates, ordering, engagement) declared per operation in the OpenAPI.
+  docs: https://docs.buttondown.com/api-filtering
+
+versioning:
+  scheme: date-based
+  current: '2026-04-01'
+  request_header: X-API-Version
+  resolution_order:
+    - The X-API-Version header on the request, when present.
+    - The version pinned to the newsletter in its settings.
+    - The latest published version.
+  breaking_change_policy: >-
+    A new dated version is released whenever a backwards-incompatible change ships — renaming or
+    removing a field or endpoint, changing a field's type or required-ness, or changing endpoint logic.
+  docs: https://docs.buttondown.com/api-versioning
+
+error_envelope:
+  coded_errors:
+    shape: {code: string, detail: string, metadata: "object<string,string>"}
+    note: >-
+      `code` is the machine-parseable error code, `detail` the human-readable message, and
+      `metadata` carries context — including a `documentation_url` key on many 4xx responses that
+      links to the page explaining the remedy.
+  validation_errors:
+    status: 422
+    shape: {detail: "array of {type, loc, msg}"}
+    note: >-
+      Schema-validation failures return one entry per invalid field. Common `type` values are
+      extra_forbidden, missing, string_too_long and string_pattern_mismatch.
+  problem_json: false
+  rfc9457: false
+  see_also: errors/buttondown-problem-types.yml
+
+rate_limiting:
+  global: 600 requests per minute across all endpoints
+  endpoint_specific:
+    - {operation: create_subscriber, limit: 100 per day}
+  response_headers: [X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After]
+  exhaustion_status: 429
+  note: >-
+    The daily subscriber-creation cap behaves differently: it returns 400 pointing at
+    POST /v1/imports rather than 429.
+  see_also: rate-limits/buttondown-rate-limits.yml
+
+request_tracing:
+  request_log: true
+  operations: [list_api_requests, retrieve_api_request]
+  description: >-
+    Buttondown records every API request the account makes and exposes them at GET /v1/api_requests
+    and GET /v1/api_requests/{id}, including the response body for idempotent requests. There is no
+    documented per-request correlation-id response header; the request record is the tracing surface.
+
+identifiers:
+  scheme: TypeID
+  description: >-
+    Resources carry prefixed, type-tagged IDs (for example ext_evt_ for external events). Buttondown
+    migrated to TypeIDs without breaking clients; older prefixes appear in historical data.
+  note: >-
+    Several endpoints accept either an ID or a natural key — for example
+    /subscribers/{id_or_email} takes a subscriber ID or an email address.
+
+collision_behavior:
+  header: X-Buttondown-Collision-Behavior
+  applies_to: create_subscriber
+  values:
+    - {value: no_op, description: "default; returns 400 when a subscriber with that address exists"}
+    - {value: overwrite, description: "overwrite existing data; cannot change terminal types (unsubscribed, blocked, complained, undeliverable) — those return 400 subscriber_suppressed"}
+    - {value: add, description: "merge into the existing subscriber; resubscribes an unsubscribed subscriber as regular"}
+
+webhook_signing:
+  header: X-Buttondown-Signature
+  algorithm: "sha256=<hmac>"
+  computed_over: the raw request body, keyed with the webhook's signing key
+  failure_policy: five consecutive non-2xx responses disable the webhook
+  see_also: asyncapi/buttondown-webhooks.yml

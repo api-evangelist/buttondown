@@ -1,95 +1,2480 @@
 openapi: 3.1.0
 info:
   title: Buttondown Emails API
-  version: '1.0'
-  description: Minimal OpenAPI 3.1 description of the Buttondown newsletter platform API. Covers core RESTful resources for subscribers, emails, tags, newsletters, and webhooks. Derived from the public Buttondown documentation.
-  x-generated-from: https://docs.buttondown.com/api
-  x-generated-by: claude-crawl-2026-05-08
+  version: 1.0.0
+  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction)
+    for guides and examples.
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
 servers:
-- url: https://api.buttondown.email/v1
-  description: Production
+- url: https://api.buttondown.com/v1
 security:
-- apiKeyAuth: []
+- ApiKeyAuth: []
 tags:
 - name: Emails
 paths:
   /emails:
-    get:
-      tags:
-      - Emails
-      summary: List emails (drafts, scheduled, sent)
-      operationId: listEmails
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginatedList'
     post:
-      tags:
-      - Emails
-      summary: Create an email
-      operationId: createEmail
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Resource'
+      operationId: create_email
+      summary: Create Email
+      parameters: []
       responses:
         '201':
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Resource'
-  /emails/{id}:
-    parameters:
-    - $ref: '#/components/parameters/IdParam'
-    get:
+                $ref: '#/components/schemas/Email'
+          links:
+            retrieve_email:
+              operationId: retrieve_email
+              parameters:
+                path.id: $response.body#/id
+            update_email:
+              operationId: update_email
+              parameters:
+                path.id: $response.body#/id
+            delete_email:
+              operationId: delete_email
+              parameters:
+                path.id: $response.body#/id
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage_EmailCreationErrorCode_'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Create a new email
       tags:
       - Emails
-      summary: Retrieve an email
-      operationId: getEmail
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailInput'
+        required: true
+      security:
+      - ApiKeyAuth: []
+    get:
+      operationId: list_emails
+      summary: List Emails
+      parameters:
+      - in: query
+        name: status
+        schema:
+          description: If provided, only return [emails](https://docs.buttondown.com/api-emails-introduction) with the given
+            status.
+          items:
+            $ref: '#/components/schemas/EmailStatus'
+          title: Status
+          type: array
+        required: false
+        description: If provided, only return [emails](https://docs.buttondown.com/api-emails-introduction) with the given
+          status.
+      - in: query
+        name: -status
+        schema:
+          description: If provided, only return [emails](https://docs.buttondown.com/api-emails-introduction) without the
+            given status.
+          example:
+          - draft
+          items:
+            $ref: '#/components/schemas/EmailStatus'
+          title: -Status
+          type: array
+        required: false
+        description: If provided, only return [emails](https://docs.buttondown.com/api-emails-introduction) without the given
+          status.
+        example:
+        - draft
+      - in: query
+        name: ids
+        schema:
+          description: If provided, only return emails with the given IDs.
+          items:
+            pattern: ^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|(?:em)_(?:[0-7][0-9abcdefghjkmnpqrstvwxyz]{25}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}))$
+            type: string
+          title: Ids
+          type: array
+        required: false
+        description: If provided, only return emails with the given IDs.
+      - in: query
+        name: ordering
+        schema:
+          allOf:
+          - enum:
+            - creation_date
+            - -creation_date
+            - status
+            - -status
+            - publish_date
+            - -publish_date
+            - subject
+            - -subject
+            - email_type
+            - -email_type
+            - modification_date
+            - -modification_date
+            - clicks
+            - -clicks
+            - opens
+            - -opens
+            - click_rate
+            - -click_rate
+            - open_rate
+            - -open_rate
+            - page_views_lifetime
+            - -page_views_lifetime
+            - page_views_30
+            - -page_views_30
+            - page_views_7
+            - -page_views_7
+            - webmentions
+            - -webmentions
+            - subscriptions
+            - -subscriptions
+            - paid_subscriptions
+            - -paid_subscriptions
+            - unsubscriptions
+            - -unsubscriptions
+            - replies
+            - -replies
+            - comments
+            - -comments
+            - social_mentions
+            - -social_mentions
+            - permanent_failure_rate
+            - -permanent_failure_rate
+            - complaint_rate
+            - -complaint_rate
+            title: Ordering
+            type: string
+          default: creation_date
+          description: The ordering to apply to the results.
+          example: -publish_date
+        required: false
+        description: The ordering to apply to the results.
+        example: -publish_date
+      - in: query
+        name: creation_date__start
+        schema:
+          description: If provided, only return emails created after the given date.
+          title: Creation Date  Start
+          format: date
+          type: string
+        required: false
+        description: If provided, only return emails created after the given date.
+      - in: query
+        name: creation_date__end
+        schema:
+          description: If provided, only return emails created before the given date.
+          title: Creation Date  End
+          format: date
+          type: string
+        required: false
+        description: If provided, only return emails created before the given date.
+      - in: query
+        name: publish_date__start
+        schema:
+          description: If provided, only return emails published after the given date.
+          title: Publish Date  Start
+          format: date
+          type: string
+        required: false
+        description: If provided, only return emails published after the given date.
+      - in: query
+        name: publish_date__end
+        schema:
+          description: If provided, only return emails published before the given date.
+          title: Publish Date  End
+          format: date
+          type: string
+        required: false
+        description: If provided, only return emails published before the given date.
+      - in: query
+        name: excluded_fields
+        schema:
+          description: If provided, exclude the given field(s) from the response. This can improve performance for large responses.
+          example:
+          - body
+          items:
+            $ref: '#/components/schemas/EmailExcludableField'
+          title: Excluded Fields
+          type: array
+        required: false
+        description: If provided, exclude the given field(s) from the response. This can improve performance for large responses.
+        example:
+        - body
+      - in: query
+        name: source
+        schema:
+          description: If provided, only return emails from the given source(s).
+          example:
+          - api
+          items:
+            $ref: '#/components/schemas/EmailSource'
+          title: Source
+          type: array
+        required: false
+        description: If provided, only return emails from the given source(s).
+        example:
+        - api
+      - in: query
+        name: archival_mode
+        schema:
+          description: If provided, only return emails with the given archival mode.
+          items:
+            $ref: '#/components/schemas/ArchivalMode'
+          title: Archival Mode
+          type: array
+        required: false
+        description: If provided, only return emails with the given archival mode.
+      - in: query
+        name: email_type
+        schema:
+          deprecated: true
+          description: The type of emails to return. Defaults to all types.
+          items:
+            $ref: '#/components/schemas/EmailType'
+          title: Email Type
+          type: array
+        required: false
+        description: The type of emails to return. Defaults to all types.
+        deprecated: true
+      - in: query
+        name: subject
+        schema:
+          description: If provided, only return emails with a subject that contains the given string.
+          title: Subject
+          type: string
+        required: false
+        description: If provided, only return emails with a subject that contains the given string.
+      - in: query
+        name: attachments
+        schema:
+          description: If provided, only return emails with the given attachments.
+          items:
+            pattern: ^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|(?:att)_(?:[0-7][0-9abcdefghjkmnpqrstvwxyz]{25}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}))$
+            type: string
+          title: Attachments
+          type: array
+        required: false
+        description: If provided, only return emails with the given attachments.
+      - in: query
+        name: snippet_id
+        schema:
+          description: If provided, only return emails that reference the given [snippets](https://docs.buttondown.com/api-snippets-introduction).
+          items:
+            pattern: ^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|(?:snip)_(?:[0-7][0-9abcdefghjkmnpqrstvwxyz]{25}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}))$
+            type: string
+          title: Snippet Id
+          type: array
+        required: false
+        description: If provided, only return emails that reference the given [snippets](https://docs.buttondown.com/api-snippets-introduction).
+      - in: query
+        name: deliveries__start
+        schema:
+          description: If provided, only return emails with at least this many deliveries.
+          example: 100
+          title: Deliveries  Start
+          type: integer
+        required: false
+        description: If provided, only return emails with at least this many deliveries.
+        example: 100
+      - in: query
+        name: deliveries__end
+        schema:
+          description: If provided, only return emails with at most this many deliveries.
+          example: 1000
+          title: Deliveries  End
+          type: integer
+        required: false
+        description: If provided, only return emails with at most this many deliveries.
+        example: 1000
+      - in: query
+        name: click_rate__start
+        schema:
+          description: If provided, only return emails with a click rate greater than or equal to the given value.
+          example: 0.1
+          title: Click Rate  Start
+          type: number
+        required: false
+        description: If provided, only return emails with a click rate greater than or equal to the given value.
+        example: 0.1
+      - in: query
+        name: click_rate__end
+        schema:
+          description: If provided, only return emails with a click rate less than or equal to the given value.
+          example: 0.5
+          title: Click Rate  End
+          type: number
+        required: false
+        description: If provided, only return emails with a click rate less than or equal to the given value.
+        example: 0.5
+      - in: query
+        name: open_rate__start
+        schema:
+          description: If provided, only return emails with an open rate greater than or equal to the given value.
+          example: 0.2
+          title: Open Rate  Start
+          type: number
+        required: false
+        description: If provided, only return emails with an open rate greater than or equal to the given value.
+        example: 0.2
+      - in: query
+        name: open_rate__end
+        schema:
+          description: If provided, only return emails with an open rate less than or equal to the given value.
+          example: 0.8
+          title: Open Rate  End
+          type: number
+        required: false
+        description: If provided, only return emails with an open rate less than or equal to the given value.
+        example: 0.8
+      - in: query
+        name: page
+        required: false
+        description: The page number of the paginated response.
+        schema:
+          type: integer
+          title: Page
+          description: The page number of the paginated response.
+          default: 1
+          example: 1
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Resource'
+                $ref: '#/components/schemas/EmailPage'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage_EmailListErrorCode_'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: List all emails
+      tags:
+      - Emails
+      security:
+      - ApiKeyAuth: []
+  /emails/{id}:
+    patch:
+      operationId: update_email
+      summary: Update Email
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Email'
+          links:
+            retrieve_email:
+              operationId: retrieve_email
+              parameters:
+                path.id: $response.body#/id
+            delete_email:
+              operationId: delete_email
+              parameters:
+                path.id: $response.body#/id
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Update an email's properties
+      tags:
+      - Emails
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailUpdateInput'
+        required: true
+      security:
+      - ApiKeyAuth: []
+    get:
+      operationId: retrieve_email
+      summary: Retrieve Email
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Email'
+          links:
+            update_email:
+              operationId: update_email
+              parameters:
+                path.id: $response.body#/id
+            delete_email:
+              operationId: delete_email
+              parameters:
+                path.id: $response.body#/id
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Retrieve a specific email by its ID
+      tags:
+      - Emails
+      security:
+      - ApiKeyAuth: []
+    delete:
+      operationId: delete_email
+      summary: Delete Email
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      responses:
+        '204':
+          description: No Content
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Delete an email
+      tags:
+      - Emails
+      security:
+      - ApiKeyAuth: []
+  /emails/{id}/history:
+    get:
+      operationId: retrieve_email_history
+      summary: Retrieve Email History
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      - in: query
+        name: expand
+        schema:
+          description: If provided, expand the given field.
+          items:
+            const: user
+            type: string
+          title: Expand
+          type: array
+        required: false
+        description: If provided, expand the given field.
+      - in: query
+        name: field
+        schema:
+          description: The field to retrieve history for.
+          minLength: 1
+          title: Field
+          type: string
+        required: true
+        description: The field to retrieve history for.
+      - in: query
+        name: page
+        schema:
+          description: The page number of the paginated response.
+          example: 1
+          title: Page
+          type: integer
+        required: false
+        description: The page number of the paginated response.
+        example: 1
+      - in: query
+        name: ordering
+        schema:
+          default: creation_date
+          description: The ordering to apply to the results.
+          enum:
+          - creation_date
+          - -creation_date
+          title: Ordering
+          type: string
+        required: false
+        description: The ordering to apply to the results.
+      - in: query
+        name: query
+        schema:
+          description: If provided, only return history entries matching the given query.
+          title: Query
+          type: string
+        required: false
+        description: If provided, only return history entries matching the given query.
+      - in: query
+        name: page_size
+        schema:
+          default: 100
+          description: The number of results per page.
+          title: Page Size
+          type: integer
+        required: false
+        description: The number of results per page.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HistoryPage'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Retrieve the edit history for a specific email
+      tags:
+      - Emails
+      security:
+      - ApiKeyAuth: []
+  /emails/{id}/history/body/{history_id}:
+    get:
+      operationId: retrieve_email_history_by_id
+      summary: Retrieve Email History By Id
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      - in: path
+        name: history_id
+        schema:
+          title: History Id
+          type: integer
+        required: true
+      - in: query
+        name: expand
+        schema:
+          description: If provided, expand the given field.
+          items:
+            const: user
+            type: string
+          title: Expand
+          type: array
+        required: false
+        description: If provided, expand the given field.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/History'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Retrieve a specific historical version of an email's body
+      tags:
+      - Emails
+      security:
+      - ApiKeyAuth: []
+  /emails/{id}/analytics:
+    get:
+      operationId: retrieve_email_analytics
+      summary: Retrieve Email Analytics
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Analytics'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Retrieve analytics for a specific email
+      tags:
+      - Emails
+      security:
+      - ApiKeyAuth: []
+  /emails/{id}/renders:
+    get:
+      operationId: retrieve_email_renders
+      summary: Retrieve Email Renders
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      - in: query
+        name: target
+        schema:
+          description: The target format for the rendered HTML. Use 'email' for rendered_html_for_email or 'html' for rendered_html_for_web.
+          enum:
+          - email
+          - html
+          title: Target
+          type: string
+        required: true
+        description: The target format for the rendered HTML. Use 'email' for rendered_html_for_email or 'html' for rendered_html_for_web.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Render'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Retrieve rendered HTML for a specific email
+      tags:
+      - Emails
+      security:
+      - ApiKeyAuth: []
+  /emails/{id}/send-draft:
+    post:
+      operationId: send_draft
+      summary: Send Draft
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Send a draft email to specific recipients
+      tags:
+      - Emails
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendDraftInput'
+        required: true
+      security:
+      - ApiKeyAuth: []
+  /emails/{id}/publish:
+    post:
+      operationId: publish_email
+      summary: Publish Email
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Email'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Publish an email
+      tags:
+      - Emails
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailUpdateInput'
+        required: true
+      security:
+      - ApiKeyAuth: []
 components:
   schemas:
-    PaginatedList:
-      type: object
+    AccessLevel:
+      enum:
+      - none
+      - read
+      - write
+      title: AccessLevel
+      type: string
+      description: An enumeration.
+    Analytics:
       properties:
-        count:
+        recipients:
+          default: 0
+          description: The number of subscribers the email was dispatched to.
+          title: Recipients
           type: integer
-        next:
-          type: string
-          nullable: true
-        previous:
-          type: string
-          nullable: true
-        results:
-          type: array
+        deliveries:
+          default: 0
+          description: The number of successful deliveries (recipients minus failures).
+          title: Deliveries
+          type: integer
+        opens:
+          default: 0
+          description: The number of unique opens recorded.
+          title: Opens
+          type: integer
+        clicks:
+          default: 0
+          description: The number of unique link clicks recorded.
+          title: Clicks
+          type: integer
+        temporary_failures:
+          default: 0
+          description: The number of temporary delivery failures (e.g. soft bounces).
+          title: Temporary Failures
+          type: integer
+        permanent_failures:
+          default: 0
+          description: The number of permanent delivery failures (e.g. hard bounces).
+          title: Permanent Failures
+          type: integer
+        unsubscriptions:
+          default: 0
+          description: The number of subscribers who unsubscribed after receiving this email.
+          title: Unsubscriptions
+          type: integer
+        complaints:
+          default: 0
+          description: The number of spam complaints recorded against this email.
+          title: Complaints
+          type: integer
+        survey_responses:
+          default: 0
+          description: The number of survey responses submitted from this email.
+          title: Survey Responses
+          type: integer
+        webmentions:
+          default: 0
+          description: The number of inbound webmentions received for this email.
+          title: Webmentions
+          type: integer
+        page_views_lifetime:
+          default: 0
+          description: The total number of archive page views for this email since publication.
+          title: Page Views Lifetime
+          type: integer
+        page_views_30:
+          default: 0
+          description: The number of archive page views in the last 30 days.
+          title: Page Views 30
+          type: integer
+        page_views_7:
+          default: 0
+          description: The number of archive page views in the last 7 days.
+          title: Page Views 7
+          type: integer
+        subscriptions:
+          default: 0
+          description: The number of new subscribers attributed to this email.
+          title: Subscriptions
+          type: integer
+        paid_subscriptions:
+          default: 0
+          description: The number of new paid subscribers attributed to this email.
+          title: Paid Subscriptions
+          type: integer
+        replies:
+          default: 0
+          description: The number of reply emails received from subscribers.
+          title: Replies
+          type: integer
+        comments:
+          default: 0
+          description: The number of comments posted on this email.
+          title: Comments
+          type: integer
+        social_mentions:
+          default: 0
+          description: The number of social media mentions of this email.
+          title: Social Mentions
+          type: integer
+        temporary_failure_breakdown:
+          description: Breakdown of temporary failures by reason code, sorted by count descending.
           items:
-            $ref: '#/components/schemas/Resource'
-      additionalProperties: true
-    Resource:
+            $ref: '#/components/schemas/FailureBreakdownItem'
+          title: Temporary Failure Breakdown
+          type: array
+        permanent_failure_breakdown:
+          description: Breakdown of permanent failures by reason code, sorted by count descending.
+          items:
+            $ref: '#/components/schemas/FailureBreakdownItem'
+          title: Permanent Failure Breakdown
+          type: array
+      title: Analytics
       type: object
-      additionalProperties: true
-  parameters:
-    IdParam:
-      name: id
-      in: path
-      required: true
-      schema:
-        type: string
+    ArchivalMode:
+      description: 'Governs who can view this email in the archive.
+
+
+        `ARCHIVE_ONLY` is the odd one out: the email is publicly archived but
+
+        is not email content at all (e.g. an imported blog post), so it is
+
+        excluded from email-rendering contexts like "recent issues" widgets.'
+      enum:
+      - archive_only
+      - disabled
+      - enabled
+      - enabled_for_paid_subscribers
+      - enabled_for_subscribers
+      title: ArchivalMode
+      type: string
+    Callout:
+      description: 'Surfacing-time flags about an email that the UI uses to render contextual
+
+        callouts (e.g. in the analytics panel). Computed on read; not persisted.'
+      enum:
+      - first_send_on_sending_domain
+      title: Callout
+      type: string
+    Email:
+      description: 'Emails are why you''re here on Buttondown, right?
+
+        Creating an email via the API is just like creating one in the interface;
+
+        it will instantly trigger sending actual emails,
+
+        based on the tags and email type you provide.
+
+
+        Relevant changes to the schema:
+
+
+        - [2024-08-15](https://docs.buttondown.com/api-changelog-2024-08-15): unshipped the `included_tags` and `excluded_tags`
+        fields.
+
+        - [2024-12-30](https://docs.buttondown.com/api-changelog-2024-12-30): unshipped the `is_comments_disabled` field,
+        and replaced it with a more flexible `commenting_mode` field.
+
+        - [2025-09-23](https://docs.buttondown.com/api-changelog-2025-09-23): increased the maximum length of the `subject`
+        field from 1000 to 2000 characters.'
+      properties:
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        absolute_url:
+          description: The canonical web URL of the email on the newsletter's archive.
+          title: Absolute Url
+          type: string
+        analytics:
+          anyOf:
+          - $ref: '#/components/schemas/Analytics'
+          - type: 'null'
+          description: Aggregate analytics for the email. Null until the email has been sent.
+        callouts:
+          description: A list of callouts that apply to this email — surfaced in the UI alongside analytics to flag context
+            the reader should know about (e.g., first send on a custom sending domain).
+          items:
+            $ref: '#/components/schemas/Callout'
+          title: Callouts
+          type: array
+        attachments:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          description: A list of attachment IDs present on the email. (See [Attachments](https://docs.buttondown.com/api-attachments-introduction)
+            for more information.)
+          title: Attachments
+        body:
+          description: 'The body of the email, in either HTML or markdown format. Buttondown attempts to intelligently detect
+            the format of the body automatically, but you can also specify the format explicitly by prepending the text with
+            the `buttondown-editor-mode` comment: `<!-- buttondown-editor-mode: fancy -->` or `<!-- buttondown-editor-mode:
+            plaintext -->`.'
+          title: Body
+          type: string
+        canonical_url:
+          description: The URL of the original source of the content.
+          title: Canonical Url
+          type: string
+        commenting_mode:
+          $ref: '#/components/schemas/EmailCommentingMode'
+          description: Controls whether subscribers can comment on this email.
+        description:
+          description: A human-readable description of the email, used for archives and SEO.
+          title: Description
+          type: string
+        archival_mode:
+          $ref: '#/components/schemas/ArchivalMode'
+          description: Controls who can view this email in the archive.
+        email_type:
+          allOf:
+          - $ref: '#/components/schemas/EmailType'
+          default: public
+          deprecated: true
+          description: 'The type of email. Defaults to `PUBLIC`. Deprecated: this is a legacy single-axis view derived from
+            `archival_mode` (archive visibility) and `filters` (audience); prefer setting those directly. Because it is derived,
+            it does not always round-trip: writing it alongside an explicit `archival_mode` that disagrees will report the
+            value implied by the two underlying fields, and writing a value that already matches the derived one is a no-op.'
+        featured:
+          description: Designated whether or not this email should be highlighted within the archives.
+          title: Featured
+          type: boolean
+        filters:
+          $ref: '#/components/schemas/FilterGroup'
+          description: Tag-based filter rules determining which subscribers receive this email.
+        image:
+          description: A primary image URL used when previewing the email on the web or in other contexts.
+          title: Image
+          type: string
+        metadata:
+          additionalProperties: true
+          default: {}
+          description: A structured key-value blob that you can use to store arbitrary data on the object. Metadata can be
+            nested — you can store objects and arrays within your metadata. (You can [read more about metadata.](https://docs.buttondown.com/metadata))
+          title: Metadata
+          type: object
+        modification_date:
+          description: The date and time at which the object was last modified.
+          format: date-time
+          title: Modification Date
+          type: string
+        publish_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: The date and time at which the email should be published in the future (for scheduled emails), or the
+            date and time at which the email was published (for sent emails).
+          title: Publish Date
+        related_email_ids:
+          description: A list of email IDs that are related to this email. Related emails are shown at the bottom of the email
+            and archive pages.
+          items:
+            type: string
+          title: Related Email Ids
+          type: array
+        secondary_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: 'An informal ''number'' for the email, used in some templates (''This was issue #123'').'
+          title: Secondary Id
+        should_trigger_pay_per_email_billing:
+          description: Whether this email should trigger pay-per-email billing for paid subscribers. Use this to differentiate
+            between free updates and premium newsletters.
+          title: Should Trigger Pay Per Email Billing
+          type: boolean
+        slug:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: A short, human-readable identifier for the email, used in the archive URL.
+          example: welcome-to-the-newsletter
+          title: Slug
+        source:
+          $ref: '#/components/schemas/EmailSource'
+          description: The source of the email.
+          example: app
+        status:
+          $ref: '#/components/schemas/EmailStatus'
+          description: The current status of the email.
+          example: draft
+        subject:
+          description: The subject line for the email.
+          maxLength: 2000
+          title: Subject
+          type: string
+        suppression_reason:
+          anyOf:
+          - $ref: '#/components/schemas/EmailSuppressionReason'
+          - type: 'null'
+          description: If the email has been suppressed from sending, the reason why.
+        template:
+          anyOf:
+          - $ref: '#/components/schemas/NewsletterEmailTemplate'
+          - type: 'null'
+          description: If present, this template overrides your newsletter's default email template.
+      required:
+      - id
+      - creation_date
+      - absolute_url
+      - body
+      - canonical_url
+      - commenting_mode
+      - description
+      - archival_mode
+      - featured
+      - filters
+      - image
+      - modification_date
+      - related_email_ids
+      - should_trigger_pay_per_email_billing
+      - source
+      - status
+      - subject
+      title: Email
+      type: object
+    EmailCommentingMode:
+      description: 'Governs who can comment on this email.
+
+
+        This enum replaces the `is_comments_disabled` field, which has been deprecated. (Also note that this field may be
+        superseded by newsletter-level settings; for instance, "enabled" is an invalid and inert value if the newsletter itself
+        has comments disabled.)'
+      enum:
+      - disabled
+      - enabled
+      - enabled_for_paid_subscribers
+      title: CommentingMode
+      type: string
+    EmailCreationErrorCode:
+      description: 'Represents the type of error that occurred when creating an email.
+
+
+        Human-readable error messages are provided in the `detail` field of the response;
+
+        these values are meant to be parseable by code or client logic.'
+      enum:
+      - body_contains_frontmatter
+      - email_duplicate
+      - email_not_confirmed
+      - body_invalid
+      - canonical_url_invalid
+      - email_invalid
+      - slug_invalid
+      - subject_invalid
+      - pay_per_email_billing_locked
+      - publish_date_invalid
+      - publish_date_missing
+      - sending_requires_confirmation
+      - status_invalid
+      - tag_invalid
+      title: EmailCreationErrorCode
+      type: string
+    EmailExcludableField:
+      description: 'Represents a field on the Email model that can be excluded from
+
+        the API response.'
+      enum:
+      - body
+      title: ExcludableField
+      type: string
+    EmailFilter:
+      properties:
+        field:
+          anyOf:
+          - enum:
+            - subscriber.churn_date
+            - subscriber.click_rate
+            - subscriber.last_click_date
+            - subscriber.last_open_date
+            - subscriber.open_rate
+            - subscriber.price
+            - subscriber.source
+            - subscriber.status
+            - subscriber.subscription_date
+            - subscriber.tags
+            - subscriber.upgrade_date
+            type: string
+          - pattern: ^subscriber\.metadata\..+$
+            type: string
+          description: The subscriber attribute to evaluate. Must be a recognized field or a `subscriber.metadata.*` path.
+          title: Field
+        operator:
+          $ref: '#/components/schemas/Operator'
+        value:
+          description: The value to compare the field against.
+          title: Value
+          type: string
+      required:
+      - field
+      - operator
+      - value
+      title: EmailFilter
+      type: object
+    EmailFilterGroup:
+      properties:
+        filters:
+          description: The leaf-level filters to apply to the audience.
+          items:
+            $ref: '#/components/schemas/EmailFilter'
+          title: Filters
+          type: array
+        groups:
+          description: The nested groups to apply to the audience.
+          items:
+            $ref: '#/components/schemas/EmailFilterGroup'
+          title: Groups
+          type: array
+        predicate:
+          description: The logical operator to use when combining filters.
+          enum:
+          - and
+          - or
+          title: Predicate
+          type: string
+      required:
+      - filters
+      - groups
+      - predicate
+      title: EmailFilterGroup
+      type: object
+    EmailInput:
+      additionalProperties: false
+      properties:
+        attachments:
+          default: []
+          description: A list of attachment IDs present on the email. (See [Attachments](https://docs.buttondown.com/api-attachments-introduction)
+            for more information.)
+          example:
+          - att_01h8xg4j3k2m1n0p9q8r7s6t5v
+          items:
+            pattern: ^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|(?:att)_(?:[0-7][0-9abcdefghjkmnpqrstvwxyz]{25}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}))$
+            type: string
+          title: Attachments
+          type: array
+        publish_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: The date and time at which the email should be published in the future (for scheduled emails), or the
+            date and time at which the email was published (for sent emails).
+          title: Publish Date
+        subject:
+          description: The subject line for the email.
+          example: The subject line for the email
+          maxLength: 2000
+          title: Subject
+          type: string
+        slug:
+          anyOf:
+          - maxLength: 100
+            pattern: ^[a-zA-Z0-9_-]+$
+            type: string
+          - type: 'null'
+          description: A short, human-readable identifier for the email, used in the archive URL.
+          example: hello-world
+          title: Slug
+        description:
+          default: ''
+          description: A human-readable description of the email, used for archives and SEO.
+          title: Description
+          type: string
+        canonical_url:
+          default: ''
+          description: The URL of the original source of the content.
+          maxLength: 2000
+          title: Canonical Url
+          type: string
+        image:
+          default: ''
+          description: A primary image URL used when previewing the email on the web or in other contexts.
+          title: Image
+          type: string
+        body:
+          default: ''
+          description: 'The body of the email, in either HTML or markdown format. Buttondown attempts to intelligently detect
+            the format of the body automatically, but you can also specify the format explicitly by prepending the text with
+            the `buttondown-editor-mode` comment: `<!-- buttondown-editor-mode: fancy -->` or `<!-- buttondown-editor-mode:
+            plaintext -->`.'
+          example: This is an example of the body of an email.
+          title: Body
+          type: string
+        archival_mode:
+          allOf:
+          - $ref: '#/components/schemas/ArchivalMode'
+          default: enabled
+          description: Controls who can view this email in the archive.
+        email_type:
+          allOf:
+          - $ref: '#/components/schemas/EmailType'
+          default: public
+          deprecated: true
+          description: 'The type of email. Defaults to `PUBLIC`. Deprecated: this is a legacy single-axis view derived from
+            `archival_mode` (archive visibility) and `filters` (audience); prefer setting those directly. Because it is derived,
+            it does not always round-trip: writing it alongside an explicit `archival_mode` that disagrees will report the
+            value implied by the two underlying fields, and writing a value that already matches the derived one is a no-op.'
+        status:
+          allOf:
+          - $ref: '#/components/schemas/EmailStatus'
+          default: about_to_send
+          description: The status of the email (e.g. `draft`, `about_to_send`, `sent`, `scheduled`).
+        metadata:
+          additionalProperties: true
+          default: {}
+          description: A structured key-value blob that you can use to store arbitrary data on the object. Metadata can be
+            nested — you can store objects and arrays within your metadata. (You can [read more about metadata.](https://docs.buttondown.com/metadata))
+          title: Metadata
+          type: object
+        secondary_id:
+          anyOf:
+          - maximum: 1000000000
+            minimum: 1
+            type: integer
+          - type: 'null'
+          description: 'An informal ''number'' for the email, used in some templates (e.g. ''This was issue #123'').'
+          title: Secondary Id
+        filters:
+          allOf:
+          - $ref: '#/components/schemas/EmailFilterGroup'
+          default:
+            filters: []
+            groups: []
+            predicate: and
+          description: Tag-based filter rules determining which subscribers receive this email.
+        template:
+          anyOf:
+          - $ref: '#/components/schemas/NewsletterEmailTemplate'
+          - type: 'null'
+          description: If present, this template overrides your newsletter's default email template.
+        commenting_mode:
+          allOf:
+          - $ref: '#/components/schemas/EmailCommentingMode'
+          default: enabled
+          description: Controls whether subscribers can comment on this email.
+        related_email_ids:
+          description: IDs of emails related to this one. Shown at the bottom of the email and archive pages.
+          example:
+          - em_01h8xg4j3k2m1n0p9q8r7s6t5v
+          items:
+            pattern: ^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|(?:em)_(?:[0-7][0-9abcdefghjkmnpqrstvwxyz]{25}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}))$
+            type: string
+          title: Related Email Ids
+          type: array
+        featured:
+          default: false
+          description: Designated whether or not this email should be highlighted within the archives.
+          title: Featured
+          type: boolean
+        should_trigger_pay_per_email_billing:
+          default: false
+          description: Whether this email should trigger pay-per-email billing for paid subscribers. Use this to differentiate
+            between free updates and premium newsletters.
+          title: Should Trigger Pay Per Email Billing
+          type: boolean
+      required:
+      - subject
+      title: EmailInput
+      type: object
+    EmailListErrorCode:
+      description: 'Represents the type of error that occurred when listing emails.
+
+
+        Human-readable error messages are provided in the `detail` field of the response;
+
+        these values are meant to be parseable by code or client logic.'
+      enum:
+      - creation_date_invalid
+      - publish_date_invalid
+      title: EmailListErrorCode
+      type: string
+    EmailPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/Email'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[Email]
+      type: object
+    EmailSource:
+      description: 'Represents the original provenance of an email. This value is not exposed
+
+        to subscribers, but does determine some behavior of the email (e.g. whether
+
+        or not analytics can be calculated.)'
+      enum:
+      - api
+      - import
+      - app
+      - external_feed
+      - smtp
+      title: Source
+      type: string
+    EmailStatus:
+      description: 'Represents the state of an email.
+
+
+        No action is required to move from one state or another; Buttondown
+
+        internally handles the transitions, and exposing the status is for
+
+        observability purposes only.'
+      enum:
+      - draft
+      - managed_by_rss
+      - about_to_send
+      - scheduled
+      - in_flight
+      - paused
+      - deleted
+      - errored
+      - sent
+      - imported
+      - throttled
+      - resending
+      - transactional
+      - suppressed
+      title: Status
+      type: string
+    EmailSuppressionReason:
+      description: Represents the reason an email was suppressed.
+      enum:
+      - law_enforcement
+      - internal_auditing
+      title: SuppressionReason
+      type: string
+    EmailType:
+      description: 'The legacy single-axis representation of an email''s audience and
+
+        archive visibility. No longer stored: `filters` owns the audience
+
+        axis and `archival_mode` owns the archive axis, and the deprecated
+
+        API field is derived from those (see `email_type` below).'
+      enum:
+      - public
+      - private
+      - premium
+      - free
+      - churned
+      - archival
+      title: Type
+      type: string
+    EmailUpdateInput:
+      additionalProperties: false
+      properties:
+        attachments:
+          anyOf:
+          - items:
+              pattern: ^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|(?:att)_(?:[0-7][0-9abcdefghjkmnpqrstvwxyz]{25}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}))$
+              type: string
+            type: array
+          - type: 'null'
+          description: A list of attachment IDs present on the email. (See [Attachments](https://docs.buttondown.com/api-attachments-introduction)
+            for more information.)
+          example:
+          - att_01h8xg4j3k2m1n0p9q8r7s6t5v
+          title: Attachments
+        publish_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - const: none
+            type: string
+          - type: 'null'
+          description: The date and time at which the email should be published in the future (for scheduled emails), or the
+            date and time at which the email was published (for sent emails). Pass `"none"` to clear a scheduled date.
+          title: Publish Date
+        subject:
+          anyOf:
+          - maxLength: 2000
+            type: string
+          - type: 'null'
+          description: The subject line for the email.
+          example: The subject line for the email
+          title: Subject
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: A human-readable description of the email, used for archives and SEO.
+          title: Description
+        canonical_url:
+          anyOf:
+          - maxLength: 2000
+            type: string
+          - type: 'null'
+          description: The URL of the original source of the content.
+          example: https://sheinhardtwig.com/2025/01/17/our-nbc-partnership
+          title: Canonical Url
+        body:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: 'The body of the email, in either HTML or markdown format. Buttondown attempts to intelligently detect
+            the format of the body automatically, but you can also specify the format explicitly by prepending the text with
+            the `buttondown-editor-mode` comment: `<!-- buttondown-editor-mode: fancy -->` or `<!-- buttondown-editor-mode:
+            plaintext -->`.'
+          example: This is an example of the body of an email.
+          title: Body
+        archival_mode:
+          anyOf:
+          - $ref: '#/components/schemas/ArchivalMode'
+          - type: 'null'
+          description: Controls who can view this email in the archive.
+        email_type:
+          anyOf:
+          - $ref: '#/components/schemas/EmailType'
+          - type: 'null'
+          deprecated: true
+          description: 'The type of email. Defaults to `PUBLIC`. Deprecated: this is a legacy single-axis view derived from
+            `archival_mode` (archive visibility) and `filters` (audience); prefer setting those directly. Because it is derived,
+            it does not always round-trip: writing it alongside an explicit `archival_mode` that disagrees will report the
+            value implied by the two underlying fields, and writing a value that already matches the derived one is a no-op.'
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/EmailStatus'
+          - type: 'null'
+          description: The status of the email (e.g. `draft`, `about_to_send`, `sent`, `scheduled`).
+        suppression_reason:
+          anyOf:
+          - $ref: '#/components/schemas/EmailSuppressionReason'
+          - type: 'null'
+          description: If the email has been suppressed from sending, the reason why.
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          default: {}
+          description: A structured key-value blob that you can use to store arbitrary data on the object. Metadata can be
+            nested — you can store objects and arrays within your metadata. (You can [read more about metadata.](https://docs.buttondown.com/metadata))
+          title: Metadata
+        image:
+          default: ''
+          description: A primary image URL used when previewing the email on the web or in other contexts.
+          title: Image
+          type: string
+        slug:
+          anyOf:
+          - maxLength: 100
+            pattern: ^[a-zA-Z0-9_-]+$
+            type: string
+          - type: 'null'
+          description: A short, human-readable identifier for the email, used in the archive URL.
+          example: hello-world
+          title: Slug
+        secondary_id:
+          anyOf:
+          - maximum: 1000000000
+            minimum: 1
+            type: integer
+          - type: 'null'
+          description: 'An informal ''number'' for the email, used in some templates (e.g. ''This was issue #123'').'
+          title: Secondary Id
+        filters:
+          anyOf:
+          - $ref: '#/components/schemas/EmailFilterGroup'
+          - type: 'null'
+          description: Tag-based filter rules determining which subscribers receive this email.
+        template:
+          anyOf:
+          - $ref: '#/components/schemas/NewsletterEmailTemplate'
+          - const: none
+            type: string
+          - type: 'null'
+          description: If present, this template overrides your newsletter's default email template. Pass `"none"` to clear
+            an override.
+          title: Template
+        commenting_mode:
+          anyOf:
+          - $ref: '#/components/schemas/EmailCommentingMode'
+          - type: 'null'
+          description: Controls whether subscribers can comment on this email.
+        related_email_ids:
+          anyOf:
+          - items:
+              pattern: ^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|(?:em)_(?:[0-7][0-9abcdefghjkmnpqrstvwxyz]{25}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}))$
+              type: string
+            type: array
+          - type: 'null'
+          description: IDs of emails related to this one. Shown at the bottom of the email and archive pages.
+          example:
+          - em_01h8xg4j3k2m1n0p9q8r7s6t5v
+          title: Related Email Ids
+        featured:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          description: Designated whether or not this email should be highlighted within the archives.
+          title: Featured
+        should_trigger_pay_per_email_billing:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          description: Whether this email should trigger pay-per-email billing for paid subscribers. Use this to differentiate
+            between free updates and premium newsletters.
+          title: Should Trigger Pay Per Email Billing
+      title: EmailUpdateInput
+      type: object
+    ErrorMessage:
+      properties:
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
+            how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage
+      type: object
+    ErrorMessage_EmailCreationErrorCode_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/EmailCreationErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
+            how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[EmailCreationErrorCode]
+      type: object
+    ErrorMessage_EmailListErrorCode_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/EmailListErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
+            how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[EmailListErrorCode]
+      type: object
+    FailureBreakdownItem:
+      description: A single failure reason with its count.
+      properties:
+        code:
+          description: The failure reason code (e.g. 'hard_bounce', 'spam')
+          title: Code
+          type: string
+        count:
+          description: Number of failures with this reason
+          title: Count
+          type: integer
+      required:
+      - code
+      - count
+      title: FailureBreakdownItem
+      type: object
+    Filter:
+      description: "A filter is a single condition that can be evaluated against a [Subscriber](/api-subscribers-retrieve).\
+        \ It has a field, an operator, and a value:\n\n```json\n{\n    \"field\": \"subscriber.tags\",\n    \"operator\":\
+        \ \"contains\",\n    \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40j\"\n}\n```\n\nThe field is the path to the field\
+        \ on the subscriber to evaluate. The operator is the operator to use when evaluating the filter. The value is the\
+        \ value to compare the field to. Tag filters require the tag's ID (either a UUID or TypeID), not its name."
+      properties:
+        field:
+          title: Field
+          type: string
+        operator:
+          $ref: '#/components/schemas/Operator'
+        value:
+          title: Value
+          type: string
+      required:
+      - field
+      - operator
+      - value
+      title: Filter
+      type: object
+    FilterGroup:
+      description: "Buttondown's filtering schema can be used for multiple things:\n\n- Filtering [the audience of an email](/api-emails-create)\
+        \ to a specific subset\n- Creating [finely-tuned automations](/api-automation-introduction)\n\nFilters are fractal;\
+        \ they can be nested in groups, and groups can be nested in other groups. This is accomplished through a tree-like\
+        \ structure. Every \"FilterGroup\" has a \"predicate\" field, which is either \"and\" or \"or\", which determines\
+        \ how the filters and groups within the group are combined, a \"groups\" field, which is a list of \"FilterGroup\"\
+        \ objects (that's that recursive bit!), and a \"filters\" field, which are the leaf-level filters themselves.\n\n\
+        Let's say you want a simple filter: all subscribers who have a tag whose ID is `sub_tag_0j6hb7h40j6hb7h40j6hb7h40j`.\
+        \ You can do that like this:\n\n```json\n{\n    \"filters\": [{\"field\": \"subscriber.tags\", \"operator\": \"contains\"\
+        , \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40j\"}],\n    \"groups\": [],\n    \"predicate\": \"and\"\n}\n```\n\n\
+        Now, let's say you want to filter for subscribers who have that tag and a tag whose ID is `sub_tag_0j6hb7h40j6hb7h40j6hb7h40k`.\
+        \ You can do that like this:\n\n```json\n{\n    \"filters\": [{\"field\": \"subscriber.tags\", \"operator\": \"contains\"\
+        , \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40j\"}, {\"field\": \"subscriber.tags\", \"operator\": \"contains\"\
+        , \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40k\"}],\n    \"groups\": [],\n    \"predicate\": \"and\"\n}\n```\n\n\
+        If you wanted to change that `and` to an `or`, you can do that like this:\n\n```json\n{\n    \"filters\": [{\"field\"\
+        : \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40j\"}, {\"field\"\
+        : \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40k\"}],\n    \"groups\"\
+        : [],\n    \"predicate\": \"or\"\n}\n```\n\nNow, let's say you want to filter for subscribers who have the first tag\
+        \ _or_ both the second tag and a third tag whose ID is `sub_tag_0j6hb7h40j6hb7h40j6hb7h40m`. This is where the whole\
+        \ nested thing comes in handy. You can do that like this:\n\n```json\n{\n    \"filters\": [{\"field\": \"subscriber.tags\"\
+        , \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40j\"}],\n    \"groups\": [\n        {\n\
+        \            \"filters\": [{\"field\": \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40k\"\
+        }, {\"field\": \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40m\"\
+        }],\n            \"groups\": [],\n            \"predicate\": \"and\"\n        }\n    ],\n    \"predicate\": \"or\"\
+        \n}\n```\n\nYou can read more about the specific filter construction in the [Filter documentation](/api-emails-filter)."
+      properties:
+        filters:
+          description: The leaf-level filters to apply to the audience.
+          items:
+            $ref: '#/components/schemas/Filter'
+          title: Filters
+          type: array
+        groups:
+          description: The nested groups to apply to the audience.
+          items:
+            $ref: '#/components/schemas/FilterGroup'
+          title: Groups
+          type: array
+        predicate:
+          description: The logical operator to use when combining filters (either 'and' or 'or').
+          enum:
+          - and
+          - or
+          title: Predicate
+          type: string
+      required:
+      - filters
+      - groups
+      - predicate
+      title: FilterGroup
+      type: object
+    History:
+      properties:
+        history_id:
+          description: A monotonically increasing history entry ID.
+          title: History Id
+          type: integer
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        value:
+          description: The field's value at the time of this history entry.
+          title: Value
+          type: string
+        user_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The ID of the user who made this change, if attributable.
+          title: User Id
+        user:
+          anyOf:
+          - $ref: '#/components/schemas/User'
+          - type: 'null'
+          description: If expanded, the user who made this change.
+      required:
+      - history_id
+      - creation_date
+      - value
+      title: History
+      type: object
+    HistoryPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/History'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[History]
+      type: object
+    InvitationStatus:
+      type: string
+      enum:
+      - pending
+      - accepted
+      - declined
+      - revoked
+      - owner
+      title: InvitationStatus
+      description: An enumeration.
+    NewsletterEmailTemplate:
+      description: 'Represents the template of an email.
+
+
+        Each template has a different layout/style; you can view screenshots and examples [in the docs](https://docs.buttondown.com/customizing-email-design#buttondowns-default-templates).'
+      enum:
+      - classic
+      - custom
+      - modern
+      - plaintext
+      - naked
+      title: EmailTemplate
+      type: string
+    Operator:
+      enum:
+      - equals
+      - not_equals
+      - contains
+      - not_contains
+      - is_empty
+      - is_not_empty
+      - greater_than
+      - less_than
+      title: Operator
+      type: string
+      description: An enumeration.
+    Permissions:
+      properties:
+        subscriber:
+          allOf:
+          - $ref: '#/components/schemas/AccessLevel'
+          default: none
+          description: Access level for subscriber management.
+        email:
+          allOf:
+          - $ref: '#/components/schemas/AccessLevel'
+          default: none
+          description: Access level for email management.
+        sending:
+          allOf:
+          - $ref: '#/components/schemas/AccessLevel'
+          default: none
+          description: Access level for sending emails.
+        styling:
+          allOf:
+          - $ref: '#/components/schemas/AccessLevel'
+          default: none
+          description: Access level for newsletter styling.
+        administrivia:
+          allOf:
+          - $ref: '#/components/schemas/AccessLevel'
+          default: none
+          description: Access level for account administration.
+        automations:
+          allOf:
+          - $ref: '#/components/schemas/AccessLevel'
+          default: none
+          description: Access level for automation management.
+        surveys:
+          allOf:
+          - $ref: '#/components/schemas/AccessLevel'
+          default: none
+          description: Access level for survey management.
+        forms:
+          allOf:
+          - $ref: '#/components/schemas/AccessLevel'
+          default: none
+          description: Access level for form management.
+      title: Permissions
+      type: object
+    Render:
+      properties:
+        content:
+          description: The rendered HTML for the specified target format.
+          title: Content
+          type: string
+      required:
+      - content
+      title: Render
+      type: object
+    SendDraftInput:
+      additionalProperties: false
+      properties:
+        subscribers:
+          anyOf:
+          - items:
+              pattern: ^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|(?:sub)_(?:[0-7][0-9abcdefghjkmnpqrstvwxyz]{25}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}))$
+              type: string
+            type: array
+          - type: 'null'
+          description: A list of subscriber ids to which to send the email.
+          example:
+          - sub_01h8xg4j3k2m1n0p9q8r7s6t5v
+          title: Subscribers
+        recipients:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          description: A list of email addresses to send the email to.
+          example:
+          - telemachus@buttondown.email
+          title: Recipients
+      title: SendDraftInput
+      type: object
+    User:
+      properties:
+        permissions:
+          $ref: '#/components/schemas/Permissions'
+        email_address:
+          description: The email address of the user.
+          title: Email Address
+          type: string
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        status:
+          $ref: '#/components/schemas/InvitationStatus'
+          description: The status of the user's invitation (e.g. `pending`, `accepted`).
+        last_logged_in:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: When the user last logged in, or null if they haven't accepted the invitation.
+          title: Last Logged In
+      required:
+      - permissions
+      - email_address
+      - id
+      - creation_date
+      - status
+      title: User
+      type: object
+    ValidationErrorDetail:
+      properties:
+        type:
+          description: The type of validation error.
+          title: Type
+          type: string
+        loc:
+          description: The location of the error in the request.
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Loc
+          type: array
+        msg:
+          description: A human-readable error message.
+          title: Msg
+          type: string
+      required:
+      - type
+      - loc
+      - msg
+      title: ValidationErrorDetail
+      type: object
+    ValidationErrorMessage:
+      properties:
+        detail:
+          description: A list of validation errors.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          title: Detail
+          type: array
+      required:
+      - detail
+      title: ValidationErrorMessage
+      type: object
   securitySchemes:
-    apiKeyAuth:
+    ApiKeyAuth:
       type: apiKey
       in: header
       name: Authorization
-      description: API token in the form `Token <api-key>`.
+      description: API key passed as 'Token <your-api-key>' in the Authorization header.

@@ -1,0 +1,337 @@
+openapi: 3.1.0
+info:
+  title: Buttondown Bulk Actions API
+  version: 1.0.0
+  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction)
+    for guides and examples.
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://api.buttondown.com/v1
+security:
+- ApiKeyAuth: []
+tags:
+- name: Bulk Actions
+paths:
+  /bulk_actions:
+    post:
+      operationId: create_bulk_action
+      summary: Create Bulk Action
+      parameters: []
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkAction'
+          links:
+            retrieve_bulk_action:
+              operationId: retrieve_bulk_action
+              parameters:
+                path.id: $response.body#/id
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Create a new bulk action
+      tags:
+      - Bulk Actions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkActionInput'
+        required: true
+      security:
+      - ApiKeyAuth: []
+  /bulk_actions/{id}:
+    get:
+      operationId: retrieve_bulk_action
+      summary: Retrieve Bulk Action
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkAction'
+          links: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Retrieve the status of a bulk action
+      tags:
+      - Bulk Actions
+      security:
+      - ApiKeyAuth: []
+components:
+  schemas:
+    BulkAction:
+      description: 'A bulk action represents, well, a bulk action. It is used to perform
+
+        actions on a large number of objects at once. For example, you can
+
+        use it to delete a large number of emails, or to unsubscribe a large
+
+        number of subscribers. The actions within a bulk action are processed
+
+        serially by Buttondown; this should be considered an ergonomic way to
+
+        batch API calls across the network rather than a net-new piece of functionality
+
+        in of itself.'
+      properties:
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        type:
+          $ref: '#/components/schemas/BulkActionType'
+          description: The type of bulk action to perform.
+          example: delete_emails
+        metadata:
+          additionalProperties:
+            anyOf:
+            - type: string
+            - items:
+                type: string
+              type: array
+            - additionalProperties: true
+              type: object
+          description: Parameters for the bulk action. The exact shape depends on `type` — typically an `ids` list of object
+            IDs to act on.
+          example:
+            ids:
+            - 611c8825-6f21-4544-bb47-9f50453e9cb0
+            - 418c701a-efe3-4e3d-a404-e635a2f28775
+          minProperties: 1
+          title: Metadata
+          type: object
+        status:
+          $ref: '#/components/schemas/BulkActionStatus'
+          description: The current processing status of the bulk action.
+        completion_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: The date and time at which the bulk action was completed.
+          title: Completion Date
+      required:
+      - id
+      - creation_date
+      - type
+      - metadata
+      - status
+      title: BulkAction
+      type: object
+    BulkActionInput:
+      additionalProperties: false
+      properties:
+        type:
+          $ref: '#/components/schemas/BulkActionType'
+          description: The type of bulk action to perform.
+          example: delete_emails
+        metadata:
+          additionalProperties:
+            anyOf:
+            - type: string
+            - items:
+                type: string
+              type: array
+            - additionalProperties: true
+              type: object
+          description: Parameters for the bulk action. The exact shape depends on `type` — typically an `ids` list of object
+            IDs to act on.
+          example:
+            ids:
+            - 611c8825-6f21-4544-bb47-9f50453e9cb0
+            - 418c701a-efe3-4e3d-a404-e635a2f28775
+          minProperties: 1
+          title: Metadata
+          type: object
+      required:
+      - type
+      - metadata
+      title: BulkActionInput
+      type: object
+    BulkActionStatus:
+      type: string
+      enum:
+      - not_started
+      - in_progress
+      - processed
+      - failed
+      title: BulkActionStatus
+      description: 'Represents the status of a bulk action.
+
+
+        No action is required to move from one state or another; Buttondown
+
+        internally handles the transitions, and exposing the status is for
+
+        observability purposes only.'
+    BulkActionType:
+      type: string
+      enum:
+      - add_notes
+      - apply_tags
+      - apply_metadata
+      - rename_metadata
+      - ban_subscribers
+      - delete_subscribers
+      - gift_subscribers
+      - ungift_subscribers
+      - reactivate_subscribers
+      - mark_subscribers_as_not_spammy
+      - resubscribe_subscribers
+      - send_emails
+      - unban_subscribers
+      - send_reminders
+      - unsubscribe_subscribers
+      - delete_attachments
+      - delete_emails
+      - delete_images
+      - update_email_types
+      - update_archival_modes
+      - update_commenting_modes
+      - mark_inbox_items_read
+      - delete_inbox_items
+      - change_tags_colors
+      - delete_comments
+      - delete_surveys
+      - delete_survey_responses
+      - delete_tags
+      - mark_comments_as_active
+      - mark_comments_as_spammy
+      - replay_events
+      - update_survey_statuses
+      - cancel_stripe_subscriptions
+      - modify_stripe_subscriptions
+      - pause_stripe_subscriptions
+      title: BulkActionType
+      description: 'Represents the action being performed on a bulk of objects.
+
+
+        (Not to be coy, but these names should be self-explanatory.)'
+    ErrorMessage:
+      properties:
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
+            how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: API key passed as 'Token <your-api-key>' in the Authorization header.

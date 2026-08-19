@@ -1,0 +1,703 @@
+openapi: 3.1.0
+info:
+  title: Buttondown Snippets API
+  version: 1.0.0
+  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction)
+    for guides and examples.
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://api.buttondown.com/v1
+security:
+- ApiKeyAuth: []
+tags:
+- name: Snippets
+paths:
+  /snippets:
+    post:
+      operationId: create_snippet
+      summary: Create Snippet
+      parameters: []
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Snippet'
+              examples:
+                create_snippet:
+                  summary: Create a snippet
+                  value:
+                    id: '{{ id }}'
+                    creation_date: '2020-01-01T00:00:00Z'
+                    identifier: footer
+                    name: Footer
+                    content: Thanks for reading!
+                    mode: fancy
+                    reference_count: 0
+          links:
+            retrieve_snippet:
+              operationId: retrieve_snippet
+              parameters:
+                path.id: $response.body#/id
+            update_snippet:
+              operationId: update_snippet
+              parameters:
+                path.id: $response.body#/id
+            delete_snippet:
+              operationId: delete_snippet
+              parameters:
+                path.id: $response.body#/id
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Create a new snippet
+      tags:
+      - Snippets
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SnippetInput'
+            examples:
+              create_snippet:
+                summary: Create a snippet
+                value:
+                  identifier: footer
+                  name: Footer
+                  content: Thanks for reading!
+        required: true
+      security:
+      - ApiKeyAuth: []
+    get:
+      operationId: list_snippets
+      summary: List Snippets
+      parameters:
+      - in: query
+        name: page
+        schema:
+          description: The page number of the paginated response.
+          example:
+          - 1
+          title: Page
+          minimum: 1
+          type: integer
+        required: false
+        description: The page number of the paginated response.
+        example:
+        - 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SnippetPage'
+              examples:
+                list_snippets:
+                  summary: List snippets
+                  value:
+                    results:
+                    - id: '{{ id }}'
+                      creation_date: '2020-01-01T00:00:00Z'
+                      identifier: footer
+                      name: Footer
+                      content: Thanks for reading!
+                      mode: fancy
+                      reference_count: 0
+                    next: null
+                    previous: null
+                    count: 1
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: List all snippets
+      tags:
+      - Snippets
+      security:
+      - ApiKeyAuth: []
+  /snippets/{id}:
+    get:
+      operationId: retrieve_snippet
+      summary: Retrieve Snippet
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Snippet'
+              examples:
+                retrieve_snippet:
+                  summary: Retrieve a snippet
+                  value:
+                    id: '{{ id }}'
+                    creation_date: '2020-01-01T00:00:00Z'
+                    identifier: footer
+                    name: Footer
+                    content: Thanks for reading!
+                    mode: fancy
+                    reference_count: 0
+          links:
+            update_snippet:
+              operationId: update_snippet
+              parameters:
+                path.id: $response.body#/id
+            delete_snippet:
+              operationId: delete_snippet
+              parameters:
+                path.id: $response.body#/id
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Retrieve a single snippet.
+      tags:
+      - Snippets
+      security:
+      - ApiKeyAuth: []
+    patch:
+      operationId: update_snippet
+      summary: Update Snippet
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Snippet'
+              examples:
+                update_snippet:
+                  summary: Update a snippet's content
+                  value:
+                    id: '{{ id }}'
+                    creation_date: '2020-01-01T00:00:00Z'
+                    identifier: footer
+                    name: Footer
+                    content: Thanks for reading — reply any time!
+                    mode: fancy
+                    reference_count: 0
+                update_snippet_identifier:
+                  summary: Rename a snippet's identifier
+                  value:
+                    id: '{{ id }}'
+                    creation_date: '2020-01-01T00:00:00Z'
+                    identifier: email-footer
+                    name: Footer
+                    content: Thanks for reading — reply any time!
+                    mode: fancy
+                    reference_count: 0
+          links:
+            retrieve_snippet:
+              operationId: retrieve_snippet
+              parameters:
+                path.id: $response.body#/id
+            delete_snippet:
+              operationId: delete_snippet
+              parameters:
+                path.id: $response.body#/id
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Update a snippet.
+      tags:
+      - Snippets
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SnippetUpdateInput'
+            examples:
+              update_snippet:
+                summary: Update a snippet's content
+                value:
+                  name: Footer
+                  content: Thanks for reading — reply any time!
+              update_snippet_identifier:
+                summary: Rename a snippet's identifier
+                value:
+                  identifier: email-footer
+        required: true
+      security:
+      - ApiKeyAuth: []
+    delete:
+      operationId: delete_snippet
+      summary: Delete Snippet
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      responses:
+        '204':
+          description: No Content
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Delete a snippet.
+      tags:
+      - Snippets
+      security:
+      - ApiKeyAuth: []
+components:
+  schemas:
+    ErrorMessage:
+      properties:
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
+            how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage
+      type: object
+    Snippet:
+      properties:
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        identifier:
+          description: A unique, newsletter-scoped slug used to reference the snippet inside email content (e.g. `{{ snippets.footer
+            }}`). Must be unique per newsletter.
+          title: Identifier
+          type: string
+        name:
+          description: A human-readable name for the snippet, shown in the Buttondown UI.
+          title: Name
+          type: string
+        content:
+          description: The body of the snippet, substituted wherever the snippet is referenced. Interpreted according to `mode`.
+          title: Content
+          type: string
+        mode:
+          $ref: '#/components/schemas/SnippetMode'
+          description: 'The editor mode for the snippet, which controls how `content` is rendered: `fancy` (rich text, stored
+            as HTML), `plaintext` (Markdown), or `naked` (raw HTML with no processing).'
+        reference_count:
+          default: 0
+          description: The number of emails that currently reference this snippet.
+          title: Reference Count
+          type: integer
+      required:
+      - id
+      - creation_date
+      - identifier
+      - name
+      - content
+      - mode
+      title: Snippet
+      type: object
+    SnippetInput:
+      additionalProperties: false
+      properties:
+        identifier:
+          description: A unique, newsletter-scoped slug used to reference the snippet inside email content (e.g. `{{ snippets.footer
+            }}`). Must be unique per newsletter.
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          title: Identifier
+          type: string
+          example: footer
+        name:
+          description: A human-readable name for the snippet, shown in the Buttondown UI.
+          maxLength: 255
+          minLength: 1
+          title: Name
+          type: string
+          example: Footer
+        content:
+          default: ''
+          description: The body of the snippet, substituted wherever the snippet is referenced. Interpreted according to `mode`.
+          title: Content
+          type: string
+          example: Thanks for reading!
+        mode:
+          allOf:
+          - $ref: '#/components/schemas/SnippetMode'
+          default: fancy
+          description: 'The editor mode for the snippet, which controls how `content` is rendered: `fancy` (rich text, stored
+            as HTML), `plaintext` (Markdown), or `naked` (raw HTML with no processing).'
+          example: fancy
+      required:
+      - identifier
+      - name
+      title: SnippetInput
+      type: object
+    SnippetMode:
+      enum:
+      - fancy
+      - naked
+      - plaintext
+      title: Mode
+      type: string
+      description: An enumeration.
+    SnippetPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/Snippet'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[Snippet]
+      type: object
+    SnippetUpdateInput:
+      additionalProperties: false
+      properties:
+        identifier:
+          anyOf:
+          - maxLength: 100
+            minLength: 1
+            pattern: ^[a-zA-Z0-9_-]+$
+            type: string
+          - type: 'null'
+          description: A unique, newsletter-scoped slug used to reference the snippet inside email content (e.g. `{{ snippets.footer
+            }}`). Must be unique per newsletter.
+          title: Identifier
+          example: footer
+        name:
+          anyOf:
+          - maxLength: 255
+            minLength: 1
+            type: string
+          - type: 'null'
+          description: A human-readable name for the snippet, shown in the Buttondown UI.
+          title: Name
+          example: Footer
+        content:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The body of the snippet, substituted wherever the snippet is referenced. Interpreted according to `mode`.
+          title: Content
+          example: Thanks for reading!
+        mode:
+          anyOf:
+          - $ref: '#/components/schemas/SnippetMode'
+          - type: 'null'
+          description: 'The editor mode for the snippet, which controls how `content` is rendered: `fancy` (rich text, stored
+            as HTML), `plaintext` (Markdown), or `naked` (raw HTML with no processing).'
+          example: fancy
+      title: SnippetUpdateInput
+      type: object
+    ValidationErrorDetail:
+      properties:
+        type:
+          description: The type of validation error.
+          title: Type
+          type: string
+        loc:
+          description: The location of the error in the request.
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Loc
+          type: array
+        msg:
+          description: A human-readable error message.
+          title: Msg
+          type: string
+      required:
+      - type
+      - loc
+      - msg
+      title: ValidationErrorDetail
+      type: object
+    ValidationErrorMessage:
+      properties:
+        detail:
+          description: A list of validation errors.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          title: Detail
+          type: array
+      required:
+      - detail
+      title: ValidationErrorMessage
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: API key passed as 'Token <your-api-key>' in the Authorization header.

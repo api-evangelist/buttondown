@@ -1,0 +1,839 @@
+generated: '2026-08-13'
+method: derived
+status: candidate
+source: openapi/_original/buttondown-openapi.json
+description: 'No Buttondown-published MCP server exists. Every candidate endpoint was probed on 2026-08-13 and missed:
+  mcp.buttondown.com does not resolve to a server (nginx 404), api.buttondown.com/mcp and /v1/mcp return 404, and
+  docs.buttondown.com/mcp is a Next.js 404 page (a POST there returns a Vercel 405, not an MCP response). The tool
+  list below is DERIVED from the live OpenAPI as a candidate surface — one tool per operationId, each inheriting
+  its real input schema from that operation''s parameters and requestBody. It is not a server Buttondown ships.
+  A third-party npm package, buttondown-mcp, exists but is not published by Buttondown.'
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: api-key
+  verified: probed
+  note: 'auth records what a server WOULD need — the Buttondown API authenticates with an Authorization: Token <key>
+    header. No server exists to reach.'
+probes:
+- url: https://mcp.buttondown.com/mcp
+  status: 404
+  note: nginx 404; host resolves but serves nothing
+- url: https://api.buttondown.com/mcp
+  status: 404
+- url: https://api.buttondown.com/v1/mcp
+  status: 404
+- url: https://docs.buttondown.com/mcp
+  status: 404
+  note: Next.js 404 page; POST returns Vercel 405 FUNCTION_INVOCATION_FAILED, not an MCP error
+- url: https://buttondown.com/mcp
+  status: 403
+third_party:
+- name: buttondown-mcp
+  registry: npm
+  version: 1.2.0
+  published: '2026-02-10'
+  url: https://www.npmjs.com/package/buttondown-mcp
+  official: false
+tool_count: 133
+tools:
+- name: list_api_requests
+  description: List Api Requests
+  category: API Requests
+  source_operation: openapi/buttondown-api-requests-api-openapi.yml#list_api_requests
+  method: GET
+  path: /api_requests
+- name: retrieve_api_request
+  description: Retrieve Api Request
+  category: API Requests
+  source_operation: openapi/buttondown-api-requests-api-openapi.yml#retrieve_api_request
+  method: GET
+  path: /api_requests/{id}
+- name: get_account
+  description: Get Account
+  category: Accounts
+  source_operation: openapi/buttondown-accounts-api-openapi.yml#get_account
+  method: GET
+  path: /accounts/me
+- name: create_advertising_unit
+  description: Create Advertising Unit
+  category: Advertising Units
+  source_operation: openapi/buttondown-advertising-units-api-openapi.yml#create_advertising_unit
+  method: POST
+  path: /advertising_units
+- name: delete_advertising_unit
+  description: Delete Advertising Unit
+  category: Advertising Units
+  source_operation: openapi/buttondown-advertising-units-api-openapi.yml#delete_advertising_unit
+  method: DELETE
+  path: /advertising_units/{id}
+- name: list_advertising_slots
+  description: List Advertising Slots
+  category: Advertising Units
+  source_operation: openapi/buttondown-advertising-units-api-openapi.yml#list_advertising_slots
+  method: GET
+  path: /advertising_units/slots
+- name: list_advertising_units
+  description: List Advertising Units
+  category: Advertising Units
+  source_operation: openapi/buttondown-advertising-units-api-openapi.yml#list_advertising_units
+  method: GET
+  path: /advertising_units
+- name: update_advertising_slot
+  description: Update Advertising Slot
+  category: Advertising Units
+  source_operation: openapi/buttondown-advertising-units-api-openapi.yml#update_advertising_slot
+  method: PATCH
+  path: /advertising_units/slots/{id}
+- name: update_advertising_unit
+  description: Update Advertising Unit
+  category: Advertising Units
+  source_operation: openapi/buttondown-advertising-units-api-openapi.yml#update_advertising_unit
+  method: PATCH
+  path: /advertising_units/{id}
+- name: create_attachment
+  description: Create Attachment
+  category: Attachments
+  source_operation: openapi/buttondown-attachments-api-openapi.yml#create_attachment
+  method: POST
+  path: /attachments
+- name: delete_attachment
+  description: Delete Attachment
+  category: Attachments
+  source_operation: openapi/buttondown-attachments-api-openapi.yml#delete_attachment
+  method: DELETE
+  path: /attachments/{id}
+- name: list_attachments
+  description: List Attachments
+  category: Attachments
+  source_operation: openapi/buttondown-attachments-api-openapi.yml#list_attachments
+  method: GET
+  path: /attachments
+- name: retrieve_attachment
+  description: Retrieve Attachment
+  category: Attachments
+  source_operation: openapi/buttondown-attachments-api-openapi.yml#retrieve_attachment
+  method: GET
+  path: /attachments/{id}
+- name: create_automation
+  description: Create Automation
+  category: Automations
+  source_operation: openapi/buttondown-automations-api-openapi.yml#create_automation
+  method: POST
+  path: /automations
+- name: delete_automation
+  description: Delete Automation
+  category: Automations
+  source_operation: openapi/buttondown-automations-api-openapi.yml#delete_automation
+  method: DELETE
+  path: /automations/{id}
+- name: invoke_automation
+  description: Invoke Automation
+  category: Automations
+  source_operation: openapi/buttondown-automations-api-openapi.yml#invoke_automation
+  method: POST
+  path: /automations/{id}/invoke
+- name: list_automations
+  description: List Automations
+  category: Automations
+  source_operation: openapi/buttondown-automations-api-openapi.yml#list_automations
+  method: GET
+  path: /automations
+- name: retrieve_automation
+  description: Retrieve Automation
+  category: Automations
+  source_operation: openapi/buttondown-automations-api-openapi.yml#retrieve_automation
+  method: GET
+  path: /automations/{id}
+- name: retrieve_automation_analytics
+  description: Retrieve Automation Analytics
+  category: Automations
+  source_operation: openapi/buttondown-automations-api-openapi.yml#retrieve_automation_analytics
+  method: GET
+  path: /automations/{id}/analytics
+- name: update_automation
+  description: Update Automation
+  category: Automations
+  source_operation: openapi/buttondown-automations-api-openapi.yml#update_automation
+  method: PATCH
+  path: /automations/{id}
+- name: create_book
+  description: Create Book
+  category: Books
+  source_operation: openapi/buttondown-books-api-openapi.yml#create_book
+  method: POST
+  path: /books
+- name: delete_book
+  description: Delete Book
+  category: Books
+  source_operation: openapi/buttondown-books-api-openapi.yml#delete_book
+  method: DELETE
+  path: /books/{id}
+- name: list_books
+  description: List Books
+  category: Books
+  source_operation: openapi/buttondown-books-api-openapi.yml#list_books
+  method: GET
+  path: /books
+- name: retrieve_book
+  description: Retrieve Book
+  category: Books
+  source_operation: openapi/buttondown-books-api-openapi.yml#retrieve_book
+  method: GET
+  path: /books/{id}
+- name: update_book
+  description: Update Book
+  category: Books
+  source_operation: openapi/buttondown-books-api-openapi.yml#update_book
+  method: PATCH
+  path: /books/{id}
+- name: create_bulk_action
+  description: Create Bulk Action
+  category: Bulk Actions
+  source_operation: openapi/buttondown-bulk-actions-api-openapi.yml#create_bulk_action
+  method: POST
+  path: /bulk_actions
+- name: retrieve_bulk_action
+  description: Retrieve Bulk Action
+  category: Bulk Actions
+  source_operation: openapi/buttondown-bulk-actions-api-openapi.yml#retrieve_bulk_action
+  method: GET
+  path: /bulk_actions/{id}
+- name: create_comment
+  description: Create Comment
+  category: Comments
+  source_operation: openapi/buttondown-comments-api-openapi.yml#create_comment
+  method: POST
+  path: /comments
+- name: delete_comment
+  description: Delete Comment
+  category: Comments
+  source_operation: openapi/buttondown-comments-api-openapi.yml#delete_comment
+  method: DELETE
+  path: /comments/{id}
+- name: list_comments
+  description: List Comments
+  category: Comments
+  source_operation: openapi/buttondown-comments-api-openapi.yml#list_comments
+  method: GET
+  path: /comments
+- name: retrieve_comment
+  description: Retrieve Comment
+  category: Comments
+  source_operation: openapi/buttondown-comments-api-openapi.yml#retrieve_comment
+  method: GET
+  path: /comments/{id}
+- name: update_comment
+  description: Update Comment
+  category: Comments
+  source_operation: openapi/buttondown-comments-api-openapi.yml#update_comment
+  method: PATCH
+  path: /comments/{id}
+- name: list_coupons
+  description: List Coupons
+  category: Coupons
+  source_operation: openapi/buttondown-coupons-api-openapi.yml#list_coupons
+  method: GET
+  path: /coupons
+- name: create_email
+  description: Create Email
+  category: Emails
+  source_operation: openapi/buttondown-emails-api-openapi.yml#create_email
+  method: POST
+  path: /emails
+- name: delete_email
+  description: Delete Email
+  category: Emails
+  source_operation: openapi/buttondown-emails-api-openapi.yml#delete_email
+  method: DELETE
+  path: /emails/{id}
+- name: list_emails
+  description: List Emails
+  category: Emails
+  source_operation: openapi/buttondown-emails-api-openapi.yml#list_emails
+  method: GET
+  path: /emails
+- name: publish_email
+  description: Publish Email
+  category: Emails
+  source_operation: openapi/buttondown-emails-api-openapi.yml#publish_email
+  method: POST
+  path: /emails/{id}/publish
+- name: retrieve_email
+  description: Retrieve Email
+  category: Emails
+  source_operation: openapi/buttondown-emails-api-openapi.yml#retrieve_email
+  method: GET
+  path: /emails/{id}
+- name: retrieve_email_analytics
+  description: Retrieve Email Analytics
+  category: Emails
+  source_operation: openapi/buttondown-emails-api-openapi.yml#retrieve_email_analytics
+  method: GET
+  path: /emails/{id}/analytics
+- name: retrieve_email_history
+  description: Retrieve Email History
+  category: Emails
+  source_operation: openapi/buttondown-emails-api-openapi.yml#retrieve_email_history
+  method: GET
+  path: /emails/{id}/history
+- name: retrieve_email_history_by_id
+  description: Retrieve Email History By Id
+  category: Emails
+  source_operation: openapi/buttondown-emails-api-openapi.yml#retrieve_email_history_by_id
+  method: GET
+  path: /emails/{id}/history/body/{history_id}
+- name: retrieve_email_renders
+  description: Retrieve Email Renders
+  category: Emails
+  source_operation: openapi/buttondown-emails-api-openapi.yml#retrieve_email_renders
+  method: GET
+  path: /emails/{id}/renders
+- name: send_draft
+  description: Send Draft
+  category: Emails
+  source_operation: openapi/buttondown-emails-api-openapi.yml#send_draft
+  method: POST
+  path: /emails/{id}/send-draft
+- name: update_email
+  description: Update Email
+  category: Emails
+  source_operation: openapi/buttondown-emails-api-openapi.yml#update_email
+  method: PATCH
+  path: /emails/{id}
+- name: get_event
+  description: Get Event
+  category: Events
+  source_operation: openapi/buttondown-events-api-openapi.yml#get_event
+  method: GET
+  path: /events/{id}
+- name: list_events
+  description: List Events
+  category: Events
+  source_operation: openapi/buttondown-events-api-openapi.yml#list_events
+  method: GET
+  path: /events
+- name: create_export
+  description: Create Export
+  category: Exports
+  source_operation: openapi/buttondown-exports-api-openapi.yml#create_export
+  method: POST
+  path: /exports
+- name: list_exports
+  description: List Exports
+  category: Exports
+  source_operation: openapi/buttondown-exports-api-openapi.yml#list_exports
+  method: GET
+  path: /exports
+- name: retrieve_export
+  description: Retrieve Export
+  category: Exports
+  source_operation: openapi/buttondown-exports-api-openapi.yml#retrieve_export
+  method: GET
+  path: /exports/{id}
+- name: create_external_feed
+  description: Create External Feed
+  category: External Feeds
+  source_operation: openapi/buttondown-external-feeds-api-openapi.yml#create_external_feed
+  method: POST
+  path: /external_feeds
+- name: delete_external_feed
+  description: Delete External Feed
+  category: External Feeds
+  source_operation: openapi/buttondown-external-feeds-api-openapi.yml#delete_external_feed
+  method: DELETE
+  path: /external_feeds/{id}
+- name: list_external_feed
+  description: List External Feed
+  category: External Feeds
+  source_operation: openapi/buttondown-external-feeds-api-openapi.yml#list_external_feed
+  method: GET
+  path: /external_feeds
+- name: poll_items
+  description: Poll Items
+  category: External Feeds
+  source_operation: openapi/buttondown-external-feeds-api-openapi.yml#poll_items
+  method: POST
+  path: /external_feeds/{id}/items
+- name: retrieve_external_feed
+  description: Retrieve External Feed
+  category: External Feeds
+  source_operation: openapi/buttondown-external-feeds-api-openapi.yml#retrieve_external_feed
+  method: GET
+  path: /external_feeds/{id}
+- name: retrieve_items
+  description: Retrieve Items
+  category: External Feeds
+  source_operation: openapi/buttondown-external-feeds-api-openapi.yml#retrieve_items
+  method: GET
+  path: /external_feeds/{id}/items
+- name: update_external_feed
+  description: Update External Feed
+  category: External Feeds
+  source_operation: openapi/buttondown-external-feeds-api-openapi.yml#update_external_feed
+  method: PATCH
+  path: /external_feeds/{id}
+- name: create_form
+  description: Create Form
+  category: Forms
+  source_operation: openapi/buttondown-forms-api-openapi.yml#create_form
+  method: POST
+  path: /forms
+- name: delete_form
+  description: Delete Form
+  category: Forms
+  source_operation: openapi/buttondown-forms-api-openapi.yml#delete_form
+  method: DELETE
+  path: /forms/{id}
+- name: list_forms
+  description: List Forms
+  category: Forms
+  source_operation: openapi/buttondown-forms-api-openapi.yml#list_forms
+  method: GET
+  path: /forms
+- name: retrieve_form
+  description: Retrieve Form
+  category: Forms
+  source_operation: openapi/buttondown-forms-api-openapi.yml#retrieve_form
+  method: GET
+  path: /forms/{id}
+- name: update_form
+  description: Update Form
+  category: Forms
+  source_operation: openapi/buttondown-forms-api-openapi.yml#update_form
+  method: PATCH
+  path: /forms/{id}
+- name: create_image
+  description: Create Image
+  category: Images
+  source_operation: openapi/buttondown-images-api-openapi.yml#create_image
+  method: POST
+  path: /images
+- name: delete_image
+  description: Delete Image
+  category: Images
+  source_operation: openapi/buttondown-images-api-openapi.yml#delete_image
+  method: DELETE
+  path: /images/{id}
+- name: list_images
+  description: List Images
+  category: Images
+  source_operation: openapi/buttondown-images-api-openapi.yml#list_images
+  method: GET
+  path: /images
+- name: update_image
+  description: Update Image
+  category: Images
+  source_operation: openapi/buttondown-images-api-openapi.yml#update_image
+  method: PATCH
+  path: /images/{id}
+- name: create_import
+  description: Create Import
+  category: Imports
+  source_operation: openapi/buttondown-imports-api-openapi.yml#create_import
+  method: POST
+  path: /imports
+- name: delete_import
+  description: Delete Import
+  category: Imports
+  source_operation: openapi/buttondown-imports-api-openapi.yml#delete_import
+  method: DELETE
+  path: /imports/{id}
+- name: list_imports
+  description: List Imports
+  category: Imports
+  source_operation: openapi/buttondown-imports-api-openapi.yml#list_imports
+  method: GET
+  path: /imports
+- name: retrieve_import
+  description: Retrieve Import
+  category: Imports
+  source_operation: openapi/buttondown-imports-api-openapi.yml#retrieve_import
+  method: GET
+  path: /imports/{id}
+- name: update_import
+  description: Update Import
+  category: Imports
+  source_operation: openapi/buttondown-imports-api-openapi.yml#update_import
+  method: PATCH
+  path: /imports/{id}
+- name: create_newsletter
+  description: Create Newsletter
+  category: Newsletters
+  source_operation: openapi/buttondown-newsletters-api-openapi.yml#create_newsletter
+  method: POST
+  path: /newsletters
+- name: delete_newsletter
+  description: Delete Newsletter
+  category: Newsletters
+  source_operation: openapi/buttondown-newsletters-api-openapi.yml#delete_newsletter
+  method: DELETE
+  path: /newsletters/{id}
+- name: list_newsletters
+  description: List Newsletters
+  category: Newsletters
+  source_operation: openapi/buttondown-newsletters-api-openapi.yml#list_newsletters
+  method: GET
+  path: /newsletters
+- name: retrieve_hosting_domain
+  description: Retrieve Hosting Domain
+  category: Newsletters
+  source_operation: openapi/buttondown-newsletters-api-openapi.yml#retrieve_hosting_domain
+  method: GET
+  path: /newsletters/{id}/hosting-domain
+- name: retrieve_newsletter
+  description: Retrieve Newsletter
+  category: Newsletters
+  source_operation: openapi/buttondown-newsletters-api-openapi.yml#retrieve_newsletter
+  method: GET
+  path: /newsletters/{id}
+- name: retrieve_sending_domain
+  description: Retrieve Sending Domain
+  category: Newsletters
+  source_operation: openapi/buttondown-newsletters-api-openapi.yml#retrieve_sending_domain
+  method: GET
+  path: /newsletters/{id}/sending-domain
+- name: update_newsletter
+  description: Update Newsletter
+  category: Newsletters
+  source_operation: openapi/buttondown-newsletters-api-openapi.yml#update_newsletter
+  method: PATCH
+  path: /newsletters/{id}
+- name: create_note_endpoint
+  description: Create Note Endpoint
+  category: Notes
+  source_operation: openapi/buttondown-notes-api-openapi.yml#create_note_endpoint
+  method: POST
+  path: /notes
+- name: delete_note_endpoint
+  description: Delete Note Endpoint
+  category: Notes
+  source_operation: openapi/buttondown-notes-api-openapi.yml#delete_note_endpoint
+  method: DELETE
+  path: /notes/{id}
+- name: list_notes
+  description: List Notes
+  category: Notes
+  source_operation: openapi/buttondown-notes-api-openapi.yml#list_notes
+  method: GET
+  path: /notes
+- name: ping
+  description: Ping
+  category: Ping
+  source_operation: openapi/buttondown-ping-api-openapi.yml#ping
+  method: GET
+  path: /ping
+- name: create_price
+  description: Create Price
+  category: Prices
+  source_operation: openapi/buttondown-prices-api-openapi.yml#create_price
+  method: POST
+  path: /prices
+- name: delete_price
+  description: Delete Price
+  category: Prices
+  source_operation: openapi/buttondown-prices-api-openapi.yml#delete_price
+  method: DELETE
+  path: /prices/{price_id}
+- name: list_prices
+  description: List Prices
+  category: Prices
+  source_operation: openapi/buttondown-prices-api-openapi.yml#list_prices
+  method: GET
+  path: /prices
+- name: create_segment
+  description: Create Segment
+  category: Segments
+  source_operation: openapi/buttondown-segments-api-openapi.yml#create_segment
+  method: POST
+  path: /segments
+- name: delete_segment
+  description: Delete Segment
+  category: Segments
+  source_operation: openapi/buttondown-segments-api-openapi.yml#delete_segment
+  method: DELETE
+  path: /segments/{id}
+- name: list_segments
+  description: List Segments
+  category: Segments
+  source_operation: openapi/buttondown-segments-api-openapi.yml#list_segments
+  method: GET
+  path: /segments
+- name: retrieve_segment
+  description: Retrieve Segment
+  category: Segments
+  source_operation: openapi/buttondown-segments-api-openapi.yml#retrieve_segment
+  method: GET
+  path: /segments/{id}
+- name: update_segment
+  description: Update Segment
+  category: Segments
+  source_operation: openapi/buttondown-segments-api-openapi.yml#update_segment
+  method: PATCH
+  path: /segments/{id}
+- name: create_snippet
+  description: Create Snippet
+  category: Snippets
+  source_operation: openapi/buttondown-snippets-api-openapi.yml#create_snippet
+  method: POST
+  path: /snippets
+- name: delete_snippet
+  description: Delete Snippet
+  category: Snippets
+  source_operation: openapi/buttondown-snippets-api-openapi.yml#delete_snippet
+  method: DELETE
+  path: /snippets/{id}
+- name: list_snippets
+  description: List Snippets
+  category: Snippets
+  source_operation: openapi/buttondown-snippets-api-openapi.yml#list_snippets
+  method: GET
+  path: /snippets
+- name: retrieve_snippet
+  description: Retrieve Snippet
+  category: Snippets
+  source_operation: openapi/buttondown-snippets-api-openapi.yml#retrieve_snippet
+  method: GET
+  path: /snippets/{id}
+- name: update_snippet
+  description: Update Snippet
+  category: Snippets
+  source_operation: openapi/buttondown-snippets-api-openapi.yml#update_snippet
+  method: PATCH
+  path: /snippets/{id}
+- name: create_subscriber
+  description: Create Subscriber
+  category: Subscribers
+  source_operation: openapi/buttondown-subscribers-api-openapi.yml#create_subscriber
+  method: POST
+  path: /subscribers
+- name: delete_subscriber
+  description: Delete Subscriber
+  category: Subscribers
+  source_operation: openapi/buttondown-subscribers-api-openapi.yml#delete_subscriber
+  method: DELETE
+  path: /subscribers/{id_or_email}
+- name: get_automations
+  description: Get Automations
+  category: Subscribers
+  source_operation: openapi/buttondown-subscribers-api-openapi.yml#get_automations
+  method: GET
+  path: /subscribers/{id_or_email}/automations
+- name: get_referrals
+  description: Get Referrals
+  category: Subscribers
+  source_operation: openapi/buttondown-subscribers-api-openapi.yml#get_referrals
+  method: GET
+  path: /subscribers/{id_or_email}/referrals
+- name: get_stripe_subscriptions
+  description: Get Stripe Subscriptions
+  category: Subscribers
+  source_operation: openapi/buttondown-subscribers-api-openapi.yml#get_stripe_subscriptions
+  method: GET
+  path: /subscribers/{id_or_email}/stripe-subscriptions
+- name: list_subscribers
+  description: List Subscribers
+  category: Subscribers
+  source_operation: openapi/buttondown-subscribers-api-openapi.yml#list_subscribers
+  method: GET
+  path: /subscribers
+- name: retrieve_subscriber
+  description: Retrieve Subscriber
+  category: Subscribers
+  source_operation: openapi/buttondown-subscribers-api-openapi.yml#retrieve_subscriber
+  method: GET
+  path: /subscribers/{id_or_email}
+- name: send_email_to
+  description: Send Email To
+  category: Subscribers
+  source_operation: openapi/buttondown-subscribers-api-openapi.yml#send_email_to
+  method: POST
+  path: /subscribers/{id_or_email}/emails/{email_id}
+- name: send_magic_link_to_subscriber
+  description: Send Magic Link To Subscriber
+  category: Subscribers
+  source_operation: openapi/buttondown-subscribers-api-openapi.yml#send_magic_link_to_subscriber
+  method: POST
+  path: /subscribers/{id_or_email}/send-magic-link
+- name: send_reminder
+  description: Send Reminder
+  category: Subscribers
+  source_operation: openapi/buttondown-subscribers-api-openapi.yml#send_reminder
+  method: POST
+  path: /subscribers/{id_or_email}/send-reminder
+- name: update_automation_attempt
+  description: Update Automation Attempt
+  category: Subscribers
+  source_operation: openapi/buttondown-subscribers-api-openapi.yml#update_automation_attempt
+  method: PATCH
+  path: /subscribers/{id_or_email}/automations/{automation_attempt_id}
+- name: update_subscriber
+  description: Update Subscriber
+  category: Subscribers
+  source_operation: openapi/buttondown-subscribers-api-openapi.yml#update_subscriber
+  method: PATCH
+  path: /subscribers/{id_or_email}
+- name: create_survey_response
+  description: Create Survey Response
+  category: Survey Responses
+  source_operation: openapi/buttondown-survey-responses-api-openapi.yml#create_survey_response
+  method: POST
+  path: /survey_responses
+- name: retrieve_survey_responses
+  description: Retrieve Survey Responses
+  category: Survey Responses
+  source_operation: openapi/buttondown-survey-responses-api-openapi.yml#retrieve_survey_responses
+  method: GET
+  path: /survey_responses
+- name: update_survey_response
+  description: Update Survey Response
+  category: Survey Responses
+  source_operation: openapi/buttondown-survey-responses-api-openapi.yml#update_survey_response
+  method: PATCH
+  path: /survey_responses/{id}
+- name: create_survey
+  description: Create Survey
+  category: Surveys
+  source_operation: openapi/buttondown-surveys-api-openapi.yml#create_survey
+  method: POST
+  path: /surveys
+- name: delete_survey
+  description: Delete Survey
+  category: Surveys
+  source_operation: openapi/buttondown-surveys-api-openapi.yml#delete_survey
+  method: DELETE
+  path: /surveys/{id}
+- name: list_surveys
+  description: List Surveys
+  category: Surveys
+  source_operation: openapi/buttondown-surveys-api-openapi.yml#list_surveys
+  method: GET
+  path: /surveys
+- name: retrieve_survey
+  description: Retrieve Survey
+  category: Surveys
+  source_operation: openapi/buttondown-surveys-api-openapi.yml#retrieve_survey
+  method: GET
+  path: /surveys/{id}
+- name: update_survey
+  description: Update Survey
+  category: Surveys
+  source_operation: openapi/buttondown-surveys-api-openapi.yml#update_survey
+  method: PATCH
+  path: /surveys/{id}
+- name: create_tag
+  description: Create Tag
+  category: Tags
+  source_operation: openapi/buttondown-tags-api-openapi.yml#create_tag
+  method: POST
+  path: /tags
+- name: delete_tag
+  description: Delete Tag
+  category: Tags
+  source_operation: openapi/buttondown-tags-api-openapi.yml#delete_tag
+  method: DELETE
+  path: /tags/{id}
+- name: list_tags
+  description: List Tags
+  category: Tags
+  source_operation: openapi/buttondown-tags-api-openapi.yml#list_tags
+  method: GET
+  path: /tags
+- name: retrieve_tag
+  description: Retrieve Tag
+  category: Tags
+  source_operation: openapi/buttondown-tags-api-openapi.yml#retrieve_tag
+  method: GET
+  path: /tags/{id}
+- name: retrieve_tag_analytics
+  description: Retrieve Tag Analytics
+  category: Tags
+  source_operation: openapi/buttondown-tags-api-openapi.yml#retrieve_tag_analytics
+  method: GET
+  path: /tags/{id}/analytics
+- name: update_tag
+  description: Update Tag
+  category: Tags
+  source_operation: openapi/buttondown-tags-api-openapi.yml#update_tag
+  method: PATCH
+  path: /tags/{id}
+- name: create_user
+  description: Create User
+  category: Users
+  source_operation: openapi/buttondown-users-api-openapi.yml#create_user
+  method: POST
+  path: /users
+- name: delete_user
+  description: Delete User
+  category: Users
+  source_operation: openapi/buttondown-users-api-openapi.yml#delete_user
+  method: DELETE
+  path: /users/{id}
+- name: list_users
+  description: List Users
+  category: Users
+  source_operation: openapi/buttondown-users-api-openapi.yml#list_users
+  method: GET
+  path: /users
+- name: retrieve_user
+  description: Retrieve User
+  category: Users
+  source_operation: openapi/buttondown-users-api-openapi.yml#retrieve_user
+  method: GET
+  path: /users/{id}
+- name: update_user
+  description: Update User
+  category: Users
+  source_operation: openapi/buttondown-users-api-openapi.yml#update_user
+  method: PATCH
+  path: /users/{id}
+- name: create_webhook
+  description: Create Webhook
+  category: Webhooks
+  source_operation: openapi/buttondown-webhooks-api-openapi.yml#create_webhook
+  method: POST
+  path: /webhooks
+- name: delete_webhook
+  description: Delete Webhook
+  category: Webhooks
+  source_operation: openapi/buttondown-webhooks-api-openapi.yml#delete_webhook
+  method: DELETE
+  path: /webhooks/{id}
+- name: list_webhooks
+  description: List Webhooks
+  category: Webhooks
+  source_operation: openapi/buttondown-webhooks-api-openapi.yml#list_webhooks
+  method: GET
+  path: /webhooks
+- name: retrieve_webhook
+  description: Retrieve Webhook
+  category: Webhooks
+  source_operation: openapi/buttondown-webhooks-api-openapi.yml#retrieve_webhook
+  method: GET
+  path: /webhooks/{id}
+- name: retrieve_webhook_attempts
+  description: Retrieve Webhook Attempts
+  category: Webhooks
+  source_operation: openapi/buttondown-webhooks-api-openapi.yml#retrieve_webhook_attempts
+  method: GET
+  path: /webhooks/{id}/attempts
+- name: test_webhook
+  description: Test Webhook
+  category: Webhooks
+  source_operation: openapi/buttondown-webhooks-api-openapi.yml#test_webhook
+  method: POST
+  path: /webhooks/{id}/test
+- name: update_webhook
+  description: Update Webhook
+  category: Webhooks
+  source_operation: openapi/buttondown-webhooks-api-openapi.yml#update_webhook
+  method: PATCH
+  path: /webhooks/{id}
+- name: list_public_emails
+  description: Search public emails
+  category: public
+  source_operation: openapi/buttondown-public-api-openapi.yml#list_public_emails
+  method: GET
+  path: /public/emails/{username}

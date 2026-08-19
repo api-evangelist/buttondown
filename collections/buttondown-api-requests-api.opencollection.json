@@ -1,0 +1,135 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Buttondown API Requests API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "API Requests",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve Api Request",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/api_requests/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve a specific API request by its ID"
+        },
+        {
+          "info": {
+            "name": "List Api Requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/api_requests",
+            "params": [
+              {
+                "name": "api_key_id",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return requests made with the given [API key](https://docs.buttondown.com/api-authentication) ID(s)."
+              },
+              {
+                "name": "creation_date__gt",
+                "value": "2024-01-01T00:00:00Z",
+                "type": "query",
+                "description": "If provided, only return requests created after the given datetime."
+              },
+              {
+                "name": "creation_date__lt",
+                "value": "2024-12-31T23:59:59Z",
+                "type": "query",
+                "description": "If provided, only return requests created before the given datetime."
+              },
+              {
+                "name": "date__end",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return requests created on or before the given date."
+              },
+              {
+                "name": "date__start",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return requests created on or after the given date."
+              },
+              {
+                "name": "limit",
+                "value": "100",
+                "type": "query",
+                "description": "The maximum number of results to return per page."
+              },
+              {
+                "name": "method",
+                "value": "GET,POST",
+                "type": "query",
+                "description": "If provided, only return requests with the given HTTP method(s)."
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return requests matching the given API path(s)."
+              },
+              {
+                "name": "source",
+                "value": "api",
+                "type": "query",
+                "description": "If provided, only return requests from the given source(s)."
+              },
+              {
+                "name": "status_code",
+                "value": "200,404",
+                "type": "query",
+                "description": "If provided, only return requests with the given HTTP status code(s)."
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return requests made with the given [API version](https://docs.buttondown.com/api-versioning)(s)."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List all API requests"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

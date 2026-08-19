@@ -1,0 +1,887 @@
+openapi: 3.1.0
+info:
+  title: Buttondown Surveys API
+  version: 1.0.0
+  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction)
+    for guides and examples.
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://api.buttondown.com/v1
+security:
+- ApiKeyAuth: []
+tags:
+- name: Surveys
+paths:
+  /surveys:
+    post:
+      operationId: create_survey
+      summary: Create Survey
+      parameters: []
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Survey'
+              examples:
+                create_survey:
+                  summary: Create a survey
+                  value:
+                    id: '{{ id }}'
+                    creation_date: '2020-01-01T00:00:00Z'
+                    identifier: favorite-topic
+                    question: What would you like to read more about?
+                    response_count: 0
+                    answers:
+                    - Engineering
+                    - Design
+                    notes: ''
+                    randomize_answers: false
+                    response_cadence: once
+                    status: active
+                    is_freeform_response_enabled: false
+                    input_type: radio
+          links:
+            retrieve_survey:
+              operationId: retrieve_survey
+              parameters:
+                path.id: $response.body#/id
+            update_survey:
+              operationId: update_survey
+              parameters:
+                path.id: $response.body#/id
+            delete_survey:
+              operationId: delete_survey
+              parameters:
+                path.id: $response.body#/id
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage_CreateSurveyErrorCode_'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Create a new survey
+      tags:
+      - Surveys
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SurveyInput'
+            examples:
+              create_survey:
+                summary: Create a survey
+                value:
+                  identifier: favorite-topic
+                  question: What would you like to read more about?
+                  answers:
+                  - Engineering
+                  - Design
+        required: true
+      security:
+      - ApiKeyAuth: []
+    get:
+      operationId: list_surveys
+      summary: List Surveys
+      parameters:
+      - in: query
+        name: status
+        schema:
+          description: If provided, only return surveys with the given status.
+          example:
+          - active
+          items:
+            $ref: '#/components/schemas/SurveyStatus'
+          title: Status
+          type: array
+        required: false
+        description: If provided, only return surveys with the given status.
+        example:
+        - active
+      - in: query
+        name: -status
+        schema:
+          description: If provided, only return surveys without the given status.
+          example:
+          - inactive
+          items:
+            $ref: '#/components/schemas/SurveyStatus'
+          title: -Status
+          type: array
+        required: false
+        description: If provided, only return surveys without the given status.
+        example:
+        - inactive
+      - in: query
+        name: ordering
+        schema:
+          allOf:
+          - enum:
+            - creation_date
+            - -creation_date
+            - question
+            - -question
+            - identifier
+            - -identifier
+            - status
+            - -status
+            - response_count
+            - -response_count
+            title: Ordering
+            type: string
+          default: -creation_date
+          description: The ordering to apply to the results.
+          example: -creation_date
+        required: false
+        description: The ordering to apply to the results.
+        example: -creation_date
+      - in: query
+        name: page
+        required: false
+        description: The page number of the paginated response.
+        schema:
+          type: integer
+          title: Page
+          description: The page number of the paginated response.
+          default: 1
+          example: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurveyPage'
+              examples:
+                list_surveys:
+                  summary: List surveys
+                  value:
+                    results:
+                    - id: '{{ id }}'
+                      creation_date: '2020-01-01T00:00:00Z'
+                      identifier: favorite-topic
+                      question: What would you like to read more about?
+                      response_count: 0
+                      answers:
+                      - Engineering
+                      - Design
+                      notes: ''
+                      randomize_answers: false
+                      response_cadence: once
+                      status: active
+                      is_freeform_response_enabled: false
+                      input_type: radio
+                    next: null
+                    previous: null
+                    count: 1
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: List all surveys
+      tags:
+      - Surveys
+      security:
+      - ApiKeyAuth: []
+  /surveys/{id}:
+    get:
+      operationId: retrieve_survey
+      summary: Retrieve Survey
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Survey'
+          links:
+            update_survey:
+              operationId: update_survey
+              parameters:
+                path.id: $response.body#/id
+            delete_survey:
+              operationId: delete_survey
+              parameters:
+                path.id: $response.body#/id
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Retrieve a specific survey by its ID
+      tags:
+      - Surveys
+      security:
+      - ApiKeyAuth: []
+    patch:
+      operationId: update_survey
+      summary: Update Survey
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Survey'
+          links:
+            retrieve_survey:
+              operationId: retrieve_survey
+              parameters:
+                path.id: $response.body#/id
+            delete_survey:
+              operationId: delete_survey
+              parameters:
+                path.id: $response.body#/id
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage_UpdateSurveyErrorCode_'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Update a survey's properties
+      tags:
+      - Surveys
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SurveyUpdateInput'
+        required: true
+      security:
+      - ApiKeyAuth: []
+    delete:
+      operationId: delete_survey
+      summary: Delete Survey
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Delete a survey
+      tags:
+      - Surveys
+      security:
+      - ApiKeyAuth: []
+components:
+  schemas:
+    CreateSurveyErrorCode:
+      description: 'Represents the type of error that occurred when creating a survey.
+
+
+        Human-readable error messages are provided in the `detail` field of the response;
+
+        these values are meant to be parseable by code or client logic.'
+      enum:
+      - identifier_already_exists
+      title: CreateSurveyErrorCode
+      type: string
+    ErrorMessage:
+      properties:
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
+            how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage
+      type: object
+    ErrorMessage_CreateSurveyErrorCode_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/CreateSurveyErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
+            how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[CreateSurveyErrorCode]
+      type: object
+    ErrorMessage_UpdateSurveyErrorCode_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/UpdateSurveyErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
+            how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[UpdateSurveyErrorCode]
+      type: object
+    Survey:
+      description: 'Surveys let you ask your subscribers a question—and personalize future
+
+        emails based on their answers. You can attach a survey to any email and read
+
+        back the responses via the API.'
+      properties:
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        identifier:
+          description: A newsletter-scoped slug used to reference this survey when embedding it in emails.
+          maxLength: 100
+          title: Identifier
+          type: string
+        question:
+          description: The survey question shown to subscribers.
+          maxLength: 500
+          title: Question
+          type: string
+        response_count:
+          description: The total number of responses this survey has received.
+          minimum: 0
+          title: Response Count
+          type: integer
+        answers:
+          description: The list of pre-defined answer choices. Order is preserved unless `randomize_answers` is true.
+          items:
+            maxLength: 500
+            type: string
+          title: Answers
+          type: array
+        notes:
+          description: Internal notes about the survey. Not shown to subscribers.
+          title: Notes
+          type: string
+        randomize_answers:
+          description: If true, the order of `answers` is shuffled each time the survey is rendered.
+          title: Randomize Answers
+          type: boolean
+        response_cadence:
+          $ref: '#/components/schemas/SurveyResponseCadence'
+          description: How often a given subscriber can respond — e.g. `once` (single response per subscriber) or `unlimited`.
+        status:
+          $ref: '#/components/schemas/SurveyStatus'
+          description: The lifecycle status of the survey (e.g. `active`, `archived`).
+        is_freeform_response_enabled:
+          description: If true, subscribers can provide a freeform text response in addition to (or instead of) picking from
+            `answers`.
+          title: Is Freeform Response Enabled
+          type: boolean
+        input_type:
+          $ref: '#/components/schemas/SurveyInputType'
+          description: The UI control used to collect responses (e.g. `radio`, `checkbox`).
+      required:
+      - id
+      - creation_date
+      - identifier
+      - question
+      - response_count
+      - answers
+      - notes
+      - randomize_answers
+      - response_cadence
+      - status
+      - is_freeform_response_enabled
+      - input_type
+      title: Survey
+      type: object
+    SurveyInput:
+      additionalProperties: false
+      properties:
+        identifier:
+          description: A newsletter-scoped slug used to reference this survey when embedding it in emails.
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          title: Identifier
+          type: string
+          example: color
+        question:
+          description: The survey question shown to subscribers.
+          maxLength: 500
+          pattern: ^[^\x00-\x1f\x7f-\x9f]*[^\W_][^\x00-\x1f\x7f-\x9f]*$
+          title: Question
+          type: string
+          example: What's your favorite color?
+        answers:
+          description: The list of pre-defined answer choices. Order is preserved unless `randomize_answers` is true.
+          items:
+            maxLength: 500
+            pattern: ^[^\x00-\x1f\x7f-\x9f]*[^\W_][^\x00-\x1f\x7f-\x9f]*$
+            type: string
+          minItems: 2
+          title: Answers
+          type: array
+          example:
+          - Red
+          - Green
+          - Blue
+        notes:
+          default: ''
+          description: Internal notes about the survey. Not shown to subscribers.
+          title: Notes
+          type: string
+          example: ''
+        response_cadence:
+          allOf:
+          - $ref: '#/components/schemas/SurveyResponseCadence'
+          default: once
+          description: How often a given subscriber can respond — e.g. `once` (single response per subscriber) or `unlimited`.
+          example: once
+        is_freeform_response_enabled:
+          default: false
+          description: If true, subscribers can provide a freeform text response in addition to (or instead of) picking from
+            `answers`.
+          title: Is Freeform Response Enabled
+          type: boolean
+          example: false
+        input_type:
+          allOf:
+          - $ref: '#/components/schemas/SurveyInputType'
+          default: radio
+          description: The UI control used to collect responses (e.g. `radio`, `checkbox`).
+          example: radio
+        randomize_answers:
+          default: false
+          description: If true, the order of `answers` is shuffled each time the survey is rendered.
+          title: Randomize Answers
+          type: boolean
+          example: false
+      required:
+      - identifier
+      - question
+      - answers
+      title: SurveyInput
+      type: object
+    SurveyInputType:
+      enum:
+      - radio
+      - checkbox
+      - text
+      title: InputType
+      type: string
+      description: An enumeration.
+    SurveyPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/Survey'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[Survey]
+      type: object
+    SurveyResponseCadence:
+      enum:
+      - once
+      - once_per_email
+      title: ResponseCadence
+      type: string
+      description: An enumeration.
+    SurveyStatus:
+      enum:
+      - active
+      - inactive
+      title: Status
+      type: string
+      description: An enumeration.
+    SurveyUpdateInput:
+      additionalProperties: false
+      properties:
+        notes:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Internal notes about the survey. Not shown to subscribers.
+          title: Notes
+        answers:
+          anyOf:
+          - items:
+              maxLength: 500
+              pattern: ^[^\x00-\x1f\x7f-\x9f]*[^\W_][^\x00-\x1f\x7f-\x9f]*$
+              type: string
+            minItems: 2
+            type: array
+          - type: 'null'
+          description: The list of pre-defined answer choices. Order is preserved unless `randomize_answers` is true.
+          title: Answers
+          example:
+          - Red
+          - Green
+          - Blue
+        response_cadence:
+          anyOf:
+          - $ref: '#/components/schemas/SurveyResponseCadence'
+          - type: 'null'
+          description: How often a given subscriber can respond — e.g. `once` (single response per subscriber) or `unlimited`.
+          example: once
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/SurveyStatus'
+          - type: 'null'
+          description: The lifecycle status of the survey (e.g. `active`, `archived`).
+        is_freeform_response_enabled:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          default: false
+          description: If true, subscribers can provide a freeform text response in addition to (or instead of) picking from
+            `answers`.
+          title: Is Freeform Response Enabled
+        input_type:
+          anyOf:
+          - $ref: '#/components/schemas/SurveyInputType'
+          - type: 'null'
+          description: The UI control used to collect responses (e.g. `radio`, `checkbox`).
+        randomize_answers:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          description: If true, the order of `answers` is shuffled each time the survey is rendered.
+          title: Randomize Answers
+      title: SurveyUpdateInput
+      type: object
+    UpdateSurveyErrorCode:
+      enum:
+      - survey_has_responses
+      title: UpdateSurveyErrorCode
+      type: string
+      description: An enumeration.
+    ValidationErrorDetail:
+      properties:
+        type:
+          description: The type of validation error.
+          title: Type
+          type: string
+        loc:
+          description: The location of the error in the request.
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Loc
+          type: array
+        msg:
+          description: A human-readable error message.
+          title: Msg
+          type: string
+      required:
+      - type
+      - loc
+      - msg
+      title: ValidationErrorDetail
+      type: object
+    ValidationErrorMessage:
+      properties:
+        detail:
+          description: A list of validation errors.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          title: Detail
+          type: array
+      required:
+      - detail
+      title: ValidationErrorMessage
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: API key passed as 'Token <your-api-key>' in the Authorization header.

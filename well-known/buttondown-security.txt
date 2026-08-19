@@ -1,0 +1,5 @@
+Contact: mailto:support@buttondown.com
+Expires: 2027-08-13T17:10:29Z
+Preferred-Languages: en
+Canonical: https://buttondown.com/.well-known/security.txt
+Policy: https://buttondown.com/blog/security

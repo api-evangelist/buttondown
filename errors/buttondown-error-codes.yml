@@ -1,0 +1,163 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/_original/buttondown-openapi.json (components.schemas *ErrorCode enums) + https://docs.buttondown.com/api-error-codes
+description: The machine-parseable error-code registry Buttondown publishes inside its OpenAPI. Each coded 4xx response
+  carries one of these values in the `code` field; `detail` carries the human-readable message and `metadata.documentation_url`
+  (when present) links to the fix. Endpoint-specific codes are also documented per endpoint in the API reference.
+envelope_field: code
+families:
+- name: ArchivePriceErrorCode
+  codes:
+  - default_price
+  count: 1
+- name: AutomationCreationErrorCode
+  codes:
+  - delay_invalid
+  - filter_invalid__tag
+  - filter_invalid
+  - action_invalid
+  - filter_invalid__field
+  - invalid_newsletter_id
+  - trigger_action_invalid
+  - action_invalid__missing_body_or_subject
+  count: 8
+- name: CreateExportErrorCode
+  codes:
+  - collection_empty_invalid
+  - columns_empty_invalid
+  - columns_invalid
+  count: 3
+- name: CreateFormErrorCode
+  codes:
+  - slug_already_exists
+  count: 1
+- name: CreateImportErrorCode
+  codes:
+  - import_failure
+  - invalid_file_type
+  - malformed_csv
+  count: 3
+- name: CreateNewsletterErrorCode
+  codes:
+  - domain_incorrect
+  - domain_path
+  - domain_protocol
+  - email_domain_conflicts_with_hosting_domain
+  - email_domain_contains_at
+  - email_domain_incorrect
+  - email_domain_path
+  - email_domain_protocol
+  - email_domain_used_by_other_account
+  - invalid_metadata
+  - username_already_exists
+  - username_malformed
+  - username_reserved
+  - username_too_short
+  count: 14
+- name: CreatePriceErrorCode
+  codes:
+  - invalid_amount
+  - maximum_amount_too_high
+  - minimum_amount_not_less_than_maximum
+  - paid_subscriptions_uninitialized
+  - product_deleted
+  - suggested_amount_out_of_range
+  count: 6
+- name: CreateSurveyErrorCode
+  codes:
+  - identifier_already_exists
+  count: 1
+- name: CreateSurveyResponseErrorCode
+  codes:
+  - invalid_input
+  count: 1
+- name: EmailCreationErrorCode
+  codes:
+  - body_contains_frontmatter
+  - email_duplicate
+  - email_not_confirmed
+  - body_invalid
+  - canonical_url_invalid
+  - email_invalid
+  - slug_invalid
+  - subject_invalid
+  - pay_per_email_billing_locked
+  - publish_date_invalid
+  - publish_date_missing
+  - sending_requires_confirmation
+  - status_invalid
+  - tag_invalid
+  count: 14
+- name: EmailListErrorCode
+  codes:
+  - creation_date_invalid
+  - publish_date_invalid
+  count: 2
+- name: ListPricesErrorCode
+  codes:
+  - paid_subscriptions_uninitialized
+  count: 1
+- name: ListSubscribersErrorCode
+  codes:
+  - invalid_tag
+  - date_invalid
+  - invalid_ordering
+  count: 3
+- name: SegmentErrorCode
+  codes:
+  - name_already_exists
+  count: 1
+- name: SubscriberInputValidationErrorCode
+  codes:
+  - currency_mismatch
+  - email_already_exists
+  - email_blocked
+  - email_empty
+  - email_invalid
+  - invalid_input
+  - ip_address_spammy
+  - metadata_invalid
+  - newsletter_not_accepting_subscribers
+  - payment_failed
+  - promo_code_invalid
+  - rate_limited
+  - subscriber_already_exists
+  - subscriber_blocked
+  - subscriber_id_invalid
+  - subscriber_suppressed
+  - tag_invalid
+  count: 17
+- name: TagErrorCode
+  codes:
+  - feature_disabled
+  - name_already_exists
+  - name_blank
+  - name_invalid
+  - name_too_long
+  count: 5
+- name: UpdateAutomationAttemptErrorCode
+  codes:
+  - automation_attempt_not_found
+  - invalid_status
+  count: 2
+- name: UpdateSubscriberErrorCode
+  codes:
+  - email_already_exists
+  - email_invalid
+  - email_has_been_changed_too_many_times
+  - firewall_blocked
+  - metadata_invalid
+  - subscriber_type_invalid
+  - tag_invalid
+  count: 7
+- name: UpdateSurveyErrorCode
+  codes:
+  - survey_has_responses
+  count: 1
+validation_error_types:
+- extra_forbidden
+- missing
+- string_too_long
+- string_pattern_mismatch
+code_count: 91
+unique_code_count: 81

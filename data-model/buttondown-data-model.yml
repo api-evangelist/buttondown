@@ -1,0 +1,329 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/_original/buttondown-openapi.json (components.schemas $ref links + *_id reference fields)
+description: 'The Buttondown entity graph, derived from its OpenAPI. Newsletter is the tenant root: every other
+  resource belongs to exactly one newsletter, addressed either by the API key or by the Buttondown-Context header.
+  Identifiers are TypeIDs (prefixed, type-tagged strings); several endpoints accept a natural key instead — /subscribers/{id_or_email}
+  takes an ID or an email address.'
+id_scheme:
+  name: TypeID
+  example: ext_evt_00000000000000000000000000
+  note: Buttondown migrated to TypeIDs without breaking clients; older prefixes (em_evt_) persist in historical
+    data.
+tenant_root: Newsletter
+entity_count: 30
+entities:
+- name: Account
+  description: null
+  operations:
+  - get_account
+- name: AdvertisingSlot
+  description: null
+  operations:
+  - list_advertising_slots
+  - update_advertising_slot
+- name: AdvertisingUnit
+  description: null
+  operations:
+  - create_advertising_unit
+  - list_advertising_units
+  - update_advertising_unit
+- name: Attachment
+  description: Attachments are files that can be included with your emails. Buttondown allows
+  operations:
+  - create_attachment
+  - list_attachments
+  - retrieve_attachment
+- name: Automation
+  description: A rule that automatically performs actions in response to events.
+  operations:
+  - create_automation
+  - list_automations
+  - retrieve_automation
+  - update_automation
+- name: AutomationForSubscriber
+  description: null
+  operations:
+  - get_automations
+  - update_automation_attempt
+- name: Book
+  description: null
+  operations:
+  - create_book
+  - list_books
+  - retrieve_book
+  - update_book
+- name: BulkAction
+  description: A bulk action represents, well, a bulk action. It is used to perform
+  operations:
+  - create_bulk_action
+  - retrieve_bulk_action
+- name: Comment
+  description: Comments are a way for subscribers to interact with newsletters. They're a way to
+  operations:
+  - create_comment
+  - list_comments
+  - retrieve_comment
+  - update_comment
+- name: Email
+  description: Emails are why you're here on Buttondown, right?
+  operations:
+  - create_email
+  - list_emails
+  - publish_email
+  - retrieve_email
+  - update_email
+- name: EmailEvent
+  description: null
+  operations:
+  - get_event
+  - list_events
+- name: Export
+  description: Some software applications may want programmatic access to their newsletter exports.
+  operations:
+  - create_export
+  - list_exports
+  - retrieve_export
+- name: ExternalFeed
+  description: An automation is a one-to-one mapping between an external RSS feed and an action
+  operations:
+  - create_external_feed
+  - list_external_feed
+  - retrieve_external_feed
+  - update_external_feed
+- name: ExternalFeedItem
+  description: An external feed item is a single item in an external RSS feed. It is created
+  operations:
+  - retrieve_items
+- name: Form
+  description: null
+  operations:
+  - create_form
+  - list_forms
+  - retrieve_form
+  - update_form
+- name: Image
+  description: Images are, well, images! Buttondown allows you to upload images to its secure
+  operations:
+  - create_image
+  - list_images
+  - update_image
+- name: Import
+  description: Imports let you bring data into Buttondown in bulk by uploading a file.
+  operations:
+  - create_import
+  - list_imports
+  - retrieve_import
+  - update_import
+- name: Newsletter
+  description: You will likely not need to interact with your newsletter settings
+  operations:
+  - create_newsletter
+  - list_newsletters
+  - retrieve_newsletter
+  - update_newsletter
+- name: Note
+  description: null
+  operations:
+  - create_note_endpoint
+  - list_notes
+- name: Price
+  description: null
+  operations:
+  - create_price
+  - list_prices
+- name: Response
+  description: null
+  operations:
+  - create_survey_response
+  - retrieve_survey_responses
+  - update_survey_response
+- name: Segment
+  description: A saved, reusable audience — a named set of subscriber filters that can
+  operations:
+  - create_segment
+  - list_segments
+  - retrieve_segment
+  - update_segment
+- name: Snippet
+  description: null
+  operations:
+  - create_snippet
+  - list_snippets
+  - retrieve_snippet
+  - update_snippet
+- name: StripeSubscription
+  description: null
+  operations:
+  - get_stripe_subscriptions
+- name: Subscriber
+  description: Subscribers are the main way you collect email addresses and
+  operations:
+  - create_subscriber
+  - get_referrals
+  - list_subscribers
+  - retrieve_subscriber
+  - update_subscriber
+- name: Survey
+  description: Surveys let you ask your subscribers a question—and personalize future
+  operations:
+  - create_survey
+  - list_surveys
+  - retrieve_survey
+  - update_survey
+- name: Tag
+  description: Tags are a way to organize your subscribers. You can create, update, and
+  operations:
+  - create_tag
+  - list_tags
+  - retrieve_tag
+  - update_tag
+- name: User
+  description: null
+  operations:
+  - create_user
+  - list_users
+  - retrieve_user
+  - update_user
+- name: Webhook
+  description: Webhooks are used to notify external services of events that occur in the
+  operations:
+  - create_webhook
+  - list_webhooks
+  - retrieve_webhook
+  - update_webhook
+- name: WebhookAttemptOutput
+  description: null
+  operations:
+  - retrieve_webhook_attempts
+relationships:
+- from: AdvertisingUnit
+  to: AdvertisingSlot
+  type: has_many
+  via: slots
+  kind: embedded
+- from: AutomationForSubscriber
+  to: Automation
+  type: belongs_to
+  via: automation_id
+  kind: id-reference
+- from: Comment
+  to: Email
+  type: belongs_to
+  via: email_id
+  kind: id-reference
+- from: Comment
+  to: Subscriber
+  type: belongs_to
+  via: subscriber_id
+  kind: id-reference
+- from: Comment
+  to: Subscriber
+  type: has_one
+  via: subscriber
+  kind: embedded
+- from: Comment
+  to: Email
+  type: has_one
+  via: email
+  kind: embedded
+- from: EmailEvent
+  to: Subscriber
+  type: belongs_to
+  via: subscriber_id
+  kind: id-reference
+- from: EmailEvent
+  to: Email
+  type: belongs_to
+  via: email_id
+  kind: id-reference
+- from: EmailEvent
+  to: Automation
+  type: belongs_to
+  via: automation_id
+  kind: id-reference
+- from: EmailEvent
+  to: Subscriber
+  type: has_one
+  via: subscriber
+  kind: embedded
+- from: EmailEvent
+  to: Email
+  type: has_one
+  via: email
+  kind: embedded
+- from: EmailEvent
+  to: Automation
+  type: has_one
+  via: automation
+  kind: embedded
+- from: ExternalFeedItem
+  to: Email
+  type: belongs_to
+  via: email_id
+  kind: id-reference
+- from: ExternalFeedItem
+  to: Email
+  type: has_one
+  via: email
+  kind: embedded
+- from: Note
+  to: User
+  type: belongs_to
+  via: user_id
+  kind: id-reference
+- from: Note
+  to: User
+  type: has_one
+  via: user
+  kind: embedded
+- from: Price
+  to: Product
+  type: belongs_to
+  via: product_id
+  kind: id-reference
+- from: Response
+  to: Survey
+  type: belongs_to
+  via: survey_id
+  kind: id-reference
+- from: Response
+  to: Subscriber
+  type: belongs_to
+  via: subscriber_id
+  kind: id-reference
+- from: Response
+  to: Email
+  type: belongs_to
+  via: email_id
+  kind: id-reference
+- from: Response
+  to: Automation
+  type: belongs_to
+  via: automation_id
+  kind: id-reference
+- from: Response
+  to: Subscriber
+  type: has_one
+  via: subscriber
+  kind: embedded
+- from: Response
+  to: Survey
+  type: has_one
+  via: survey
+  kind: embedded
+- from: Response
+  to: Email
+  type: has_one
+  via: email
+  kind: embedded
+- from: Response
+  to: Automation
+  type: has_one
+  via: automation
+  kind: embedded
+- from: Subscriber
+  to: Form
+  type: belongs_to
+  via: form_id
+  kind: id-reference

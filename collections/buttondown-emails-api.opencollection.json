@@ -1,0 +1,479 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Buttondown Emails API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Emails",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Emails",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/emails",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return [emails](https://docs.buttondown.com/api-emails-introduction) with the given status."
+              },
+              {
+                "name": "-status",
+                "value": "draft",
+                "type": "query",
+                "description": "If provided, only return [emails](https://docs.buttondown.com/api-emails-introduction) without the given status."
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return emails with the given IDs."
+              },
+              {
+                "name": "ordering",
+                "value": "-publish_date",
+                "type": "query",
+                "description": "The ordering to apply to the results."
+              },
+              {
+                "name": "creation_date__start",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return emails created after the given date."
+              },
+              {
+                "name": "creation_date__end",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return emails created before the given date."
+              },
+              {
+                "name": "publish_date__start",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return emails published after the given date."
+              },
+              {
+                "name": "publish_date__end",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return emails published before the given date."
+              },
+              {
+                "name": "excluded_fields",
+                "value": "body",
+                "type": "query",
+                "description": "If provided, exclude the given field(s) from the response. This can improve performance for large responses."
+              },
+              {
+                "name": "source",
+                "value": "api",
+                "type": "query",
+                "description": "If provided, only return emails from the given source(s)."
+              },
+              {
+                "name": "archival_mode",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return emails with the given archival mode."
+              },
+              {
+                "name": "email_type",
+                "value": "",
+                "type": "query",
+                "description": "The type of emails to return. Defaults to all types."
+              },
+              {
+                "name": "subject",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return emails with a subject that contains the given string."
+              },
+              {
+                "name": "attachments",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return emails with the given attachments."
+              },
+              {
+                "name": "snippet_id",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return emails that reference the given [snippets](https://docs.buttondown.com/api-snippets-introduction)."
+              },
+              {
+                "name": "deliveries__start",
+                "value": "100",
+                "type": "query",
+                "description": "If provided, only return emails with at least this many deliveries."
+              },
+              {
+                "name": "deliveries__end",
+                "value": "1000",
+                "type": "query",
+                "description": "If provided, only return emails with at most this many deliveries."
+              },
+              {
+                "name": "click_rate__start",
+                "value": "0.1",
+                "type": "query",
+                "description": "If provided, only return emails with a click rate greater than or equal to the given value."
+              },
+              {
+                "name": "click_rate__end",
+                "value": "0.5",
+                "type": "query",
+                "description": "If provided, only return emails with a click rate less than or equal to the given value."
+              },
+              {
+                "name": "open_rate__start",
+                "value": "0.2",
+                "type": "query",
+                "description": "If provided, only return emails with an open rate greater than or equal to the given value."
+              },
+              {
+                "name": "open_rate__end",
+                "value": "0.8",
+                "type": "query",
+                "description": "If provided, only return emails with an open rate less than or equal to the given value."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number of the paginated response."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List all emails"
+        },
+        {
+          "info": {
+            "name": "Create Email",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/emails",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a new email"
+        },
+        {
+          "info": {
+            "name": "Retrieve Email",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/emails/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve a specific email by its ID"
+        },
+        {
+          "info": {
+            "name": "Update Email",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.buttondown.com/v1/emails/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update an email's properties"
+        },
+        {
+          "info": {
+            "name": "Delete Email",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.buttondown.com/v1/emails/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete an email"
+        },
+        {
+          "info": {
+            "name": "Retrieve Email History",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/emails/:id/history",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "If provided, expand the given field."
+              },
+              {
+                "name": "field",
+                "value": "",
+                "type": "query",
+                "description": "The field to retrieve history for."
+              },
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "The page number of the paginated response."
+              },
+              {
+                "name": "ordering",
+                "value": "",
+                "type": "query",
+                "description": "The ordering to apply to the results."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return history entries matching the given query."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of results per page."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve the edit history for a specific email"
+        },
+        {
+          "info": {
+            "name": "Retrieve Email History By Id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/emails/:id/history/body/:history_id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "history_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "If provided, expand the given field."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve a specific historical version of an email's body"
+        },
+        {
+          "info": {
+            "name": "Retrieve Email Analytics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/emails/:id/analytics",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve analytics for a specific email"
+        },
+        {
+          "info": {
+            "name": "Retrieve Email Renders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/emails/:id/renders",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "target",
+                "value": "",
+                "type": "query",
+                "description": "The target format for the rendered HTML. Use 'email' for rendered_html_for_email or 'html' for rendered_html_for_web."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve rendered HTML for a specific email"
+        },
+        {
+          "info": {
+            "name": "Send Draft",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/emails/:id/send-draft",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Send a draft email to specific recipients"
+        },
+        {
+          "info": {
+            "name": "Publish Email",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/emails/:id/publish",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Publish an email"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

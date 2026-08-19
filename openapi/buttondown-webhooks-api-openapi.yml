@@ -1,73 +1,1085 @@
 openapi: 3.1.0
 info:
-  title: Buttondown Emails Webhooks API
-  version: '1.0'
-  description: Minimal OpenAPI 3.1 description of the Buttondown newsletter platform API. Covers core RESTful resources for subscribers, emails, tags, newsletters, and webhooks. Derived from the public Buttondown documentation.
-  x-generated-from: https://docs.buttondown.com/api
-  x-generated-by: claude-crawl-2026-05-08
+  title: Buttondown Webhooks API
+  version: 1.0.0
+  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction)
+    for guides and examples.
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
 servers:
-- url: https://api.buttondown.email/v1
-  description: Production
+- url: https://api.buttondown.com/v1
 security:
-- apiKeyAuth: []
+- ApiKeyAuth: []
 tags:
 - name: Webhooks
 paths:
   /webhooks:
-    get:
-      tags:
-      - Webhooks
-      summary: List all webhooks
-      operationId: listWebhooks
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginatedList'
     post:
-      tags:
-      - Webhooks
-      summary: Create a webhook
-      operationId: createWebhook
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Resource'
+      operationId: create_webhook
+      summary: Create Webhook
+      parameters: []
       responses:
         '201':
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Resource'
+                $ref: '#/components/schemas/Webhook'
+              examples:
+                create_webhook:
+                  summary: Create a webhook
+                  value:
+                    id: '{{ id }}'
+                    creation_date: '2020-01-01T00:00:00Z'
+                    status: enabled
+                    event_types:
+                    - email.created
+                    url: https://my.api/webhook
+                    description: Notify Slack when an email is created.
+                    signing_key: ''
+                create_webhook_minimal:
+                  summary: Create a webhook with only the required fields
+                  value:
+                    id: '{{ id }}'
+                    creation_date: '2020-01-01T00:00:00Z'
+                    status: enabled
+                    event_types:
+                    - subscriber.created
+                    url: https://my.api/minimal
+                    description: ''
+                    signing_key: ''
+          links:
+            retrieve_webhook:
+              operationId: retrieve_webhook
+              parameters:
+                path.id: $response.body#/id
+            update_webhook:
+              operationId: update_webhook
+              parameters:
+                path.id: $response.body#/id
+            delete_webhook:
+              operationId: delete_webhook
+              parameters:
+                path.id: $response.body#/id
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Create a new webhook
+      tags:
+      - Webhooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookInput'
+            examples:
+              create_webhook:
+                summary: Create a webhook
+                value:
+                  url: https://my.api/webhook
+                  event_types:
+                  - email.created
+                  description: Notify Slack when an email is created.
+              create_webhook_minimal:
+                summary: Create a webhook with only the required fields
+                value:
+                  url: https://my.api/minimal
+                  event_types:
+                  - subscriber.created
+        required: true
+      security:
+      - ApiKeyAuth: []
+    get:
+      operationId: list_webhooks
+      summary: List Webhooks
+      parameters:
+      - in: query
+        name: status
+        schema:
+          description: If provided, only return webhooks with the given status.
+          $ref: '#/components/schemas/WebhookStatus'
+        required: false
+        description: If provided, only return webhooks with the given status.
+      - in: query
+        name: page
+        required: false
+        description: The page number of the paginated response.
+        schema:
+          type: integer
+          title: Page
+          description: The page number of the paginated response.
+          default: 1
+          example: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookPage'
+              examples:
+                list_webhooks:
+                  summary: List webhooks
+                  value:
+                    results:
+                    - id: '{{ id }}'
+                      creation_date: '2020-01-01T00:00:00Z'
+                      status: enabled
+                      event_types:
+                      - email.created
+                      url: https://my.api/webhook
+                      description: Notify Slack when an email is created.
+                      signing_key: ''
+                    next: null
+                    previous: null
+                    count: 1
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: List all webhooks
+      tags:
+      - Webhooks
+      security:
+      - ApiKeyAuth: []
+  /webhooks/{id}:
+    get:
+      operationId: retrieve_webhook
+      summary: Retrieve Webhook
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+              examples:
+                retrieve_webhook:
+                  summary: Retrieve a webhook
+                  value:
+                    id: '{{ id }}'
+                    creation_date: '2020-01-01T00:00:00Z'
+                    status: enabled
+                    event_types:
+                    - email.created
+                    url: https://my.api/webhook
+                    description: Notify Slack when an email is created.
+                    signing_key: ''
+          links:
+            update_webhook:
+              operationId: update_webhook
+              parameters:
+                path.id: $response.body#/id
+            delete_webhook:
+              operationId: delete_webhook
+              parameters:
+                path.id: $response.body#/id
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Retrieve a specific webhook by its ID
+      tags:
+      - Webhooks
+      security:
+      - ApiKeyAuth: []
+    patch:
+      operationId: update_webhook
+      summary: Update Webhook
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+          links:
+            retrieve_webhook:
+              operationId: retrieve_webhook
+              parameters:
+                path.id: $response.body#/id
+            delete_webhook:
+              operationId: delete_webhook
+              parameters:
+                path.id: $response.body#/id
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Update a webhook's properties
+      tags:
+      - Webhooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookInput'
+        required: true
+      security:
+      - ApiKeyAuth: []
+    delete:
+      operationId: delete_webhook
+      summary: Delete Webhook
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      responses:
+        '204':
+          description: No Content
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Delete a webhook
+      tags:
+      - Webhooks
+      security:
+      - ApiKeyAuth: []
+  /webhooks/{id}/attempts:
+    get:
+      operationId: retrieve_webhook_attempts
+      summary: Retrieve Webhook Attempts
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      - in: query
+        name: status
+        schema:
+          description: If provided, only return webhook attempts with the given status.
+          $ref: '#/components/schemas/WebhookAttemptStatus'
+        required: false
+        description: If provided, only return webhook attempts with the given status.
+      - in: query
+        name: page
+        required: false
+        description: The page number of the paginated response.
+        schema:
+          type: integer
+          title: Page
+          description: The page number of the paginated response.
+          default: 1
+          example: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookAttemptOutputPage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Retrieve webhook attempts for a specific webhook
+      tags:
+      - Webhooks
+      security:
+      - ApiKeyAuth: []
+  /webhooks/{id}/test:
+    post:
+      operationId: test_webhook
+      summary: Test Webhook
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      - in: query
+        name: event_type
+        schema:
+          description: The event type to send. Defaults to the webhook's first configured event type.
+          $ref: '#/components/schemas/ExternalEventType'
+        required: false
+        description: The event type to send. Defaults to the webhook's first configured event type.
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Send a test event to a webhook
+      tags:
+      - Webhooks
+      security:
+      - ApiKeyAuth: []
+webhooks:
+  event:
+    post:
+      operationId: webhook_event
+      security: []
+      summary: Event notification
+      description: 'When an event you''ve subscribed to occurs, Buttondown sends an HTTP `POST` to your configured webhook
+        URL. If the webhook has a signing key, the request carries an `X-Buttondown-Signature: sha256=<hmac>` header — an
+        HMAC-SHA256 of the raw request body keyed with your signing key. Respond with any 2xx status to acknowledge receipt;
+        five consecutive non-2xx responses disable the webhook.'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookEvent'
+      responses:
+        2XX:
+          description: Return any 2xx status to acknowledge the event.
 components:
   schemas:
-    PaginatedList:
-      type: object
+    ErrorMessage:
       properties:
-        count:
-          type: integer
-        next:
+        code:
+          description: The error code.
+          title: Code
           type: string
-          nullable: true
-        previous:
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
           type: string
-          nullable: true
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Resource'
-      additionalProperties: true
-    Resource:
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
+            how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage
       type: object
-      additionalProperties: true
+    ExternalEventType:
+      description: 'Various types of events that are recorded by Buttondown, both in terms of exogenous systems
+
+        like Stripe and Memberful, and endogenous ones like email opens and clicks. (In general, if anything
+
+        important ever happens that could be relevant to your newsletter, we have an event type for it!)
+
+
+        These event types power lots of things within Buttondown. They''re used to trigger automations, webhooks,
+
+        and analytics.
+
+
+        (Note that the `/v1/events` API speaks an older, shorter vocabulary for subscriber engagement —
+
+        `clicked` rather than `subscriber.clicked` — a relic of a previous events system. Each of those
+
+        names maps onto one of the `subscriber.*` types below.)
+
+
+        In general, our event namespacing tries to hew to the following pattern:
+
+
+        `<source>.<object>.<action>`
+
+
+        When wondering which object we are referring to, default to the _more granular_ object.
+
+
+        For instance, an email being sent to a subscriber is `subscriber.delivered`, not `email.sent`.'
+      enum:
+      - advertising_slot.inquiry
+      - advertising_slot.purchased
+      - automation.invoked
+      - date.day.started
+      - date.month.started
+      - date.week.started
+      - date.year.started
+      - bigcommerce.customer.created
+      - bigcommerce.customer.updated
+      - bigcommerce.order.created
+      - bigcommerce.order.updated
+      - email.created
+      - email.deleted
+      - email.send.started
+      - email.sent
+      - email.status.changed
+      - email.updated
+      - external_feed_item.created
+      - export.completed
+      - export.created
+      - export.failed
+      - firewall.blocked
+      - mention.created
+      - memberful.member.updated
+      - memberful.subscription.created
+      - memberful.subscription.deleted
+      - note.created
+      - note.deleted
+      - patreon.member.updated
+      - patreon.membership.created
+      - patreon.membership.deleted
+      - shopify.customer.created
+      - shopify.customer.updated
+      - social_mention.created
+      - stripe.checkout.session.completed
+      - stripe.customer.updated
+      - stripe.invoice.upcoming
+      - stripe.subscription.activated
+      - stripe.subscription.churning
+      - stripe.subscription.deactivated
+      - subscriber.activation_bounced
+      - subscriber.activation_clicked
+      - subscriber.activation_complained
+      - subscriber.activation_deferred
+      - subscriber.activation_delivered
+      - subscriber.activation_opened
+      - subscriber.activation_rejected
+      - subscriber.bounced
+      - subscriber.changed_email
+      - subscriber.churned
+      - subscriber.clicked
+      - subscriber.commented
+      - subscriber.complained
+      - subscriber.confirmed
+      - subscriber.created
+      - subscriber.deferred
+      - subscriber.deleted
+      - subscriber.delivered
+      - subscriber.opened
+      - subscriber.paid
+      - subscriber.paused
+      - subscriber.resumed
+      - subscriber.referred
+      - subscriber.referred.paid
+      - subscriber.rejected
+      - subscriber.replied
+      - subscriber.sent
+      - subscriber.responded_to_survey
+      - subscriber.tags.changed
+      - subscriber.trial_ended
+      - subscriber.trial_started
+      - subscriber.type.changed
+      - subscriber.unsubscribed
+      - subscriber.updated
+      - subscriber.viewed_checkout_page
+      - survey.cleared_responses
+      - survey.created
+      - survey.deleted
+      - survey.updated
+      - form.created
+      - form.deleted
+      - form.updated
+      title: Type
+      type: string
+    ValidationErrorDetail:
+      properties:
+        type:
+          description: The type of validation error.
+          title: Type
+          type: string
+        loc:
+          description: The location of the error in the request.
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Loc
+          type: array
+        msg:
+          description: A human-readable error message.
+          title: Msg
+          type: string
+      required:
+      - type
+      - loc
+      - msg
+      title: ValidationErrorDetail
+      type: object
+    ValidationErrorMessage:
+      properties:
+        detail:
+          description: A list of validation errors.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          title: Detail
+          type: array
+      required:
+      - detail
+      title: ValidationErrorMessage
+      type: object
+    Webhook:
+      description: 'Webhooks are used to notify external services of events that occur in the
+
+        system. For example, when a newsletter is sent, a webhook can be used to
+
+        notify an external service that the newsletter has been sent.'
+      properties:
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        status:
+          $ref: '#/components/schemas/WebhookStatus'
+          description: Whether the webhook is enabled or not.
+        event_types:
+          description: The types of event for which the webhook will be triggered.
+          items:
+            $ref: '#/components/schemas/ExternalEventType'
+          title: Event Types
+          type: array
+        url:
+          description: The URL to which the webhook will send POST requests.
+          title: Url
+          type: string
+        description:
+          default: ''
+          description: An optional description of the webhook, for reference.
+          title: Description
+          type: string
+        signing_key:
+          default: ''
+          description: Optional HMAC signing key for webhook verification. When set, webhook requests will include an X-Buttondown-Signature
+            header with sha256=<signature>.
+          title: Signing Key
+          type: string
+      required:
+      - id
+      - creation_date
+      - status
+      - event_types
+      - url
+      title: Webhook
+      type: object
+    WebhookAttemptOutput:
+      properties:
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        status:
+          description: The status of the webhook attempt.
+          example:
+          - successful
+          title: Status
+          type: string
+        event_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The type of the event that triggered the attempt.
+          example:
+          - subscriber.created
+          title: Event Type
+        error_message:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The failure reason, if the attempt failed. Includes the response status code and a snippet of the response
+            body when the endpoint returned a non-2xx response.
+          example:
+          - 'WebhookFailedError: Webhook returned 401: invalid signature'
+          title: Error Message
+        attempt_count:
+          default: 0
+          description: The number of times this attempt has been retried.
+          example:
+          - 1
+          title: Attempt Count
+          type: integer
+        completion_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: When the attempt finished, if it has.
+          example:
+          - '2026-04-27T05:25:19.819Z'
+          title: Completion Date
+        duration_ms:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: How long the HTTP request took, in milliseconds.
+          example:
+          - 412
+          title: Duration Ms
+      required:
+      - id
+      - creation_date
+      - status
+      title: WebhookAttemptOutput
+      type: object
+    WebhookAttemptOutputPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/WebhookAttemptOutput'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[WebhookAttemptOutput]
+      type: object
+    WebhookAttemptStatus:
+      enum:
+      - unattempted
+      - successful
+      - failed
+      title: WebhookAttemptStatus
+      type: string
+      description: An enumeration.
+    WebhookEvent:
+      type: object
+      title: WebhookEvent
+      description: The payload Buttondown delivers to a configured webhook URL when a subscribed event fires.
+      properties:
+        id:
+          type: string
+          title: Id
+          description: The unique TypeID of the event that triggered this delivery.
+          example: ext_evt_00000000000000000000000000
+        event_type:
+          allOf:
+          - $ref: '#/components/schemas/ExternalEventType'
+          description: The type of event that triggered this delivery.
+        data:
+          type: object
+          title: Data
+          additionalProperties: true
+          description: Event-specific metadata. The shape varies by `event_type`. Accounts with more than one newsletter also
+            receive a `newsletter` ID to disambiguate which one the event belongs to.
+      required:
+      - id
+      - event_type
+      - data
+    WebhookInput:
+      additionalProperties: false
+      properties:
+        status:
+          allOf:
+          - $ref: '#/components/schemas/WebhookStatus'
+          default: enabled
+          description: Whether the webhook is enabled or not.
+          example:
+          - enabled
+        event_types:
+          description: The types of event for which the webhook will be triggered.
+          example:
+          - - email.created
+            - email.sent
+          items:
+            $ref: '#/components/schemas/ExternalEventType'
+          title: Event Types
+          type: array
+        url:
+          description: The URL to which the webhook will send POST requests.
+          example:
+          - https://my.api/webhook
+          format: uri
+          maxLength: 2000
+          minLength: 1
+          title: Url
+          type: string
+        description:
+          default: ''
+          description: An optional description of the webhook, for reference.
+          example:
+          - Trigger when an email is created to notify in Slack.
+          title: Description
+          type: string
+        signing_key:
+          default: ''
+          description: Optional HMAC signing key for webhook verification. When set, webhook requests will include an X-Buttondown-Signature
+            header with sha256=<signature>.
+          example:
+          - ''
+          maxLength: 255
+          title: Signing Key
+          type: string
+      required:
+      - event_types
+      - url
+      title: WebhookInput
+      type: object
+    WebhookPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/Webhook'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[Webhook]
+      type: object
+    WebhookStatus:
+      description: The status of a webhook.
+      enum:
+      - enabled
+      - disabled
+      title: WebhookStatus
+      type: string
   securitySchemes:
-    apiKeyAuth:
+    ApiKeyAuth:
       type: apiKey
       in: header
       name: Authorization
-      description: API token in the form `Token <api-key>`.
+      description: API key passed as 'Token <your-api-key>' in the Authorization header.

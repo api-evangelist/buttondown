@@ -1,0 +1,117 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.buttondown.com/api-changelog (entries read verbatim from https://github.com/buttondown/docs content/pages/api-changelog-*.mdoc)
+description: >-
+  Buttondown maintains a dated, per-change API changelog with 63 entries running from 2020-12-09 to
+  2026-08-08. Entries are narrative and specific: each names the affected endpoints, states whether
+  the change is additive or backwards-incompatible, and links to the reference pages that changed.
+  Recent window captured below; the live changelog is the source of truth.
+scheme: date
+current_version: '2026-04-01'
+url: https://docs.buttondown.com/api-changelog
+rss: https://buttondown.com/rss/changelog.xml
+product_changelog: https://buttondown.com/changelog
+entry_count: 63
+earliest: '2020-12-09'
+latest: '2026-08-08'
+entries:
+  - date: '2026-08-08'
+    breaking: false
+    title: Segments added to the API
+    highlights:
+      - Five new endpoints — list, create, retrieve, update and delete segments.
+      - >-
+        A segment is a named, reusable set of tag and metadata filters that can be applied as an
+        email's audience.
+      - >-
+        Audience is a snapshot: applying a segment copies its filters onto the email, so editing or
+        deleting the segment never changes already-sent or scheduled emails.
+    operations: [list_segments, create_segment, retrieve_segment, update_segment, delete_segment]
+  - date: '2026-08-06'
+    breaking: true
+    title: Clearer collision behavior when recreating subscribers
+    highlights:
+      - >-
+        POST /v1/subscribers with X-Buttondown-Collision-Behavior:overwrite no longer returns 201
+        while silently leaving an unsubscribed subscriber unchanged.
+      - >-
+        Overwrite cannot change terminal types (unsubscribed, blocked, complained, undeliverable);
+        those now return 400 with subscriber_suppressed.
+    operations: [create_subscriber]
+  - date: '2026-07-24'
+    breaking: true
+    title: Tag creation gated on the tags feature; custom domain verification exposed
+    highlights:
+      - >-
+        Implicitly creating a tag through the subscriber endpoints now returns 403 feature_disabled
+        on plans without tags; previously the tag was created silently.
+      - >-
+        Two new read-only endpoints return custom sending- and hosting-domain DNS records and their
+        verification state.
+      - The newsletter object gained sending_domain_status and hosting_domain_status.
+    operations: [create_subscriber, update_subscriber, retrieve_sending_domain, retrieve_hosting_domain]
+  - date: '2026-06-30'
+    breaking: false
+    title: New publish endpoint for emails
+    highlights:
+      - >-
+        POST /v1/emails/{id}/publish publishes immediately with an empty payload, or schedules when
+        given a publish_date, replacing manual status/publish_date PATCHes.
+      - Accepts the same payload as PATCH /v1/emails/{id}; existing endpoints are unaffected.
+    operations: [publish_email]
+  - date: '2026-06-23'
+    breaking: true
+    title: Events API moved onto the unified event store
+    highlights:
+      - >-
+        Deliberately backwards-incompatible and shipped WITHOUT a new API version — Buttondown chose
+        a single source of truth over compatibility.
+      - Event IDs now use the ext_evt_ prefix (previously em_evt_); older IDs are no longer retrievable.
+      - >-
+        The event_type filter narrowed to bounced, clicked, complained, delivered, opened, rejected,
+        replied and unsubscribed; internal-only types now 422.
+      - Event metadata normalized to code, url, ip_address, os, browser (plus from/subject/html/text on replied).
+    operations: [list_events, get_event]
+  - date: '2026-06-05'
+    breaking: false
+    title: Errors now tell you how to fix them; stricter validation on writes
+    highlights:
+      - Many 4xx responses gained metadata.documentation_url and a detail naming the remedy.
+      - Duplicate-subscriber and duplicate-tag errors now return the existing resource ID in metadata.
+      - >-
+        Automations, survey responses and notes tightened validation — unexpected fields, malformed
+        identifiers and oversized values now return 422 instead of being coerced.
+    operations: [create_subscriber, create_tag, create_automation, update_automation, create_survey_response, create_note_endpoint]
+  - date: '2026-05-04'
+    breaking: true
+    title: Symmetric filters on survey responses
+    highlights:
+      - All three filters on GET /v1/survey_responses now accept multiple IDs.
+      - "survey renamed to survey_id; requests using survey=... must be updated."
+    operations: [retrieve_survey_responses]
+  - date: '2026-04-22'
+    breaking: false
+    title: response_data retained only for idempotent requests
+    highlights:
+      - >-
+        API request detail records keep response_data only when the original request carried an
+        X-Idempotency-Key; otherwise the field is null.
+    operations: [retrieve_api_request]
+  - date: '2026-02-26'
+    breaking: true
+    title: Per-action timing on automations
+    highlights:
+      - >-
+        Timing moved from a top-level automation field into each action as a step, enabling
+        multi-step sequences in one automation.
+      - Landed with API version 2026-04-01.
+    operations: [create_automation, update_automation]
+  - date: '2026-02-16'
+    breaking: true
+    title: Email bodies starting with YAML frontmatter are rejected
+    highlights:
+      - >-
+        POST /v1/emails and PATCH /v1/emails/{id} return 400 body_contains_frontmatter for bodies
+        beginning with a --- delimiter.
+      - The X-Buttondown-Live-Dangerously header bypasses the check.
+    operations: [create_email, update_email]

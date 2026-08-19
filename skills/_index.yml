@@ -1,0 +1,28 @@
+generated: '2026-08-13'
+method: generated
+source: >-
+  openapi/_original/buttondown-openapi.json (all operationIds verified against the split specs in
+  openapi/) + conventions/buttondown-conventions.yml + errors/buttondown-error-codes.yml
+description: >-
+  Packaged Agent Skills for the Buttondown API — one per marquee flow. Every step is grounded in a
+  real operationId present in the harvested OpenAPI, and each skill carries the conventions an agent
+  gets wrong first: idempotency keys, collision behavior, the 100/day subscriber cap, the 5-failure
+  webhook disable rule, and the vendor error envelope.
+skills:
+  - file: buttondown-subscribe-and-tag.md
+    name: Subscribe someone and tag them
+    api: openapi/buttondown-subscribers-api-openapi.yml
+    operations: [create_subscriber, retrieve_subscriber, update_subscriber, list_tags, create_tag]
+  - file: buttondown-draft-and-publish-email.md
+    name: Draft, target and publish an email
+    api: openapi/buttondown-emails-api-openapi.yml
+    operations: [create_email, update_email, retrieve_email, send_draft, publish_email, retrieve_email_analytics, list_segments]
+  - file: buttondown-bulk-import-subscribers.md
+    name: Bulk-load subscribers via imports
+    api: openapi/buttondown-imports-api-openapi.yml
+    operations: [create_import, retrieve_import, list_imports, update_import, create_bulk_action, retrieve_bulk_action]
+  - file: buttondown-consume-webhooks.md
+    name: Register, verify and consume webhooks
+    api: openapi/buttondown-webhooks-api-openapi.yml
+    operations: [create_webhook, list_webhooks, retrieve_webhook, update_webhook, delete_webhook, test_webhook, retrieve_webhook_attempts, list_events, get_event]
+skill_count: 4

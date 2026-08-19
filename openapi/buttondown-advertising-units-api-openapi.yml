@@ -1,0 +1,908 @@
+openapi: 3.1.0
+info:
+  title: Buttondown Advertising Units API
+  version: 1.0.0
+  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction)
+    for guides and examples.
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://api.buttondown.com/v1
+security:
+- ApiKeyAuth: []
+tags:
+- name: Advertising Units
+paths:
+  /advertising_units:
+    get:
+      operationId: list_advertising_units
+      summary: List Advertising Units
+      parameters:
+      - in: query
+        name: page
+        required: false
+        description: The page number of the paginated response.
+        schema:
+          type: integer
+          title: Page
+          description: The page number of the paginated response.
+          default: 1
+          example: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdvertisingUnitPage'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: List all advertising units
+      tags:
+      - Advertising Units
+      security:
+      - ApiKeyAuth: []
+    post:
+      operationId: create_advertising_unit
+      summary: Create Advertising Unit
+      parameters: []
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdvertisingUnit'
+          links:
+            update_advertising_unit:
+              operationId: update_advertising_unit
+              parameters:
+                path.id: $response.body#/id
+            delete_advertising_unit:
+              operationId: delete_advertising_unit
+              parameters:
+                path.id: $response.body#/id
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Create a new advertising unit
+      tags:
+      - Advertising Units
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdvertisingUnitInput'
+        required: true
+      security:
+      - ApiKeyAuth: []
+  /advertising_units/{id}:
+    patch:
+      operationId: update_advertising_unit
+      summary: Update Advertising Unit
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdvertisingUnit'
+          links:
+            delete_advertising_unit:
+              operationId: delete_advertising_unit
+              parameters:
+                path.id: $response.body#/id
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Update an advertising unit's properties
+      tags:
+      - Advertising Units
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdvertisingUnitUpdateInput'
+        required: true
+      security:
+      - ApiKeyAuth: []
+    delete:
+      operationId: delete_advertising_unit
+      summary: Delete Advertising Unit
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Delete an advertising unit
+      tags:
+      - Advertising Units
+      security:
+      - ApiKeyAuth: []
+  /advertising_units/slots:
+    get:
+      operationId: list_advertising_slots
+      summary: List Advertising Slots
+      parameters:
+      - in: query
+        name: page
+        required: false
+        description: The page number of the paginated response.
+        schema:
+          type: integer
+          title: Page
+          description: The page number of the paginated response.
+          default: 1
+          example: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdvertisingSlotPage'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: List all advertising slots
+      tags:
+      - Advertising Units
+      security:
+      - ApiKeyAuth: []
+  /advertising_units/slots/{id}:
+    patch:
+      operationId: update_advertising_slot
+      summary: Update Advertising Slot
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdvertisingSlot'
+          links: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Update an advertising slot's sponsor content
+      tags:
+      - Advertising Units
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdvertisingSlotUpdateInput'
+        required: true
+      security:
+      - ApiKeyAuth: []
+components:
+  schemas:
+    AdvertisingSKUStatus:
+      enum:
+      - active
+      - inactive
+      title: Status
+      type: string
+      description: An enumeration.
+    AdvertisingSlot:
+      properties:
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        date:
+          description: The date this advertising slot is scheduled for.
+          format: date
+          title: Date
+          type: string
+        status:
+          $ref: '#/components/schemas/AdvertisingSlotStatus'
+          description: The current status of the advertising slot.
+        invoice_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: URL to the Stripe invoice PDF for this slot, if available.
+          title: Invoice Url
+        sku_id:
+          description: The ID of the advertising unit this slot belongs to.
+          title: Sku Id
+          type: string
+        submission_url:
+          description: URL where the sponsor can submit their ad content.
+          title: Submission Url
+          type: string
+        sponsor_company:
+          description: The name of the sponsoring company.
+          title: Sponsor Company
+          type: string
+        sponsor_email:
+          description: The email address of the sponsor contact.
+          title: Sponsor Email
+          type: string
+        sponsor_name:
+          description: The name of the sponsor contact.
+          title: Sponsor Name
+          type: string
+        content:
+          description: The ad content text.
+          title: Content
+          type: string
+        content_image_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The ID of the image attached to this ad, if any.
+          title: Content Image Id
+        content_url:
+          description: The URL the ad links to.
+          title: Content Url
+          type: string
+        content_approved_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: When the ad content was approved, if applicable.
+          title: Content Approved At
+        content_rejected_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: When the ad content was rejected, if applicable.
+          title: Content Rejected At
+        content_rejection_reason:
+          description: The reason the ad content was rejected, if applicable.
+          title: Content Rejection Reason
+          type: string
+        content_submitted_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: When the ad content was submitted for review.
+          title: Content Submitted At
+        inquiry_message:
+          description: Optional message from the sponsor inquiry.
+          title: Inquiry Message
+          type: string
+      required:
+      - id
+      - creation_date
+      - date
+      - status
+      - sku_id
+      - submission_url
+      - sponsor_company
+      - sponsor_email
+      - sponsor_name
+      - content
+      - content_url
+      - content_rejection_reason
+      - inquiry_message
+      title: AdvertisingSlot
+      type: object
+    AdvertisingSlotPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/AdvertisingSlot'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[AdvertisingSlot]
+      type: object
+    AdvertisingSlotStatus:
+      enum:
+      - expired
+      - executed
+      - finalized
+      - held
+      - open
+      - sold
+      title: Status
+      type: string
+      description: An enumeration.
+    AdvertisingSlotUpdateInput:
+      properties:
+        content:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The ad content text.
+          title: Content
+        content_approved_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: When the ad content was approved.
+          title: Content Approved At
+        content_image_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The ID of the image attached to this ad.
+          title: Content Image Id
+        content_rejection_reason:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The reason the ad content was rejected.
+          title: Content Rejection Reason
+        content_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL the ad links to.
+          title: Content Url
+        sponsor_company:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The name of the sponsoring company.
+          title: Sponsor Company
+        sponsor_email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The email address of the sponsor contact.
+          title: Sponsor Email
+        sponsor_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The name of the sponsor contact.
+          title: Sponsor Name
+        status:
+          anyOf:
+          - enum:
+            - approve
+            - hold_accept
+            - hold_decline
+            - reject
+            type: string
+          - type: 'null'
+          description: Set to 'approve', 'reject', 'hold_accept', or 'hold_decline' to update the slot status.
+          title: Status
+      title: AdvertisingSlotUpdateInput
+      type: object
+    AdvertisingUnit:
+      properties:
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        status:
+          $ref: '#/components/schemas/AdvertisingSKUStatus'
+          description: The current status of the advertising unit.
+        slots:
+          description: The list of advertising slots for this unit.
+          items:
+            $ref: '#/components/schemas/AdvertisingSlot'
+          title: Slots
+          type: array
+        title:
+          description: The title of the advertising unit.
+          title: Title
+          type: string
+        description:
+          description: A description of the advertising unit.
+          title: Description
+          type: string
+        behavior:
+          description: The behavior type of the advertising unit.
+          title: Behavior
+          type: string
+        url:
+          description: The URL for the advertising unit's landing page.
+          title: Url
+          type: string
+        price:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: The price in the smallest currency unit, or null if not set.
+          title: Price
+        allows_html:
+          description: Whether the advertising unit accepts HTML content.
+          title: Allows Html
+          type: boolean
+        allows_image:
+          description: Whether the advertising unit accepts an image.
+          title: Allows Image
+          type: boolean
+        max_characters:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: Maximum number of characters allowed for the ad content.
+          title: Max Characters
+        submission_deadline_days:
+          description: Number of days before the slot date that content must be submitted.
+          title: Submission Deadline Days
+          type: integer
+      required:
+      - id
+      - creation_date
+      - status
+      - slots
+      - title
+      - description
+      - behavior
+      - url
+      - allows_html
+      - allows_image
+      - submission_deadline_days
+      title: AdvertisingUnit
+      type: object
+    AdvertisingUnitInput:
+      properties:
+        title:
+          description: The title of the advertising unit.
+          maxLength: 100
+          title: Title
+          type: string
+        description:
+          default: ''
+          description: A description of the advertising unit.
+          title: Description
+          type: string
+        behavior:
+          default: ''
+          description: The behavior type of the advertising unit.
+          title: Behavior
+          type: string
+        url:
+          default: ''
+          description: The URL for the advertising unit's landing page.
+          title: Url
+          type: string
+        price:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: The price in the smallest currency unit.
+          title: Price
+        allows_html:
+          default: false
+          description: Whether the advertising unit accepts HTML content.
+          title: Allows Html
+          type: boolean
+        allows_image:
+          default: false
+          description: Whether the advertising unit accepts an image.
+          title: Allows Image
+          type: boolean
+        max_characters:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: Maximum number of characters allowed for the ad content.
+          title: Max Characters
+        submission_deadline_days:
+          default: 3
+          description: Number of days before the slot date that content must be submitted.
+          title: Submission Deadline Days
+          type: integer
+      required:
+      - title
+      title: AdvertisingUnitInput
+      type: object
+    AdvertisingUnitPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/AdvertisingUnit'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[AdvertisingUnit]
+      type: object
+    AdvertisingUnitUpdateInput:
+      properties:
+        title:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The title of the advertising unit.
+          title: Title
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: A description of the advertising unit.
+          title: Description
+        dates:
+          description: The dates for this advertising unit's slots.
+          items:
+            type: string
+          title: Dates
+          type: array
+        behavior:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The behavior type of the advertising unit.
+          title: Behavior
+        url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL for the advertising unit's landing page.
+          title: Url
+        price:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: The price in the smallest currency unit.
+          title: Price
+        allows_html:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          description: Whether the advertising unit accepts HTML content.
+          title: Allows Html
+        allows_image:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          description: Whether the advertising unit accepts an image.
+          title: Allows Image
+        max_characters:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: Maximum number of characters allowed for the ad content.
+          title: Max Characters
+        submission_deadline_days:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: Number of days before the slot date that content must be submitted.
+          title: Submission Deadline Days
+      required:
+      - dates
+      title: AdvertisingUnitUpdateInput
+      type: object
+    ErrorMessage:
+      properties:
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
+            how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: API key passed as 'Token <your-api-key>' in the Authorization header.

@@ -1,0 +1,682 @@
+openapi: 3.1.0
+info:
+  title: Buttondown Imports API
+  version: 1.0.0
+  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction)
+    for guides and examples.
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://api.buttondown.com/v1
+security:
+- ApiKeyAuth: []
+tags:
+- name: Imports
+paths:
+  /imports:
+    get:
+      operationId: list_imports
+      summary: List Imports
+      parameters:
+      - in: query
+        name: page
+        required: false
+        description: The page number of the paginated response.
+        schema:
+          type: integer
+          title: Page
+          description: The page number of the paginated response.
+          default: 1
+          example: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportPage'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: List all imports
+      tags:
+      - Imports
+      security:
+      - ApiKeyAuth: []
+    post:
+      operationId: create_import
+      summary: Create Import
+      parameters: []
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Import'
+          links:
+            retrieve_import:
+              operationId: retrieve_import
+              parameters:
+                path.id: $response.body#/id
+            update_import:
+              operationId: update_import
+              parameters:
+                path.id: $response.body#/id
+            delete_import:
+              operationId: delete_import
+              parameters:
+                path.id: $response.body#/id
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage_CreateImportErrorCode_'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Create a new import by uploading a file
+      tags:
+      - Imports
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                file:
+                  format: binary
+                  title: File
+                  type: string
+                metadata:
+                  anyOf:
+                  - type: string
+                  - type: 'null'
+                  title: Metadata
+              required:
+              - file
+              title: MultiPartBodyParams
+              type: object
+        required: true
+      security:
+      - ApiKeyAuth: []
+  /imports/{id}:
+    get:
+      operationId: retrieve_import
+      summary: Retrieve Import
+      parameters:
+      - in: path
+        name: id
+        schema:
+          pattern: ^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|(?:sub_imp)_(?:[0-7][0-9abcdefghjkmnpqrstvwxyz]{25}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}))$
+          title: Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Import'
+          links:
+            update_import:
+              operationId: update_import
+              parameters:
+                path.id: $response.body#/id
+            delete_import:
+              operationId: delete_import
+              parameters:
+                path.id: $response.body#/id
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Retrieve a specific import by its ID
+      tags:
+      - Imports
+      security:
+      - ApiKeyAuth: []
+    patch:
+      operationId: update_import
+      summary: Update Import
+      parameters:
+      - in: path
+        name: id
+        schema:
+          pattern: ^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|(?:sub_imp)_(?:[0-7][0-9abcdefghjkmnpqrstvwxyz]{25}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}))$
+          title: Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Import'
+          links:
+            retrieve_import:
+              operationId: retrieve_import
+              parameters:
+                path.id: $response.body#/id
+            delete_import:
+              operationId: delete_import
+              parameters:
+                path.id: $response.body#/id
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Update an import's properties
+      tags:
+      - Imports
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateImportInput'
+        required: true
+      security:
+      - ApiKeyAuth: []
+    delete:
+      operationId: delete_import
+      summary: Delete Import
+      parameters:
+      - in: path
+        name: id
+        schema:
+          pattern: ^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|(?:sub_imp)_(?:[0-7][0-9abcdefghjkmnpqrstvwxyz]{25}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}))$
+          title: Id
+          type: string
+        required: true
+      responses:
+        '204':
+          description: No Content
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Delete an import
+      tags:
+      - Imports
+      security:
+      - ApiKeyAuth: []
+components:
+  schemas:
+    CreateImportErrorCode:
+      enum:
+      - import_failure
+      - invalid_file_type
+      - malformed_csv
+      title: CreateImportErrorCode
+      type: string
+      description: An enumeration.
+    ErrorMessage:
+      properties:
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
+            how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage
+      type: object
+    ErrorMessage_CreateImportErrorCode_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/CreateImportErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
+            how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[CreateImportErrorCode]
+      type: object
+    Import:
+      description: 'Imports let you bring data into Buttondown in bulk by uploading a file.
+
+        Currently, subscriber imports are supported.'
+      properties:
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        type:
+          $ref: '#/components/schemas/ImportType'
+          description: The type of import.
+        status:
+          $ref: '#/components/schemas/ImportStatus'
+          description: The current status of the import.
+        source:
+          $ref: '#/components/schemas/ImportSource'
+          description: The detected source of the import file.
+        label:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: An optional label for the import.
+          title: Label
+        metadata:
+          additionalProperties: true
+          description: Metadata about the import, such as detected column mappings.
+          title: Metadata
+          type: object
+        results:
+          anyOf:
+          - $ref: '#/components/schemas/ImportResult'
+          - type: 'null'
+          description: The results of the import, available after completion.
+      required:
+      - id
+      - creation_date
+      - type
+      - status
+      - source
+      title: Import
+      type: object
+    ImportPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/Import'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[Import]
+      type: object
+    ImportResult:
+      properties:
+        new_subscribers:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: The number of new subscribers created by the import.
+          title: New Subscribers
+        updated_subscribers:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: The number of existing subscribers updated by the import.
+          title: Updated Subscribers
+        existing_subscribers:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: The number of subscribers that already existed and were skipped.
+          title: Existing Subscribers
+        reason_to_bad_subscribers:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          description: A mapping of error reasons to the list of email addresses that failed for that reason.
+          title: Reason To Bad Subscribers
+          type: object
+        new_tags:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: The number of new tags created by the import.
+          title: New Tags
+      title: ImportResult
+      type: object
+    ImportSource:
+      enum:
+      - bare
+      - beehiiv
+      - buttondown
+      - custom
+      - flodesk
+      - ghost
+      - google
+      - mailchimp
+      - mailerlite
+      - memberful
+      - pencilbooth
+      - sender_dot_net
+      - sendy
+      - shopify
+      - sparkloop
+      - squarespace
+      - standard
+      - substack
+      - tinyletter
+      title: ImportSource
+      type: string
+      description: An enumeration.
+    ImportStatus:
+      enum:
+      - failed
+      - in_progress
+      - not_started
+      - succeeded
+      - validating
+      title: ImportStatus
+      type: string
+      description: An enumeration.
+    ImportType:
+      enum:
+      - subscriber_import
+      title: ImportType
+      type: string
+      description: An enumeration.
+    UpdateImportInput:
+      additionalProperties: false
+      properties:
+        label:
+          anyOf:
+          - maxLength: 500
+            type: string
+          - type: 'null'
+          description: An optional label for the import.
+          title: Label
+          example: June 2025 migration
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          description: Metadata about the import, such as detected column mappings.
+          title: Metadata
+          example:
+            email_column: 0
+            metadata_columns:
+              name: 1
+        status:
+          anyOf:
+          - const: in_progress
+            type: string
+          - type: 'null'
+          description: The status of the import. Set to 'in_progress' to begin executing the import.
+          title: Status
+          example: in_progress
+      title: UpdateImportInput
+      type: object
+    ValidationErrorDetail:
+      properties:
+        type:
+          description: The type of validation error.
+          title: Type
+          type: string
+        loc:
+          description: The location of the error in the request.
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Loc
+          type: array
+        msg:
+          description: A human-readable error message.
+          title: Msg
+          type: string
+      required:
+      - type
+      - loc
+      - msg
+      title: ValidationErrorDetail
+      type: object
+    ValidationErrorMessage:
+      properties:
+        detail:
+          description: A list of validation errors.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          title: Detail
+          type: array
+      required:
+      - detail
+      title: ValidationErrorMessage
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: API key passed as 'Token <your-api-key>' in the Authorization header.

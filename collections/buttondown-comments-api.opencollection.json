@@ -1,0 +1,184 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Buttondown Comments API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Comments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Comments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/comments",
+            "params": [
+              {
+                "name": "email_id",
+                "value": "em_01h8xg4j3k2m1n0p9q8r7s6t5v",
+                "type": "query",
+                "description": "If provided, only return comments for the given [email](https://docs.buttondown.com/api-emails-introduction)."
+              },
+              {
+                "name": "subscriber_id",
+                "value": "sub_01h8xg4j3k2m1n0p9q8r7s6t5v",
+                "type": "query",
+                "description": "If provided, only return comments for the given [subscriber](https://docs.buttondown.com/api-subscribers-introduction)."
+              },
+              {
+                "name": "parent_id",
+                "value": "com_01h8xg4j3k2m1n0p9q8r7s6t5v",
+                "type": "query",
+                "description": "If provided, only return comments that are replies to the given parent comment."
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "If provided, expand the given field. (Only supported fields: 'subscriber', 'email')."
+              },
+              {
+                "name": "ordering",
+                "value": "-creation_date",
+                "type": "query",
+                "description": "The ordering to apply to the results."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return comments with the given status. Only the newsletter owner can filter by status; subscribers always see active comments."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number of the paginated response."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List all comments"
+        },
+        {
+          "info": {
+            "name": "Create Comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.buttondown.com/v1/comments",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a new comment or reply to an existing comment. If subscriber_id is provided, the comment is attributed to that subscriber; otherwise it is attributed to the newsletter author."
+        },
+        {
+          "info": {
+            "name": "Retrieve Comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/comments/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve a specific comment by its ID"
+        },
+        {
+          "info": {
+            "name": "Update Comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.buttondown.com/v1/comments/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update a comment's status. Only the newsletter owner can call this."
+        },
+        {
+          "info": {
+            "name": "Delete Comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.buttondown.com/v1/comments/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete a comment. Only the comment owner (subscriber) or the newsletter author can delete a comment."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

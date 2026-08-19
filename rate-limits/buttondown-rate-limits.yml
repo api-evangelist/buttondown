@@ -4,94 +4,80 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Buttondown
 providerId: buttondown
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-08-13'
+generated: '2026-08-13'
+method: searched
+source: https://docs.buttondown.com/api-rate-limits
+description: >-
+  Buttondown's published API rate limits, read from its rate-limits documentation. This replaces the
+  2026-05-04 scaffold, whose values were placeholders. Buttondown enforces one global per-minute
+  limit plus one endpoint-specific daily cap on subscriber creation, and returns rate-limit state on
+  every response.
 tags:
-  - Analytics
-  - Automations
   - Email
-  - Markdown
   - Newsletters
-  - Paid Subscriptions
-  - SaaS
-  - Subscribers
   - Rate Limiting
-  - Quotas
   - Throttling
-description: Machine-readable rate limit definitions for the Buttondown API surface. Captures per-tier
-  quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to
-  be replaced with published provider limits.
 headers:
   limit: X-RateLimit-Limit
   remaining: X-RateLimit-Remaining
   reset: X-RateLimit-Reset
   retryAfter: Retry-After
-  policy: RateLimit-Policy
 responseCodes:
   throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
+  quotaExceeded: 400
 limits:
-  - tier: free
-    name: Free Tier Default
+  - name: Global API limit
     scope: api-key
     metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Buttondown API
-      - Buttondown Newsletter Platform
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Buttondown API
-      - Buttondown Newsletter Platform
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
+    limit: 600
+    window: 60
+    windowUnit: seconds
+    appliesTo: All API endpoints
+    exhaustionStatus: 429
+    exhaustionBehavior: >-
+      Returns 429 Too Many Requests with a Retry-After header giving the number of seconds to wait,
+      alongside X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset.
+    source: https://docs.buttondown.com/api-rate-limits
+  - name: Subscriber creation daily cap
+    scope: newsletter
+    metric: requests_per_day
     limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Buttondown API
-      - Buttondown Newsletter Platform
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Buttondown API
-      - Buttondown Newsletter Platform
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Buttondown API
-      - Buttondown Newsletter Platform
-policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
-maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+    window: 1
+    windowUnit: day
+    appliesTo: POST /v1/subscribers
+    operationId: create_subscriber
+    exhaustionStatus: 400
+    exhaustionBehavior: >-
+      Returns 400 (not 429) with a body directing the caller to POST /v1/imports as the supported
+      way to add subscribers in bulk.
+    source: https://docs.buttondown.com/api-rate-limits
+  - name: Firewall bypass limit
+    scope: newsletter
+    metric: requests_per_hour
+    limit: 5
+    window: 1
+    windowUnit: hour
+    appliesTo: POST /v1/subscribers with X-Buttondown-Bypass-Firewall
+    operationId: create_subscriber
+    source: openapi/_original/buttondown-openapi.json
+    note: >-
+      Documented in the OpenAPI parameter description for X-Buttondown-Bypass-Firewall as
+      "aggressive rate limiting (5 per hour per newsletter)".
+signaling:
+  headersOnEveryResponse: true
+  headers:
+    - name: X-RateLimit-Limit
+      description: Maximum number of requests allowed in the current window.
+    - name: X-RateLimit-Remaining
+      description: Requests remaining in the current window.
+    - name: X-RateLimit-Reset
+      description: Unix timestamp (seconds) at which the current window resets.
+    - name: Retry-After
+      description: Seconds to wait before retrying; returned on a 429.
+  example: |
+    HTTP/1.1 200 OK
+    X-RateLimit-Limit: 600
+    X-RateLimit-Remaining: 595
+    X-RateLimit-Reset: 1735776060
+limit_count: 3

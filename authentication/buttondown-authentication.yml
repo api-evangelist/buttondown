@@ -1,16 +1,89 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/buttondown-openapi.yml
+generated: '2026-08-13'
+method: searched
+source: openapi/_original/buttondown-openapi.json
+docs: https://docs.buttondown.com/api-authentication
+description: >-
+  Buttondown authenticates with a static API key in the Authorization header. There is no OAuth, no
+  OIDC and no token exchange — but the key model is richer than a single bearer secret: an account can
+  mint any number of keys, each with independent per-area read/write/none permissions, and a platform
+  account can act on any newsletter it owns by adding a context header.
 summary:
   types:
-  - apiKey
+    - apiKey
   api_key_in:
-  - header
+    - header
+  oauth2_flows: []
 schemes:
-- name: apiKeyAuth
-  type: apiKey
-  in: header
-  parameter: Authorization
-  description: API token in the form `Token <api-key>`.
-  sources:
-  - openapi/buttondown-openapi.yml
+  - name: ApiKeyAuth
+    type: apiKey
+    in: header
+    parameter: Authorization
+    format: "Token <your-api-key>"
+    description: >-
+      API key passed as 'Token <your-api-key>' in the Authorization header. Note the trailing space
+      after `Token`.
+    applied: global
+    sources:
+      - openapi/_original/buttondown-openapi.json
+key_management:
+  console: https://buttondown.com/keys
+  multiple_keys: true
+  labels: true
+  description: >-
+    Keys can be created per integration and labeled, so a compromised or retired integration is
+    revoked by deleting one key without disturbing the others.
+  primary_key:
+    exists: true
+    permissions: full — not configurable
+    deletable: false
+    note: If the primary key leaks, regenerate it to invalidate the current value.
+permissions:
+  model: per-key, per-area
+  levels: [write, read, none]
+  enforcement: 403 Forbidden when a key lacks permission for the attempted operation.
+  areas:
+    - {name: subscriber_access, controls: Managing subscribers}
+    - {name: email_access, controls: Managing emails and drafts}
+    - {name: sending_access, controls: Sending emails}
+    - {name: administrivia_access, controls: Newsletter settings}
+    - {name: automations_access, controls: Managing automations}
+    - {name: forms_access, controls: Managing forms}
+    - {name: styling_access, controls: Design settings}
+    - {name: surveys_access, controls: Managing surveys}
+  note: >-
+    This is the nearest thing Buttondown has to OAuth scopes, but it is not a scope surface: the
+    permissions are configured on the key in the dashboard, not requested at authorization time, and
+    they are not declared in the OpenAPI securitySchemes. No scopes/ artifact is emitted for this
+    provider.
+multi_tenancy:
+  header: Buttondown-Context
+  value: newsletter UUID
+  description: >-
+    A platform account managing several newsletters authenticates with its own key and passes the
+    target newsletter's ID in Buttondown-Context. Reads return that newsletter's data and writes are
+    scoped to it.
+  constraints:
+    - >-
+      Only takes effect with the platform account's own key, and only for newsletters that account
+      can access. One newsletter's key cannot reach into another.
+    - >-
+      An unknown ID, a malformed value, or a newsletter's username fails with 401
+      authentication_invalid. It never falls back to the account's primary newsletter, so a typo
+      cannot silently target the wrong newsletter.
+  discovery: list_newsletters (GET /v1/newsletters) returns the IDs.
+unauthenticated_surface:
+  - operation: list_public_emails
+    path: GET /v1/public/emails/{username}
+    note: Public archive search; no Authorization header required.
+  - operation: ping
+    path: GET /v1/ping
+  - operation: webhook_event
+    note: >-
+      The inbound webhook delivery, which declares an empty `security` array and is verified by HMAC
+      signature instead.
+oauth:
+  supported: false
+  evidence: >-
+    No oauth2 or openIdConnect securityScheme in the spec; /.well-known/oauth-authorization-server,
+    /.well-known/oauth-protected-resource and /.well-known/openid-configuration all return 404 on
+    buttondown.com, docs.buttondown.com and api.buttondown.com (probed 2026-08-13).

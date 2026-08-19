@@ -1,95 +1,806 @@
 openapi: 3.1.0
 info:
-  title: Buttondown Emails Tags API
-  version: '1.0'
-  description: Minimal OpenAPI 3.1 description of the Buttondown newsletter platform API. Covers core RESTful resources for subscribers, emails, tags, newsletters, and webhooks. Derived from the public Buttondown documentation.
-  x-generated-from: https://docs.buttondown.com/api
-  x-generated-by: claude-crawl-2026-05-08
+  title: Buttondown Tags API
+  version: 1.0.0
+  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction)
+    for guides and examples.
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
 servers:
-- url: https://api.buttondown.email/v1
-  description: Production
+- url: https://api.buttondown.com/v1
 security:
-- apiKeyAuth: []
+- ApiKeyAuth: []
 tags:
 - name: Tags
 paths:
   /tags:
-    get:
-      tags:
-      - Tags
-      summary: List all tags
-      operationId: listTags
+    post:
+      operationId: create_tag
+      summary: Create Tag
+      parameters:
+      - in: header
+        name: X-Buttondown-Collision-Behavior
+        schema:
+          allOf:
+          - description: Behavior applied when a tag with the same name already exists on create.
+            enum:
+            - no_op
+            - overwrite
+            title: TagCollisionBehavior
+            type: string
+          default: no_op
+          description: 'The behavior to apply when a tag with the same name already exists.
+
+            Defaults to "no_op", which returns a 400 error. Set to "overwrite" to update the existing tag with the supplied
+            values and return it with a 200 status code instead.'
+        required: false
+        description: 'The behavior to apply when a tag with the same name already exists.
+
+          Defaults to "no_op", which returns a 400 error. Set to "overwrite" to update the existing tag with the supplied
+          values and return it with a 200 status code instead.'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedList'
-    post:
-      tags:
-      - Tags
-      summary: Create a tag
-      operationId: createTag
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Resource'
-      responses:
+                $ref: '#/components/schemas/Tag'
         '201':
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Resource'
-  /tags/{id}:
-    parameters:
-    - $ref: '#/components/parameters/IdParam'
-    get:
+                $ref: '#/components/schemas/Tag'
+          links:
+            retrieve_tag:
+              operationId: retrieve_tag
+              parameters:
+                path.id: $response.body#/id
+            update_tag:
+              operationId: update_tag
+              parameters:
+                path.id: $response.body#/id
+            delete_tag:
+              operationId: delete_tag
+              parameters:
+                path.id: $response.body#/id
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage_TagErrorCode_'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Create a new tag
       tags:
       - Tags
-      summary: Retrieve a tag
-      operationId: getTag
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TagInput'
+        required: true
+      security:
+      - ApiKeyAuth: []
+    get:
+      operationId: list_tags
+      summary: List Tags
+      parameters:
+      - in: query
+        name: ids
+        schema:
+          description: If provided, only return tags matching the given IDs.
+          example:
+          - tag_abc123
+          title: Ids
+          items:
+            type: string
+          type: array
+        required: false
+        description: If provided, only return tags matching the given IDs.
+        example:
+        - tag_abc123
+      - in: query
+        name: page_size
+        schema:
+          default: 100
+          description: The number of results per page.
+          title: Page Size
+          maximum: 1000
+          minimum: 1
+          type: integer
+        required: false
+        description: The number of results per page.
+      - in: query
+        name: page
+        required: false
+        description: The page number of the paginated response.
+        schema:
+          type: integer
+          title: Page
+          description: The page number of the paginated response.
+          default: 1
+          example: 1
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Resource'
+                $ref: '#/components/schemas/TagPage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: List all tags
+      tags:
+      - Tags
+      security:
+      - ApiKeyAuth: []
+  /tags/{id}:
+    get:
+      operationId: retrieve_tag
+      summary: Retrieve Tag
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag'
+          links:
+            update_tag:
+              operationId: update_tag
+              parameters:
+                path.id: $response.body#/id
+            delete_tag:
+              operationId: delete_tag
+              parameters:
+                path.id: $response.body#/id
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Retrieve a specific tag by its ID
+      tags:
+      - Tags
+      security:
+      - ApiKeyAuth: []
+    patch:
+      operationId: update_tag
+      summary: Update Tag
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag'
+          links:
+            retrieve_tag:
+              operationId: retrieve_tag
+              parameters:
+                path.id: $response.body#/id
+            delete_tag:
+              operationId: delete_tag
+              parameters:
+                path.id: $response.body#/id
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage_TagErrorCode_'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Update a tag's properties
+      tags:
+      - Tags
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TagUpdateInput'
+        required: true
+      security:
+      - ApiKeyAuth: []
+    delete:
+      operationId: delete_tag
+      summary: Delete Tag
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      responses:
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Delete a tag
+      tags:
+      - Tags
+      security:
+      - ApiKeyAuth: []
+  /tags/{id}/analytics:
+    get:
+      operationId: retrieve_tag_analytics
+      summary: Retrieve Tag Analytics
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TagAnalytics'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Retrieve analytics for a specific tag
+      tags:
+      - Tags
+      security:
+      - ApiKeyAuth: []
 components:
   schemas:
-    PaginatedList:
-      type: object
+    ErrorMessage:
       properties:
-        count:
-          type: integer
-        next:
+        code:
+          description: The error code.
+          title: Code
           type: string
-          nullable: true
-        previous:
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
           type: string
-          nullable: true
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Resource'
-      additionalProperties: true
-    Resource:
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
+            how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage
       type: object
-      additionalProperties: true
-  parameters:
-    IdParam:
-      name: id
-      in: path
-      required: true
-      schema:
-        type: string
+    ErrorMessage_TagErrorCode_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/TagErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
+            how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[TagErrorCode]
+      type: object
+    Tag:
+      description: 'Tags are a way to organize your subscribers. You can create, update, and
+
+        delete tags via the API. You can also list all tags for a given newsletter.
+
+
+        Tags don''t have any strict functionality on their own, but you can send emails
+
+        to subscribers with a given tag (or to all subscribers _without_ a given tag.)'
+      properties:
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        name:
+          description: The name of the tag.
+          title: Name
+          type: string
+        color:
+          description: The hex color code associated with the tag.
+          title: Color
+          type: string
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: An internal description of the tag, only visible to the newsletter author.
+          title: Description
+        public_description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: A public-facing description of the tag, visible to subscribers in the subscriber portal.
+          title: Public Description
+        subscriber_editable:
+          description: If true, subscribers can add or remove this tag from their own profile via the subscriber portal.
+          title: Subscriber Editable
+          type: boolean
+        secondary_id:
+          description: The secondary ID of the tag, used as a human-readable numeric identifier.
+          maximum: 1000000000
+          minimum: 1
+          title: Secondary Id
+          type: integer
+      required:
+      - id
+      - creation_date
+      - name
+      - color
+      - subscriber_editable
+      - secondary_id
+      title: Tag
+      type: object
+    TagAnalytics:
+      description: Analytics data associated with a given tag.
+      properties:
+        created_subscribers:
+          description: The number of subscribers who have been created with this tag.
+          minimum: 0
+          title: Created Subscribers
+          type: integer
+        click_rate:
+          description: The click rate of emails sent to subscribers with this tag.
+          title: Click Rate
+          type: number
+        open_rate:
+          description: The open rate of emails sent to subscribers with this tag.
+          title: Open Rate
+          type: number
+      required:
+      - created_subscribers
+      - click_rate
+      - open_rate
+      title: TagAnalytics
+      type: object
+    TagErrorCode:
+      description: Error codes returned when creating or updating a tag fails.
+      enum:
+      - feature_disabled
+      - name_already_exists
+      - name_blank
+      - name_invalid
+      - name_too_long
+      title: TagErrorCode
+      type: string
+    TagInput:
+      additionalProperties: false
+      description: Input schema for creating a new tag.
+      properties:
+        name:
+          description: The name of the tag.
+          maxLength: 100
+          minLength: 1
+          pattern: ^[^\x00-\x1f\x7f-\x9f]*[^\W_][^\x00-\x1f\x7f-\x9f]*$
+          title: Name
+          type: string
+          example: VIP
+        color:
+          description: The hex color code associated with the tag.
+          maxLength: 7
+          minLength: 4
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+          title: Color
+          type: string
+          example: '#FFD700'
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: An internal description of the tag, only visible to the newsletter author.
+          title: Description
+        public_description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: A public-facing description of the tag, visible to subscribers in the subscriber portal.
+          title: Public Description
+        subscriber_editable:
+          default: false
+          description: If true, subscribers can add or remove this tag from their own profile via the subscriber portal.
+          title: Subscriber Editable
+          type: boolean
+          example: false
+      required:
+      - name
+      - color
+      title: TagInput
+      type: object
+    TagPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/Tag'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[Tag]
+      type: object
+    TagUpdateInput:
+      additionalProperties: false
+      description: Input schema for updating an existing tag. All fields are optional.
+      properties:
+        name:
+          anyOf:
+          - maxLength: 100
+            minLength: 1
+            pattern: ^[^\x00-\x1f\x7f-\x9f]*[^\W_][^\x00-\x1f\x7f-\x9f]*$
+            type: string
+          - type: 'null'
+          description: The name of the tag.
+          title: Name
+          example: VIP
+        color:
+          anyOf:
+          - maxLength: 7
+            minLength: 4
+            pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+            type: string
+          - type: 'null'
+          description: The hex color code associated with the tag.
+          title: Color
+          example: '#FFD700'
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: An internal description of the tag, only visible to the newsletter author.
+          title: Description
+        public_description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: A public-facing description of the tag, visible to subscribers in the subscriber portal.
+          title: Public Description
+        secondary_id:
+          anyOf:
+          - maximum: 1000000000
+            minimum: 1
+            type: integer
+          - type: 'null'
+          description: The secondary ID of the tag, used as a human-readable numeric identifier.
+          title: Secondary Id
+        subscriber_editable:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          description: If true, subscribers can add or remove this tag from their own profile via the subscriber portal.
+          title: Subscriber Editable
+      title: TagUpdateInput
+      type: object
+    ValidationErrorDetail:
+      properties:
+        type:
+          description: The type of validation error.
+          title: Type
+          type: string
+        loc:
+          description: The location of the error in the request.
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Loc
+          type: array
+        msg:
+          description: A human-readable error message.
+          title: Msg
+          type: string
+      required:
+      - type
+      - loc
+      - msg
+      title: ValidationErrorDetail
+      type: object
+    ValidationErrorMessage:
+      properties:
+        detail:
+          description: A list of validation errors.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          title: Detail
+          type: array
+      required:
+      - detail
+      title: ValidationErrorMessage
+      type: object
   securitySchemes:
-    apiKeyAuth:
+    ApiKeyAuth:
       type: apiKey
       in: header
       name: Authorization
-      description: API token in the form `Token <api-key>`.
+      description: API key passed as 'Token <your-api-key>' in the Authorization header.

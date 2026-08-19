@@ -1,0 +1,117 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Buttondown Events API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/events",
+            "params": [
+              {
+                "name": "event_type",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return events of the given type (e.g. `delivered`, `opened`, `clicked`)."
+              },
+              {
+                "name": "ordering",
+                "value": "",
+                "type": "query",
+                "description": "The ordering to apply to the results."
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "If provided, expand the given field. (Only supported field: 'subscriber')."
+              },
+              {
+                "name": "email_id",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return events for the given email."
+              },
+              {
+                "name": "automation_id",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return events for the given automation."
+              },
+              {
+                "name": "subscriber_id",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only return events for the given subscriber."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page number of the paginated response."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List all events"
+        },
+        {
+          "info": {
+            "name": "Get Event",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.buttondown.com/v1/events/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "If provided, expand the given field. (Only supported field: 'subscriber')."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve a specific event by its ID"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

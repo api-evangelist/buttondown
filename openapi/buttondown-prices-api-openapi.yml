@@ -1,0 +1,571 @@
+openapi: 3.1.0
+info:
+  title: Buttondown Prices API
+  version: 1.0.0
+  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction)
+    for guides and examples.
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://api.buttondown.com/v1
+security:
+- ApiKeyAuth: []
+tags:
+- name: Prices
+paths:
+  /prices:
+    get:
+      operationId: list_prices
+      summary: List Prices
+      parameters:
+      - in: query
+        name: expand
+        schema:
+          description: If provided, expand the given field.
+          items:
+            const: product
+            type: string
+          title: Expand
+          type: array
+        required: false
+        description: If provided, expand the given field.
+      - in: query
+        name: page
+        required: false
+        description: The page number of the paginated response.
+        schema:
+          type: integer
+          title: Page
+          description: The page number of the paginated response.
+          default: 1
+          example: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PricePage'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage_ListPricesErrorCode_'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: List all prices
+      tags:
+      - Prices
+      security:
+      - ApiKeyAuth: []
+    post:
+      operationId: create_price
+      summary: Create Price
+      parameters: []
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Price'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage_CreatePriceErrorCode_'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Create a new price
+      tags:
+      - Prices
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PriceInput'
+        required: true
+      security:
+      - ApiKeyAuth: []
+  /prices/{price_id}:
+    delete:
+      operationId: delete_price
+      summary: Delete Price
+      parameters:
+      - in: path
+        name: price_id
+        schema:
+          title: Price Id
+          type: string
+        required: true
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage_ArchivePriceErrorCode_'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Conflict
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+            X-RateLimit-Limit:
+              description: Requests permitted per minute.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Requests remaining in the current window.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: Unix timestamp at which the window resets.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      description: Archive a price, making it unavailable for new subscriptions. Stripe prices cannot be deleted outright;
+        archiving deactivates the price while leaving existing subscriptions on it untouched.
+      tags:
+      - Prices
+      security:
+      - ApiKeyAuth: []
+components:
+  schemas:
+    ArchivePriceErrorCode:
+      description: 'Represents the type of error that occurred when archiving a price.
+
+
+        Human-readable error messages are provided in the `detail` field of the response;
+
+        these values are meant to be parseable by code or client logic.'
+      enum:
+      - default_price
+      title: ArchivePriceErrorCode
+      type: string
+    CreatePriceErrorCode:
+      description: 'Represents the type of error that occurred when listing a price.
+
+
+        Human-readable error messages are provided in the `detail` field of the response;
+
+        these values are meant to be parseable by code or client logic.'
+      enum:
+      - invalid_amount
+      - maximum_amount_too_high
+      - minimum_amount_not_less_than_maximum
+      - paid_subscriptions_uninitialized
+      - product_deleted
+      - suggested_amount_out_of_range
+      title: CreatePriceErrorCode
+      type: string
+    ErrorMessage:
+      properties:
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
+            how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage
+      type: object
+    ErrorMessage_ArchivePriceErrorCode_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/ArchivePriceErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
+            how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[ArchivePriceErrorCode]
+      type: object
+    ErrorMessage_CreatePriceErrorCode_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/CreatePriceErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
+            how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[CreatePriceErrorCode]
+      type: object
+    ErrorMessage_ListPricesErrorCode_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/ListPricesErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
+            how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[ListPricesErrorCode]
+      type: object
+    ListPricesErrorCode:
+      description: 'Represents the type of error that occurred when listing a price.
+
+
+        Human-readable error messages are provided in the `detail` field of the response;
+
+        these values are meant to be parseable by code or client logic.'
+      enum:
+      - paid_subscriptions_uninitialized
+      title: ListPricesErrorCode
+      type: string
+    Price:
+      properties:
+        amount:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: The price amount in the smallest currency unit (e.g. cents).
+          title: Amount
+        cadence:
+          description: The billing cadence for this price.
+          enum:
+          - year
+          - month
+          - one-time
+          - email
+          - week
+          title: Cadence
+          type: string
+        currency:
+          description: The three-letter ISO currency code (e.g. 'usd').
+          title: Currency
+          type: string
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: An optional human-readable description of the price.
+          title: Description
+        maximum_amount:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: The maximum amount for pay-what-you-want prices.
+          title: Maximum Amount
+        minimum_amount:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: The minimum amount for pay-what-you-want prices.
+          title: Minimum Amount
+        product_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The ID of the Stripe product this price belongs to.
+          title: Product Id
+        style:
+          description: 'The pricing style: ''fixed'', ''pay-what-you-want'', or ''usage-based''.'
+          enum:
+          - pay-what-you-want
+          - fixed
+          - usage-based
+          title: Style
+          type: string
+        suggested_amount:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: The suggested amount for pay-what-you-want prices.
+          title: Suggested Amount
+        id:
+          description: The unique identifier of the price.
+          title: Id
+          type: string
+        product:
+          anyOf:
+          - $ref: '#/components/schemas/Product'
+          - type: 'null'
+      required:
+      - cadence
+      - currency
+      - style
+      - id
+      title: Price
+      type: object
+    PriceInput:
+      properties:
+        amount:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: The price amount in the smallest currency unit (e.g. cents).
+          title: Amount
+        cadence:
+          description: The billing cadence for this price.
+          enum:
+          - year
+          - month
+          - one-time
+          - email
+          - week
+          title: Cadence
+          type: string
+        currency:
+          description: The three-letter ISO currency code (e.g. 'usd').
+          title: Currency
+          type: string
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: An optional human-readable description of the price.
+          title: Description
+        maximum_amount:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: The maximum amount for pay-what-you-want prices.
+          title: Maximum Amount
+        minimum_amount:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: The minimum amount for pay-what-you-want prices.
+          title: Minimum Amount
+        product_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The ID of the Stripe product this price belongs to.
+          title: Product Id
+        style:
+          description: 'The pricing style: ''fixed'', ''pay-what-you-want'', or ''usage-based''.'
+          enum:
+          - pay-what-you-want
+          - fixed
+          - usage-based
+          title: Style
+          type: string
+        suggested_amount:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: The suggested amount for pay-what-you-want prices.
+          title: Suggested Amount
+      required:
+      - cadence
+      - currency
+      - style
+      title: PriceInput
+      type: object
+    PricePage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/Price'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[Price]
+      type: object
+    Product:
+      properties:
+        id:
+          description: The unique identifier of the product.
+          title: Id
+          type: string
+        product_id:
+          description: The Stripe product ID.
+          title: Product Id
+          type: string
+        name:
+          description: The name of the product.
+          title: Name
+          type: string
+        creation_date:
+          description: The date the product was created in Stripe.
+          title: Creation Date
+          type: string
+        active:
+          description: Whether the product is currently active.
+          title: Active
+          type: boolean
+        default_price:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The ID of the default price for this product.
+          title: Default Price
+      required:
+      - id
+      - product_id
+      - name
+      - creation_date
+      - active
+      title: Product
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: API key passed as 'Token <your-api-key>' in the Authorization header.

@@ -1,0 +1,951 @@
+{
+  "item": [
+    {
+      "id": "53cacf8e-2dab-46aa-b25d-c3b6f63f8a54",
+      "name": "Events",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f6037163-909c-42da-b215-0cac0e01c494",
+          "name": "List Events",
+          "request": {
+            "name": "List Events",
+            "description": {
+              "content": "List all events",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "event_type",
+                  "value": "<string>",
+                  "description": "If provided, only return events of the given type (e.g. `delivered`, `opened`, `clicked`)."
+                },
+                {
+                  "disabled": false,
+                  "key": "ordering",
+                  "value": "-creation_date",
+                  "description": "The ordering to apply to the results."
+                },
+                {
+                  "disabled": false,
+                  "key": "expand",
+                  "value": "<string>",
+                  "description": "If provided, expand the given field. (Only supported field: 'subscriber')."
+                },
+                {
+                  "disabled": false,
+                  "key": "expand",
+                  "value": "<string>",
+                  "description": "If provided, expand the given field. (Only supported field: 'subscriber')."
+                },
+                {
+                  "disabled": false,
+                  "key": "email_id",
+                  "value": "<string>",
+                  "description": "If provided, only return events for the given email."
+                },
+                {
+                  "disabled": false,
+                  "key": "automation_id",
+                  "value": "<string>",
+                  "description": "If provided, only return events for the given automation."
+                },
+                {
+                  "disabled": false,
+                  "key": "subscriber_id",
+                  "value": "<string>",
+                  "description": "If provided, only return events for the given subscriber."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "The page number of the paginated response."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d25771d5-016c-4ff6-9d79-0e4a079d8b6a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "event_type",
+                      "value": "complained"
+                    },
+                    {
+                      "key": "ordering",
+                      "value": "-creation_date"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "email_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "automation_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subscriber_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"id\": \"string\",\n      \"creation_date\": \"2001-03-25T18:32:13.376Z\",\n      \"metadata\": {\n        \"key_0\": \"string\"\n      },\n      \"event_type\": \"bounced\",\n      \"subscriber_id\": \"string\",\n      \"email_id\": \"string\",\n      \"automation_id\": \"string\",\n      \"subscriber\": {\n        \"id\": \"string\",\n        \"creation_date\": \"1950-11-16T13:03:06.129Z\",\n        \"email_address\": \"telemachus@buttondown.email\",\n        \"referral_code\": \"string\",\n        \"secondary_id\": 453,\n        \"source\": \"zapier\",\n        \"tags\": [\n          \"string\",\n          \"string\"\n        ],\n        \"type\": \"premium\",\n        \"utm_campaign\": \"string\",\n        \"utm_medium\": \"string\",\n        \"utm_source\": \"string\",\n        \"avatar_url\": \"string\",\n        \"bounce_date\": \"2023-01-10T04:47:05.337Z\",\n        \"bounce_reason\": \"spf_failed\",\n        \"churn_date\": \"1973-08-25T23:11:01.845Z\",\n        \"commenting_disabled\": false,\n        \"country\": \"string\",\n        \"gift_subscription_end_date\": \"1976-03-02T18:30:11.756Z\",\n        \"gift_subscription_message\": \"string\",\n        \"ip_address\": \"string\",\n        \"last_click_date\": \"1972-08-24T05:34:26.271Z\",\n        \"last_open_date\": \"1959-07-18T19:59:12.554Z\",\n        \"delivered_count\": 3671,\n        \"open_count\": 9773,\n        \"clicked_count\": 6214,\n        \"open_rate\": 6922.287383395458,\n        \"click_rate\": 8268.277659539344,\n        \"metadata\": {},\n        \"notes\": \"\",\n        \"purchased_by\": \"string\",\n        \"purchased_message\": \"string\",\n        \"referrer_url\": \"\",\n        \"risk_score\": 6219.640681926546,\n        \"stripe_coupon\": {\n          \"coupon_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"percent_off\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_off\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"stripe_customer_id\": \"string\",\n        \"subscriber_import_id\": \"string\",\n        \"form_id\": \"string\",\n        \"firewall_reasons\": [\n          {\n            \"code\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"reason\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"code\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"reason\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"undeliverability_date\": \"1957-08-28T09:02:19.752Z\",\n        \"undeliverability_reason\": \"rate_limited\",\n        \"unsubscription_date\": \"1985-09-26T05:44:06.267Z\",\n        \"unsubscription_reason\": \"string\",\n        \"upgrade_date\": \"2001-11-30T15:24:35.979Z\",\n        \"stripe_customer\": {\n          \"key_0\": false\n        },\n        \"stripe_subscription\": {\n          \"key_0\": 3399.740447768286,\n          \"key_1\": 3882.9699044553513\n        }\n      },\n      \"email\": {\n        \"id\": \"string\",\n        \"creation_date\": \"1958-06-20T21:39:28.187Z\",\n        \"absolute_url\": \"string\",\n        \"body\": \"string\",\n        \"canonical_url\": \"string\",\n        \"commenting_mode\": \"disabled\",\n        \"description\": \"string\",\n        \"archival_mode\": \"disabled\",\n        \"featured\": true,\n        \"filters\": {\n          \"filters\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"groups\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"predicate\": \"or\"\n        },\n        \"image\": \"string\",\n        \"modification_date\": \"1969-02-24T02:10:53.322Z\",\n        \"related_email_ids\": [\n          \"string\",\n          \"string\"\n        ],\n        \"should_trigger_pay_per_email_billing\": true,\n        \"source\": \"app\",\n        \"status\": \"draft\",\n        \"subject\": \"string\",\n        \"analytics\": {\n          \"recipients\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deliveries\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"opens\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"clicks\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"temporary_failures\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"permanent_failures\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unsubscriptions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"complaints\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"survey_responses\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"webmentions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"page_views_lifetime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"page_views_30\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"page_views_7\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"subscriptions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paid_subscriptions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"replies\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"comments\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"social_mentions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"temporary_failure_breakdown\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"permanent_failure_breakdown\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"callouts\": [\n          \"first_send_on_sending_domain\",\n          \"first_send_on_sending_domain\"\n        ],\n        \"attachments\": [\n          \"string\",\n          \"string\"\n        ],\n        \"email_type\": \"public\",\n        \"metadata\": {},\n        \"publish_date\": \"1966-05-19T05:12:12.204Z\",\n        \"secondary_id\": 5613,\n        \"slug\": \"string\",\n        \"suppression_reason\": \"internal_auditing\",\n        \"template\": \"naked\"\n      },\n      \"automation\": {\n        \"id\": \"string\",\n        \"creation_date\": \"1997-10-01T07:02:57.203Z\",\n        \"name\": \"string\",\n        \"status\": \"active\",\n        \"trigger\": \"external_feed_item.created\",\n        \"actions\": [\n          {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"metadata\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"timing\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"metadata\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"timing\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"filters\": {\n          \"filters\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"groups\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"predicate\": \"or\"\n        },\n        \"metadata\": {\n          \"key_0\": 1638,\n          \"key_1\": 9026.25413235839,\n          \"key_2\": true\n        },\n        \"should_evaluate_filter_after_delay\": true\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"creation_date\": \"2003-05-12T23:36:16.615Z\",\n      \"metadata\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\",\n        \"key_3\": \"string\"\n      },\n      \"event_type\": \"complained\",\n      \"subscriber_id\": \"string\",\n      \"email_id\": \"string\",\n      \"automation_id\": \"string\",\n      \"subscriber\": {\n        \"id\": \"string\",\n        \"creation_date\": \"1955-09-29T00:33:53.457Z\",\n        \"email_address\": \"telemachus@buttondown.email\",\n        \"referral_code\": \"string\",\n        \"secondary_id\": 916,\n        \"source\": \"organic\",\n        \"tags\": [\n          \"string\",\n          \"string\"\n        ],\n        \"type\": \"gifted\",\n        \"utm_campaign\": \"string\",\n        \"utm_medium\": \"string\",\n        \"utm_source\": \"string\",\n        \"avatar_url\": \"string\",\n        \"bounce_date\": \"1974-01-14T09:08:12.589Z\",\n        \"bounce_reason\": \"problematic_url\",\n        \"churn_date\": \"1988-11-15T11:15:28.407Z\",\n        \"commenting_disabled\": false,\n        \"country\": \"string\",\n        \"gift_subscription_end_date\": \"1991-06-19T20:54:01.569Z\",\n        \"gift_subscription_message\": \"string\",\n        \"ip_address\": \"string\",\n        \"last_click_date\": \"1959-04-02T13:57:44.748Z\",\n        \"last_open_date\": \"1953-07-01T16:23:52.423Z\",\n        \"delivered_count\": 5665,\n        \"open_count\": 3157,\n        \"clicked_count\": 272,\n        \"open_rate\": 9032.604105449462,\n        \"click_rate\": 2836.2043722852472,\n        \"metadata\": {},\n        \"notes\": \"\",\n        \"purchased_by\": \"string\",\n        \"purchased_message\": \"string\",\n        \"referrer_url\": \"\",\n        \"risk_score\": 8993.200378655032,\n        \"stripe_coupon\": {\n          \"coupon_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"percent_off\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_off\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"stripe_customer_id\": \"string\",\n        \"subscriber_import_id\": \"string\",\n        \"form_id\": \"string\",\n        \"firewall_reasons\": [\n          {\n            \"code\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"reason\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"code\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"reason\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"undeliverability_date\": \"1952-01-30T11:55:50.313Z\",\n        \"undeliverability_reason\": \"email_blocked\",\n        \"unsubscription_date\": \"2005-11-30T17:21:29.034Z\",\n        \"unsubscription_reason\": \"string\",\n        \"upgrade_date\": \"2019-06-04T07:16:19.738Z\",\n        \"stripe_customer\": {\n          \"key_0\": \"string\",\n          \"key_1\": 8500.60603547519\n        },\n        \"stripe_subscription\": {\n          \"key_0\": \"string\"\n        }\n      },\n      \"email\": {\n        \"id\": \"string\",\n        \"creation_date\": \"1991-05-18T17:41:15.853Z\",\n        \"absolute_url\": \"string\",\n        \"body\": \"string\",\n        \"canonical_url\": \"string\",\n        \"commenting_mode\": \"disabled\",\n        \"description\": \"string\",\n        \"archival_mode\": \"archive_only\",\n        \"featured\": true,\n        \"filters\": {\n          \"filters\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"groups\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"predicate\": \"or\"\n        },\n        \"image\": \"string\",\n        \"modification_date\": \"1968-10-24T09:14:09.778Z\",\n        \"related_email_ids\": [\n          \"string\",\n          \"string\"\n        ],\n        \"should_trigger_pay_per_email_billing\": false,\n        \"source\": \"app\",\n        \"status\": \"draft\",\n        \"subject\": \"string\",\n        \"analytics\": {\n          \"recipients\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deliveries\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"opens\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"clicks\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"temporary_failures\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"permanent_failures\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unsubscriptions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"complaints\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"survey_responses\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"webmentions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"page_views_lifetime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"page_views_30\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"page_views_7\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"subscriptions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paid_subscriptions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"replies\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"comments\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"social_mentions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"temporary_failure_breakdown\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"permanent_failure_breakdown\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"callouts\": [\n          \"first_send_on_sending_domain\",\n          \"first_send_on_sending_domain\"\n        ],\n        \"attachments\": [\n          \"string\",\n          \"string\"\n        ],\n        \"email_type\": \"public\",\n        \"metadata\": {},\n        \"publish_date\": \"1962-02-16T06:34:56.221Z\",\n        \"secondary_id\": 9771,\n        \"slug\": \"string\",\n        \"suppression_reason\": \"law_enforcement\",\n        \"template\": \"plaintext\"\n      },\n      \"automation\": {\n        \"id\": \"string\",\n        \"creation_date\": \"1962-01-03T19:32:58.170Z\",\n        \"name\": \"string\",\n        \"status\": \"active\",\n        \"trigger\": \"subscriber.responded_to_survey\",\n        \"actions\": [\n          {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"metadata\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"timing\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"metadata\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"timing\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"filters\": {\n          \"filters\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"groups\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"predicate\": \"and\"\n        },\n        \"metadata\": {\n          \"key_0\": 8505.237207881777,\n          \"key_1\": \"string\",\n          \"key_2\": false\n        },\n        \"should_evaluate_filter_after_delay\": false\n      }\n    }\n  ],\n  \"count\": 523,\n  \"next\": \"string\",\n  \"previous\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0cdb0004-67f0-4b7f-8ad8-e9f191eb0273",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "event_type",
+                      "value": "complained"
+                    },
+                    {
+                      "key": "ordering",
+                      "value": "-creation_date"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "email_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "automation_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subscriber_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "39a8d5e9-ce3c-4957-bc34-b421a79ad679",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "event_type",
+                      "value": "complained"
+                    },
+                    {
+                      "key": "ordering",
+                      "value": "-creation_date"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "email_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "automation_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subscriber_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "99e5bc95-936c-4eb1-94e0-ecf1073efddf",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "event_type",
+                      "value": "complained"
+                    },
+                    {
+                      "key": "ordering",
+                      "value": "-creation_date"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "email_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "automation_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subscriber_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f3d3f936-dbf4-41dd-87db-fdbe734c5c19",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "event_type",
+                      "value": "complained"
+                    },
+                    {
+                      "key": "ordering",
+                      "value": "-creation_date"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "email_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "automation_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subscriber_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "2769"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests permitted per minute.",
+                  "key": "X-RateLimit-Limit",
+                  "value": "2769"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests remaining in the current window.",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "2769"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp at which the window resets.",
+                  "key": "X-RateLimit-Reset",
+                  "value": "2769"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "82119b59-df99-4a2b-a525-f5e4d8a5ea7b",
+          "name": "Get Event",
+          "request": {
+            "name": "Get Event",
+            "description": {
+              "content": "Retrieve a specific event by its ID",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "events",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "expand",
+                  "value": "<string>",
+                  "description": "If provided, expand the given field. (Only supported field: 'subscriber')."
+                },
+                {
+                  "disabled": false,
+                  "key": "expand",
+                  "value": "<string>",
+                  "description": "If provided, expand the given field. (Only supported field: 'subscriber')."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "173f0227-f091-4b8d-a8c1-77dc9881a970",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"creation_date\": \"1990-12-31T01:15:15.523Z\",\n  \"metadata\": {\n    \"key_0\": \"string\"\n  },\n  \"event_type\": \"rejected\",\n  \"subscriber_id\": \"string\",\n  \"email_id\": \"string\",\n  \"automation_id\": \"string\",\n  \"subscriber\": {\n    \"id\": \"string\",\n    \"creation_date\": \"2005-06-29T11:31:25.218Z\",\n    \"email_address\": \"telemachus@buttondown.email\",\n    \"referral_code\": \"string\",\n    \"secondary_id\": 3275,\n    \"source\": \"netlify\",\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"type\": \"blocked\",\n    \"utm_campaign\": \"string\",\n    \"utm_medium\": \"string\",\n    \"utm_source\": \"string\",\n    \"avatar_url\": \"string\",\n    \"bounce_date\": \"1978-12-29T16:39:46.601Z\",\n    \"bounce_reason\": \"problematic_url\",\n    \"churn_date\": \"1966-01-12T04:22:06.479Z\",\n    \"commenting_disabled\": false,\n    \"country\": \"string\",\n    \"gift_subscription_end_date\": \"1971-07-02T14:15:03.800Z\",\n    \"gift_subscription_message\": \"string\",\n    \"ip_address\": \"string\",\n    \"last_click_date\": \"1984-12-27T06:43:58.455Z\",\n    \"last_open_date\": \"2000-12-09T16:44:05.065Z\",\n    \"delivered_count\": 8981,\n    \"open_count\": 5876,\n    \"clicked_count\": 3847,\n    \"open_rate\": 7138.269916086424,\n    \"click_rate\": 1330.0556001371745,\n    \"metadata\": {},\n    \"notes\": \"\",\n    \"purchased_by\": \"string\",\n    \"purchased_message\": \"string\",\n    \"referrer_url\": \"\",\n    \"risk_score\": 7026.7751763336055,\n    \"stripe_coupon\": {\n      \"coupon_id\": \"string\",\n      \"percent_off\": \"string\",\n      \"amount_off\": 1325,\n      \"name\": \"string\"\n    },\n    \"stripe_customer_id\": \"string\",\n    \"subscriber_import_id\": \"string\",\n    \"form_id\": \"string\",\n    \"firewall_reasons\": [\n      {\n        \"code\": \"embedded_form_honeypot\",\n        \"reason\": \"string\"\n      },\n      {\n        \"code\": \"email_address_length\",\n        \"reason\": \"string\"\n      }\n    ],\n    \"undeliverability_date\": \"2005-05-23T00:38:00.305Z\",\n    \"undeliverability_reason\": \"email_blocked\",\n    \"unsubscription_date\": \"2006-12-19T13:10:03.246Z\",\n    \"unsubscription_reason\": \"string\",\n    \"upgrade_date\": \"2000-04-13T13:11:20.978Z\",\n    \"stripe_customer\": {\n      \"key_0\": 5362,\n      \"key_1\": 8867.889996554033\n    },\n    \"stripe_subscription\": {\n      \"key_0\": false,\n      \"key_1\": 1833\n    }\n  },\n  \"email\": {\n    \"id\": \"string\",\n    \"creation_date\": \"1951-02-02T03:27:09.567Z\",\n    \"absolute_url\": \"string\",\n    \"body\": \"string\",\n    \"canonical_url\": \"string\",\n    \"commenting_mode\": \"disabled\",\n    \"description\": \"string\",\n    \"archival_mode\": \"enabled_for_paid_subscribers\",\n    \"featured\": false,\n    \"filters\": {\n      \"filters\": [\n        {\n          \"field\": \"string\",\n          \"operator\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": \"string\"\n        },\n        {\n          \"field\": \"string\",\n          \"operator\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": \"string\"\n        }\n      ],\n      \"groups\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n        }\n      ],\n      \"predicate\": \"or\"\n    },\n    \"image\": \"string\",\n    \"modification_date\": \"2020-05-25T18:42:55.872Z\",\n    \"related_email_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"should_trigger_pay_per_email_billing\": true,\n    \"source\": \"app\",\n    \"status\": \"draft\",\n    \"subject\": \"string\",\n    \"analytics\": {\n      \"recipients\": 0,\n      \"deliveries\": 0,\n      \"opens\": 0,\n      \"clicks\": 0,\n      \"temporary_failures\": 0,\n      \"permanent_failures\": 0,\n      \"unsubscriptions\": 0,\n      \"complaints\": 0,\n      \"survey_responses\": 0,\n      \"webmentions\": 0,\n      \"page_views_lifetime\": 0,\n      \"page_views_30\": 0,\n      \"page_views_7\": 0,\n      \"subscriptions\": 0,\n      \"paid_subscriptions\": 0,\n      \"replies\": 0,\n      \"comments\": 0,\n      \"social_mentions\": 0,\n      \"temporary_failure_breakdown\": [\n        {\n          \"code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"count\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"count\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"permanent_failure_breakdown\": [\n        {\n          \"code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"count\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"count\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ]\n    },\n    \"callouts\": [\n      \"first_send_on_sending_domain\",\n      \"first_send_on_sending_domain\"\n    ],\n    \"attachments\": [\n      \"string\",\n      \"string\"\n    ],\n    \"email_type\": \"public\",\n    \"metadata\": {},\n    \"publish_date\": \"2019-07-01T19:05:29.884Z\",\n    \"secondary_id\": 8983,\n    \"slug\": \"string\",\n    \"suppression_reason\": \"internal_auditing\",\n    \"template\": \"custom\"\n  },\n  \"automation\": {\n    \"id\": \"string\",\n    \"creation_date\": \"1949-11-05T21:44:42.936Z\",\n    \"name\": \"string\",\n    \"status\": \"active\",\n    \"trigger\": \"subscriber.activation_bounced\",\n    \"actions\": [\n      {\n        \"type\": \"create_tumblr_post\",\n        \"metadata\": {\n          \"key_0\": 4106.147463629744\n        },\n        \"timing\": {\n          \"time\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"delay\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"type\": \"create_arena_post\",\n        \"metadata\": {\n          \"key_0\": 3839.5461932365583,\n          \"key_1\": 5583\n        },\n        \"timing\": {\n          \"time\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"delay\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"filters\": {\n      \"filters\": [\n        {\n          \"field\": \"string\",\n          \"operator\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": \"string\"\n        },\n        {\n          \"field\": \"string\",\n          \"operator\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": \"string\"\n        }\n      ],\n      \"groups\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n        }\n      ],\n      \"predicate\": \"and\"\n    },\n    \"metadata\": {\n      \"key_0\": 6628,\n      \"key_1\": \"string\",\n      \"key_2\": 3516,\n      \"key_3\": 8353.8260619983,\n      \"key_4\": \"string\"\n    },\n    \"should_evaluate_filter_after_delay\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "773cc632-a824-4df9-8013-0caf6b1ea6dc",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "92062102-bd2d-4f17-a0e0-cc103a03e2af",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b0cdf5a2-1639-47ee-9bca-d13f6494a9e7",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "05853177-c1f4-4020-b634-3b78c396e88a",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "2769"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests permitted per minute.",
+                  "key": "X-RateLimit-Limit",
+                  "value": "2769"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests remaining in the current window.",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "2769"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp at which the window resets.",
+                  "key": "X-RateLimit-Reset",
+                  "value": "2769"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.buttondown.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e7dfda3a-2d3a-4aa8-910a-e1c35714de0f",
+    "name": "Buttondown Events API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction) for guides and examples.",
+      "type": "text/plain"
+    }
+  }
+}

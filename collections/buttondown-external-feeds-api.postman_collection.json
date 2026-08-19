@@ -1,0 +1,3188 @@
+{
+  "item": [
+    {
+      "id": "fc9f8d88-2d00-4e3e-ba7a-f0a78fc7b8a6",
+      "name": "External Feeds",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "dcfa335d-3249-45a1-9bbb-ba0d9eb186de",
+          "name": "Create External Feed",
+          "request": {
+            "name": "Create External Feed",
+            "description": {
+              "content": "Create a new external feed",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "external_feeds"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"url\": \"<string>\",\n  \"behavior\": \"<string>\",\n  \"cadence\": \"<string>\",\n  \"filters\": {\n    \"filters\": [\n      {\n        \"field\": \"<string>\",\n        \"operator\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"operator\": \"<string>\",\n        \"value\": \"<string>\"\n      }\n    ],\n    \"groups\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      }\n    ],\n    \"predicate\": \"<string>\"\n  },\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\",\n  \"cadence_metadata\": {\n    \"time\": \"<string>\",\n    \"weekday\": \"<string>\",\n    \"monthday\": \"<string>\"\n  },\n  \"label\": \"\",\n  \"metadata\": {\n    \"key_0\": 9327.873389596283\n  },\n  \"skip_old_items\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f0464931-d4e1-457d-91c9-05ec1719f75e",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"http://lorem-rss.herokuapp.com/feed\",\n  \"behavior\": \"draft\",\n  \"cadence\": \"daily\",\n  \"filters\": {\n    \"filters\": [\n      {\n        \"field\": \"string\",\n        \"operator\": \"is_empty\",\n        \"value\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"operator\": \"greater_than\",\n        \"value\": \"string\"\n      }\n    ],\n    \"groups\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      }\n    ],\n    \"predicate\": \"or\"\n  },\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\",\n  \"cadence_metadata\": {\n    \"time\": \"2\",\n    \"weekday\": \"tuesday\",\n    \"monthday\": \"lastday\"\n  },\n  \"label\": \"\",\n  \"metadata\": {\n    \"foo\": \"bar\"\n  },\n  \"skip_old_items\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"creation_date\": \"1988-03-31T01:46:39.253Z\",\n  \"status\": \"inactive\",\n  \"behavior\": \"emails\",\n  \"cadence\": \"daily\",\n  \"cadence_metadata\": {\n    \"key_0\": \"string\"\n  },\n  \"filters\": {\n    \"filters\": [\n      {\n        \"field\": \"string\",\n        \"operator\": \"contains\",\n        \"value\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"operator\": \"not_equals\",\n        \"value\": \"string\"\n      }\n    ],\n    \"groups\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      }\n    ],\n    \"predicate\": \"or\"\n  },\n  \"url\": \"string\",\n  \"subject\": \"string\",\n  \"body\": \"string\",\n  \"label\": \"string\",\n  \"skip_old_items\": true,\n  \"last_checked_date\": \"1952-08-18T20:15:53.336Z\",\n  \"metadata\": {\n    \"foo\": \"bar\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bffe87dd-b885-4b74-8a8f-cf223ffe3538",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"http://lorem-rss.herokuapp.com/feed\",\n  \"behavior\": \"draft\",\n  \"cadence\": \"daily\",\n  \"filters\": {\n    \"filters\": [\n      {\n        \"field\": \"string\",\n        \"operator\": \"is_empty\",\n        \"value\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"operator\": \"greater_than\",\n        \"value\": \"string\"\n      }\n    ],\n    \"groups\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      }\n    ],\n    \"predicate\": \"or\"\n  },\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\",\n  \"cadence_metadata\": {\n    \"time\": \"2\",\n    \"weekday\": \"tuesday\",\n    \"monthday\": \"lastday\"\n  },\n  \"label\": \"\",\n  \"metadata\": {\n    \"foo\": \"bar\"\n  },\n  \"skip_old_items\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "934a4b10-9445-43f0-a81e-2a274558b0ca",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"http://lorem-rss.herokuapp.com/feed\",\n  \"behavior\": \"draft\",\n  \"cadence\": \"daily\",\n  \"filters\": {\n    \"filters\": [\n      {\n        \"field\": \"string\",\n        \"operator\": \"is_empty\",\n        \"value\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"operator\": \"greater_than\",\n        \"value\": \"string\"\n      }\n    ],\n    \"groups\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      }\n    ],\n    \"predicate\": \"or\"\n  },\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\",\n  \"cadence_metadata\": {\n    \"time\": \"2\",\n    \"weekday\": \"tuesday\",\n    \"monthday\": \"lastday\"\n  },\n  \"label\": \"\",\n  \"metadata\": {\n    \"foo\": \"bar\"\n  },\n  \"skip_old_items\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bc71e05d-8e6e-41cd-b006-b4ae7a1d5e70",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"http://lorem-rss.herokuapp.com/feed\",\n  \"behavior\": \"draft\",\n  \"cadence\": \"daily\",\n  \"filters\": {\n    \"filters\": [\n      {\n        \"field\": \"string\",\n        \"operator\": \"is_empty\",\n        \"value\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"operator\": \"greater_than\",\n        \"value\": \"string\"\n      }\n    ],\n    \"groups\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      }\n    ],\n    \"predicate\": \"or\"\n  },\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\",\n  \"cadence_metadata\": {\n    \"time\": \"2\",\n    \"weekday\": \"tuesday\",\n    \"monthday\": \"lastday\"\n  },\n  \"label\": \"\",\n  \"metadata\": {\n    \"foo\": \"bar\"\n  },\n  \"skip_old_items\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "beab8d4d-f777-4eb3-bc84-6c568f36dc3d",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"http://lorem-rss.herokuapp.com/feed\",\n  \"behavior\": \"draft\",\n  \"cadence\": \"daily\",\n  \"filters\": {\n    \"filters\": [\n      {\n        \"field\": \"string\",\n        \"operator\": \"is_empty\",\n        \"value\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"operator\": \"greater_than\",\n        \"value\": \"string\"\n      }\n    ],\n    \"groups\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      }\n    ],\n    \"predicate\": \"or\"\n  },\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\",\n  \"cadence_metadata\": {\n    \"time\": \"2\",\n    \"weekday\": \"tuesday\",\n    \"monthday\": \"lastday\"\n  },\n  \"label\": \"\",\n  \"metadata\": {\n    \"foo\": \"bar\"\n  },\n  \"skip_old_items\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "be7690ca-8c6e-4d7a-91f0-5104669b6ec5",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"http://lorem-rss.herokuapp.com/feed\",\n  \"behavior\": \"draft\",\n  \"cadence\": \"daily\",\n  \"filters\": {\n    \"filters\": [\n      {\n        \"field\": \"string\",\n        \"operator\": \"is_empty\",\n        \"value\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"operator\": \"greater_than\",\n        \"value\": \"string\"\n      }\n    ],\n    \"groups\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      }\n    ],\n    \"predicate\": \"or\"\n  },\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\",\n  \"cadence_metadata\": {\n    \"time\": \"2\",\n    \"weekday\": \"tuesday\",\n    \"monthday\": \"lastday\"\n  },\n  \"label\": \"\",\n  \"metadata\": {\n    \"foo\": \"bar\"\n  },\n  \"skip_old_items\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"type\": \"string\",\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "70649a4f-3747-4872-84a2-2f220e29ce28",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"http://lorem-rss.herokuapp.com/feed\",\n  \"behavior\": \"draft\",\n  \"cadence\": \"daily\",\n  \"filters\": {\n    \"filters\": [\n      {\n        \"field\": \"string\",\n        \"operator\": \"is_empty\",\n        \"value\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"operator\": \"greater_than\",\n        \"value\": \"string\"\n      }\n    ],\n    \"groups\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      }\n    ],\n    \"predicate\": \"or\"\n  },\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\",\n  \"cadence_metadata\": {\n    \"time\": \"2\",\n    \"weekday\": \"tuesday\",\n    \"monthday\": \"lastday\"\n  },\n  \"label\": \"\",\n  \"metadata\": {\n    \"foo\": \"bar\"\n  },\n  \"skip_old_items\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "5835"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests permitted per minute.",
+                  "key": "X-RateLimit-Limit",
+                  "value": "5835"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests remaining in the current window.",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "5835"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp at which the window resets.",
+                  "key": "X-RateLimit-Reset",
+                  "value": "5835"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "50631fa0-1a4a-4678-9241-4c87c16c7b02",
+          "name": "List External Feed",
+          "request": {
+            "name": "List External Feed",
+            "description": {
+              "content": "List all external feeds",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "external_feeds"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "The page number of the paginated response."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "50f09aa9-1009-4cba-8a3a-d282b61eaeda",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"id\": \"string\",\n      \"creation_date\": \"1969-06-23T10:13:43.605Z\",\n      \"status\": \"failing\",\n      \"behavior\": \"draft\",\n      \"cadence\": \"daily\",\n      \"cadence_metadata\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"filters\": {\n        \"filters\": [\n          {\n            \"field\": \"string\",\n            \"operator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value\": \"string\"\n          },\n          {\n            \"field\": \"string\",\n            \"operator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value\": \"string\"\n          }\n        ],\n        \"groups\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n          }\n        ],\n        \"predicate\": \"and\"\n      },\n      \"url\": \"string\",\n      \"subject\": \"string\",\n      \"body\": \"string\",\n      \"label\": \"string\",\n      \"skip_old_items\": false,\n      \"last_checked_date\": \"2006-08-12T15:14:20.441Z\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"creation_date\": \"2004-04-09T21:46:34.477Z\",\n      \"status\": \"deleted\",\n      \"behavior\": \"draft\",\n      \"cadence\": \"daily\",\n      \"cadence_metadata\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      },\n      \"filters\": {\n        \"filters\": [\n          {\n            \"field\": \"string\",\n            \"operator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value\": \"string\"\n          },\n          {\n            \"field\": \"string\",\n            \"operator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value\": \"string\"\n          }\n        ],\n        \"groups\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n          }\n        ],\n        \"predicate\": \"or\"\n      },\n      \"url\": \"string\",\n      \"subject\": \"string\",\n      \"body\": \"string\",\n      \"label\": \"string\",\n      \"skip_old_items\": true,\n      \"last_checked_date\": \"2006-10-09T09:54:24.565Z\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    }\n  ],\n  \"count\": 374,\n  \"next\": \"string\",\n  \"previous\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f60cb47f-b0c3-4556-9d68-462a37c09136",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f1fcaf1c-d490-4433-aeb0-1e386bf91b03",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c94a88fb-c18b-4f34-a12b-67fe34fa7d24",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "58bcefda-5335-4902-93e1-e0f4bb74b949",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "5835"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests permitted per minute.",
+                  "key": "X-RateLimit-Limit",
+                  "value": "5835"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests remaining in the current window.",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "5835"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp at which the window resets.",
+                  "key": "X-RateLimit-Reset",
+                  "value": "5835"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2d58affe-8484-47ca-8e59-394014a8eb49",
+          "name": "Update External Feed",
+          "request": {
+            "name": "Update External Feed",
+            "description": {
+              "content": "Update an external feed's properties",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "external_feeds",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"behavior\": \"<string>\",\n  \"cadence\": \"<string>\",\n  \"cadence_metadata\": {\n    \"time\": \"<string>\",\n    \"weekday\": \"<string>\",\n    \"monthday\": \"<string>\"\n  },\n  \"filters\": {\n    \"filters\": [\n      {\n        \"field\": \"<string>\",\n        \"operator\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"operator\": \"<string>\",\n        \"value\": \"<string>\"\n      }\n    ],\n    \"groups\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      }\n    ],\n    \"predicate\": \"<string>\"\n  },\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\",\n  \"label\": \"<string>\",\n  \"status\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": 735.2781760069494,\n    \"key_1\": 1504.8667987557685\n  },\n  \"skip_old_items\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9e34db15-500d-4226-8104-449f55853af8",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"behavior\": \"draft\",\n  \"cadence\": \"daily\",\n  \"cadence_metadata\": {\n    \"time\": \"3\",\n    \"weekday\": \"thursday\",\n    \"monthday\": \"sunday\"\n  },\n  \"filters\": {\n    \"filters\": [\n      {\n        \"field\": \"string\",\n        \"operator\": \"is_not_empty\",\n        \"value\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"operator\": \"is_not_empty\",\n        \"value\": \"string\"\n      }\n    ],\n    \"groups\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      }\n    ],\n    \"predicate\": \"or\"\n  },\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\",\n  \"label\": \"<string>\",\n  \"status\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": \"string\"\n  },\n  \"skip_old_items\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"creation_date\": \"1988-03-31T01:46:39.253Z\",\n  \"status\": \"inactive\",\n  \"behavior\": \"emails\",\n  \"cadence\": \"daily\",\n  \"cadence_metadata\": {\n    \"key_0\": \"string\"\n  },\n  \"filters\": {\n    \"filters\": [\n      {\n        \"field\": \"string\",\n        \"operator\": \"contains\",\n        \"value\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"operator\": \"not_equals\",\n        \"value\": \"string\"\n      }\n    ],\n    \"groups\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      }\n    ],\n    \"predicate\": \"or\"\n  },\n  \"url\": \"string\",\n  \"subject\": \"string\",\n  \"body\": \"string\",\n  \"label\": \"string\",\n  \"skip_old_items\": true,\n  \"last_checked_date\": \"1952-08-18T20:15:53.336Z\",\n  \"metadata\": {\n    \"foo\": \"bar\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ad0fc0f1-8f72-4f1e-b66f-094b1e8d97ec",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"behavior\": \"draft\",\n  \"cadence\": \"daily\",\n  \"cadence_metadata\": {\n    \"time\": \"3\",\n    \"weekday\": \"thursday\",\n    \"monthday\": \"sunday\"\n  },\n  \"filters\": {\n    \"filters\": [\n      {\n        \"field\": \"string\",\n        \"operator\": \"is_not_empty\",\n        \"value\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"operator\": \"is_not_empty\",\n        \"value\": \"string\"\n      }\n    ],\n    \"groups\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      }\n    ],\n    \"predicate\": \"or\"\n  },\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\",\n  \"label\": \"<string>\",\n  \"status\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": \"string\"\n  },\n  \"skip_old_items\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d96d7a32-41c0-4db6-a842-d07f4bf1d61d",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"behavior\": \"draft\",\n  \"cadence\": \"daily\",\n  \"cadence_metadata\": {\n    \"time\": \"3\",\n    \"weekday\": \"thursday\",\n    \"monthday\": \"sunday\"\n  },\n  \"filters\": {\n    \"filters\": [\n      {\n        \"field\": \"string\",\n        \"operator\": \"is_not_empty\",\n        \"value\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"operator\": \"is_not_empty\",\n        \"value\": \"string\"\n      }\n    ],\n    \"groups\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      }\n    ],\n    \"predicate\": \"or\"\n  },\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\",\n  \"label\": \"<string>\",\n  \"status\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": \"string\"\n  },\n  \"skip_old_items\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "277a9d1d-e2a6-48f5-9391-480b767dd854",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"behavior\": \"draft\",\n  \"cadence\": \"daily\",\n  \"cadence_metadata\": {\n    \"time\": \"3\",\n    \"weekday\": \"thursday\",\n    \"monthday\": \"sunday\"\n  },\n  \"filters\": {\n    \"filters\": [\n      {\n        \"field\": \"string\",\n        \"operator\": \"is_not_empty\",\n        \"value\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"operator\": \"is_not_empty\",\n        \"value\": \"string\"\n      }\n    ],\n    \"groups\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      }\n    ],\n    \"predicate\": \"or\"\n  },\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\",\n  \"label\": \"<string>\",\n  \"status\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": \"string\"\n  },\n  \"skip_old_items\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3397edfc-27e4-4b0b-8096-f50a3f09e64b",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"behavior\": \"draft\",\n  \"cadence\": \"daily\",\n  \"cadence_metadata\": {\n    \"time\": \"3\",\n    \"weekday\": \"thursday\",\n    \"monthday\": \"sunday\"\n  },\n  \"filters\": {\n    \"filters\": [\n      {\n        \"field\": \"string\",\n        \"operator\": \"is_not_empty\",\n        \"value\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"operator\": \"is_not_empty\",\n        \"value\": \"string\"\n      }\n    ],\n    \"groups\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      }\n    ],\n    \"predicate\": \"or\"\n  },\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\",\n  \"label\": \"<string>\",\n  \"status\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": \"string\"\n  },\n  \"skip_old_items\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fa21632a-4ef1-4d84-b0d1-e8b52269ad2c",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"behavior\": \"draft\",\n  \"cadence\": \"daily\",\n  \"cadence_metadata\": {\n    \"time\": \"3\",\n    \"weekday\": \"thursday\",\n    \"monthday\": \"sunday\"\n  },\n  \"filters\": {\n    \"filters\": [\n      {\n        \"field\": \"string\",\n        \"operator\": \"is_not_empty\",\n        \"value\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"operator\": \"is_not_empty\",\n        \"value\": \"string\"\n      }\n    ],\n    \"groups\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      }\n    ],\n    \"predicate\": \"or\"\n  },\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\",\n  \"label\": \"<string>\",\n  \"status\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": \"string\"\n  },\n  \"skip_old_items\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b1faa4dd-f7c6-40ec-824c-2b9c17dd4a6a",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"behavior\": \"draft\",\n  \"cadence\": \"daily\",\n  \"cadence_metadata\": {\n    \"time\": \"3\",\n    \"weekday\": \"thursday\",\n    \"monthday\": \"sunday\"\n  },\n  \"filters\": {\n    \"filters\": [\n      {\n        \"field\": \"string\",\n        \"operator\": \"is_not_empty\",\n        \"value\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"operator\": \"is_not_empty\",\n        \"value\": \"string\"\n      }\n    ],\n    \"groups\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      }\n    ],\n    \"predicate\": \"or\"\n  },\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\",\n  \"label\": \"<string>\",\n  \"status\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": \"string\"\n  },\n  \"skip_old_items\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"type\": \"string\",\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e0388c0-13ab-4e75-8d55-dad199205887",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"behavior\": \"draft\",\n  \"cadence\": \"daily\",\n  \"cadence_metadata\": {\n    \"time\": \"3\",\n    \"weekday\": \"thursday\",\n    \"monthday\": \"sunday\"\n  },\n  \"filters\": {\n    \"filters\": [\n      {\n        \"field\": \"string\",\n        \"operator\": \"is_not_empty\",\n        \"value\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"operator\": \"is_not_empty\",\n        \"value\": \"string\"\n      }\n    ],\n    \"groups\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      }\n    ],\n    \"predicate\": \"or\"\n  },\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\",\n  \"label\": \"<string>\",\n  \"status\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": \"string\"\n  },\n  \"skip_old_items\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "5835"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests permitted per minute.",
+                  "key": "X-RateLimit-Limit",
+                  "value": "5835"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests remaining in the current window.",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "5835"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp at which the window resets.",
+                  "key": "X-RateLimit-Reset",
+                  "value": "5835"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "993d6850-280e-41d7-ae1c-2c09e5cfb81a",
+          "name": "Delete External Feed",
+          "request": {
+            "name": "Delete External Feed",
+            "description": {
+              "content": "Delete an external feed",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "external_feeds",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2fde0aa2-1d0d-4c7e-81c3-8ceba5986f39",
+              "name": "No Content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1a026dea-89c8-4376-b732-1768495d57b2",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e420caa2-861c-4b2f-b298-3825ba7f323a",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7018a46c-07bf-4136-b92a-3042382078da",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e9e5d59a-0e58-47b1-b444-959c10d64c95",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0eb6552b-ad52-4f39-8203-cf35886320f0",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "5835"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests permitted per minute.",
+                  "key": "X-RateLimit-Limit",
+                  "value": "5835"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests remaining in the current window.",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "5835"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp at which the window resets.",
+                  "key": "X-RateLimit-Reset",
+                  "value": "5835"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f65e3701-7d08-417b-8cb6-d5492460da3d",
+          "name": "Retrieve External Feed",
+          "request": {
+            "name": "Retrieve External Feed",
+            "description": {
+              "content": "Retrieve a specific external feed by its ID",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "external_feeds",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "557ec818-4f2f-467e-90fd-fcbcf6f7ec54",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"creation_date\": \"1988-03-31T01:46:39.253Z\",\n  \"status\": \"inactive\",\n  \"behavior\": \"emails\",\n  \"cadence\": \"daily\",\n  \"cadence_metadata\": {\n    \"key_0\": \"string\"\n  },\n  \"filters\": {\n    \"filters\": [\n      {\n        \"field\": \"string\",\n        \"operator\": \"contains\",\n        \"value\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"operator\": \"not_equals\",\n        \"value\": \"string\"\n      }\n    ],\n    \"groups\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/FilterGroup detected>\"\n      }\n    ],\n    \"predicate\": \"or\"\n  },\n  \"url\": \"string\",\n  \"subject\": \"string\",\n  \"body\": \"string\",\n  \"label\": \"string\",\n  \"skip_old_items\": true,\n  \"last_checked_date\": \"1952-08-18T20:15:53.336Z\",\n  \"metadata\": {\n    \"foo\": \"bar\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "71595f0a-b00a-4510-b1b9-91b3550f9bc7",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0942b268-7281-4f50-9a9e-a288a7aae958",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5cd968dd-0739-44af-a783-f591295e8614",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f45b46df-3d7e-49d9-8073-dba6b2beec20",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "834f3c9c-9bfe-4a59-b485-7de5613ba10f",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "5835"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests permitted per minute.",
+                  "key": "X-RateLimit-Limit",
+                  "value": "5835"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests remaining in the current window.",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "5835"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp at which the window resets.",
+                  "key": "X-RateLimit-Reset",
+                  "value": "5835"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ea9fd6e1-caa2-4184-a667-cbc16c805771",
+          "name": "Poll Items",
+          "request": {
+            "name": "Poll Items",
+            "description": {
+              "content": "Poll for new items in an external feed",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "external_feeds",
+                ":id",
+                "items"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1b65482b-12e2-44bf-a87f-4550cdea5db1",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "19fee08b-4756-4434-8036-6d880d7b7d7e",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2ecd628f-15e6-48e3-a428-b3d5c8090524",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "540af31a-7ab6-4856-87a1-41a844ac40a4",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d86e9b3a-a89b-4fbd-8013-998aa961ca3e",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f9b33b36-a260-4627-bea0-e02ed7e432a0",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "5835"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests permitted per minute.",
+                  "key": "X-RateLimit-Limit",
+                  "value": "5835"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests remaining in the current window.",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "5835"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp at which the window resets.",
+                  "key": "X-RateLimit-Reset",
+                  "value": "5835"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "44162f2d-9422-4aae-a0fa-805365fa3aab",
+          "name": "Retrieve Items",
+          "request": {
+            "name": "Retrieve Items",
+            "description": {
+              "content": "Retrieve items from an external feed",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "external_feeds",
+                ":id",
+                "items"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "expand",
+                  "value": "<string>",
+                  "description": "If provided, expand the given field."
+                },
+                {
+                  "disabled": false,
+                  "key": "expand",
+                  "value": "<string>",
+                  "description": "If provided, expand the given field."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "The page number of the paginated response."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0983d4a5-3bfc-4336-a68b-96de8473ea99",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"id\": \"string\",\n      \"creation_date\": \"2008-02-01T10:59:44.418Z\",\n      \"status\": \"skipped\",\n      \"url\": \"string\",\n      \"publish_date\": \"2002-02-16T23:55:26.801Z\",\n      \"title\": \"string\",\n      \"description\": \"string\",\n      \"content\": \"string\",\n      \"author\": \"string\",\n      \"email_id\": \"string\",\n      \"email\": {\n        \"id\": \"string\",\n        \"creation_date\": \"1971-12-27T18:58:09.996Z\",\n        \"absolute_url\": \"string\",\n        \"body\": \"string\",\n        \"canonical_url\": \"string\",\n        \"commenting_mode\": \"enabled_for_paid_subscribers\",\n        \"description\": \"string\",\n        \"archival_mode\": \"enabled_for_subscribers\",\n        \"featured\": false,\n        \"filters\": {\n          \"filters\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"groups\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"predicate\": \"and\"\n        },\n        \"image\": \"string\",\n        \"modification_date\": \"2004-12-29T12:28:54.349Z\",\n        \"related_email_ids\": [\n          \"string\",\n          \"string\"\n        ],\n        \"should_trigger_pay_per_email_billing\": true,\n        \"source\": \"app\",\n        \"status\": \"draft\",\n        \"subject\": \"string\",\n        \"analytics\": {\n          \"recipients\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deliveries\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"opens\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"clicks\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"temporary_failures\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"permanent_failures\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unsubscriptions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"complaints\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"survey_responses\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"webmentions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"page_views_lifetime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"page_views_30\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"page_views_7\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"subscriptions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paid_subscriptions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"replies\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"comments\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"social_mentions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"temporary_failure_breakdown\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"permanent_failure_breakdown\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"callouts\": [\n          \"first_send_on_sending_domain\",\n          \"first_send_on_sending_domain\"\n        ],\n        \"attachments\": [\n          \"string\",\n          \"string\"\n        ],\n        \"email_type\": \"public\",\n        \"metadata\": {},\n        \"publish_date\": \"1949-10-21T09:37:21.968Z\",\n        \"secondary_id\": 8931,\n        \"slug\": \"string\",\n        \"suppression_reason\": \"law_enforcement\",\n        \"template\": \"plaintext\"\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"creation_date\": \"2001-03-22T02:06:26.093Z\",\n      \"status\": \"skipped\",\n      \"url\": \"string\",\n      \"publish_date\": \"2010-08-26T00:11:13.823Z\",\n      \"title\": \"string\",\n      \"description\": \"string\",\n      \"content\": \"string\",\n      \"author\": \"string\",\n      \"email_id\": \"string\",\n      \"email\": {\n        \"id\": \"string\",\n        \"creation_date\": \"2002-04-14T05:25:20.381Z\",\n        \"absolute_url\": \"string\",\n        \"body\": \"string\",\n        \"canonical_url\": \"string\",\n        \"commenting_mode\": \"disabled\",\n        \"description\": \"string\",\n        \"archival_mode\": \"disabled\",\n        \"featured\": false,\n        \"filters\": {\n          \"filters\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"groups\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"predicate\": \"or\"\n        },\n        \"image\": \"string\",\n        \"modification_date\": \"1993-01-16T06:43:02.418Z\",\n        \"related_email_ids\": [\n          \"string\",\n          \"string\"\n        ],\n        \"should_trigger_pay_per_email_billing\": false,\n        \"source\": \"app\",\n        \"status\": \"draft\",\n        \"subject\": \"string\",\n        \"analytics\": {\n          \"recipients\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deliveries\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"opens\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"clicks\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"temporary_failures\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"permanent_failures\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unsubscriptions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"complaints\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"survey_responses\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"webmentions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"page_views_lifetime\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"page_views_30\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"page_views_7\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"subscriptions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paid_subscriptions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"replies\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"comments\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"social_mentions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"temporary_failure_breakdown\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"permanent_failure_breakdown\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"callouts\": [\n          \"first_send_on_sending_domain\",\n          \"first_send_on_sending_domain\"\n        ],\n        \"attachments\": [\n          \"string\",\n          \"string\"\n        ],\n        \"email_type\": \"public\",\n        \"metadata\": {},\n        \"publish_date\": \"1994-05-06T00:38:53.386Z\",\n        \"secondary_id\": 5782,\n        \"slug\": \"string\",\n        \"suppression_reason\": \"law_enforcement\",\n        \"template\": \"custom\"\n      }\n    }\n  ],\n  \"count\": 9507,\n  \"next\": \"string\",\n  \"previous\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dffbf678-c03a-4522-b28a-14c7d832beb1",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d402f39d-51bf-4e22-bec8-c4c8b517c738",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a6aab53d-3a55-4a8b-b9f5-0a16dacd162a",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8fd3e53e-7ce1-4201-84a8-b284ff84cd7b",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f282f4ca-0cdb-4942-a1fe-5f5f7126a837",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "12813782-ab32-46aa-bb91-6630d0c25af0",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"type\": \"string\",\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "51672b74-4395-4ada-b70f-dbb20eb1075c",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_feeds",
+                    ":id",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "5835"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests permitted per minute.",
+                  "key": "X-RateLimit-Limit",
+                  "value": "5835"
+                },
+                {
+                  "disabled": false,
+                  "description": "Requests remaining in the current window.",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "5835"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp at which the window resets.",
+                  "key": "X-RateLimit-Reset",
+                  "value": "5835"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"code\": \"string\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.buttondown.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8b464d2e-65cf-42c4-83ff-9094bfe1b3fe",
+    "name": "Buttondown External Feeds API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction) for guides and examples.",
+      "type": "text/plain"
+    }
+  }
+}
