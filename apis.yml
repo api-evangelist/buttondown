@@ -32,6 +32,19 @@ tags:
 - Markdown
 - Newsletters
 - Paid Subscriptions
+- Software-as-a-Service
+- Subscribers
+- Webhook
+- Segmentation
+- Developer Tools
+- Marketing
+tags_raw:
+- Analytics
+- Automations
+- Email
+- Markdown
+- Newsletters
+- Paid Subscriptions
 - SaaS
 - Subscribers
 - Webhooks
@@ -50,6 +63,8 @@ apis:
   humanURL: https://docs.buttondown.com/api-accounts-me
   baseURL: https://api.buttondown.com/v1
   tags:
+  - Account
+  tags_raw:
   - Accounts
   properties:
   - type: OpenAPI
@@ -219,6 +234,8 @@ apis:
   humanURL: https://docs.buttondown.com/api-events-retrieve
   baseURL: https://api.buttondown.com/v1
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
@@ -236,6 +253,8 @@ apis:
   humanURL: https://docs.buttondown.com/api-exports-introduction
   baseURL: https://api.buttondown.com/v1
   tags:
+  - Export
+  tags_raw:
   - Exports
   properties:
   - type: OpenAPI
@@ -285,6 +304,8 @@ apis:
   humanURL: https://docs.buttondown.com/api-images-introduction
   baseURL: https://api.buttondown.com/v1
   tags:
+  - Image
+  tags_raw:
   - Images
   properties:
   - type: OpenAPI
@@ -500,6 +521,8 @@ apis:
   humanURL: https://docs.buttondown.com/api-users-create
   baseURL: https://api.buttondown.com/v1
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
@@ -517,6 +540,8 @@ apis:
   humanURL: https://docs.buttondown.com/api-webhooks-introduction
   baseURL: https://api.buttondown.com/v1
   tags:
+  - Webhook
+  tags_raw:
   - Webhooks
   properties:
   - type: OpenAPI
@@ -536,6 +561,12 @@ apis:
     integrations with Discord, Memberful, YouTube, Stripe, Shopify, BigCommerce, Patreon and RSS.
   humanURL: https://buttondown.com/
   tags:
+  - Analytics
+  - Email
+  - Markdown
+  - Newsletters
+  - Software-as-a-Service
+  tags_raw:
   - Analytics
   - Email
   - Markdown
