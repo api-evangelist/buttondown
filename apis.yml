@@ -9,6 +9,19 @@ description: Buttondown is an independent, bootstrapped email newsletter platfor
   idempotency keys, and a first-party CLI for syncing newsletter content to a local folder.
 type: Index
 kind: company
+deliveryModel:
+  model: unknown
+  open_source: unknown
+  commercial: true
+  callable_host: true
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - openapi
+  - pricing
+  - repository-unlicensed
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
