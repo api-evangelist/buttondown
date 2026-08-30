@@ -1,0 +1,178 @@
+openapi: 3.2.0
+info:
+  title: Buttondown Webhooks API
+  version: 1.0.0
+  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction) for guides and examples.
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://api.buttondown.com/v1
+security:
+- ApiKeyAuth: []
+tags:
+- name: Buttondown Webhooks API
+paths: {}
+webhooks:
+  event:
+    post:
+      operationId: webhook_event
+      security: []
+      summary: Event notification
+      description: 'When an event you''ve subscribed to occurs, Buttondown sends an HTTP `POST` to your configured webhook URL. If the webhook has a signing key, the request carries an `X-Buttondown-Signature: sha256=<hmac>` header — an HMAC-SHA256 of the raw request body keyed with your signing key. Respond with any 2xx status to acknowledge receipt; five consecutive non-2xx responses disable the webhook.'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookEvent'
+      responses:
+        2XX:
+          description: Return any 2xx status to acknowledge the event.
+      tags:
+      - Buttondown Webhooks API
+components:
+  schemas:
+    WebhookEvent:
+      type: object
+      title: WebhookEvent
+      description: The payload Buttondown delivers to a configured webhook URL when a subscribed event fires.
+      properties:
+        id:
+          type: string
+          title: Id
+          description: The unique TypeID of the event that triggered this delivery.
+          example: ext_evt_00000000000000000000000000
+        event_type:
+          allOf:
+          - $ref: '#/components/schemas/ExternalEventType'
+          description: The type of event that triggered this delivery.
+        data:
+          type: object
+          title: Data
+          additionalProperties: true
+          description: Event-specific metadata. The shape varies by `event_type`. Accounts with more than one newsletter also receive a `newsletter` ID to disambiguate which one the event belongs to.
+      required:
+      - id
+      - event_type
+      - data
+    ExternalEventType:
+      description: 'Various types of events that are recorded by Buttondown, both in terms of exogenous systems
+
+        like Stripe and Memberful, and endogenous ones like email opens and clicks. (In general, if anything
+
+        important ever happens that could be relevant to your newsletter, we have an event type for it!)
+
+
+        These event types power lots of things within Buttondown. They''re used to trigger automations, webhooks,
+
+        and analytics.
+
+
+        (Note that the `/v1/events` API speaks an older, shorter vocabulary for subscriber engagement —
+
+        `clicked` rather than `subscriber.clicked` — a relic of a previous events system. Each of those
+
+        names maps onto one of the `subscriber.*` types below.)
+
+
+        In general, our event namespacing tries to hew to the following pattern:
+
+
+        `<source>.<object>.<action>`
+
+
+        When wondering which object we are referring to, default to the _more granular_ object.
+
+
+        For instance, an email being sent to a subscriber is `subscriber.delivered`, not `email.sent`.'
+      enum:
+      - advertising_slot.inquiry
+      - advertising_slot.purchased
+      - automation.invoked
+      - date.day.started
+      - date.month.started
+      - date.week.started
+      - date.year.started
+      - bigcommerce.customer.created
+      - bigcommerce.customer.updated
+      - bigcommerce.order.created
+      - bigcommerce.order.updated
+      - email.created
+      - email.deleted
+      - email.send.started
+      - email.sent
+      - email.status.changed
+      - email.updated
+      - external_feed_item.created
+      - export.completed
+      - export.created
+      - export.failed
+      - firewall.blocked
+      - mention.created
+      - memberful.member.updated
+      - memberful.subscription.created
+      - memberful.subscription.deleted
+      - note.created
+      - note.deleted
+      - patreon.member.updated
+      - patreon.membership.created
+      - patreon.membership.deleted
+      - shopify.customer.created
+      - shopify.customer.updated
+      - social_mention.created
+      - stripe.checkout.session.completed
+      - stripe.customer.updated
+      - stripe.invoice.upcoming
+      - stripe.subscription.activated
+      - stripe.subscription.churning
+      - stripe.subscription.deactivated
+      - subscriber.activation_bounced
+      - subscriber.activation_clicked
+      - subscriber.activation_complained
+      - subscriber.activation_deferred
+      - subscriber.activation_delivered
+      - subscriber.activation_opened
+      - subscriber.activation_rejected
+      - subscriber.bounced
+      - subscriber.changed_email
+      - subscriber.churned
+      - subscriber.clicked
+      - subscriber.commented
+      - subscriber.complained
+      - subscriber.confirmed
+      - subscriber.created
+      - subscriber.deferred
+      - subscriber.deleted
+      - subscriber.delivered
+      - subscriber.opened
+      - subscriber.paid
+      - subscriber.paused
+      - subscriber.resumed
+      - subscriber.referred
+      - subscriber.referred.paid
+      - subscriber.rejected
+      - subscriber.replied
+      - subscriber.sent
+      - subscriber.responded_to_survey
+      - subscriber.tags.changed
+      - subscriber.trial_ended
+      - subscriber.trial_started
+      - subscriber.type.changed
+      - subscriber.unsubscribed
+      - subscriber.updated
+      - subscriber.viewed_checkout_page
+      - survey.cleared_responses
+      - survey.created
+      - survey.deleted
+      - survey.updated
+      - form.created
+      - form.deleted
+      - form.updated
+      title: Type
+      type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: API key passed as 'Token <your-api-key>' in the Authorization header.
