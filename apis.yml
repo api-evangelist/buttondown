@@ -33,9 +33,12 @@ accessModel:
   source:
   - plans
   - authentication
-  generated: '2026-07-22'
+  - rate-limits
+  - security
+  - sandbox
+  generated: '2026-09-03'
   method: derived
-position: Consumer
+position: Consuming
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/buttondown.png
 tags:
@@ -648,6 +651,9 @@ apis:
   - type: OpenAPI
     url: openapi/buttondown-buttondown-webhooks-api-api-openapi.yml
 common:
+- type: CapabilityMap
+  url: capabilities/buttondown-capability-edges.yml
+  name: Buttondown Business Capability Map
 - type: OpenAPI
   url: openapi/_original/buttondown-openapi.json
 - type: AgenticAccess
