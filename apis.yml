@@ -44,7 +44,7 @@ access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/buttondown.png
 tags:
 - Analytics
-- Automations
+- Automation
 - Email
 - Markdown
 - Newsletters
@@ -154,6 +154,8 @@ apis:
   humanURL: https://docs.buttondown.com/api-automation-introduction
   baseURL: https://api.buttondown.com/v1
   tags:
+  - Automation
+  tags_raw:
   - Automations
   properties:
   - type: OpenAPI
@@ -243,6 +245,8 @@ apis:
   humanURL: https://docs.buttondown.com/api-emails-introduction
   baseURL: https://api.buttondown.com/v1
   tags:
+  - Email
+  tags_raw:
   - Emails
   properties:
   - type: OpenAPI
@@ -355,6 +359,8 @@ apis:
   humanURL: https://docs.buttondown.com/api-imports-introduction
   baseURL: https://api.buttondown.com/v1
   tags:
+  - Import
+  tags_raw:
   - Imports
   properties:
   - type: OpenAPI
