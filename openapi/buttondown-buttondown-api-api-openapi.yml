@@ -1,17 +1,15 @@
 openapi: 3.2.0
 info:
-  title: Buttondown Webhooks API
+  title: Buttondown API
   version: 1.0.0
-  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction) for guides and examples.
+  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See the documentation for guides and examples.
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
 servers:
 - url: https://api.buttondown.com/v1
-security:
-- ApiKeyAuth: []
 tags:
-- name: Buttondown Webhooks API
+- name: Buttondown API
 paths: {}
 webhooks:
   event:
@@ -19,7 +17,7 @@ webhooks:
       operationId: webhook_event
       security: []
       summary: Event notification
-      description: 'When an event you''ve subscribed to occurs, Buttondown sends an HTTP `POST` to your configured webhook URL. If the webhook has a signing key, the request carries an `X-Buttondown-Signature: sha256=<hmac>` header — an HMAC-SHA256 of the raw request body keyed with your signing key. Respond with any 2xx status to acknowledge receipt; five consecutive non-2xx responses disable the webhook.'
+      description: 'When an event you''ve subscribed to occurs, Buttondown sends an HTTP `POST` to your configured webhook URL. If the webhook has a signing key, the request carries an `X-Buttondown-Signature: sha256=` header — an HMAC-SHA256 of the raw request body keyed with your signing key. Respond with any 2xx status to acknowledge receipt; five consecutive non-2xx responses disable the webhook.'
       requestBody:
         content:
           application/json:
@@ -29,7 +27,7 @@ webhooks:
         2XX:
           description: Return any 2xx status to acknowledge the event.
       tags:
-      - Buttondown Webhooks API
+      - Buttondown API
 components:
   schemas:
     WebhookEvent:

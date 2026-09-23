@@ -1,16 +1,13 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Buttondown API Requests API
   version: 1.0.0
-  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction)
-    for guides and examples.
+  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See the documentation for guides and examples.
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
 servers:
 - url: https://api.buttondown.com/v1
-security:
-- ApiKeyAuth: []
 tags:
 - name: API Requests
 paths:
@@ -90,15 +87,13 @@ paths:
         name: api_key_id
         schema:
           default: []
-          description: If provided, only return requests made with the given [API key](https://docs.buttondown.com/api-authentication)
-            ID(s).
+          description: If provided, only return requests made with the given [API key](https://docs.buttondown.com/api-authentication) ID(s).
           items:
             type: string
           title: Api Key Id
           type: array
         required: false
-        description: If provided, only return requests made with the given [API key](https://docs.buttondown.com/api-authentication)
-          ID(s).
+        description: If provided, only return requests made with the given [API key](https://docs.buttondown.com/api-authentication) ID(s).
       - in: query
         name: creation_date__gt
         schema:
@@ -284,74 +279,23 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    APIRequest:
-      description: Represents a request to the API (api.buttondown.com).
+    APIRequestList:
       properties:
-        id:
-          description: A unique TypeID associated with the object.
-          title: Id
-          type: string
-        creation_date:
-          description: The date and time at which the object was first created.
-          format: date-time
-          title: Creation Date
-          type: string
-        status_code:
-          description: The HTTP status code the API returned.
-          title: Status Code
-          type: integer
-        path:
-          description: The request path (e.g. `/v1/subscribers`).
-          title: Path
-          type: string
-        method:
-          description: The HTTP method used (e.g. `GET`, `POST`).
-          title: Method
-          type: string
-        source:
-          $ref: '#/components/schemas/APIRequestSource'
-          description: Where the request originated (e.g. `api`, `dashboard`).
-        version:
-          description: The API version the request was made against.
-          enum:
-          - '2024-07-01'
-          - '2024-08-01'
-          - '2024-08-15'
-          - '2024-09-30'
-          - '2024-12-30'
-          - '2025-01-02'
-          - '2025-05-19'
-          - '2025-06-01'
-          - '2026-01-01'
-          - '2026-04-01'
-          title: Version
-          type: string
-        ip_address:
-          description: The IP address the request was made from.
-          title: Ip Address
-          type: string
-        api_key_id:
+        results:
+          description: The list of API requests on this page.
+          items:
+            $ref: '#/components/schemas/APIRequest'
+          title: Results
+          type: array
+        cursor:
           anyOf:
           - type: string
           - type: 'null'
-          description: The ID of the API key used, if authenticated via API key.
-          title: Api Key Id
-        api_key_label:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The human-readable label of the API key used, if any.
-          title: Api Key Label
+          description: An opaque cursor to pass back to fetch the next page, or null if this is the last page.
+          title: Cursor
       required:
-      - id
-      - creation_date
-      - status_code
-      - path
-      - method
-      - source
-      - version
-      - ip_address
-      title: APIRequest
+      - results
+      title: APIRequestList
       type: object
     APIRequestDetail:
       description: Represents a request to the API (api.buttondown.com).
@@ -440,24 +384,6 @@ components:
       - headers
       title: APIRequestDetail
       type: object
-    APIRequestList:
-      properties:
-        results:
-          description: The list of API requests on this page.
-          items:
-            $ref: '#/components/schemas/APIRequest'
-          title: Results
-          type: array
-        cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: An opaque cursor to pass back to fetch the next page, or null if this is the last page.
-          title: Cursor
-      required:
-      - results
-      title: APIRequestList
-      type: object
     APIRequestSource:
       type: string
       enum:
@@ -479,6 +405,75 @@ components:
       - zapier
       title: APIRequestSource
       description: An enumeration.
+    APIRequest:
+      description: Represents a request to the API (api.buttondown.com).
+      properties:
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        status_code:
+          description: The HTTP status code the API returned.
+          title: Status Code
+          type: integer
+        path:
+          description: The request path (e.g. `/v1/subscribers`).
+          title: Path
+          type: string
+        method:
+          description: The HTTP method used (e.g. `GET`, `POST`).
+          title: Method
+          type: string
+        source:
+          $ref: '#/components/schemas/APIRequestSource'
+          description: Where the request originated (e.g. `api`, `dashboard`).
+        version:
+          description: The API version the request was made against.
+          enum:
+          - '2024-07-01'
+          - '2024-08-01'
+          - '2024-08-15'
+          - '2024-09-30'
+          - '2024-12-30'
+          - '2025-01-02'
+          - '2025-05-19'
+          - '2025-06-01'
+          - '2026-01-01'
+          - '2026-04-01'
+          title: Version
+          type: string
+        ip_address:
+          description: The IP address the request was made from.
+          title: Ip Address
+          type: string
+        api_key_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The ID of the API key used, if authenticated via API key.
+          title: Api Key Id
+        api_key_label:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The human-readable label of the API key used, if any.
+          title: Api Key Label
+      required:
+      - id
+      - creation_date
+      - status_code
+      - path
+      - method
+      - source
+      - version
+      - ip_address
+      title: APIRequest
+      type: object
     ErrorMessage:
       properties:
         code:
@@ -493,8 +488,7 @@ components:
           additionalProperties:
             type: string
           default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
-            how to resolve it.
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
           title: Metadata
           type: object
       required:

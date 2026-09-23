@@ -1,16 +1,13 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Buttondown Bulk Actions API
   version: 1.0.0
-  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction)
-    for guides and examples.
+  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See the documentation for guides and examples.
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
 servers:
 - url: https://api.buttondown.com/v1
-security:
-- ApiKeyAuth: []
 tags:
 - name: Bulk Actions
 paths:
@@ -154,6 +151,51 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
+    BulkActionStatus:
+      type: string
+      enum:
+      - not_started
+      - in_progress
+      - processed
+      - failed
+      title: BulkActionStatus
+      description: 'Represents the status of a bulk action.
+
+
+        No action is required to move from one state or another; Buttondown
+
+        internally handles the transitions, and exposing the status is for
+
+        observability purposes only.'
+    BulkActionInput:
+      additionalProperties: false
+      properties:
+        type:
+          $ref: '#/components/schemas/BulkActionType'
+          description: The type of bulk action to perform.
+          example: delete_emails
+        metadata:
+          additionalProperties:
+            anyOf:
+            - type: string
+            - items:
+                type: string
+              type: array
+            - additionalProperties: true
+              type: object
+          description: Parameters for the bulk action. The exact shape depends on `type` — typically an `ids` list of object IDs to act on.
+          example:
+            ids:
+            - 611c8825-6f21-4544-bb47-9f50453e9cb0
+            - 418c701a-efe3-4e3d-a404-e635a2f28775
+          minProperties: 1
+          title: Metadata
+          type: object
+      required:
+      - type
+      - metadata
+      title: BulkActionInput
+      type: object
     BulkAction:
       description: 'A bulk action represents, well, a bulk action. It is used to perform
 
@@ -191,8 +233,7 @@ components:
               type: array
             - additionalProperties: true
               type: object
-          description: Parameters for the bulk action. The exact shape depends on `type` — typically an `ids` list of object
-            IDs to act on.
+          description: Parameters for the bulk action. The exact shape depends on `type` — typically an `ids` list of object IDs to act on.
           example:
             ids:
             - 611c8825-6f21-4544-bb47-9f50453e9cb0
@@ -218,52 +259,6 @@ components:
       - status
       title: BulkAction
       type: object
-    BulkActionInput:
-      additionalProperties: false
-      properties:
-        type:
-          $ref: '#/components/schemas/BulkActionType'
-          description: The type of bulk action to perform.
-          example: delete_emails
-        metadata:
-          additionalProperties:
-            anyOf:
-            - type: string
-            - items:
-                type: string
-              type: array
-            - additionalProperties: true
-              type: object
-          description: Parameters for the bulk action. The exact shape depends on `type` — typically an `ids` list of object
-            IDs to act on.
-          example:
-            ids:
-            - 611c8825-6f21-4544-bb47-9f50453e9cb0
-            - 418c701a-efe3-4e3d-a404-e635a2f28775
-          minProperties: 1
-          title: Metadata
-          type: object
-      required:
-      - type
-      - metadata
-      title: BulkActionInput
-      type: object
-    BulkActionStatus:
-      type: string
-      enum:
-      - not_started
-      - in_progress
-      - processed
-      - failed
-      title: BulkActionStatus
-      description: 'Represents the status of a bulk action.
-
-
-        No action is required to move from one state or another; Buttondown
-
-        internally handles the transitions, and exposing the status is for
-
-        observability purposes only.'
     BulkActionType:
       type: string
       enum:
@@ -321,8 +316,7 @@ components:
           additionalProperties:
             type: string
           default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
-            how to resolve it.
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
           title: Metadata
           type: object
       required:

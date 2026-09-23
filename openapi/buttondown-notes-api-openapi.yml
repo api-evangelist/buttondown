@@ -1,16 +1,13 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Buttondown Notes API
   version: 1.0.0
-  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction)
-    for guides and examples.
+  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See the documentation for guides and examples.
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
 servers:
 - url: https://api.buttondown.com/v1
-security:
-- ApiKeyAuth: []
 tags:
 - name: Notes
 paths:
@@ -272,36 +269,6 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    AccessLevel:
-      enum:
-      - none
-      - read
-      - write
-      title: AccessLevel
-      type: string
-      description: An enumeration.
-    ErrorMessage:
-      properties:
-        code:
-          description: The error code.
-          title: Code
-          type: string
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
-            how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage
-      type: object
     InvitationStatus:
       type: string
       enum:
@@ -312,157 +279,6 @@ components:
       - owner
       title: InvitationStatus
       description: An enumeration.
-    Note:
-      properties:
-        id:
-          description: A unique TypeID associated with the object.
-          title: Id
-          type: string
-        creation_date:
-          description: The date and time at which the object was first created.
-          format: date-time
-          title: Creation Date
-          type: string
-        body:
-          description: The text content of the note.
-          example: This subscriber upgraded to a paid plan.
-          minLength: 1
-          pattern: '[\s\S]*\S[\s\S]*'
-          title: Body
-          type: string
-        model_type:
-          description: The type of object this note is attached to (e.g., 'email', 'subscriber').
-          enum:
-          - automation
-          - comment
-          - conversation
-          - email
-          - external_feed
-          - invitation
-          - socialmention
-          - stripe_customer
-          - subscriber
-          - survey
-          - tag
-          - webmention
-          example: email
-          title: Model Type
-          type: string
-        model_id:
-          description: The UUID or TypeID of the object this note is attached to.
-          example: 13121cd6-0dfc-424c-bb12-988b0a32fcb3
-          maxLength: 50
-          pattern: ^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|(?:bsky_ss_doc|bsky_ss_pub|permission|unsub_req|auth_tok|rec_code|webauthn|api_req|aut_att|ext_evt|segment|str_cus|str_sub|sub_imp|sub_tag|adslot|em_dom|em_imp|le_evt|str_pd|adsku|socmn|webmn|book|bulk|cnvs|form|hook|inbx|news|note|resp|rssi|snip|snpr|acc|att|aut|com|emr|exp|img|inv|mes|rss|smp|srv|sub|dr|em)_(?:[0-7][0-9abcdefghjkmnpqrstvwxyz]{25}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}))$
-          title: Model Id
-          type: string
-        metadata:
-          additionalProperties: true
-          title: Metadata
-          type: object
-        source:
-          description: The source of the note. If the note was created by a Buttondown admin, this will be 'admin'; otherwise,
-            it will be 'user'.
-          enum:
-          - admin
-          - user
-          example: admin
-          title: Source
-          type: string
-        user_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Id
-        user:
-          anyOf:
-          - $ref: '#/components/schemas/User'
-          - type: 'null'
-      required:
-      - id
-      - creation_date
-      - body
-      - model_type
-      - model_id
-      - metadata
-      - source
-      title: Note
-      type: object
-    NoteInput:
-      properties:
-        body:
-          description: The text content of the note.
-          example: This subscriber upgraded to a paid plan.
-          minLength: 1
-          pattern: '[\s\S]*\S[\s\S]*'
-          title: Body
-          type: string
-        model_type:
-          description: The type of object this note is attached to (e.g., 'email', 'subscriber').
-          enum:
-          - automation
-          - comment
-          - conversation
-          - email
-          - external_feed
-          - invitation
-          - socialmention
-          - stripe_customer
-          - subscriber
-          - survey
-          - tag
-          - webmention
-          example: email
-          title: Model Type
-          type: string
-        model_id:
-          description: The UUID or TypeID of the object this note is attached to.
-          example: 13121cd6-0dfc-424c-bb12-988b0a32fcb3
-          maxLength: 50
-          pattern: ^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|(?:bsky_ss_doc|bsky_ss_pub|permission|unsub_req|auth_tok|rec_code|webauthn|api_req|aut_att|ext_evt|segment|str_cus|str_sub|sub_imp|sub_tag|adslot|em_dom|em_imp|le_evt|str_pd|adsku|socmn|webmn|book|bulk|cnvs|form|hook|inbx|news|note|resp|rssi|snip|snpr|acc|att|aut|com|emr|exp|img|inv|mes|rss|smp|srv|sub|dr|em)_(?:[0-7][0-9abcdefghjkmnpqrstvwxyz]{25}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}))$
-          title: Model Id
-          type: string
-        metadata:
-          additionalProperties: true
-          default: {}
-          description: A structured key-value blob that you can use to store arbitrary data on the object. Metadata can be
-            nested — you can store objects and arrays within your metadata. (You can [read more about metadata.](https://docs.buttondown.com/metadata))
-          title: Metadata
-          type: object
-      required:
-      - body
-      - model_type
-      - model_id
-      title: NoteInput
-      type: object
-    NotePage:
-      properties:
-        results:
-          description: The list of results for this page.
-          items:
-            $ref: '#/components/schemas/Note'
-          title: Results
-          type: array
-        next:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the next page of results, if any.
-          title: Next
-        previous:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the previous page of results, if any.
-          title: Previous
-        count:
-          description: The total number of results across all pages.
-          title: Count
-          type: integer
-      required:
-      - results
-      - count
-      title: Page[Note]
-      type: object
     Permissions:
       properties:
         subscriber:
@@ -542,6 +358,56 @@ components:
       - status
       title: User
       type: object
+    NotePage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/Note'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[Note]
+      type: object
+    ErrorMessage:
+      properties:
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage
+      type: object
     ValidationErrorDetail:
       properties:
         type:
@@ -566,6 +432,134 @@ components:
       - msg
       title: ValidationErrorDetail
       type: object
+    Note:
+      properties:
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        body:
+          description: The text content of the note.
+          example: This subscriber upgraded to a paid plan.
+          minLength: 1
+          pattern: '[\s\S]*\S[\s\S]*'
+          title: Body
+          type: string
+        model_type:
+          description: The type of object this note is attached to (e.g., 'email', 'subscriber').
+          enum:
+          - automation
+          - comment
+          - conversation
+          - email
+          - external_feed
+          - invitation
+          - socialmention
+          - stripe_customer
+          - subscriber
+          - survey
+          - tag
+          - webmention
+          example: email
+          title: Model Type
+          type: string
+        model_id:
+          description: The UUID or TypeID of the object this note is attached to.
+          example: 13121cd6-0dfc-424c-bb12-988b0a32fcb3
+          maxLength: 50
+          pattern: ^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|(?:bsky_ss_doc|bsky_ss_pub|permission|unsub_req|auth_tok|rec_code|webauthn|api_req|aut_att|ext_evt|segment|str_cus|str_sub|sub_imp|sub_tag|adslot|em_dom|em_imp|le_evt|str_pd|adsku|socmn|webmn|book|bulk|cnvs|form|hook|inbx|news|note|resp|rssi|snip|snpr|acc|att|aut|com|emr|exp|img|inv|mes|rss|smp|srv|sub|dr|em)_(?:[0-7][0-9abcdefghjkmnpqrstvwxyz]{25}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}))$
+          title: Model Id
+          type: string
+        metadata:
+          additionalProperties: true
+          title: Metadata
+          type: object
+        source:
+          description: The source of the note. If the note was created by a Buttondown admin, this will be 'admin'; otherwise, it will be 'user'.
+          enum:
+          - admin
+          - user
+          example: admin
+          title: Source
+          type: string
+        user_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Id
+        user:
+          anyOf:
+          - $ref: '#/components/schemas/User'
+          - type: 'null'
+      required:
+      - id
+      - creation_date
+      - body
+      - model_type
+      - model_id
+      - metadata
+      - source
+      title: Note
+      type: object
+    NoteInput:
+      properties:
+        body:
+          description: The text content of the note.
+          example: This subscriber upgraded to a paid plan.
+          minLength: 1
+          pattern: '[\s\S]*\S[\s\S]*'
+          title: Body
+          type: string
+        model_type:
+          description: The type of object this note is attached to (e.g., 'email', 'subscriber').
+          enum:
+          - automation
+          - comment
+          - conversation
+          - email
+          - external_feed
+          - invitation
+          - socialmention
+          - stripe_customer
+          - subscriber
+          - survey
+          - tag
+          - webmention
+          example: email
+          title: Model Type
+          type: string
+        model_id:
+          description: The UUID or TypeID of the object this note is attached to.
+          example: 13121cd6-0dfc-424c-bb12-988b0a32fcb3
+          maxLength: 50
+          pattern: ^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|(?:bsky_ss_doc|bsky_ss_pub|permission|unsub_req|auth_tok|rec_code|webauthn|api_req|aut_att|ext_evt|segment|str_cus|str_sub|sub_imp|sub_tag|adslot|em_dom|em_imp|le_evt|str_pd|adsku|socmn|webmn|book|bulk|cnvs|form|hook|inbx|news|note|resp|rssi|snip|snpr|acc|att|aut|com|emr|exp|img|inv|mes|rss|smp|srv|sub|dr|em)_(?:[0-7][0-9abcdefghjkmnpqrstvwxyz]{25}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}))$
+          title: Model Id
+          type: string
+        metadata:
+          additionalProperties: true
+          default: {}
+          description: A structured key-value blob that you can use to store arbitrary data on the object. Metadata can be nested — you can store objects and arrays within your metadata. (You can [read more about metadata.](https://docs.buttondown.com/metadata))
+          title: Metadata
+          type: object
+      required:
+      - body
+      - model_type
+      - model_id
+      title: NoteInput
+      type: object
+    AccessLevel:
+      enum:
+      - none
+      - read
+      - write
+      title: AccessLevel
+      type: string
+      description: An enumeration.
     ValidationErrorMessage:
       properties:
         detail:

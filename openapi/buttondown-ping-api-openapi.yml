@@ -1,16 +1,13 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Buttondown Ping API
   version: 1.0.0
-  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction)
-    for guides and examples.
+  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See the documentation for guides and examples.
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
 servers:
 - url: https://api.buttondown.com/v1
-security:
-- ApiKeyAuth: []
 tags:
 - name: Ping
 paths:
@@ -57,10 +54,6 @@ paths:
       security: []
 components:
   schemas:
-    Empty:
-      properties: {}
-      title: Empty
-      type: object
     ErrorMessage:
       properties:
         code:
@@ -75,13 +68,16 @@ components:
           additionalProperties:
             type: string
           default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
-            how to resolve it.
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
           title: Metadata
           type: object
       required:
       - detail
       title: ErrorMessage
+      type: object
+    Empty:
+      properties: {}
+      title: Empty
       type: object
   securitySchemes:
     ApiKeyAuth:

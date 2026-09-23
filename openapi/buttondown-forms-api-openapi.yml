@@ -1,16 +1,13 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Buttondown Forms API
   version: 1.0.0
-  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction)
-    for guides and examples.
+  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See the documentation for guides and examples.
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
 servers:
 - url: https://api.buttondown.com/v1
-security:
-- ApiKeyAuth: []
 tags:
 - name: Forms
 paths:
@@ -492,134 +489,13 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    CreateFormErrorCode:
-      description: 'Represents the type of error that occurred when creating a form.
-
-
-        Human-readable error messages are provided in the `detail` field of the response;
-
-        these values are meant to be parseable by code or client logic.'
-      enum:
-      - slug_already_exists
-      title: CreateFormErrorCode
+    FormStatus:
       type: string
-    ErrorMessage:
-      properties:
-        code:
-          description: The error code.
-          title: Code
-          type: string
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
-            how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage
-      type: object
-    ErrorMessage_CreateFormErrorCode_:
-      properties:
-        code:
-          allOf:
-          - $ref: '#/components/schemas/CreateFormErrorCode'
-          description: The error code.
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
-            how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage[CreateFormErrorCode]
-      type: object
-    Form:
-      properties:
-        id:
-          description: A unique TypeID associated with the object.
-          title: Id
-          type: string
-        creation_date:
-          description: The date and time at which the object was first created.
-          format: date-time
-          title: Creation Date
-          type: string
-        title:
-          description: The human-readable title of the form, shown in the UI and on the hosted form page.
-          title: Title
-          type: string
-        slug:
-          description: A URL-safe identifier used in the form's hosted URL (e.g. `/forms/{slug}`). Must be unique per newsletter.
-          title: Slug
-          type: string
-        body:
-          description: Markdown body rendered above the subscribe fields on the hosted form page.
-          title: Body
-          type: string
-        css:
-          description: Custom CSS applied to the hosted form page.
-          title: Css
-          type: string
-        success_body:
-          description: Markdown shown to the subscriber after a successful submission.
-          title: Success Body
-          type: string
-        surveys:
-          description: IDs of surveys to attach to this form. Responses are associated with the submitting subscriber.
-          items:
-            type: string
-          title: Surveys
-          type: array
-        admin:
-          description: If true, the form acts as an admin-only signup form — it skips confirmation and can accept additional
-            subscriber fields.
-          title: Admin
-          type: boolean
-        status:
-          $ref: '#/components/schemas/FormStatus'
-          description: The status of the form. Only `active` forms accept submissions.
-        subscriber_count:
-          description: The number of subscribers who signed up through this form.
-          title: Subscriber Count
-          type: integer
-        confirmed_subscriber_count:
-          description: The number of confirmed subscribers who signed up through this form.
-          title: Confirmed Subscriber Count
-          type: integer
-        page_view_count:
-          description: The number of page views for this form.
-          title: Page View Count
-          type: integer
-      required:
-      - id
-      - creation_date
-      - title
-      - slug
-      - body
-      - css
-      - success_body
-      - surveys
-      - admin
-      - status
-      - subscriber_count
-      - confirmed_subscriber_count
-      - page_view_count
-      title: Form
-      type: object
+      enum:
+      - active
+      - inactive
+      title: FormStatus
+      description: An enumeration.
     FormInput:
       properties:
         title:
@@ -661,8 +537,7 @@ components:
           example: []
         admin:
           default: false
-          description: If true, the form acts as an admin-only signup form — it skips confirmation and can accept additional
-            subscriber fields.
+          description: If true, the form acts as an admin-only signup form — it skips confirmation and can accept additional subscriber fields.
           title: Admin
           type: boolean
           example: false
@@ -676,6 +551,78 @@ components:
       - title
       - slug
       title: FormInput
+      type: object
+    Form:
+      properties:
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        title:
+          description: The human-readable title of the form, shown in the UI and on the hosted form page.
+          title: Title
+          type: string
+        slug:
+          description: A URL-safe identifier used in the form's hosted URL (e.g. `/forms/{slug}`). Must be unique per newsletter.
+          title: Slug
+          type: string
+        body:
+          description: Markdown body rendered above the subscribe fields on the hosted form page.
+          title: Body
+          type: string
+        css:
+          description: Custom CSS applied to the hosted form page.
+          title: Css
+          type: string
+        success_body:
+          description: Markdown shown to the subscriber after a successful submission.
+          title: Success Body
+          type: string
+        surveys:
+          description: IDs of surveys to attach to this form. Responses are associated with the submitting subscriber.
+          items:
+            type: string
+          title: Surveys
+          type: array
+        admin:
+          description: If true, the form acts as an admin-only signup form — it skips confirmation and can accept additional subscriber fields.
+          title: Admin
+          type: boolean
+        status:
+          $ref: '#/components/schemas/FormStatus'
+          description: The status of the form. Only `active` forms accept submissions.
+        subscriber_count:
+          description: The number of subscribers who signed up through this form.
+          title: Subscriber Count
+          type: integer
+        confirmed_subscriber_count:
+          description: The number of confirmed subscribers who signed up through this form.
+          title: Confirmed Subscriber Count
+          type: integer
+        page_view_count:
+          description: The number of page views for this form.
+          title: Page View Count
+          type: integer
+      required:
+      - id
+      - creation_date
+      - title
+      - slug
+      - body
+      - css
+      - success_body
+      - surveys
+      - admin
+      - status
+      - subscriber_count
+      - confirmed_subscriber_count
+      - page_view_count
+      title: Form
       type: object
     FormPage:
       properties:
@@ -706,13 +653,27 @@ components:
       - count
       title: Page[Form]
       type: object
-    FormStatus:
-      type: string
-      enum:
-      - active
-      - inactive
-      title: FormStatus
-      description: An enumeration.
+    ErrorMessage_CreateFormErrorCode_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/CreateFormErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[CreateFormErrorCode]
+      type: object
     FormUpdateInput:
       properties:
         title:
@@ -759,8 +720,7 @@ components:
           anyOf:
           - type: boolean
           - type: 'null'
-          description: If true, the form acts as an admin-only signup form — it skips confirmation and can accept additional
-            subscriber fields.
+          description: If true, the form acts as an admin-only signup form — it skips confirmation and can accept additional subscriber fields.
           title: Admin
         status:
           anyOf:
@@ -768,6 +728,38 @@ components:
           - type: 'null'
           description: The status of the form. Only `active` forms accept submissions.
       title: FormUpdateInput
+      type: object
+    CreateFormErrorCode:
+      description: 'Represents the type of error that occurred when creating a form.
+
+
+        Human-readable error messages are provided in the `detail` field of the response;
+
+        these values are meant to be parseable by code or client logic.'
+      enum:
+      - slug_already_exists
+      title: CreateFormErrorCode
+      type: string
+    ErrorMessage:
+      properties:
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage
       type: object
   securitySchemes:
     ApiKeyAuth:

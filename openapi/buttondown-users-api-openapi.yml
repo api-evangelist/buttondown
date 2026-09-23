@@ -1,16 +1,13 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Buttondown Users API
   version: 1.0.0
-  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction)
-    for guides and examples.
+  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See the documentation for guides and examples.
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
 servers:
 - url: https://api.buttondown.com/v1
-security:
-- ApiKeyAuth: []
 tags:
 - name: Users
 paths:
@@ -386,64 +383,6 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    AccessLevel:
-      enum:
-      - none
-      - read
-      - write
-      title: AccessLevel
-      type: string
-      description: An enumeration.
-    ErrorMessage:
-      properties:
-        code:
-          description: The error code.
-          title: Code
-          type: string
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
-            how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage
-      type: object
-    ErrorMessage_Failure_:
-      properties:
-        code:
-          allOf:
-          - $ref: '#/components/schemas/Failure'
-          description: The error code.
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
-            how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage[Failure]
-      type: object
-    Failure:
-      enum:
-      - email_already_exists
-      title: Failure
-      type: string
-      description: An enumeration.
     InvitationStatus:
       type: string
       enum:
@@ -533,19 +472,6 @@ components:
       - status
       title: User
       type: object
-    UserInput:
-      properties:
-        permissions:
-          $ref: '#/components/schemas/Permissions'
-        email_address:
-          description: The email address of the user.
-          title: Email Address
-          type: string
-      required:
-      - permissions
-      - email_address
-      title: UserInput
-      type: object
     UserPage:
       properties:
         results:
@@ -575,6 +501,27 @@ components:
       - count
       title: Page[User]
       type: object
+    ErrorMessage_Failure_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/Failure'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[Failure]
+      type: object
     UserUpdateInput:
       properties:
         permissions:
@@ -582,6 +529,54 @@ components:
       required:
       - permissions
       title: UserUpdateInput
+      type: object
+    Failure:
+      enum:
+      - email_already_exists
+      title: Failure
+      type: string
+      description: An enumeration.
+    AccessLevel:
+      enum:
+      - none
+      - read
+      - write
+      title: AccessLevel
+      type: string
+      description: An enumeration.
+    UserInput:
+      properties:
+        permissions:
+          $ref: '#/components/schemas/Permissions'
+        email_address:
+          description: The email address of the user.
+          title: Email Address
+          type: string
+      required:
+      - permissions
+      - email_address
+      title: UserInput
+      type: object
+    ErrorMessage:
+      properties:
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage
       type: object
   securitySchemes:
     ApiKeyAuth:

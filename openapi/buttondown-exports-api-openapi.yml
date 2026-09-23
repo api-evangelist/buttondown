@@ -1,16 +1,13 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Buttondown Exports API
   version: 1.0.0
-  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction)
-    for guides and examples.
+  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See the documentation for guides and examples.
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
 servers:
 - url: https://api.buttondown.com/v1
-security:
-- ApiKeyAuth: []
 tags:
 - name: Exports
 paths:
@@ -229,14 +226,6 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    CreateExportErrorCode:
-      enum:
-      - collection_empty_invalid
-      - columns_empty_invalid
-      - columns_invalid
-      title: CreateExportErrorCode
-      type: string
-      description: An enumeration.
     ErrorMessage:
       properties:
         code:
@@ -251,35 +240,48 @@ components:
           additionalProperties:
             type: string
           default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
-            how to resolve it.
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
           title: Metadata
           type: object
       required:
       - detail
       title: ErrorMessage
       type: object
-    ErrorMessage_CreateExportErrorCode_:
+    ExportFormat:
+      enum:
+      - csv
+      - json
+      title: Format
+      type: string
+      description: An enumeration.
+    ExportPage:
       properties:
-        code:
-          allOf:
-          - $ref: '#/components/schemas/CreateExportErrorCode'
-          description: The error code.
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
-            how to resolve it.
-          title: Metadata
-          type: object
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/Export'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
       required:
-      - detail
-      title: ErrorMessage[CreateExportErrorCode]
+      - results
+      - count
+      title: Page[Export]
       type: object
     Export:
       description: 'Some software applications may want programmatic access to their newsletter exports.
@@ -294,8 +296,7 @@ components:
         _absolutely_ need to use this endpoint.
 
 
-        To browse the contents of a given export collection, refer to the [Data exports](https://docs.buttondown.com/data-exports-subscriber)
-        section
+        To browse the contents of a given export collection, refer to the [Data exports](https://docs.buttondown.com/data-exports-subscriber) section
 
         of the documentation.'
       properties:
@@ -321,8 +322,7 @@ components:
           - additionalProperties: true
             type: object
           - type: 'null'
-          description: Parameters to pass to the exporter. These are specific to the collection and format, and constrain
-            the export.
+          description: Parameters to pass to the exporter. These are specific to the collection and format, and constrain the export.
           title: Parameters
           example:
             status: active
@@ -387,100 +387,27 @@ components:
       - stripe_charges
       title: Collection
       type: string
-    ExportFormat:
-      enum:
-      - csv
-      - json
-      title: Format
-      type: string
-      description: An enumeration.
-    ExportInput:
-      additionalProperties: false
+    ErrorMessage_CreateExportErrorCode_:
       properties:
-        collections:
-          description: The [collections](https://docs.buttondown.com/api-exports-collections) of objects to export.
-          items:
-            $ref: '#/components/schemas/ExportCollection'
-          title: Collections
-          type: array
-          example:
-          - subscribers
-        parameters:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          description: Parameters to pass to the exporter. These are specific to the collection and format, and constrain
-            the export.
-          title: Parameters
-          example:
-            status: active
-        format:
+        code:
           allOf:
-          - $ref: '#/components/schemas/ExportFormat'
-          default: csv
-          description: The [format](https://docs.buttondown.com/api-exports-format) of the export files.
-          example: csv
-        columns:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          description: If provided, the export will only include these columns.
-          title: Columns
-          example:
-          - id
-          - email
+          - $ref: '#/components/schemas/CreateExportErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
       required:
-      - collections
-      title: ExportInput
+      - detail
+      title: ErrorMessage[CreateExportErrorCode]
       type: object
-    ExportPage:
-      properties:
-        results:
-          description: The list of results for this page.
-          items:
-            $ref: '#/components/schemas/Export'
-          title: Results
-          type: array
-        next:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the next page of results, if any.
-          title: Next
-        previous:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the previous page of results, if any.
-          title: Previous
-        count:
-          description: The total number of results across all pages.
-          title: Count
-          type: integer
-      required:
-      - results
-      - count
-      title: Page[Export]
-      type: object
-    ExportStatus:
-      type: string
-      enum:
-      - error
-      - in_progress
-      - not_started
-      - ready
-      title: ExportStatus
-      description: 'Represents the status of an export.
-
-
-        No action is required to move from one state or another; Buttondown
-
-        internally handles the transitions, and exposing the status is for
-
-        observability purposes only.'
     ValidationErrorDetail:
       properties:
         type:
@@ -505,6 +432,71 @@ components:
       - msg
       title: ValidationErrorDetail
       type: object
+    ExportInput:
+      additionalProperties: false
+      properties:
+        collections:
+          description: The [collections](https://docs.buttondown.com/api-exports-collections) of objects to export.
+          items:
+            $ref: '#/components/schemas/ExportCollection'
+          title: Collections
+          type: array
+          example:
+          - subscribers
+        parameters:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          description: Parameters to pass to the exporter. These are specific to the collection and format, and constrain the export.
+          title: Parameters
+          example:
+            status: active
+        format:
+          allOf:
+          - $ref: '#/components/schemas/ExportFormat'
+          default: csv
+          description: The [format](https://docs.buttondown.com/api-exports-format) of the export files.
+          example: csv
+        columns:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          description: If provided, the export will only include these columns.
+          title: Columns
+          example:
+          - id
+          - email
+      required:
+      - collections
+      title: ExportInput
+      type: object
+    ExportStatus:
+      type: string
+      enum:
+      - error
+      - in_progress
+      - not_started
+      - ready
+      title: ExportStatus
+      description: 'Represents the status of an export.
+
+
+        No action is required to move from one state or another; Buttondown
+
+        internally handles the transitions, and exposing the status is for
+
+        observability purposes only.'
+    CreateExportErrorCode:
+      enum:
+      - collection_empty_invalid
+      - columns_empty_invalid
+      - columns_invalid
+      title: CreateExportErrorCode
+      type: string
+      description: An enumeration.
     ValidationErrorMessage:
       properties:
         detail:

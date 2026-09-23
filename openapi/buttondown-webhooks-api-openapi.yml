@@ -1,16 +1,13 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Buttondown Webhooks API
   version: 1.0.0
-  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction)
-    for guides and examples.
+  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See the documentation for guides and examples.
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
 servers:
 - url: https://api.buttondown.com/v1
-security:
-- ApiKeyAuth: []
 tags:
 - name: Webhooks
 paths:
@@ -626,24 +623,6 @@ paths:
       - Webhooks
       security:
       - ApiKeyAuth: []
-webhooks:
-  event:
-    post:
-      operationId: webhook_event
-      security: []
-      summary: Event notification
-      description: 'When an event you''ve subscribed to occurs, Buttondown sends an HTTP `POST` to your configured webhook
-        URL. If the webhook has a signing key, the request carries an `X-Buttondown-Signature: sha256=<hmac>` header — an
-        HMAC-SHA256 of the raw request body keyed with your signing key. Respond with any 2xx status to acknowledge receipt;
-        five consecutive non-2xx responses disable the webhook.'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/WebhookEvent'
-      responses:
-        2XX:
-          description: Return any 2xx status to acknowledge the event.
 components:
   schemas:
     ErrorMessage:
@@ -660,14 +639,168 @@ components:
           additionalProperties:
             type: string
           default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
-            how to resolve it.
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
           title: Metadata
           type: object
       required:
       - detail
       title: ErrorMessage
       type: object
+    WebhookAttemptOutputPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/WebhookAttemptOutput'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[WebhookAttemptOutput]
+      type: object
+    WebhookAttemptOutput:
+      properties:
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        status:
+          description: The status of the webhook attempt.
+          example:
+          - successful
+          title: Status
+          type: string
+        event_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The type of the event that triggered the attempt.
+          example:
+          - subscriber.created
+          title: Event Type
+        error_message:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The failure reason, if the attempt failed. Includes the response status code and a snippet of the response body when the endpoint returned a non-2xx response.
+          example:
+          - 'WebhookFailedError: Webhook returned 401: invalid signature'
+          title: Error Message
+        attempt_count:
+          default: 0
+          description: The number of times this attempt has been retried.
+          example:
+          - 1
+          title: Attempt Count
+          type: integer
+        completion_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: When the attempt finished, if it has.
+          example:
+          - '2026-04-27T05:25:19.819Z'
+          title: Completion Date
+        duration_ms:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: How long the HTTP request took, in milliseconds.
+          example:
+          - 412
+          title: Duration Ms
+      required:
+      - id
+      - creation_date
+      - status
+      title: WebhookAttemptOutput
+      type: object
+    WebhookInput:
+      additionalProperties: false
+      properties:
+        status:
+          allOf:
+          - $ref: '#/components/schemas/WebhookStatus'
+          default: enabled
+          description: Whether the webhook is enabled or not.
+          example:
+          - enabled
+        event_types:
+          description: The types of event for which the webhook will be triggered.
+          example:
+          - - email.created
+            - email.sent
+          items:
+            $ref: '#/components/schemas/ExternalEventType'
+          title: Event Types
+          type: array
+        url:
+          description: The URL to which the webhook will send POST requests.
+          example:
+          - https://my.api/webhook
+          format: uri
+          maxLength: 2000
+          minLength: 1
+          title: Url
+          type: string
+        description:
+          default: ''
+          description: An optional description of the webhook, for reference.
+          example:
+          - Trigger when an email is created to notify in Slack.
+          title: Description
+          type: string
+        signing_key:
+          default: ''
+          description: Optional HMAC signing key for webhook verification. When set, webhook requests will include an X-Buttondown-Signature header with sha256=<signature>.
+          example:
+          - ''
+          maxLength: 255
+          title: Signing Key
+          type: string
+      required:
+      - event_types
+      - url
+      title: WebhookInput
+      type: object
+    WebhookStatus:
+      description: The status of a webhook.
+      enum:
+      - enabled
+      - disabled
+      title: WebhookStatus
+      type: string
+    WebhookAttemptStatus:
+      enum:
+      - unattempted
+      - successful
+      - failed
+      title: WebhookAttemptStatus
+      type: string
+      description: An enumeration.
     ExternalEventType:
       description: 'Various types of events that are recorded by Buttondown, both in terms of exogenous systems
 
@@ -807,18 +940,6 @@ components:
       - msg
       title: ValidationErrorDetail
       type: object
-    ValidationErrorMessage:
-      properties:
-        detail:
-          description: A list of validation errors.
-          items:
-            $ref: '#/components/schemas/ValidationErrorDetail'
-          title: Detail
-          type: array
-      required:
-      - detail
-      title: ValidationErrorMessage
-      type: object
     Webhook:
       description: 'Webhooks are used to notify external services of events that occur in the
 
@@ -855,8 +976,7 @@ components:
           type: string
         signing_key:
           default: ''
-          description: Optional HMAC signing key for webhook verification. When set, webhook requests will include an X-Buttondown-Signature
-            header with sha256=<signature>.
+          description: Optional HMAC signing key for webhook verification. When set, webhook requests will include an X-Buttondown-Signature header with sha256=<signature>.
           title: Signing Key
           type: string
       required:
@@ -866,180 +986,6 @@ components:
       - event_types
       - url
       title: Webhook
-      type: object
-    WebhookAttemptOutput:
-      properties:
-        id:
-          description: A unique TypeID associated with the object.
-          title: Id
-          type: string
-        creation_date:
-          description: The date and time at which the object was first created.
-          format: date-time
-          title: Creation Date
-          type: string
-        status:
-          description: The status of the webhook attempt.
-          example:
-          - successful
-          title: Status
-          type: string
-        event_type:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The type of the event that triggered the attempt.
-          example:
-          - subscriber.created
-          title: Event Type
-        error_message:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The failure reason, if the attempt failed. Includes the response status code and a snippet of the response
-            body when the endpoint returned a non-2xx response.
-          example:
-          - 'WebhookFailedError: Webhook returned 401: invalid signature'
-          title: Error Message
-        attempt_count:
-          default: 0
-          description: The number of times this attempt has been retried.
-          example:
-          - 1
-          title: Attempt Count
-          type: integer
-        completion_date:
-          anyOf:
-          - format: date-time
-            type: string
-          - type: 'null'
-          description: When the attempt finished, if it has.
-          example:
-          - '2026-04-27T05:25:19.819Z'
-          title: Completion Date
-        duration_ms:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          description: How long the HTTP request took, in milliseconds.
-          example:
-          - 412
-          title: Duration Ms
-      required:
-      - id
-      - creation_date
-      - status
-      title: WebhookAttemptOutput
-      type: object
-    WebhookAttemptOutputPage:
-      properties:
-        results:
-          description: The list of results for this page.
-          items:
-            $ref: '#/components/schemas/WebhookAttemptOutput'
-          title: Results
-          type: array
-        next:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the next page of results, if any.
-          title: Next
-        previous:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the previous page of results, if any.
-          title: Previous
-        count:
-          description: The total number of results across all pages.
-          title: Count
-          type: integer
-      required:
-      - results
-      - count
-      title: Page[WebhookAttemptOutput]
-      type: object
-    WebhookAttemptStatus:
-      enum:
-      - unattempted
-      - successful
-      - failed
-      title: WebhookAttemptStatus
-      type: string
-      description: An enumeration.
-    WebhookEvent:
-      type: object
-      title: WebhookEvent
-      description: The payload Buttondown delivers to a configured webhook URL when a subscribed event fires.
-      properties:
-        id:
-          type: string
-          title: Id
-          description: The unique TypeID of the event that triggered this delivery.
-          example: ext_evt_00000000000000000000000000
-        event_type:
-          allOf:
-          - $ref: '#/components/schemas/ExternalEventType'
-          description: The type of event that triggered this delivery.
-        data:
-          type: object
-          title: Data
-          additionalProperties: true
-          description: Event-specific metadata. The shape varies by `event_type`. Accounts with more than one newsletter also
-            receive a `newsletter` ID to disambiguate which one the event belongs to.
-      required:
-      - id
-      - event_type
-      - data
-    WebhookInput:
-      additionalProperties: false
-      properties:
-        status:
-          allOf:
-          - $ref: '#/components/schemas/WebhookStatus'
-          default: enabled
-          description: Whether the webhook is enabled or not.
-          example:
-          - enabled
-        event_types:
-          description: The types of event for which the webhook will be triggered.
-          example:
-          - - email.created
-            - email.sent
-          items:
-            $ref: '#/components/schemas/ExternalEventType'
-          title: Event Types
-          type: array
-        url:
-          description: The URL to which the webhook will send POST requests.
-          example:
-          - https://my.api/webhook
-          format: uri
-          maxLength: 2000
-          minLength: 1
-          title: Url
-          type: string
-        description:
-          default: ''
-          description: An optional description of the webhook, for reference.
-          example:
-          - Trigger when an email is created to notify in Slack.
-          title: Description
-          type: string
-        signing_key:
-          default: ''
-          description: Optional HMAC signing key for webhook verification. When set, webhook requests will include an X-Buttondown-Signature
-            header with sha256=<signature>.
-          example:
-          - ''
-          maxLength: 255
-          title: Signing Key
-          type: string
-      required:
-      - event_types
-      - url
-      title: WebhookInput
       type: object
     WebhookPage:
       properties:
@@ -1070,13 +1016,18 @@ components:
       - count
       title: Page[Webhook]
       type: object
-    WebhookStatus:
-      description: The status of a webhook.
-      enum:
-      - enabled
-      - disabled
-      title: WebhookStatus
-      type: string
+    ValidationErrorMessage:
+      properties:
+        detail:
+          description: A list of validation errors.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          title: Detail
+          type: array
+      required:
+      - detail
+      title: ValidationErrorMessage
+      type: object
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

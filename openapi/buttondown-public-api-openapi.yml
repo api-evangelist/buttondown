@@ -1,18 +1,15 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Buttondown public API
+  title: Buttondown Public API
   version: 1.0.0
-  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction)
-    for guides and examples.
+  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See the documentation for guides and examples.
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
 servers:
 - url: https://api.buttondown.com/v1
-security:
-- ApiKeyAuth: []
 tags:
-- name: public
+- name: Public
 paths:
   /public/emails/{username}:
     get:
@@ -76,32 +73,10 @@ paths:
                 $ref: '#/components/schemas/ErrorMessage'
       description: Search and list public emails for a newsletter. No authentication required.
       tags:
-      - public
+      - Public
       security: []
 components:
   schemas:
-    ErrorMessage:
-      properties:
-        code:
-          description: The error code.
-          title: Code
-          type: string
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
-            how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage
-      type: object
     PublicEmail:
       description: Public email schema for email search results.
       properties:
@@ -170,6 +145,27 @@ components:
       - results
       - count
       title: Page[PublicEmail]
+      type: object
+    ErrorMessage:
+      properties:
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage
       type: object
   securitySchemes:
     ApiKeyAuth:

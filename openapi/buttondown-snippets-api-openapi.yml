@@ -1,16 +1,13 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Buttondown Snippets API
   version: 1.0.0
-  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction)
-    for guides and examples.
+  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See the documentation for guides and examples.
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
 servers:
 - url: https://api.buttondown.com/v1
-security:
-- ApiKeyAuth: []
 tags:
 - name: Snippets
 paths:
@@ -496,13 +493,49 @@ components:
           additionalProperties:
             type: string
           default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
-            how to resolve it.
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
           title: Metadata
           type: object
       required:
       - detail
       title: ErrorMessage
+      type: object
+    SnippetUpdateInput:
+      additionalProperties: false
+      properties:
+        identifier:
+          anyOf:
+          - maxLength: 100
+            minLength: 1
+            pattern: ^[a-zA-Z0-9_-]+$
+            type: string
+          - type: 'null'
+          description: A unique, newsletter-scoped slug used to reference the snippet inside email content (e.g. `{{ snippets.footer }}`). Must be unique per newsletter.
+          title: Identifier
+          example: footer
+        name:
+          anyOf:
+          - maxLength: 255
+            minLength: 1
+            type: string
+          - type: 'null'
+          description: A human-readable name for the snippet, shown in the Buttondown UI.
+          title: Name
+          example: Footer
+        content:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The body of the snippet, substituted wherever the snippet is referenced. Interpreted according to `mode`.
+          title: Content
+          example: Thanks for reading!
+        mode:
+          anyOf:
+          - $ref: '#/components/schemas/SnippetMode'
+          - type: 'null'
+          description: 'The editor mode for the snippet, which controls how `content` is rendered: `fancy` (rich text, stored as HTML), `plaintext` (Markdown), or `naked` (raw HTML with no processing).'
+          example: fancy
+      title: SnippetUpdateInput
       type: object
     Snippet:
       properties:
@@ -516,8 +549,7 @@ components:
           title: Creation Date
           type: string
         identifier:
-          description: A unique, newsletter-scoped slug used to reference the snippet inside email content (e.g. `{{ snippets.footer
-            }}`). Must be unique per newsletter.
+          description: A unique, newsletter-scoped slug used to reference the snippet inside email content (e.g. `{{ snippets.footer }}`). Must be unique per newsletter.
           title: Identifier
           type: string
         name:
@@ -530,8 +562,7 @@ components:
           type: string
         mode:
           $ref: '#/components/schemas/SnippetMode'
-          description: 'The editor mode for the snippet, which controls how `content` is rendered: `fancy` (rich text, stored
-            as HTML), `plaintext` (Markdown), or `naked` (raw HTML with no processing).'
+          description: 'The editor mode for the snippet, which controls how `content` is rendered: `fancy` (rich text, stored as HTML), `plaintext` (Markdown), or `naked` (raw HTML with no processing).'
         reference_count:
           default: 0
           description: The number of emails that currently reference this snippet.
@@ -546,51 +577,6 @@ components:
       - mode
       title: Snippet
       type: object
-    SnippetInput:
-      additionalProperties: false
-      properties:
-        identifier:
-          description: A unique, newsletter-scoped slug used to reference the snippet inside email content (e.g. `{{ snippets.footer
-            }}`). Must be unique per newsletter.
-          maxLength: 100
-          minLength: 1
-          pattern: ^[a-zA-Z0-9_-]+$
-          title: Identifier
-          type: string
-          example: footer
-        name:
-          description: A human-readable name for the snippet, shown in the Buttondown UI.
-          maxLength: 255
-          minLength: 1
-          title: Name
-          type: string
-          example: Footer
-        content:
-          default: ''
-          description: The body of the snippet, substituted wherever the snippet is referenced. Interpreted according to `mode`.
-          title: Content
-          type: string
-          example: Thanks for reading!
-        mode:
-          allOf:
-          - $ref: '#/components/schemas/SnippetMode'
-          default: fancy
-          description: 'The editor mode for the snippet, which controls how `content` is rendered: `fancy` (rich text, stored
-            as HTML), `plaintext` (Markdown), or `naked` (raw HTML with no processing).'
-          example: fancy
-      required:
-      - identifier
-      - name
-      title: SnippetInput
-      type: object
-    SnippetMode:
-      enum:
-      - fancy
-      - naked
-      - plaintext
-      title: Mode
-      type: string
-      description: An enumeration.
     SnippetPage:
       properties:
         results:
@@ -620,45 +606,14 @@ components:
       - count
       title: Page[Snippet]
       type: object
-    SnippetUpdateInput:
-      additionalProperties: false
-      properties:
-        identifier:
-          anyOf:
-          - maxLength: 100
-            minLength: 1
-            pattern: ^[a-zA-Z0-9_-]+$
-            type: string
-          - type: 'null'
-          description: A unique, newsletter-scoped slug used to reference the snippet inside email content (e.g. `{{ snippets.footer
-            }}`). Must be unique per newsletter.
-          title: Identifier
-          example: footer
-        name:
-          anyOf:
-          - maxLength: 255
-            minLength: 1
-            type: string
-          - type: 'null'
-          description: A human-readable name for the snippet, shown in the Buttondown UI.
-          title: Name
-          example: Footer
-        content:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The body of the snippet, substituted wherever the snippet is referenced. Interpreted according to `mode`.
-          title: Content
-          example: Thanks for reading!
-        mode:
-          anyOf:
-          - $ref: '#/components/schemas/SnippetMode'
-          - type: 'null'
-          description: 'The editor mode for the snippet, which controls how `content` is rendered: `fancy` (rich text, stored
-            as HTML), `plaintext` (Markdown), or `naked` (raw HTML with no processing).'
-          example: fancy
-      title: SnippetUpdateInput
-      type: object
+    SnippetMode:
+      enum:
+      - fancy
+      - naked
+      - plaintext
+      title: Mode
+      type: string
+      description: An enumeration.
     ValidationErrorDetail:
       properties:
         type:
@@ -682,6 +637,41 @@ components:
       - loc
       - msg
       title: ValidationErrorDetail
+      type: object
+    SnippetInput:
+      additionalProperties: false
+      properties:
+        identifier:
+          description: A unique, newsletter-scoped slug used to reference the snippet inside email content (e.g. `{{ snippets.footer }}`). Must be unique per newsletter.
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          title: Identifier
+          type: string
+          example: footer
+        name:
+          description: A human-readable name for the snippet, shown in the Buttondown UI.
+          maxLength: 255
+          minLength: 1
+          title: Name
+          type: string
+          example: Footer
+        content:
+          default: ''
+          description: The body of the snippet, substituted wherever the snippet is referenced. Interpreted according to `mode`.
+          title: Content
+          type: string
+          example: Thanks for reading!
+        mode:
+          allOf:
+          - $ref: '#/components/schemas/SnippetMode'
+          default: fancy
+          description: 'The editor mode for the snippet, which controls how `content` is rendered: `fancy` (rich text, stored as HTML), `plaintext` (Markdown), or `naked` (raw HTML with no processing).'
+          example: fancy
+      required:
+      - identifier
+      - name
+      title: SnippetInput
       type: object
     ValidationErrorMessage:
       properties:

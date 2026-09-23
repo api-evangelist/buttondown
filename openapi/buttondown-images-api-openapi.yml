@@ -1,16 +1,13 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Buttondown Images API
   version: 1.0.0
-  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction)
-    for guides and examples.
+  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See the documentation for guides and examples.
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
 servers:
 - url: https://api.buttondown.com/v1
-security:
-- ApiKeyAuth: []
 tags:
 - name: Images
 paths:
@@ -357,27 +354,28 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    ErrorMessage:
+    ValidationErrorMessage:
       properties:
-        code:
-          description: The error code.
-          title: Code
-          type: string
         detail:
-          description: A human-readable description of the error.
+          description: A list of validation errors.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
           title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
-            how to resolve it.
-          title: Metadata
-          type: object
+          type: array
       required:
       - detail
-      title: ErrorMessage
+      title: ValidationErrorMessage
+      type: object
+    ImageUpdateInput:
+      additionalProperties: false
+      properties:
+        metadata:
+          additionalProperties: true
+          default: {}
+          description: A structured key-value blob that you can use to store arbitrary data on the object. Metadata can be nested — you can store objects and arrays within your metadata. (You can [read more about metadata.](https://docs.buttondown.com/metadata))
+          title: Metadata
+          type: object
+      title: ImageUpdateInput
       type: object
     Image:
       description: 'Images are, well, images! Buttondown allows you to upload images to its secure
@@ -405,8 +403,7 @@ components:
         metadata:
           additionalProperties: true
           default: {}
-          description: A structured key-value blob that you can use to store arbitrary data on the object. Metadata can be
-            nested — you can store objects and arrays within your metadata. (You can [read more about metadata.](https://docs.buttondown.com/metadata))
+          description: A structured key-value blob that you can use to store arbitrary data on the object. Metadata can be nested — you can store objects and arrays within your metadata. (You can [read more about metadata.](https://docs.buttondown.com/metadata))
           title: Metadata
           type: object
       required:
@@ -414,6 +411,30 @@ components:
       - creation_date
       - image
       title: Image
+      type: object
+    ValidationErrorDetail:
+      properties:
+        type:
+          description: The type of validation error.
+          title: Type
+          type: string
+        loc:
+          description: The location of the error in the request.
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Loc
+          type: array
+        msg:
+          description: A human-readable error message.
+          title: Msg
+          type: string
+      required:
+      - type
+      - loc
+      - msg
+      title: ValidationErrorDetail
       type: object
     ImagePage:
       properties:
@@ -444,53 +465,26 @@ components:
       - count
       title: Page[Image]
       type: object
-    ImageUpdateInput:
-      additionalProperties: false
+    ErrorMessage:
       properties:
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
         metadata:
-          additionalProperties: true
+          additionalProperties:
+            type: string
           default: {}
-          description: A structured key-value blob that you can use to store arbitrary data on the object. Metadata can be
-            nested — you can store objects and arrays within your metadata. (You can [read more about metadata.](https://docs.buttondown.com/metadata))
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
           title: Metadata
           type: object
-      title: ImageUpdateInput
-      type: object
-    ValidationErrorDetail:
-      properties:
-        type:
-          description: The type of validation error.
-          title: Type
-          type: string
-        loc:
-          description: The location of the error in the request.
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Loc
-          type: array
-        msg:
-          description: A human-readable error message.
-          title: Msg
-          type: string
-      required:
-      - type
-      - loc
-      - msg
-      title: ValidationErrorDetail
-      type: object
-    ValidationErrorMessage:
-      properties:
-        detail:
-          description: A list of validation errors.
-          items:
-            $ref: '#/components/schemas/ValidationErrorDetail'
-          title: Detail
-          type: array
       required:
       - detail
-      title: ValidationErrorMessage
+      title: ErrorMessage
       type: object
   securitySchemes:
     ApiKeyAuth:

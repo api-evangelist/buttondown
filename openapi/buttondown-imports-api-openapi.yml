@@ -1,16 +1,13 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Buttondown Imports API
   version: 1.0.0
-  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See [the documentation](https://docs.buttondown.com/api-introduction)
-    for guides and examples.
+  description: The Buttondown API lets you manage newsletters, subscribers, emails, and more. See the documentation for guides and examples.
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
 servers:
 - url: https://api.buttondown.com/v1
-security:
-- ApiKeyAuth: []
 tags:
 - name: Imports
 paths:
@@ -402,58 +399,6 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    CreateImportErrorCode:
-      enum:
-      - import_failure
-      - invalid_file_type
-      - malformed_csv
-      title: CreateImportErrorCode
-      type: string
-      description: An enumeration.
-    ErrorMessage:
-      properties:
-        code:
-          description: The error code.
-          title: Code
-          type: string
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
-            how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage
-      type: object
-    ErrorMessage_CreateImportErrorCode_:
-      properties:
-        code:
-          allOf:
-          - $ref: '#/components/schemas/CreateImportErrorCode'
-          description: The error code.
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining
-            how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage[CreateImportErrorCode]
-      type: object
     Import:
       description: 'Imports let you bring data into Buttondown in bulk by uploading a file.
 
@@ -501,35 +446,69 @@ components:
       - source
       title: Import
       type: object
-    ImportPage:
+    UpdateImportInput:
+      additionalProperties: false
       properties:
-        results:
-          description: The list of results for this page.
-          items:
-            $ref: '#/components/schemas/Import'
-          title: Results
-          type: array
-        next:
+        label:
           anyOf:
-          - type: string
+          - maxLength: 500
+            type: string
           - type: 'null'
-          description: The URL to the next page of results, if any.
-          title: Next
-        previous:
+          description: An optional label for the import.
+          title: Label
+          example: June 2025 migration
+        metadata:
           anyOf:
-          - type: string
+          - additionalProperties: true
+            type: object
           - type: 'null'
-          description: The URL to the previous page of results, if any.
-          title: Previous
-        count:
-          description: The total number of results across all pages.
-          title: Count
-          type: integer
-      required:
-      - results
-      - count
-      title: Page[Import]
+          description: Metadata about the import, such as detected column mappings.
+          title: Metadata
+          example:
+            email_column: 0
+            metadata_columns:
+              name: 1
+        status:
+          anyOf:
+          - const: in_progress
+            type: string
+          - type: 'null'
+          description: The status of the import. Set to 'in_progress' to begin executing the import.
+          title: Status
+          example: in_progress
+      title: UpdateImportInput
       type: object
+    ErrorMessage:
+      properties:
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage
+      type: object
+    ImportStatus:
+      enum:
+      - failed
+      - in_progress
+      - not_started
+      - succeeded
+      - validating
+      title: ImportStatus
+      type: string
+      description: An enumeration.
     ImportResult:
       properties:
         new_subscribers:
@@ -590,53 +569,63 @@ components:
       title: ImportSource
       type: string
       description: An enumeration.
-    ImportStatus:
+    CreateImportErrorCode:
       enum:
-      - failed
-      - in_progress
-      - not_started
-      - succeeded
-      - validating
-      title: ImportStatus
+      - import_failure
+      - invalid_file_type
+      - malformed_csv
+      title: CreateImportErrorCode
       type: string
       description: An enumeration.
-    ImportType:
-      enum:
-      - subscriber_import
-      title: ImportType
-      type: string
-      description: An enumeration.
-    UpdateImportInput:
-      additionalProperties: false
+    ErrorMessage_CreateImportErrorCode_:
       properties:
-        label:
-          anyOf:
-          - maxLength: 500
-            type: string
-          - type: 'null'
-          description: An optional label for the import.
-          title: Label
-          example: June 2025 migration
+        code:
+          allOf:
+          - $ref: '#/components/schemas/CreateImportErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
         metadata:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          description: Metadata about the import, such as detected column mappings.
-          title: Metadata
-          example:
-            email_column: 0
-            metadata_columns:
-              name: 1
-        status:
-          anyOf:
-          - const: in_progress
+          additionalProperties:
             type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[CreateImportErrorCode]
+      type: object
+    ImportPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/Import'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
           - type: 'null'
-          description: The status of the import. Set to 'in_progress' to begin executing the import.
-          title: Status
-          example: in_progress
-      title: UpdateImportInput
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[Import]
       type: object
     ValidationErrorDetail:
       properties:
@@ -662,6 +651,12 @@ components:
       - msg
       title: ValidationErrorDetail
       type: object
+    ImportType:
+      enum:
+      - subscriber_import
+      title: ImportType
+      type: string
+      description: An enumeration.
     ValidationErrorMessage:
       properties:
         detail:
