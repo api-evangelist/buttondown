@@ -499,70 +499,36 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    Tag:
-      description: 'Tags are a way to organize your subscribers. You can create, update, and
-
-        delete tags via the API. You can also list all tags for a given newsletter.
-
-
-        Tags don''t have any strict functionality on their own, but you can send emails
-
-        to subscribers with a given tag (or to all subscribers _without_ a given tag.)'
+    ValidationErrorDetail:
       properties:
-        id:
-          description: A unique TypeID associated with the object.
-          title: Id
+        type:
+          description: The type of validation error.
+          title: Type
           type: string
-        creation_date:
-          description: The date and time at which the object was first created.
-          format: date-time
-          title: Creation Date
+        loc:
+          description: The location of the error in the request.
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Loc
+          type: array
+        msg:
+          description: A human-readable error message.
+          title: Msg
           type: string
-        name:
-          description: The name of the tag.
-          title: Name
-          type: string
-        color:
-          description: The hex color code associated with the tag.
-          title: Color
-          type: string
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: An internal description of the tag, only visible to the newsletter author.
-          title: Description
-        public_description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: A public-facing description of the tag, visible to subscribers in the subscriber portal.
-          title: Public Description
-        subscriber_editable:
-          description: If true, subscribers can add or remove this tag from their own profile via the subscriber portal.
-          title: Subscriber Editable
-          type: boolean
-        secondary_id:
-          description: The secondary ID of the tag, used as a human-readable numeric identifier.
-          maximum: 1000000000
-          minimum: 1
-          title: Secondary Id
-          type: integer
       required:
-      - id
-      - creation_date
-      - name
-      - color
-      - subscriber_editable
-      - secondary_id
-      title: Tag
+      - type
+      - loc
+      - msg
+      title: ValidationErrorDetail
       type: object
-    ErrorMessage:
+    ErrorMessage_TagErrorCode_:
       properties:
         code:
+          allOf:
+          - $ref: '#/components/schemas/TagErrorCode'
           description: The error code.
-          title: Code
-          type: string
         detail:
           description: A human-readable description of the error.
           title: Detail
@@ -576,29 +542,7 @@ components:
           type: object
       required:
       - detail
-      title: ErrorMessage
-      type: object
-    TagAnalytics:
-      description: Analytics data associated with a given tag.
-      properties:
-        created_subscribers:
-          description: The number of subscribers who have been created with this tag.
-          minimum: 0
-          title: Created Subscribers
-          type: integer
-        click_rate:
-          description: The click rate of emails sent to subscribers with this tag.
-          title: Click Rate
-          type: number
-        open_rate:
-          description: The open rate of emails sent to subscribers with this tag.
-          title: Open Rate
-          type: number
-      required:
-      - created_subscribers
-      - click_rate
-      - open_rate
-      title: TagAnalytics
+      title: ErrorMessage[TagErrorCode]
       type: object
     TagErrorCode:
       description: Error codes returned when creating or updating a tag fails.
@@ -734,36 +678,34 @@ components:
       - color
       title: TagInput
       type: object
-    ValidationErrorDetail:
+    TagAnalytics:
+      description: Analytics data associated with a given tag.
       properties:
-        type:
-          description: The type of validation error.
-          title: Type
-          type: string
-        loc:
-          description: The location of the error in the request.
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Loc
-          type: array
-        msg:
-          description: A human-readable error message.
-          title: Msg
-          type: string
+        created_subscribers:
+          description: The number of subscribers who have been created with this tag.
+          minimum: 0
+          title: Created Subscribers
+          type: integer
+        click_rate:
+          description: The click rate of emails sent to subscribers with this tag.
+          title: Click Rate
+          type: number
+        open_rate:
+          description: The open rate of emails sent to subscribers with this tag.
+          title: Open Rate
+          type: number
       required:
-      - type
-      - loc
-      - msg
-      title: ValidationErrorDetail
+      - created_subscribers
+      - click_rate
+      - open_rate
+      title: TagAnalytics
       type: object
-    ErrorMessage_TagErrorCode_:
+    ErrorMessage:
       properties:
         code:
-          allOf:
-          - $ref: '#/components/schemas/TagErrorCode'
           description: The error code.
+          title: Code
+          type: string
         detail:
           description: A human-readable description of the error.
           title: Detail
@@ -777,7 +719,65 @@ components:
           type: object
       required:
       - detail
-      title: ErrorMessage[TagErrorCode]
+      title: ErrorMessage
+      type: object
+    Tag:
+      description: 'Tags are a way to organize your subscribers. You can create, update, and
+
+        delete tags via the API. You can also list all tags for a given newsletter.
+
+
+        Tags don''t have any strict functionality on their own, but you can send emails
+
+        to subscribers with a given tag (or to all subscribers _without_ a given tag.)'
+      properties:
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        name:
+          description: The name of the tag.
+          title: Name
+          type: string
+        color:
+          description: The hex color code associated with the tag.
+          title: Color
+          type: string
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: An internal description of the tag, only visible to the newsletter author.
+          title: Description
+        public_description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: A public-facing description of the tag, visible to subscribers in the subscriber portal.
+          title: Public Description
+        subscriber_editable:
+          description: If true, subscribers can add or remove this tag from their own profile via the subscriber portal.
+          title: Subscriber Editable
+          type: boolean
+        secondary_id:
+          description: The secondary ID of the tag, used as a human-readable numeric identifier.
+          maximum: 1000000000
+          minimum: 1
+          title: Secondary Id
+          type: integer
+      required:
+      - id
+      - creation_date
+      - name
+      - color
+      - subscriber_editable
+      - secondary_id
+      title: Tag
       type: object
     ValidationErrorMessage:
       properties:

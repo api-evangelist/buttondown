@@ -489,6 +489,17 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
+    CreateFormErrorCode:
+      description: 'Represents the type of error that occurred when creating a form.
+
+
+        Human-readable error messages are provided in the `detail` field of the response;
+
+        these values are meant to be parseable by code or client logic.'
+      enum:
+      - slug_already_exists
+      title: CreateFormErrorCode
+      type: string
     FormStatus:
       type: string
       enum:
@@ -496,62 +507,6 @@ components:
       - inactive
       title: FormStatus
       description: An enumeration.
-    FormInput:
-      properties:
-        title:
-          description: The human-readable title of the form, shown in the UI and on the hosted form page.
-          maxLength: 255
-          title: Title
-          type: string
-          example: Contact Form
-        slug:
-          description: A URL-safe identifier used in the form's hosted URL (e.g. `/forms/{slug}`). Must be unique per newsletter.
-          maxLength: 100
-          title: Slug
-          type: string
-          example: contact
-        body:
-          default: ''
-          description: Markdown body rendered above the subscribe fields on the hosted form page.
-          title: Body
-          type: string
-          example: ''
-        css:
-          default: ''
-          description: Custom CSS applied to the hosted form page.
-          title: Css
-          type: string
-          example: ''
-        success_body:
-          default: ''
-          description: Markdown shown to the subscriber after a successful submission.
-          title: Success Body
-          type: string
-          example: Thank you for your submission!
-        surveys:
-          description: IDs of surveys to attach to this form. Responses are associated with the submitting subscriber.
-          items:
-            type: string
-          title: Surveys
-          type: array
-          example: []
-        admin:
-          default: false
-          description: If true, the form acts as an admin-only signup form — it skips confirmation and can accept additional subscriber fields.
-          title: Admin
-          type: boolean
-          example: false
-        status:
-          allOf:
-          - $ref: '#/components/schemas/FormStatus'
-          default: active
-          description: The status of the form. Only `active` forms accept submissions.
-          example: active
-      required:
-      - title
-      - slug
-      title: FormInput
-      type: object
     Form:
       properties:
         id:
@@ -624,6 +579,104 @@ components:
       - page_view_count
       title: Form
       type: object
+    ErrorMessage_CreateFormErrorCode_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/CreateFormErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[CreateFormErrorCode]
+      type: object
+    ErrorMessage:
+      properties:
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage
+      type: object
+    FormInput:
+      properties:
+        title:
+          description: The human-readable title of the form, shown in the UI and on the hosted form page.
+          maxLength: 255
+          title: Title
+          type: string
+          example: Contact Form
+        slug:
+          description: A URL-safe identifier used in the form's hosted URL (e.g. `/forms/{slug}`). Must be unique per newsletter.
+          maxLength: 100
+          title: Slug
+          type: string
+          example: contact
+        body:
+          default: ''
+          description: Markdown body rendered above the subscribe fields on the hosted form page.
+          title: Body
+          type: string
+          example: ''
+        css:
+          default: ''
+          description: Custom CSS applied to the hosted form page.
+          title: Css
+          type: string
+          example: ''
+        success_body:
+          default: ''
+          description: Markdown shown to the subscriber after a successful submission.
+          title: Success Body
+          type: string
+          example: Thank you for your submission!
+        surveys:
+          description: IDs of surveys to attach to this form. Responses are associated with the submitting subscriber.
+          items:
+            type: string
+          title: Surveys
+          type: array
+          example: []
+        admin:
+          default: false
+          description: If true, the form acts as an admin-only signup form — it skips confirmation and can accept additional subscriber fields.
+          title: Admin
+          type: boolean
+          example: false
+        status:
+          allOf:
+          - $ref: '#/components/schemas/FormStatus'
+          default: active
+          description: The status of the form. Only `active` forms accept submissions.
+          example: active
+      required:
+      - title
+      - slug
+      title: FormInput
+      type: object
     FormPage:
       properties:
         results:
@@ -652,27 +705,6 @@ components:
       - results
       - count
       title: Page[Form]
-      type: object
-    ErrorMessage_CreateFormErrorCode_:
-      properties:
-        code:
-          allOf:
-          - $ref: '#/components/schemas/CreateFormErrorCode'
-          description: The error code.
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage[CreateFormErrorCode]
       type: object
     FormUpdateInput:
       properties:
@@ -728,38 +760,6 @@ components:
           - type: 'null'
           description: The status of the form. Only `active` forms accept submissions.
       title: FormUpdateInput
-      type: object
-    CreateFormErrorCode:
-      description: 'Represents the type of error that occurred when creating a form.
-
-
-        Human-readable error messages are provided in the `detail` field of the response;
-
-        these values are meant to be parseable by code or client logic.'
-      enum:
-      - slug_already_exists
-      title: CreateFormErrorCode
-      type: string
-    ErrorMessage:
-      properties:
-        code:
-          description: The error code.
-          title: Code
-          type: string
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage
       type: object
   securitySchemes:
     ApiKeyAuth:

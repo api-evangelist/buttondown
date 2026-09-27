@@ -279,23 +279,47 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    APIRequestList:
+    APIRequestSource:
+      type: string
+      enum:
+      - api
+      - app
+      - axios
+      - carrd
+      - cli
+      - curl
+      - go
+      - make
+      - netlify
+      - node
+      - pipedream
+      - powershell
+      - python
+      - ruby
+      - wordpress
+      - zapier
+      title: APIRequestSource
+      description: An enumeration.
+    ErrorMessage:
       properties:
-        results:
-          description: The list of API requests on this page.
-          items:
-            $ref: '#/components/schemas/APIRequest'
-          title: Results
-          type: array
-        cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: An opaque cursor to pass back to fetch the next page, or null if this is the last page.
-          title: Cursor
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
       required:
-      - results
-      title: APIRequestList
+      - detail
+      title: ErrorMessage
       type: object
     APIRequestDetail:
       description: Represents a request to the API (api.buttondown.com).
@@ -384,27 +408,6 @@ components:
       - headers
       title: APIRequestDetail
       type: object
-    APIRequestSource:
-      type: string
-      enum:
-      - api
-      - app
-      - axios
-      - carrd
-      - cli
-      - curl
-      - go
-      - make
-      - netlify
-      - node
-      - pipedream
-      - powershell
-      - python
-      - ruby
-      - wordpress
-      - zapier
-      title: APIRequestSource
-      description: An enumeration.
     APIRequest:
       description: Represents a request to the API (api.buttondown.com).
       properties:
@@ -474,26 +477,23 @@ components:
       - ip_address
       title: APIRequest
       type: object
-    ErrorMessage:
+    APIRequestList:
       properties:
-        code:
-          description: The error code.
-          title: Code
-          type: string
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
+        results:
+          description: The list of API requests on this page.
+          items:
+            $ref: '#/components/schemas/APIRequest'
+          title: Results
+          type: array
+        cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: An opaque cursor to pass back to fetch the next page, or null if this is the last page.
+          title: Cursor
       required:
-      - detail
-      title: ErrorMessage
+      - results
+      title: APIRequestList
       type: object
   securitySchemes:
     ApiKeyAuth:

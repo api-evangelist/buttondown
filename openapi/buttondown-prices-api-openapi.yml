@@ -227,58 +227,131 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    Product:
+    ErrorMessage_ArchivePriceErrorCode_:
       properties:
-        id:
-          description: The unique identifier of the product.
-          title: Id
+        code:
+          allOf:
+          - $ref: '#/components/schemas/ArchivePriceErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
           type: string
-        product_id:
-          description: The Stripe product ID.
-          title: Product Id
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[ArchivePriceErrorCode]
+      type: object
+    Price:
+      properties:
+        amount:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: The price amount in the smallest currency unit (e.g. cents).
+          title: Amount
+        cadence:
+          description: The billing cadence for this price.
+          enum:
+          - year
+          - month
+          - one-time
+          - email
+          - week
+          title: Cadence
           type: string
-        name:
-          description: The name of the product.
-          title: Name
+        currency:
+          description: The three-letter ISO currency code (e.g. 'usd').
+          title: Currency
           type: string
-        creation_date:
-          description: The date the product was created in Stripe.
-          title: Creation Date
-          type: string
-        active:
-          description: Whether the product is currently active.
-          title: Active
-          type: boolean
-        default_price:
+        description:
           anyOf:
           - type: string
           - type: 'null'
-          description: The ID of the default price for this product.
-          title: Default Price
+          description: An optional human-readable description of the price.
+          title: Description
+        maximum_amount:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: The maximum amount for pay-what-you-want prices.
+          title: Maximum Amount
+        minimum_amount:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: The minimum amount for pay-what-you-want prices.
+          title: Minimum Amount
+        product_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The ID of the Stripe product this price belongs to.
+          title: Product Id
+        style:
+          description: 'The pricing style: ''fixed'', ''pay-what-you-want'', or ''usage-based''.'
+          enum:
+          - pay-what-you-want
+          - fixed
+          - usage-based
+          title: Style
+          type: string
+        suggested_amount:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: The suggested amount for pay-what-you-want prices.
+          title: Suggested Amount
+        id:
+          description: The unique identifier of the price.
+          title: Id
+          type: string
+        product:
+          anyOf:
+          - $ref: '#/components/schemas/Product'
+          - type: 'null'
       required:
+      - cadence
+      - currency
+      - style
       - id
-      - product_id
-      - name
-      - creation_date
-      - active
-      title: Product
+      title: Price
       type: object
-    CreatePriceErrorCode:
-      description: 'Represents the type of error that occurred when listing a price.
-
-
-        Human-readable error messages are provided in the `detail` field of the response;
-
-        these values are meant to be parseable by code or client logic.'
-      enum:
-      - invalid_amount
-      - maximum_amount_too_high
-      - minimum_amount_not_less_than_maximum
-      - paid_subscriptions_uninitialized
-      - product_deleted
-      - suggested_amount_out_of_range
-      title: CreatePriceErrorCode
-      type: string
+    PricePage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/Price'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[Price]
+      type: object
     ErrorMessage_CreatePriceErrorCode_:
       properties:
         code:
@@ -366,173 +439,41 @@ components:
       - style
       title: PriceInput
       type: object
-    ListPricesErrorCode:
-      description: 'Represents the type of error that occurred when listing a price.
-
-
-        Human-readable error messages are provided in the `detail` field of the response;
-
-        these values are meant to be parseable by code or client logic.'
-      enum:
-      - paid_subscriptions_uninitialized
-      title: ListPricesErrorCode
-      type: string
-    PricePage:
+    Product:
       properties:
-        results:
-          description: The list of results for this page.
-          items:
-            $ref: '#/components/schemas/Price'
-          title: Results
-          type: array
-        next:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the next page of results, if any.
-          title: Next
-        previous:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the previous page of results, if any.
-          title: Previous
-        count:
-          description: The total number of results across all pages.
-          title: Count
-          type: integer
-      required:
-      - results
-      - count
-      title: Page[Price]
-      type: object
-    ArchivePriceErrorCode:
-      description: 'Represents the type of error that occurred when archiving a price.
-
-
-        Human-readable error messages are provided in the `detail` field of the response;
-
-        these values are meant to be parseable by code or client logic.'
-      enum:
-      - default_price
-      title: ArchivePriceErrorCode
-      type: string
-    Price:
-      properties:
-        amount:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          description: The price amount in the smallest currency unit (e.g. cents).
-          title: Amount
-        cadence:
-          description: The billing cadence for this price.
-          enum:
-          - year
-          - month
-          - one-time
-          - email
-          - week
-          title: Cadence
-          type: string
-        currency:
-          description: The three-letter ISO currency code (e.g. 'usd').
-          title: Currency
-          type: string
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: An optional human-readable description of the price.
-          title: Description
-        maximum_amount:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          description: The maximum amount for pay-what-you-want prices.
-          title: Maximum Amount
-        minimum_amount:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          description: The minimum amount for pay-what-you-want prices.
-          title: Minimum Amount
-        product_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The ID of the Stripe product this price belongs to.
-          title: Product Id
-        style:
-          description: 'The pricing style: ''fixed'', ''pay-what-you-want'', or ''usage-based''.'
-          enum:
-          - pay-what-you-want
-          - fixed
-          - usage-based
-          title: Style
-          type: string
-        suggested_amount:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          description: The suggested amount for pay-what-you-want prices.
-          title: Suggested Amount
         id:
-          description: The unique identifier of the price.
+          description: The unique identifier of the product.
           title: Id
           type: string
-        product:
+        product_id:
+          description: The Stripe product ID.
+          title: Product Id
+          type: string
+        name:
+          description: The name of the product.
+          title: Name
+          type: string
+        creation_date:
+          description: The date the product was created in Stripe.
+          title: Creation Date
+          type: string
+        active:
+          description: Whether the product is currently active.
+          title: Active
+          type: boolean
+        default_price:
           anyOf:
-          - $ref: '#/components/schemas/Product'
+          - type: string
           - type: 'null'
+          description: The ID of the default price for this product.
+          title: Default Price
       required:
-      - cadence
-      - currency
-      - style
       - id
-      title: Price
-      type: object
-    ErrorMessage_ListPricesErrorCode_:
-      properties:
-        code:
-          allOf:
-          - $ref: '#/components/schemas/ListPricesErrorCode'
-          description: The error code.
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage[ListPricesErrorCode]
-      type: object
-    ErrorMessage_ArchivePriceErrorCode_:
-      properties:
-        code:
-          allOf:
-          - $ref: '#/components/schemas/ArchivePriceErrorCode'
-          description: The error code.
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage[ArchivePriceErrorCode]
+      - product_id
+      - name
+      - creation_date
+      - active
+      title: Product
       type: object
     ErrorMessage:
       properties:
@@ -555,6 +496,65 @@ components:
       - detail
       title: ErrorMessage
       type: object
+    ErrorMessage_ListPricesErrorCode_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/ListPricesErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[ListPricesErrorCode]
+      type: object
+    ArchivePriceErrorCode:
+      description: 'Represents the type of error that occurred when archiving a price.
+
+
+        Human-readable error messages are provided in the `detail` field of the response;
+
+        these values are meant to be parseable by code or client logic.'
+      enum:
+      - default_price
+      title: ArchivePriceErrorCode
+      type: string
+    CreatePriceErrorCode:
+      description: 'Represents the type of error that occurred when listing a price.
+
+
+        Human-readable error messages are provided in the `detail` field of the response;
+
+        these values are meant to be parseable by code or client logic.'
+      enum:
+      - invalid_amount
+      - maximum_amount_too_high
+      - minimum_amount_not_less_than_maximum
+      - paid_subscriptions_uninitialized
+      - product_deleted
+      - suggested_amount_out_of_range
+      title: CreatePriceErrorCode
+      type: string
+    ListPricesErrorCode:
+      description: 'Represents the type of error that occurred when listing a price.
+
+
+        Human-readable error messages are provided in the `detail` field of the response;
+
+        these values are meant to be parseable by code or client logic.'
+      enum:
+      - paid_subscriptions_uninitialized
+      title: ListPricesErrorCode
+      type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

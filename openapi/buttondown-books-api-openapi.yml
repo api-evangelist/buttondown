@@ -389,26 +389,58 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    ErrorMessage:
+    ValidationErrorDetail:
       properties:
-        code:
-          description: The error code.
-          title: Code
+        type:
+          description: The type of validation error.
+          title: Type
           type: string
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
+        loc:
+          description: The location of the error in the request.
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Loc
+          type: array
+        msg:
+          description: A human-readable error message.
+          title: Msg
           type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
       required:
-      - detail
-      title: ErrorMessage
+      - type
+      - loc
+      - msg
+      title: ValidationErrorDetail
+      type: object
+    BookPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/Book'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[Book]
       type: object
     BookUpdateInput:
       additionalProperties: false
@@ -462,55 +494,6 @@ components:
           description: Whether the book is displayed publicly on the archive.
           title: Shared
       title: BookUpdateInput
-      type: object
-    BookInput:
-      additionalProperties: false
-      properties:
-        title:
-          description: The title of the book.
-          maxLength: 500
-          minLength: 1
-          title: Title
-          type: string
-        url:
-          default: ''
-          description: The URL where the book can be purchased or viewed.
-          maxLength: 2000
-          title: Url
-          type: string
-        image_url:
-          default: ''
-          description: The URL of the book's cover image.
-          maxLength: 2000
-          title: Image Url
-          type: string
-        description:
-          default: ''
-          description: A description of the book.
-          title: Description
-          type: string
-        year:
-          anyOf:
-          - maximum: 2147483647
-            minimum: -2147483648
-            type: integer
-          - type: 'null'
-          description: The year the book was published.
-          title: Year
-        isbn:
-          default: ''
-          description: The ISBN of the book.
-          maxLength: 20
-          title: Isbn
-          type: string
-        shared:
-          default: true
-          description: Whether the book is displayed publicly on the archive.
-          title: Shared
-          type: boolean
-      required:
-      - title
-      title: BookInput
       type: object
     Book:
       properties:
@@ -570,58 +553,26 @@ components:
       - title
       title: Book
       type: object
-    BookPage:
+    ErrorMessage:
       properties:
-        results:
-          description: The list of results for this page.
-          items:
-            $ref: '#/components/schemas/Book'
-          title: Results
-          type: array
-        next:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the next page of results, if any.
-          title: Next
-        previous:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the previous page of results, if any.
-          title: Previous
-        count:
-          description: The total number of results across all pages.
-          title: Count
-          type: integer
-      required:
-      - results
-      - count
-      title: Page[Book]
-      type: object
-    ValidationErrorDetail:
-      properties:
-        type:
-          description: The type of validation error.
-          title: Type
+        code:
+          description: The error code.
+          title: Code
           type: string
-        loc:
-          description: The location of the error in the request.
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Loc
-          type: array
-        msg:
-          description: A human-readable error message.
-          title: Msg
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
           type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
       required:
-      - type
-      - loc
-      - msg
-      title: ValidationErrorDetail
+      - detail
+      title: ErrorMessage
       type: object
     ValidationErrorMessage:
       properties:
@@ -634,6 +585,55 @@ components:
       required:
       - detail
       title: ValidationErrorMessage
+      type: object
+    BookInput:
+      additionalProperties: false
+      properties:
+        title:
+          description: The title of the book.
+          maxLength: 500
+          minLength: 1
+          title: Title
+          type: string
+        url:
+          default: ''
+          description: The URL where the book can be purchased or viewed.
+          maxLength: 2000
+          title: Url
+          type: string
+        image_url:
+          default: ''
+          description: The URL of the book's cover image.
+          maxLength: 2000
+          title: Image Url
+          type: string
+        description:
+          default: ''
+          description: A description of the book.
+          title: Description
+          type: string
+        year:
+          anyOf:
+          - maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+          - type: 'null'
+          description: The year the book was published.
+          title: Year
+        isbn:
+          default: ''
+          description: The ISBN of the book.
+          maxLength: 20
+          title: Isbn
+          type: string
+        shared:
+          default: true
+          description: Whether the book is displayed publicly on the archive.
+          title: Shared
+          type: boolean
+      required:
+      - title
+      title: BookInput
       type: object
   securitySchemes:
     ApiKeyAuth:

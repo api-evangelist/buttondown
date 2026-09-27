@@ -1260,100 +1260,22 @@ components:
           title: Recipients
       title: SendDraftInput
       type: object
-    EmailSource:
-      description: 'Represents the original provenance of an email. This value is not exposed
-
-        to subscribers, but does determine some behavior of the email (e.g. whether
-
-        or not analytics can be calculated.)'
-      enum:
-      - api
-      - import
-      - app
-      - external_feed
-      - smtp
-      title: Source
-      type: string
-    ArchivalMode:
-      description: 'Governs who can view this email in the archive.
-
-
-        `ARCHIVE_ONLY` is the odd one out: the email is publicly archived but
-
-        is not email content at all (e.g. an imported blog post), so it is
-
-        excluded from email-rendering contexts like "recent issues" widgets.'
-      enum:
-      - archive_only
-      - disabled
-      - enabled
-      - enabled_for_paid_subscribers
-      - enabled_for_subscribers
-      title: ArchivalMode
-      type: string
-    ValidationErrorDetail:
+    FailureBreakdownItem:
+      description: A single failure reason with its count.
       properties:
-        type:
-          description: The type of validation error.
-          title: Type
+        code:
+          description: The failure reason code (e.g. 'hard_bounce', 'spam')
+          title: Code
           type: string
-        loc:
-          description: The location of the error in the request.
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Loc
-          type: array
-        msg:
-          description: A human-readable error message.
-          title: Msg
-          type: string
+        count:
+          description: Number of failures with this reason
+          title: Count
+          type: integer
       required:
-      - type
-      - loc
-      - msg
-      title: ValidationErrorDetail
+      - code
+      - count
+      title: FailureBreakdownItem
       type: object
-    AccessLevel:
-      enum:
-      - none
-      - read
-      - write
-      title: AccessLevel
-      type: string
-      description: An enumeration.
-    EmailSuppressionReason:
-      description: Represents the reason an email was suppressed.
-      enum:
-      - law_enforcement
-      - internal_auditing
-      title: SuppressionReason
-      type: string
-    EmailCreationErrorCode:
-      description: 'Represents the type of error that occurred when creating an email.
-
-
-        Human-readable error messages are provided in the `detail` field of the response;
-
-        these values are meant to be parseable by code or client logic.'
-      enum:
-      - body_contains_frontmatter
-      - email_duplicate
-      - email_not_confirmed
-      - body_invalid
-      - canonical_url_invalid
-      - email_invalid
-      - slug_invalid
-      - subject_invalid
-      - pay_per_email_billing_locked
-      - publish_date_invalid
-      - publish_date_missing
-      - sending_requires_confirmation
-      - status_invalid
-      - tag_invalid
-      title: EmailCreationErrorCode
-      type: string
     FilterGroup:
       description: "Buttondown's filtering schema can be used for multiple things:\n\n- Filtering [the audience of an email](/api-emails-create) to a specific subset\n- Creating [finely-tuned automations](/api-automation-introduction)\n\nFilters are fractal; they can be nested in groups, and groups can be nested in other groups. This is accomplished through a tree-like structure. Every \"FilterGroup\" has a \"predicate\" field, which is either \"and\" or \"or\", which determines how the filters and groups within the group are combined, a \"groups\" field, which is a list of \"FilterGroup\" objects (that's that recursive bit!), and a \"filters\" field, which are the leaf-level filters themselves.\n\nLet's say you want a simple filter: all subscribers who have a tag whose ID is `sub_tag_0j6hb7h40j6hb7h40j6hb7h40j`. You can do that like this:\n\n```json\n{\n    \"filters\": [{\"field\": \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40j\"}],\n    \"groups\": [],\n    \"predicate\": \"and\"\n}\n```\n\nNow, let's say you want to filter for subscribers who have that tag and a tag whose ID is `sub_tag_0j6hb7h40j6hb7h40j6hb7h40k`. You can do that like this:\n\n```json\n{\n    \"filters\": [{\"field\": \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40j\"}, {\"field\": \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40k\"}],\n    \"groups\": [],\n    \"predicate\": \"and\"\n}\n```\n\nIf you wanted to change that `and` to an `or`, you can do that like this:\n\n```json\n{\n    \"filters\": [{\"field\": \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40j\"}, {\"field\": \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40k\"}],\n    \"groups\": [],\n    \"predicate\": \"or\"\n}\n```\n\nNow, let's say you want to filter for subscribers who have the first tag _or_ both the second tag and a third tag whose ID is `sub_tag_0j6hb7h40j6hb7h40j6hb7h40m`. This is where the whole nested thing comes in handy. You can do that like this:\n\n```json\n{\n    \"filters\": [{\"field\": \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40j\"}],\n    \"groups\": [\n        {\n            \"filters\": [{\"field\": \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40k\"}, {\"field\": \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40m\"}],\n            \"groups\": [],\n            \"predicate\": \"and\"\n        }\n    ],\n    \"predicate\": \"or\"\n}\n```\n\nYou can read more about the specific filter construction in the [Filter documentation](/api-emails-filter)."
       properties:
@@ -1382,15 +1304,90 @@ components:
       - predicate
       title: FilterGroup
       type: object
-    InvitationStatus:
-      type: string
+    EmailStatus:
+      description: 'Represents the state of an email.
+
+
+        No action is required to move from one state or another; Buttondown
+
+        internally handles the transitions, and exposing the status is for
+
+        observability purposes only.'
       enum:
-      - pending
-      - accepted
-      - declined
-      - revoked
-      - owner
-      title: InvitationStatus
+      - draft
+      - managed_by_rss
+      - about_to_send
+      - scheduled
+      - in_flight
+      - paused
+      - deleted
+      - errored
+      - sent
+      - imported
+      - throttled
+      - resending
+      - transactional
+      - suppressed
+      title: Status
+      type: string
+    EmailType:
+      description: 'The legacy single-axis representation of an email''s audience and
+
+        archive visibility. No longer stored: `filters` owns the audience
+
+        axis and `archival_mode` owns the archive axis, and the deprecated
+
+        API field is derived from those (see `email_type` below).'
+      enum:
+      - public
+      - private
+      - premium
+      - free
+      - churned
+      - archival
+      title: Type
+      type: string
+    HistoryPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/History'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[History]
+      type: object
+    Operator:
+      enum:
+      - equals
+      - not_equals
+      - contains
+      - not_contains
+      - is_empty
+      - is_not_empty
+      - greater_than
+      - less_than
+      title: Operator
+      type: string
       description: An enumeration.
     Permissions:
       properties:
@@ -1436,6 +1433,579 @@ components:
           description: Access level for form management.
       title: Permissions
       type: object
+    ErrorMessage_EmailListErrorCode_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/EmailListErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[EmailListErrorCode]
+      type: object
+    EmailFilterGroup:
+      properties:
+        filters:
+          description: The leaf-level filters to apply to the audience.
+          items:
+            $ref: '#/components/schemas/EmailFilter'
+          title: Filters
+          type: array
+        groups:
+          description: The nested groups to apply to the audience.
+          items:
+            $ref: '#/components/schemas/EmailFilterGroup'
+          title: Groups
+          type: array
+        predicate:
+          description: The logical operator to use when combining filters.
+          enum:
+          - and
+          - or
+          title: Predicate
+          type: string
+      required:
+      - filters
+      - groups
+      - predicate
+      title: EmailFilterGroup
+      type: object
+    ArchivalMode:
+      description: 'Governs who can view this email in the archive.
+
+
+        `ARCHIVE_ONLY` is the odd one out: the email is publicly archived but
+
+        is not email content at all (e.g. an imported blog post), so it is
+
+        excluded from email-rendering contexts like "recent issues" widgets.'
+      enum:
+      - archive_only
+      - disabled
+      - enabled
+      - enabled_for_paid_subscribers
+      - enabled_for_subscribers
+      title: ArchivalMode
+      type: string
+    NewsletterEmailTemplate:
+      description: 'Represents the template of an email.
+
+
+        Each template has a different layout/style; you can view screenshots and examples [in the docs](https://docs.buttondown.com/customizing-email-design#buttondowns-default-templates).'
+      enum:
+      - classic
+      - custom
+      - modern
+      - plaintext
+      - naked
+      title: EmailTemplate
+      type: string
+    EmailFilter:
+      properties:
+        field:
+          anyOf:
+          - enum:
+            - subscriber.churn_date
+            - subscriber.click_rate
+            - subscriber.last_click_date
+            - subscriber.last_open_date
+            - subscriber.open_rate
+            - subscriber.price
+            - subscriber.source
+            - subscriber.status
+            - subscriber.subscription_date
+            - subscriber.tags
+            - subscriber.upgrade_date
+            type: string
+          - pattern: ^subscriber\.metadata\..+$
+            type: string
+          description: The subscriber attribute to evaluate. Must be a recognized field or a `subscriber.metadata.*` path.
+          title: Field
+        operator:
+          $ref: '#/components/schemas/Operator'
+        value:
+          description: The value to compare the field against.
+          title: Value
+          type: string
+      required:
+      - field
+      - operator
+      - value
+      title: EmailFilter
+      type: object
+    EmailInput:
+      additionalProperties: false
+      properties:
+        attachments:
+          default: []
+          description: A list of attachment IDs present on the email. (See [Attachments](https://docs.buttondown.com/api-attachments-introduction) for more information.)
+          example:
+          - att_01h8xg4j3k2m1n0p9q8r7s6t5v
+          items:
+            pattern: ^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|(?:att)_(?:[0-7][0-9abcdefghjkmnpqrstvwxyz]{25}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}))$
+            type: string
+          title: Attachments
+          type: array
+        publish_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: The date and time at which the email should be published in the future (for scheduled emails), or the date and time at which the email was published (for sent emails).
+          title: Publish Date
+        subject:
+          description: The subject line for the email.
+          example: The subject line for the email
+          maxLength: 2000
+          title: Subject
+          type: string
+        slug:
+          anyOf:
+          - maxLength: 100
+            pattern: ^[a-zA-Z0-9_-]+$
+            type: string
+          - type: 'null'
+          description: A short, human-readable identifier for the email, used in the archive URL.
+          example: hello-world
+          title: Slug
+        description:
+          default: ''
+          description: A human-readable description of the email, used for archives and SEO.
+          title: Description
+          type: string
+        canonical_url:
+          default: ''
+          description: The URL of the original source of the content.
+          maxLength: 2000
+          title: Canonical Url
+          type: string
+        image:
+          default: ''
+          description: A primary image URL used when previewing the email on the web or in other contexts.
+          title: Image
+          type: string
+        body:
+          default: ''
+          description: 'The body of the email, in either HTML or markdown format. Buttondown attempts to intelligently detect the format of the body automatically, but you can also specify the format explicitly by prepending the text with the `buttondown-editor-mode` comment: `<!-- buttondown-editor-mode: fancy -->` or `<!-- buttondown-editor-mode: plaintext -->`.'
+          example: This is an example of the body of an email.
+          title: Body
+          type: string
+        archival_mode:
+          allOf:
+          - $ref: '#/components/schemas/ArchivalMode'
+          default: enabled
+          description: Controls who can view this email in the archive.
+        email_type:
+          allOf:
+          - $ref: '#/components/schemas/EmailType'
+          default: public
+          deprecated: true
+          description: 'The type of email. Defaults to `PUBLIC`. Deprecated: this is a legacy single-axis view derived from `archival_mode` (archive visibility) and `filters` (audience); prefer setting those directly. Because it is derived, it does not always round-trip: writing it alongside an explicit `archival_mode` that disagrees will report the value implied by the two underlying fields, and writing a value that already matches the derived one is a no-op.'
+        status:
+          allOf:
+          - $ref: '#/components/schemas/EmailStatus'
+          default: about_to_send
+          description: The status of the email (e.g. `draft`, `about_to_send`, `sent`, `scheduled`).
+        metadata:
+          additionalProperties: true
+          default: {}
+          description: A structured key-value blob that you can use to store arbitrary data on the object. Metadata can be nested — you can store objects and arrays within your metadata. (You can [read more about metadata.](https://docs.buttondown.com/metadata))
+          title: Metadata
+          type: object
+        secondary_id:
+          anyOf:
+          - maximum: 1000000000
+            minimum: 1
+            type: integer
+          - type: 'null'
+          description: 'An informal ''number'' for the email, used in some templates (e.g. ''This was issue #123'').'
+          title: Secondary Id
+        filters:
+          allOf:
+          - $ref: '#/components/schemas/EmailFilterGroup'
+          default:
+            filters: []
+            groups: []
+            predicate: and
+          description: Tag-based filter rules determining which subscribers receive this email.
+        template:
+          anyOf:
+          - $ref: '#/components/schemas/NewsletterEmailTemplate'
+          - type: 'null'
+          description: If present, this template overrides your newsletter's default email template.
+        commenting_mode:
+          allOf:
+          - $ref: '#/components/schemas/EmailCommentingMode'
+          default: enabled
+          description: Controls whether subscribers can comment on this email.
+        related_email_ids:
+          description: IDs of emails related to this one. Shown at the bottom of the email and archive pages.
+          example:
+          - em_01h8xg4j3k2m1n0p9q8r7s6t5v
+          items:
+            pattern: ^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|(?:em)_(?:[0-7][0-9abcdefghjkmnpqrstvwxyz]{25}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}))$
+            type: string
+          title: Related Email Ids
+          type: array
+        featured:
+          default: false
+          description: Designated whether or not this email should be highlighted within the archives.
+          title: Featured
+          type: boolean
+        should_trigger_pay_per_email_billing:
+          default: false
+          description: Whether this email should trigger pay-per-email billing for paid subscribers. Use this to differentiate between free updates and premium newsletters.
+          title: Should Trigger Pay Per Email Billing
+          type: boolean
+      required:
+      - subject
+      title: EmailInput
+      type: object
+    ValidationErrorDetail:
+      properties:
+        type:
+          description: The type of validation error.
+          title: Type
+          type: string
+        loc:
+          description: The location of the error in the request.
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Loc
+          type: array
+        msg:
+          description: A human-readable error message.
+          title: Msg
+          type: string
+      required:
+      - type
+      - loc
+      - msg
+      title: ValidationErrorDetail
+      type: object
+    EmailSuppressionReason:
+      description: Represents the reason an email was suppressed.
+      enum:
+      - law_enforcement
+      - internal_auditing
+      title: SuppressionReason
+      type: string
+    EmailCreationErrorCode:
+      description: 'Represents the type of error that occurred when creating an email.
+
+
+        Human-readable error messages are provided in the `detail` field of the response;
+
+        these values are meant to be parseable by code or client logic.'
+      enum:
+      - body_contains_frontmatter
+      - email_duplicate
+      - email_not_confirmed
+      - body_invalid
+      - canonical_url_invalid
+      - email_invalid
+      - slug_invalid
+      - subject_invalid
+      - pay_per_email_billing_locked
+      - publish_date_invalid
+      - publish_date_missing
+      - sending_requires_confirmation
+      - status_invalid
+      - tag_invalid
+      title: EmailCreationErrorCode
+      type: string
+    EmailListErrorCode:
+      description: 'Represents the type of error that occurred when listing emails.
+
+
+        Human-readable error messages are provided in the `detail` field of the response;
+
+        these values are meant to be parseable by code or client logic.'
+      enum:
+      - creation_date_invalid
+      - publish_date_invalid
+      title: EmailListErrorCode
+      type: string
+    EmailPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/Email'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[Email]
+      type: object
+    Callout:
+      description: 'Surfacing-time flags about an email that the UI uses to render contextual
+
+        callouts (e.g. in the analytics panel). Computed on read; not persisted.'
+      enum:
+      - first_send_on_sending_domain
+      title: Callout
+      type: string
+    ValidationErrorMessage:
+      properties:
+        detail:
+          description: A list of validation errors.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          title: Detail
+          type: array
+      required:
+      - detail
+      title: ValidationErrorMessage
+      type: object
+    ErrorMessage_EmailCreationErrorCode_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/EmailCreationErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[EmailCreationErrorCode]
+      type: object
+    History:
+      properties:
+        history_id:
+          description: A monotonically increasing history entry ID.
+          title: History Id
+          type: integer
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        value:
+          description: The field's value at the time of this history entry.
+          title: Value
+          type: string
+        user_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The ID of the user who made this change, if attributable.
+          title: User Id
+        user:
+          anyOf:
+          - $ref: '#/components/schemas/User'
+          - type: 'null'
+          description: If expanded, the user who made this change.
+      required:
+      - history_id
+      - creation_date
+      - value
+      title: History
+      type: object
+    EmailUpdateInput:
+      additionalProperties: false
+      properties:
+        attachments:
+          anyOf:
+          - items:
+              pattern: ^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|(?:att)_(?:[0-7][0-9abcdefghjkmnpqrstvwxyz]{25}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}))$
+              type: string
+            type: array
+          - type: 'null'
+          description: A list of attachment IDs present on the email. (See [Attachments](https://docs.buttondown.com/api-attachments-introduction) for more information.)
+          example:
+          - att_01h8xg4j3k2m1n0p9q8r7s6t5v
+          title: Attachments
+        publish_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - const: none
+            type: string
+          - type: 'null'
+          description: The date and time at which the email should be published in the future (for scheduled emails), or the date and time at which the email was published (for sent emails). Pass `"none"` to clear a scheduled date.
+          title: Publish Date
+        subject:
+          anyOf:
+          - maxLength: 2000
+            type: string
+          - type: 'null'
+          description: The subject line for the email.
+          example: The subject line for the email
+          title: Subject
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: A human-readable description of the email, used for archives and SEO.
+          title: Description
+        canonical_url:
+          anyOf:
+          - maxLength: 2000
+            type: string
+          - type: 'null'
+          description: The URL of the original source of the content.
+          example: https://sheinhardtwig.com/2025/01/17/our-nbc-partnership
+          title: Canonical Url
+        body:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: 'The body of the email, in either HTML or markdown format. Buttondown attempts to intelligently detect the format of the body automatically, but you can also specify the format explicitly by prepending the text with the `buttondown-editor-mode` comment: `<!-- buttondown-editor-mode: fancy -->` or `<!-- buttondown-editor-mode: plaintext -->`.'
+          example: This is an example of the body of an email.
+          title: Body
+        archival_mode:
+          anyOf:
+          - $ref: '#/components/schemas/ArchivalMode'
+          - type: 'null'
+          description: Controls who can view this email in the archive.
+        email_type:
+          anyOf:
+          - $ref: '#/components/schemas/EmailType'
+          - type: 'null'
+          deprecated: true
+          description: 'The type of email. Defaults to `PUBLIC`. Deprecated: this is a legacy single-axis view derived from `archival_mode` (archive visibility) and `filters` (audience); prefer setting those directly. Because it is derived, it does not always round-trip: writing it alongside an explicit `archival_mode` that disagrees will report the value implied by the two underlying fields, and writing a value that already matches the derived one is a no-op.'
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/EmailStatus'
+          - type: 'null'
+          description: The status of the email (e.g. `draft`, `about_to_send`, `sent`, `scheduled`).
+        suppression_reason:
+          anyOf:
+          - $ref: '#/components/schemas/EmailSuppressionReason'
+          - type: 'null'
+          description: If the email has been suppressed from sending, the reason why.
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          default: {}
+          description: A structured key-value blob that you can use to store arbitrary data on the object. Metadata can be nested — you can store objects and arrays within your metadata. (You can [read more about metadata.](https://docs.buttondown.com/metadata))
+          title: Metadata
+        image:
+          default: ''
+          description: A primary image URL used when previewing the email on the web or in other contexts.
+          title: Image
+          type: string
+        slug:
+          anyOf:
+          - maxLength: 100
+            pattern: ^[a-zA-Z0-9_-]+$
+            type: string
+          - type: 'null'
+          description: A short, human-readable identifier for the email, used in the archive URL.
+          example: hello-world
+          title: Slug
+        secondary_id:
+          anyOf:
+          - maximum: 1000000000
+            minimum: 1
+            type: integer
+          - type: 'null'
+          description: 'An informal ''number'' for the email, used in some templates (e.g. ''This was issue #123'').'
+          title: Secondary Id
+        filters:
+          anyOf:
+          - $ref: '#/components/schemas/EmailFilterGroup'
+          - type: 'null'
+          description: Tag-based filter rules determining which subscribers receive this email.
+        template:
+          anyOf:
+          - $ref: '#/components/schemas/NewsletterEmailTemplate'
+          - const: none
+            type: string
+          - type: 'null'
+          description: If present, this template overrides your newsletter's default email template. Pass `"none"` to clear an override.
+          title: Template
+        commenting_mode:
+          anyOf:
+          - $ref: '#/components/schemas/EmailCommentingMode'
+          - type: 'null'
+          description: Controls whether subscribers can comment on this email.
+        related_email_ids:
+          anyOf:
+          - items:
+              pattern: ^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|(?:em)_(?:[0-7][0-9abcdefghjkmnpqrstvwxyz]{25}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}))$
+              type: string
+            type: array
+          - type: 'null'
+          description: IDs of emails related to this one. Shown at the bottom of the email and archive pages.
+          example:
+          - em_01h8xg4j3k2m1n0p9q8r7s6t5v
+          title: Related Email Ids
+        featured:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          description: Designated whether or not this email should be highlighted within the archives.
+          title: Featured
+        should_trigger_pay_per_email_billing:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          description: Whether this email should trigger pay-per-email billing for paid subscribers. Use this to differentiate between free updates and premium newsletters.
+          title: Should Trigger Pay Per Email Billing
+      title: EmailUpdateInput
+      type: object
+    AccessLevel:
+      enum:
+      - none
+      - read
+      - write
+      title: AccessLevel
+      type: string
+      description: An enumeration.
+    EmailCommentingMode:
+      description: 'Governs who can comment on this email.
+
+
+        This enum replaces the `is_comments_disabled` field, which has been deprecated. (Also note that this field may be superseded by newsletter-level settings; for instance, "enabled" is an invalid and inert value if the newsletter itself has comments disabled.)'
+      enum:
+      - disabled
+      - enabled
+      - enabled_for_paid_subscribers
+      title: CommentingMode
+      type: string
     User:
       properties:
         permissions:
@@ -1471,6 +2041,112 @@ components:
       - status
       title: User
       type: object
+    Analytics:
+      properties:
+        recipients:
+          default: 0
+          description: The number of subscribers the email was dispatched to.
+          title: Recipients
+          type: integer
+        deliveries:
+          default: 0
+          description: The number of successful deliveries (recipients minus failures).
+          title: Deliveries
+          type: integer
+        opens:
+          default: 0
+          description: The number of unique opens recorded.
+          title: Opens
+          type: integer
+        clicks:
+          default: 0
+          description: The number of unique link clicks recorded.
+          title: Clicks
+          type: integer
+        temporary_failures:
+          default: 0
+          description: The number of temporary delivery failures (e.g. soft bounces).
+          title: Temporary Failures
+          type: integer
+        permanent_failures:
+          default: 0
+          description: The number of permanent delivery failures (e.g. hard bounces).
+          title: Permanent Failures
+          type: integer
+        unsubscriptions:
+          default: 0
+          description: The number of subscribers who unsubscribed after receiving this email.
+          title: Unsubscriptions
+          type: integer
+        complaints:
+          default: 0
+          description: The number of spam complaints recorded against this email.
+          title: Complaints
+          type: integer
+        survey_responses:
+          default: 0
+          description: The number of survey responses submitted from this email.
+          title: Survey Responses
+          type: integer
+        webmentions:
+          default: 0
+          description: The number of inbound webmentions received for this email.
+          title: Webmentions
+          type: integer
+        page_views_lifetime:
+          default: 0
+          description: The total number of archive page views for this email since publication.
+          title: Page Views Lifetime
+          type: integer
+        page_views_30:
+          default: 0
+          description: The number of archive page views in the last 30 days.
+          title: Page Views 30
+          type: integer
+        page_views_7:
+          default: 0
+          description: The number of archive page views in the last 7 days.
+          title: Page Views 7
+          type: integer
+        subscriptions:
+          default: 0
+          description: The number of new subscribers attributed to this email.
+          title: Subscriptions
+          type: integer
+        paid_subscriptions:
+          default: 0
+          description: The number of new paid subscribers attributed to this email.
+          title: Paid Subscriptions
+          type: integer
+        replies:
+          default: 0
+          description: The number of reply emails received from subscribers.
+          title: Replies
+          type: integer
+        comments:
+          default: 0
+          description: The number of comments posted on this email.
+          title: Comments
+          type: integer
+        social_mentions:
+          default: 0
+          description: The number of social media mentions of this email.
+          title: Social Mentions
+          type: integer
+        temporary_failure_breakdown:
+          description: Breakdown of temporary failures by reason code, sorted by count descending.
+          items:
+            $ref: '#/components/schemas/FailureBreakdownItem'
+          title: Temporary Failure Breakdown
+          type: array
+        permanent_failure_breakdown:
+          description: Breakdown of permanent failures by reason code, sorted by count descending.
+          items:
+            $ref: '#/components/schemas/FailureBreakdownItem'
+          title: Permanent Failure Breakdown
+          type: array
+      title: Analytics
+      type: object
     EmailExcludableField:
       description: 'Represents a field on the Email model that can be excluded from
 
@@ -1479,6 +2155,78 @@ components:
       - body
       title: ExcludableField
       type: string
+    EmailSource:
+      description: 'Represents the original provenance of an email. This value is not exposed
+
+        to subscribers, but does determine some behavior of the email (e.g. whether
+
+        or not analytics can be calculated.)'
+      enum:
+      - api
+      - import
+      - app
+      - external_feed
+      - smtp
+      title: Source
+      type: string
+    InvitationStatus:
+      type: string
+      enum:
+      - pending
+      - accepted
+      - declined
+      - revoked
+      - owner
+      title: InvitationStatus
+      description: An enumeration.
+    Render:
+      properties:
+        content:
+          description: The rendered HTML for the specified target format.
+          title: Content
+          type: string
+      required:
+      - content
+      title: Render
+      type: object
+    ErrorMessage:
+      properties:
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage
+      type: object
+    Filter:
+      description: "A filter is a single condition that can be evaluated against a [Subscriber](/api-subscribers-retrieve). It has a field, an operator, and a value:\n\n```json\n{\n    \"field\": \"subscriber.tags\",\n    \"operator\": \"contains\",\n    \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40j\"\n}\n```\n\nThe field is the path to the field on the subscriber to evaluate. The operator is the operator to use when evaluating the filter. The value is the value to compare the field to. Tag filters require the tag's ID (either a UUID or TypeID), not its name."
+      properties:
+        field:
+          title: Field
+          type: string
+        operator:
+          $ref: '#/components/schemas/Operator'
+        value:
+          title: Value
+          type: string
+      required:
+      - field
+      - operator
+      - value
+      title: Filter
+      type: object
     Email:
       description: 'Emails are why you''re here on Buttondown, right?
 
@@ -1648,754 +2396,6 @@ components:
       - status
       - subject
       title: Email
-      type: object
-    EmailUpdateInput:
-      additionalProperties: false
-      properties:
-        attachments:
-          anyOf:
-          - items:
-              pattern: ^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|(?:att)_(?:[0-7][0-9abcdefghjkmnpqrstvwxyz]{25}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}))$
-              type: string
-            type: array
-          - type: 'null'
-          description: A list of attachment IDs present on the email. (See [Attachments](https://docs.buttondown.com/api-attachments-introduction) for more information.)
-          example:
-          - att_01h8xg4j3k2m1n0p9q8r7s6t5v
-          title: Attachments
-        publish_date:
-          anyOf:
-          - format: date-time
-            type: string
-          - const: none
-            type: string
-          - type: 'null'
-          description: The date and time at which the email should be published in the future (for scheduled emails), or the date and time at which the email was published (for sent emails). Pass `"none"` to clear a scheduled date.
-          title: Publish Date
-        subject:
-          anyOf:
-          - maxLength: 2000
-            type: string
-          - type: 'null'
-          description: The subject line for the email.
-          example: The subject line for the email
-          title: Subject
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: A human-readable description of the email, used for archives and SEO.
-          title: Description
-        canonical_url:
-          anyOf:
-          - maxLength: 2000
-            type: string
-          - type: 'null'
-          description: The URL of the original source of the content.
-          example: https://sheinhardtwig.com/2025/01/17/our-nbc-partnership
-          title: Canonical Url
-        body:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: 'The body of the email, in either HTML or markdown format. Buttondown attempts to intelligently detect the format of the body automatically, but you can also specify the format explicitly by prepending the text with the `buttondown-editor-mode` comment: `<!-- buttondown-editor-mode: fancy -->` or `<!-- buttondown-editor-mode: plaintext -->`.'
-          example: This is an example of the body of an email.
-          title: Body
-        archival_mode:
-          anyOf:
-          - $ref: '#/components/schemas/ArchivalMode'
-          - type: 'null'
-          description: Controls who can view this email in the archive.
-        email_type:
-          anyOf:
-          - $ref: '#/components/schemas/EmailType'
-          - type: 'null'
-          deprecated: true
-          description: 'The type of email. Defaults to `PUBLIC`. Deprecated: this is a legacy single-axis view derived from `archival_mode` (archive visibility) and `filters` (audience); prefer setting those directly. Because it is derived, it does not always round-trip: writing it alongside an explicit `archival_mode` that disagrees will report the value implied by the two underlying fields, and writing a value that already matches the derived one is a no-op.'
-        status:
-          anyOf:
-          - $ref: '#/components/schemas/EmailStatus'
-          - type: 'null'
-          description: The status of the email (e.g. `draft`, `about_to_send`, `sent`, `scheduled`).
-        suppression_reason:
-          anyOf:
-          - $ref: '#/components/schemas/EmailSuppressionReason'
-          - type: 'null'
-          description: If the email has been suppressed from sending, the reason why.
-        metadata:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          default: {}
-          description: A structured key-value blob that you can use to store arbitrary data on the object. Metadata can be nested — you can store objects and arrays within your metadata. (You can [read more about metadata.](https://docs.buttondown.com/metadata))
-          title: Metadata
-        image:
-          default: ''
-          description: A primary image URL used when previewing the email on the web or in other contexts.
-          title: Image
-          type: string
-        slug:
-          anyOf:
-          - maxLength: 100
-            pattern: ^[a-zA-Z0-9_-]+$
-            type: string
-          - type: 'null'
-          description: A short, human-readable identifier for the email, used in the archive URL.
-          example: hello-world
-          title: Slug
-        secondary_id:
-          anyOf:
-          - maximum: 1000000000
-            minimum: 1
-            type: integer
-          - type: 'null'
-          description: 'An informal ''number'' for the email, used in some templates (e.g. ''This was issue #123'').'
-          title: Secondary Id
-        filters:
-          anyOf:
-          - $ref: '#/components/schemas/EmailFilterGroup'
-          - type: 'null'
-          description: Tag-based filter rules determining which subscribers receive this email.
-        template:
-          anyOf:
-          - $ref: '#/components/schemas/NewsletterEmailTemplate'
-          - const: none
-            type: string
-          - type: 'null'
-          description: If present, this template overrides your newsletter's default email template. Pass `"none"` to clear an override.
-          title: Template
-        commenting_mode:
-          anyOf:
-          - $ref: '#/components/schemas/EmailCommentingMode'
-          - type: 'null'
-          description: Controls whether subscribers can comment on this email.
-        related_email_ids:
-          anyOf:
-          - items:
-              pattern: ^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|(?:em)_(?:[0-7][0-9abcdefghjkmnpqrstvwxyz]{25}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}))$
-              type: string
-            type: array
-          - type: 'null'
-          description: IDs of emails related to this one. Shown at the bottom of the email and archive pages.
-          example:
-          - em_01h8xg4j3k2m1n0p9q8r7s6t5v
-          title: Related Email Ids
-        featured:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          description: Designated whether or not this email should be highlighted within the archives.
-          title: Featured
-        should_trigger_pay_per_email_billing:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          description: Whether this email should trigger pay-per-email billing for paid subscribers. Use this to differentiate between free updates and premium newsletters.
-          title: Should Trigger Pay Per Email Billing
-      title: EmailUpdateInput
-      type: object
-    EmailStatus:
-      description: 'Represents the state of an email.
-
-
-        No action is required to move from one state or another; Buttondown
-
-        internally handles the transitions, and exposing the status is for
-
-        observability purposes only.'
-      enum:
-      - draft
-      - managed_by_rss
-      - about_to_send
-      - scheduled
-      - in_flight
-      - paused
-      - deleted
-      - errored
-      - sent
-      - imported
-      - throttled
-      - resending
-      - transactional
-      - suppressed
-      title: Status
-      type: string
-    Callout:
-      description: 'Surfacing-time flags about an email that the UI uses to render contextual
-
-        callouts (e.g. in the analytics panel). Computed on read; not persisted.'
-      enum:
-      - first_send_on_sending_domain
-      title: Callout
-      type: string
-    ErrorMessage_EmailListErrorCode_:
-      properties:
-        code:
-          allOf:
-          - $ref: '#/components/schemas/EmailListErrorCode'
-          description: The error code.
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage[EmailListErrorCode]
-      type: object
-    EmailFilterGroup:
-      properties:
-        filters:
-          description: The leaf-level filters to apply to the audience.
-          items:
-            $ref: '#/components/schemas/EmailFilter'
-          title: Filters
-          type: array
-        groups:
-          description: The nested groups to apply to the audience.
-          items:
-            $ref: '#/components/schemas/EmailFilterGroup'
-          title: Groups
-          type: array
-        predicate:
-          description: The logical operator to use when combining filters.
-          enum:
-          - and
-          - or
-          title: Predicate
-          type: string
-      required:
-      - filters
-      - groups
-      - predicate
-      title: EmailFilterGroup
-      type: object
-    Filter:
-      description: "A filter is a single condition that can be evaluated against a [Subscriber](/api-subscribers-retrieve). It has a field, an operator, and a value:\n\n```json\n{\n    \"field\": \"subscriber.tags\",\n    \"operator\": \"contains\",\n    \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40j\"\n}\n```\n\nThe field is the path to the field on the subscriber to evaluate. The operator is the operator to use when evaluating the filter. The value is the value to compare the field to. Tag filters require the tag's ID (either a UUID or TypeID), not its name."
-      properties:
-        field:
-          title: Field
-          type: string
-        operator:
-          $ref: '#/components/schemas/Operator'
-        value:
-          title: Value
-          type: string
-      required:
-      - field
-      - operator
-      - value
-      title: Filter
-      type: object
-    ValidationErrorMessage:
-      properties:
-        detail:
-          description: A list of validation errors.
-          items:
-            $ref: '#/components/schemas/ValidationErrorDetail'
-          title: Detail
-          type: array
-      required:
-      - detail
-      title: ValidationErrorMessage
-      type: object
-    ErrorMessage_EmailCreationErrorCode_:
-      properties:
-        code:
-          allOf:
-          - $ref: '#/components/schemas/EmailCreationErrorCode'
-          description: The error code.
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage[EmailCreationErrorCode]
-      type: object
-    HistoryPage:
-      properties:
-        results:
-          description: The list of results for this page.
-          items:
-            $ref: '#/components/schemas/History'
-          title: Results
-          type: array
-        next:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the next page of results, if any.
-          title: Next
-        previous:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the previous page of results, if any.
-          title: Previous
-        count:
-          description: The total number of results across all pages.
-          title: Count
-          type: integer
-      required:
-      - results
-      - count
-      title: Page[History]
-      type: object
-    EmailFilter:
-      properties:
-        field:
-          anyOf:
-          - enum:
-            - subscriber.churn_date
-            - subscriber.click_rate
-            - subscriber.last_click_date
-            - subscriber.last_open_date
-            - subscriber.open_rate
-            - subscriber.price
-            - subscriber.source
-            - subscriber.status
-            - subscriber.subscription_date
-            - subscriber.tags
-            - subscriber.upgrade_date
-            type: string
-          - pattern: ^subscriber\.metadata\..+$
-            type: string
-          description: The subscriber attribute to evaluate. Must be a recognized field or a `subscriber.metadata.*` path.
-          title: Field
-        operator:
-          $ref: '#/components/schemas/Operator'
-        value:
-          description: The value to compare the field against.
-          title: Value
-          type: string
-      required:
-      - field
-      - operator
-      - value
-      title: EmailFilter
-      type: object
-    FailureBreakdownItem:
-      description: A single failure reason with its count.
-      properties:
-        code:
-          description: The failure reason code (e.g. 'hard_bounce', 'spam')
-          title: Code
-          type: string
-        count:
-          description: Number of failures with this reason
-          title: Count
-          type: integer
-      required:
-      - code
-      - count
-      title: FailureBreakdownItem
-      type: object
-    EmailPage:
-      properties:
-        results:
-          description: The list of results for this page.
-          items:
-            $ref: '#/components/schemas/Email'
-          title: Results
-          type: array
-        next:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the next page of results, if any.
-          title: Next
-        previous:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the previous page of results, if any.
-          title: Previous
-        count:
-          description: The total number of results across all pages.
-          title: Count
-          type: integer
-      required:
-      - results
-      - count
-      title: Page[Email]
-      type: object
-    Operator:
-      enum:
-      - equals
-      - not_equals
-      - contains
-      - not_contains
-      - is_empty
-      - is_not_empty
-      - greater_than
-      - less_than
-      title: Operator
-      type: string
-      description: An enumeration.
-    Render:
-      properties:
-        content:
-          description: The rendered HTML for the specified target format.
-          title: Content
-          type: string
-      required:
-      - content
-      title: Render
-      type: object
-    Analytics:
-      properties:
-        recipients:
-          default: 0
-          description: The number of subscribers the email was dispatched to.
-          title: Recipients
-          type: integer
-        deliveries:
-          default: 0
-          description: The number of successful deliveries (recipients minus failures).
-          title: Deliveries
-          type: integer
-        opens:
-          default: 0
-          description: The number of unique opens recorded.
-          title: Opens
-          type: integer
-        clicks:
-          default: 0
-          description: The number of unique link clicks recorded.
-          title: Clicks
-          type: integer
-        temporary_failures:
-          default: 0
-          description: The number of temporary delivery failures (e.g. soft bounces).
-          title: Temporary Failures
-          type: integer
-        permanent_failures:
-          default: 0
-          description: The number of permanent delivery failures (e.g. hard bounces).
-          title: Permanent Failures
-          type: integer
-        unsubscriptions:
-          default: 0
-          description: The number of subscribers who unsubscribed after receiving this email.
-          title: Unsubscriptions
-          type: integer
-        complaints:
-          default: 0
-          description: The number of spam complaints recorded against this email.
-          title: Complaints
-          type: integer
-        survey_responses:
-          default: 0
-          description: The number of survey responses submitted from this email.
-          title: Survey Responses
-          type: integer
-        webmentions:
-          default: 0
-          description: The number of inbound webmentions received for this email.
-          title: Webmentions
-          type: integer
-        page_views_lifetime:
-          default: 0
-          description: The total number of archive page views for this email since publication.
-          title: Page Views Lifetime
-          type: integer
-        page_views_30:
-          default: 0
-          description: The number of archive page views in the last 30 days.
-          title: Page Views 30
-          type: integer
-        page_views_7:
-          default: 0
-          description: The number of archive page views in the last 7 days.
-          title: Page Views 7
-          type: integer
-        subscriptions:
-          default: 0
-          description: The number of new subscribers attributed to this email.
-          title: Subscriptions
-          type: integer
-        paid_subscriptions:
-          default: 0
-          description: The number of new paid subscribers attributed to this email.
-          title: Paid Subscriptions
-          type: integer
-        replies:
-          default: 0
-          description: The number of reply emails received from subscribers.
-          title: Replies
-          type: integer
-        comments:
-          default: 0
-          description: The number of comments posted on this email.
-          title: Comments
-          type: integer
-        social_mentions:
-          default: 0
-          description: The number of social media mentions of this email.
-          title: Social Mentions
-          type: integer
-        temporary_failure_breakdown:
-          description: Breakdown of temporary failures by reason code, sorted by count descending.
-          items:
-            $ref: '#/components/schemas/FailureBreakdownItem'
-          title: Temporary Failure Breakdown
-          type: array
-        permanent_failure_breakdown:
-          description: Breakdown of permanent failures by reason code, sorted by count descending.
-          items:
-            $ref: '#/components/schemas/FailureBreakdownItem'
-          title: Permanent Failure Breakdown
-          type: array
-      title: Analytics
-      type: object
-    EmailListErrorCode:
-      description: 'Represents the type of error that occurred when listing emails.
-
-
-        Human-readable error messages are provided in the `detail` field of the response;
-
-        these values are meant to be parseable by code or client logic.'
-      enum:
-      - creation_date_invalid
-      - publish_date_invalid
-      title: EmailListErrorCode
-      type: string
-    EmailInput:
-      additionalProperties: false
-      properties:
-        attachments:
-          default: []
-          description: A list of attachment IDs present on the email. (See [Attachments](https://docs.buttondown.com/api-attachments-introduction) for more information.)
-          example:
-          - att_01h8xg4j3k2m1n0p9q8r7s6t5v
-          items:
-            pattern: ^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|(?:att)_(?:[0-7][0-9abcdefghjkmnpqrstvwxyz]{25}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}))$
-            type: string
-          title: Attachments
-          type: array
-        publish_date:
-          anyOf:
-          - format: date-time
-            type: string
-          - type: 'null'
-          description: The date and time at which the email should be published in the future (for scheduled emails), or the date and time at which the email was published (for sent emails).
-          title: Publish Date
-        subject:
-          description: The subject line for the email.
-          example: The subject line for the email
-          maxLength: 2000
-          title: Subject
-          type: string
-        slug:
-          anyOf:
-          - maxLength: 100
-            pattern: ^[a-zA-Z0-9_-]+$
-            type: string
-          - type: 'null'
-          description: A short, human-readable identifier for the email, used in the archive URL.
-          example: hello-world
-          title: Slug
-        description:
-          default: ''
-          description: A human-readable description of the email, used for archives and SEO.
-          title: Description
-          type: string
-        canonical_url:
-          default: ''
-          description: The URL of the original source of the content.
-          maxLength: 2000
-          title: Canonical Url
-          type: string
-        image:
-          default: ''
-          description: A primary image URL used when previewing the email on the web or in other contexts.
-          title: Image
-          type: string
-        body:
-          default: ''
-          description: 'The body of the email, in either HTML or markdown format. Buttondown attempts to intelligently detect the format of the body automatically, but you can also specify the format explicitly by prepending the text with the `buttondown-editor-mode` comment: `<!-- buttondown-editor-mode: fancy -->` or `<!-- buttondown-editor-mode: plaintext -->`.'
-          example: This is an example of the body of an email.
-          title: Body
-          type: string
-        archival_mode:
-          allOf:
-          - $ref: '#/components/schemas/ArchivalMode'
-          default: enabled
-          description: Controls who can view this email in the archive.
-        email_type:
-          allOf:
-          - $ref: '#/components/schemas/EmailType'
-          default: public
-          deprecated: true
-          description: 'The type of email. Defaults to `PUBLIC`. Deprecated: this is a legacy single-axis view derived from `archival_mode` (archive visibility) and `filters` (audience); prefer setting those directly. Because it is derived, it does not always round-trip: writing it alongside an explicit `archival_mode` that disagrees will report the value implied by the two underlying fields, and writing a value that already matches the derived one is a no-op.'
-        status:
-          allOf:
-          - $ref: '#/components/schemas/EmailStatus'
-          default: about_to_send
-          description: The status of the email (e.g. `draft`, `about_to_send`, `sent`, `scheduled`).
-        metadata:
-          additionalProperties: true
-          default: {}
-          description: A structured key-value blob that you can use to store arbitrary data on the object. Metadata can be nested — you can store objects and arrays within your metadata. (You can [read more about metadata.](https://docs.buttondown.com/metadata))
-          title: Metadata
-          type: object
-        secondary_id:
-          anyOf:
-          - maximum: 1000000000
-            minimum: 1
-            type: integer
-          - type: 'null'
-          description: 'An informal ''number'' for the email, used in some templates (e.g. ''This was issue #123'').'
-          title: Secondary Id
-        filters:
-          allOf:
-          - $ref: '#/components/schemas/EmailFilterGroup'
-          default:
-            filters: []
-            groups: []
-            predicate: and
-          description: Tag-based filter rules determining which subscribers receive this email.
-        template:
-          anyOf:
-          - $ref: '#/components/schemas/NewsletterEmailTemplate'
-          - type: 'null'
-          description: If present, this template overrides your newsletter's default email template.
-        commenting_mode:
-          allOf:
-          - $ref: '#/components/schemas/EmailCommentingMode'
-          default: enabled
-          description: Controls whether subscribers can comment on this email.
-        related_email_ids:
-          description: IDs of emails related to this one. Shown at the bottom of the email and archive pages.
-          example:
-          - em_01h8xg4j3k2m1n0p9q8r7s6t5v
-          items:
-            pattern: ^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|(?:em)_(?:[0-7][0-9abcdefghjkmnpqrstvwxyz]{25}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}))$
-            type: string
-          title: Related Email Ids
-          type: array
-        featured:
-          default: false
-          description: Designated whether or not this email should be highlighted within the archives.
-          title: Featured
-          type: boolean
-        should_trigger_pay_per_email_billing:
-          default: false
-          description: Whether this email should trigger pay-per-email billing for paid subscribers. Use this to differentiate between free updates and premium newsletters.
-          title: Should Trigger Pay Per Email Billing
-          type: boolean
-      required:
-      - subject
-      title: EmailInput
-      type: object
-    History:
-      properties:
-        history_id:
-          description: A monotonically increasing history entry ID.
-          title: History Id
-          type: integer
-        creation_date:
-          description: The date and time at which the object was first created.
-          format: date-time
-          title: Creation Date
-          type: string
-        value:
-          description: The field's value at the time of this history entry.
-          title: Value
-          type: string
-        user_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The ID of the user who made this change, if attributable.
-          title: User Id
-        user:
-          anyOf:
-          - $ref: '#/components/schemas/User'
-          - type: 'null'
-          description: If expanded, the user who made this change.
-      required:
-      - history_id
-      - creation_date
-      - value
-      title: History
-      type: object
-    NewsletterEmailTemplate:
-      description: 'Represents the template of an email.
-
-
-        Each template has a different layout/style; you can view screenshots and examples [in the docs](https://docs.buttondown.com/customizing-email-design#buttondowns-default-templates).'
-      enum:
-      - classic
-      - custom
-      - modern
-      - plaintext
-      - naked
-      title: EmailTemplate
-      type: string
-    EmailCommentingMode:
-      description: 'Governs who can comment on this email.
-
-
-        This enum replaces the `is_comments_disabled` field, which has been deprecated. (Also note that this field may be superseded by newsletter-level settings; for instance, "enabled" is an invalid and inert value if the newsletter itself has comments disabled.)'
-      enum:
-      - disabled
-      - enabled
-      - enabled_for_paid_subscribers
-      title: CommentingMode
-      type: string
-    EmailType:
-      description: 'The legacy single-axis representation of an email''s audience and
-
-        archive visibility. No longer stored: `filters` owns the audience
-
-        axis and `archival_mode` owns the archive axis, and the deprecated
-
-        API field is derived from those (see `email_type` below).'
-      enum:
-      - public
-      - private
-      - premium
-      - free
-      - churned
-      - archival
-      title: Type
-      type: string
-    ErrorMessage:
-      properties:
-        code:
-          description: The error code.
-          title: Code
-          type: string
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage
       type: object
   securitySchemes:
     ApiKeyAuth:

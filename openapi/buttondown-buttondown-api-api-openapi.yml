@@ -30,29 +30,6 @@ webhooks:
       - Buttondown API
 components:
   schemas:
-    WebhookEvent:
-      type: object
-      title: WebhookEvent
-      description: The payload Buttondown delivers to a configured webhook URL when a subscribed event fires.
-      properties:
-        id:
-          type: string
-          title: Id
-          description: The unique TypeID of the event that triggered this delivery.
-          example: ext_evt_00000000000000000000000000
-        event_type:
-          allOf:
-          - $ref: '#/components/schemas/ExternalEventType'
-          description: The type of event that triggered this delivery.
-        data:
-          type: object
-          title: Data
-          additionalProperties: true
-          description: Event-specific metadata. The shape varies by `event_type`. Accounts with more than one newsletter also receive a `newsletter` ID to disambiguate which one the event belongs to.
-      required:
-      - id
-      - event_type
-      - data
     ExternalEventType:
       description: 'Various types of events that are recorded by Buttondown, both in terms of exogenous systems
 
@@ -168,6 +145,29 @@ components:
       - form.updated
       title: Type
       type: string
+    WebhookEvent:
+      type: object
+      title: WebhookEvent
+      description: The payload Buttondown delivers to a configured webhook URL when a subscribed event fires.
+      properties:
+        id:
+          type: string
+          title: Id
+          description: The unique TypeID of the event that triggered this delivery.
+          example: ext_evt_00000000000000000000000000
+        event_type:
+          allOf:
+          - $ref: '#/components/schemas/ExternalEventType'
+          description: The type of event that triggered this delivery.
+        data:
+          type: object
+          title: Data
+          additionalProperties: true
+          description: Event-specific metadata. The shape varies by `event_type`. Accounts with more than one newsletter also receive a `newsletter` ID to disambiguate which one the event belongs to.
+      required:
+      - id
+      - event_type
+      - data
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
