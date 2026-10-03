@@ -61,21 +61,6 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    Account:
-      properties:
-        username:
-          description: The username associated with the account.
-          title: Username
-          type: string
-        email_address:
-          description: The email address associated with the account.
-          title: Email Address
-          type: string
-      required:
-      - username
-      - email_address
-      title: Account
-      type: object
     ErrorMessage:
       properties:
         code:
@@ -96,6 +81,21 @@ components:
       required:
       - detail
       title: ErrorMessage
+      type: object
+    Account:
+      properties:
+        username:
+          description: The username associated with the account.
+          title: Username
+          type: string
+        email_address:
+          description: The email address associated with the account.
+          title: Email Address
+          type: string
+      required:
+      - username
+      - email_address
+      title: Account
       type: object
   securitySchemes:
     ApiKeyAuth:

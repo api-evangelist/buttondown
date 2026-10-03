@@ -269,68 +269,40 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    AccessLevel:
-      enum:
-      - none
-      - read
-      - write
-      title: AccessLevel
-      type: string
-      description: An enumeration.
-    ValidationErrorDetail:
+    User:
       properties:
-        type:
-          description: The type of validation error.
-          title: Type
+        permissions:
+          $ref: '#/components/schemas/Permissions'
+        email_address:
+          description: The email address of the user.
+          title: Email Address
           type: string
-        loc:
-          description: The location of the error in the request.
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Loc
-          type: array
-        msg:
-          description: A human-readable error message.
-          title: Msg
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
           type: string
-      required:
-      - type
-      - loc
-      - msg
-      title: ValidationErrorDetail
-      type: object
-    InvitationStatus:
-      type: string
-      enum:
-      - pending
-      - accepted
-      - declined
-      - revoked
-      - owner
-      title: InvitationStatus
-      description: An enumeration.
-    ErrorMessage:
-      properties:
-        code:
-          description: The error code.
-          title: Code
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
           type: string
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
+        status:
+          $ref: '#/components/schemas/InvitationStatus'
+          description: The status of the user's invitation (e.g. `pending`, `accepted`).
+        last_logged_in:
+          anyOf:
+          - format: date-time
             type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
+          - type: 'null'
+          description: When the user last logged in, or null if they haven't accepted the invitation.
+          title: Last Logged In
       required:
-      - detail
-      title: ErrorMessage
+      - permissions
+      - email_address
+      - id
+      - creation_date
+      - status
+      title: User
       type: object
     Note:
       properties:
@@ -406,6 +378,38 @@ components:
       - source
       title: Note
       type: object
+    ValidationErrorDetail:
+      properties:
+        type:
+          description: The type of validation error.
+          title: Type
+          type: string
+        loc:
+          description: The location of the error in the request.
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Loc
+          type: array
+        msg:
+          description: A human-readable error message.
+          title: Msg
+          type: string
+      required:
+      - type
+      - loc
+      - msg
+      title: ValidationErrorDetail
+      type: object
+    AccessLevel:
+      enum:
+      - none
+      - read
+      - write
+      title: AccessLevel
+      type: string
+      description: An enumeration.
     NoteInput:
       properties:
         body:
@@ -452,6 +456,49 @@ components:
       - model_id
       title: NoteInput
       type: object
+    ErrorMessage:
+      properties:
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage
+      type: object
+    InvitationStatus:
+      type: string
+      enum:
+      - pending
+      - accepted
+      - declined
+      - revoked
+      - owner
+      title: InvitationStatus
+      description: An enumeration.
+    ValidationErrorMessage:
+      properties:
+        detail:
+          description: A list of validation errors.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          title: Detail
+          type: array
+      required:
+      - detail
+      title: ValidationErrorMessage
+      type: object
     Permissions:
       properties:
         subscriber:
@@ -496,18 +543,6 @@ components:
           description: Access level for form management.
       title: Permissions
       type: object
-    ValidationErrorMessage:
-      properties:
-        detail:
-          description: A list of validation errors.
-          items:
-            $ref: '#/components/schemas/ValidationErrorDetail'
-          title: Detail
-          type: array
-      required:
-      - detail
-      title: ValidationErrorMessage
-      type: object
     NotePage:
       properties:
         results:
@@ -536,41 +571,6 @@ components:
       - results
       - count
       title: Page[Note]
-      type: object
-    User:
-      properties:
-        permissions:
-          $ref: '#/components/schemas/Permissions'
-        email_address:
-          description: The email address of the user.
-          title: Email Address
-          type: string
-        id:
-          description: A unique TypeID associated with the object.
-          title: Id
-          type: string
-        creation_date:
-          description: The date and time at which the object was first created.
-          format: date-time
-          title: Creation Date
-          type: string
-        status:
-          $ref: '#/components/schemas/InvitationStatus'
-          description: The status of the user's invitation (e.g. `pending`, `accepted`).
-        last_logged_in:
-          anyOf:
-          - format: date-time
-            type: string
-          - type: 'null'
-          description: When the user last logged in, or null if they haven't accepted the invitation.
-          title: Last Logged In
-      required:
-      - permissions
-      - email_address
-      - id
-      - creation_date
-      - status
-      title: User
       type: object
   securitySchemes:
     ApiKeyAuth:

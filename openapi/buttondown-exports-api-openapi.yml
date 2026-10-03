@@ -233,63 +233,6 @@ components:
       title: Format
       type: string
       description: An enumeration.
-    ErrorMessage_CreateExportErrorCode_:
-      properties:
-        code:
-          allOf:
-          - $ref: '#/components/schemas/CreateExportErrorCode'
-          description: The error code.
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage[CreateExportErrorCode]
-      type: object
-    ValidationErrorMessage:
-      properties:
-        detail:
-          description: A list of validation errors.
-          items:
-            $ref: '#/components/schemas/ValidationErrorDetail'
-          title: Detail
-          type: array
-      required:
-      - detail
-      title: ValidationErrorMessage
-      type: object
-    ValidationErrorDetail:
-      properties:
-        type:
-          description: The type of validation error.
-          title: Type
-          type: string
-        loc:
-          description: The location of the error in the request.
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Loc
-          type: array
-        msg:
-          description: A human-readable error message.
-          title: Msg
-          type: string
-      required:
-      - type
-      - loc
-      - msg
-      title: ValidationErrorDetail
-      type: object
     ExportInput:
       additionalProperties: false
       properties:
@@ -331,6 +274,108 @@ components:
       - collections
       title: ExportInput
       type: object
+    ExportPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/Export'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[Export]
+      type: object
+    ValidationErrorDetail:
+      properties:
+        type:
+          description: The type of validation error.
+          title: Type
+          type: string
+        loc:
+          description: The location of the error in the request.
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Loc
+          type: array
+        msg:
+          description: A human-readable error message.
+          title: Msg
+          type: string
+      required:
+      - type
+      - loc
+      - msg
+      title: ValidationErrorDetail
+      type: object
+    ErrorMessage_CreateExportErrorCode_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/CreateExportErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[CreateExportErrorCode]
+      type: object
+    CreateExportErrorCode:
+      enum:
+      - collection_empty_invalid
+      - columns_empty_invalid
+      - columns_invalid
+      title: CreateExportErrorCode
+      type: string
+      description: An enumeration.
+    ExportCollection:
+      description: A group of data that can be exported in an export.
+      enum:
+      - subscribers
+      - emails
+      - events
+      - referrals
+      - surveys
+      - comments
+      - requests
+      - mentions
+      - conversations
+      - images
+      - stripe_subscriptions
+      - stripe_products
+      - stripe_customers
+      - stripe_prices
+      - stripe_charges
+      title: Collection
+      type: string
     ErrorMessage:
       properties:
         code:
@@ -351,6 +396,34 @@ components:
       required:
       - detail
       title: ErrorMessage
+      type: object
+    ExportStatus:
+      type: string
+      enum:
+      - error
+      - in_progress
+      - not_started
+      - ready
+      title: ExportStatus
+      description: 'Represents the status of an export.
+
+
+        No action is required to move from one state or another; Buttondown
+
+        internally handles the transitions, and exposing the status is for
+
+        observability purposes only.'
+    ValidationErrorMessage:
+      properties:
+        detail:
+          description: A list of validation errors.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          title: Detail
+          type: array
+      required:
+      - detail
+      title: ValidationErrorMessage
       type: object
     Export:
       description: 'Some software applications may want programmatic access to their newsletter exports.
@@ -436,79 +509,6 @@ components:
       - status
       title: Export
       type: object
-    ExportCollection:
-      description: A group of data that can be exported in an export.
-      enum:
-      - subscribers
-      - emails
-      - events
-      - referrals
-      - surveys
-      - comments
-      - requests
-      - mentions
-      - conversations
-      - images
-      - stripe_subscriptions
-      - stripe_products
-      - stripe_customers
-      - stripe_prices
-      - stripe_charges
-      title: Collection
-      type: string
-    ExportStatus:
-      type: string
-      enum:
-      - error
-      - in_progress
-      - not_started
-      - ready
-      title: ExportStatus
-      description: 'Represents the status of an export.
-
-
-        No action is required to move from one state or another; Buttondown
-
-        internally handles the transitions, and exposing the status is for
-
-        observability purposes only.'
-    ExportPage:
-      properties:
-        results:
-          description: The list of results for this page.
-          items:
-            $ref: '#/components/schemas/Export'
-          title: Results
-          type: array
-        next:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the next page of results, if any.
-          title: Next
-        previous:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the previous page of results, if any.
-          title: Previous
-        count:
-          description: The total number of results across all pages.
-          title: Count
-          type: integer
-      required:
-      - results
-      - count
-      title: Page[Export]
-      type: object
-    CreateExportErrorCode:
-      enum:
-      - collection_empty_invalid
-      - columns_empty_invalid
-      - columns_invalid
-      title: CreateExportErrorCode
-      type: string
-      description: An enumeration.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

@@ -479,6 +479,172 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
+    ValidationErrorDetail:
+      properties:
+        type:
+          description: The type of validation error.
+          title: Type
+          type: string
+        loc:
+          description: The location of the error in the request.
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Loc
+          type: array
+        msg:
+          description: A human-readable error message.
+          title: Msg
+          type: string
+      required:
+      - type
+      - loc
+      - msg
+      title: ValidationErrorDetail
+      type: object
+    SnippetInput:
+      additionalProperties: false
+      properties:
+        identifier:
+          description: A unique, newsletter-scoped slug used to reference the snippet inside email content (e.g. `{{ snippets.footer }}`). Must be unique per newsletter.
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          title: Identifier
+          type: string
+          example: footer
+        name:
+          description: A human-readable name for the snippet, shown in the Buttondown UI.
+          maxLength: 255
+          minLength: 1
+          title: Name
+          type: string
+          example: Footer
+        content:
+          default: ''
+          description: The body of the snippet, substituted wherever the snippet is referenced. Interpreted according to `mode`.
+          title: Content
+          type: string
+          example: Thanks for reading!
+        mode:
+          allOf:
+          - $ref: '#/components/schemas/SnippetMode'
+          default: fancy
+          description: 'The editor mode for the snippet, which controls how `content` is rendered: `fancy` (rich text, stored as HTML), `plaintext` (Markdown), or `naked` (raw HTML with no processing).'
+          example: fancy
+      required:
+      - identifier
+      - name
+      title: SnippetInput
+      type: object
+    ErrorMessage:
+      properties:
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage
+      type: object
+    SnippetPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/Snippet'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[Snippet]
+      type: object
+    ValidationErrorMessage:
+      properties:
+        detail:
+          description: A list of validation errors.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          title: Detail
+          type: array
+      required:
+      - detail
+      title: ValidationErrorMessage
+      type: object
+    SnippetMode:
+      enum:
+      - fancy
+      - naked
+      - plaintext
+      title: Mode
+      type: string
+      description: An enumeration.
+    SnippetUpdateInput:
+      additionalProperties: false
+      properties:
+        identifier:
+          anyOf:
+          - maxLength: 100
+            minLength: 1
+            pattern: ^[a-zA-Z0-9_-]+$
+            type: string
+          - type: 'null'
+          description: A unique, newsletter-scoped slug used to reference the snippet inside email content (e.g. `{{ snippets.footer }}`). Must be unique per newsletter.
+          title: Identifier
+          example: footer
+        name:
+          anyOf:
+          - maxLength: 255
+            minLength: 1
+            type: string
+          - type: 'null'
+          description: A human-readable name for the snippet, shown in the Buttondown UI.
+          title: Name
+          example: Footer
+        content:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The body of the snippet, substituted wherever the snippet is referenced. Interpreted according to `mode`.
+          title: Content
+          example: Thanks for reading!
+        mode:
+          anyOf:
+          - $ref: '#/components/schemas/SnippetMode'
+          - type: 'null'
+          description: 'The editor mode for the snippet, which controls how `content` is rendered: `fancy` (rich text, stored as HTML), `plaintext` (Markdown), or `naked` (raw HTML with no processing).'
+          example: fancy
+      title: SnippetUpdateInput
+      type: object
     Snippet:
       properties:
         id:
@@ -518,172 +684,6 @@ components:
       - content
       - mode
       title: Snippet
-      type: object
-    SnippetInput:
-      additionalProperties: false
-      properties:
-        identifier:
-          description: A unique, newsletter-scoped slug used to reference the snippet inside email content (e.g. `{{ snippets.footer }}`). Must be unique per newsletter.
-          maxLength: 100
-          minLength: 1
-          pattern: ^[a-zA-Z0-9_-]+$
-          title: Identifier
-          type: string
-          example: footer
-        name:
-          description: A human-readable name for the snippet, shown in the Buttondown UI.
-          maxLength: 255
-          minLength: 1
-          title: Name
-          type: string
-          example: Footer
-        content:
-          default: ''
-          description: The body of the snippet, substituted wherever the snippet is referenced. Interpreted according to `mode`.
-          title: Content
-          type: string
-          example: Thanks for reading!
-        mode:
-          allOf:
-          - $ref: '#/components/schemas/SnippetMode'
-          default: fancy
-          description: 'The editor mode for the snippet, which controls how `content` is rendered: `fancy` (rich text, stored as HTML), `plaintext` (Markdown), or `naked` (raw HTML with no processing).'
-          example: fancy
-      required:
-      - identifier
-      - name
-      title: SnippetInput
-      type: object
-    ValidationErrorDetail:
-      properties:
-        type:
-          description: The type of validation error.
-          title: Type
-          type: string
-        loc:
-          description: The location of the error in the request.
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Loc
-          type: array
-        msg:
-          description: A human-readable error message.
-          title: Msg
-          type: string
-      required:
-      - type
-      - loc
-      - msg
-      title: ValidationErrorDetail
-      type: object
-    SnippetUpdateInput:
-      additionalProperties: false
-      properties:
-        identifier:
-          anyOf:
-          - maxLength: 100
-            minLength: 1
-            pattern: ^[a-zA-Z0-9_-]+$
-            type: string
-          - type: 'null'
-          description: A unique, newsletter-scoped slug used to reference the snippet inside email content (e.g. `{{ snippets.footer }}`). Must be unique per newsletter.
-          title: Identifier
-          example: footer
-        name:
-          anyOf:
-          - maxLength: 255
-            minLength: 1
-            type: string
-          - type: 'null'
-          description: A human-readable name for the snippet, shown in the Buttondown UI.
-          title: Name
-          example: Footer
-        content:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The body of the snippet, substituted wherever the snippet is referenced. Interpreted according to `mode`.
-          title: Content
-          example: Thanks for reading!
-        mode:
-          anyOf:
-          - $ref: '#/components/schemas/SnippetMode'
-          - type: 'null'
-          description: 'The editor mode for the snippet, which controls how `content` is rendered: `fancy` (rich text, stored as HTML), `plaintext` (Markdown), or `naked` (raw HTML with no processing).'
-          example: fancy
-      title: SnippetUpdateInput
-      type: object
-    SnippetPage:
-      properties:
-        results:
-          description: The list of results for this page.
-          items:
-            $ref: '#/components/schemas/Snippet'
-          title: Results
-          type: array
-        next:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the next page of results, if any.
-          title: Next
-        previous:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the previous page of results, if any.
-          title: Previous
-        count:
-          description: The total number of results across all pages.
-          title: Count
-          type: integer
-      required:
-      - results
-      - count
-      title: Page[Snippet]
-      type: object
-    ErrorMessage:
-      properties:
-        code:
-          description: The error code.
-          title: Code
-          type: string
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage
-      type: object
-    SnippetMode:
-      enum:
-      - fancy
-      - naked
-      - plaintext
-      title: Mode
-      type: string
-      description: An enumeration.
-    ValidationErrorMessage:
-      properties:
-        detail:
-          description: A list of validation errors.
-          items:
-            $ref: '#/components/schemas/ValidationErrorDetail'
-          title: Detail
-          type: array
-      required:
-      - detail
-      title: ValidationErrorMessage
       type: object
   securitySchemes:
     ApiKeyAuth:

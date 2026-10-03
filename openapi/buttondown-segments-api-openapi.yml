@@ -385,63 +385,6 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    EmailFilter:
-      properties:
-        field:
-          anyOf:
-          - enum:
-            - subscriber.churn_date
-            - subscriber.click_rate
-            - subscriber.last_click_date
-            - subscriber.last_open_date
-            - subscriber.open_rate
-            - subscriber.price
-            - subscriber.source
-            - subscriber.status
-            - subscriber.subscription_date
-            - subscriber.tags
-            - subscriber.upgrade_date
-            type: string
-          - pattern: ^subscriber\.metadata\..+$
-            type: string
-          description: The subscriber attribute to evaluate. Must be a recognized field or a `subscriber.metadata.*` path.
-          title: Field
-        operator:
-          $ref: '#/components/schemas/Operator'
-        value:
-          description: The value to compare the field against.
-          title: Value
-          type: string
-      required:
-      - field
-      - operator
-      - value
-      title: EmailFilter
-      type: object
-    ValidationErrorDetail:
-      properties:
-        type:
-          description: The type of validation error.
-          title: Type
-          type: string
-        loc:
-          description: The location of the error in the request.
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Loc
-          type: array
-        msg:
-          description: A human-readable error message.
-          title: Msg
-          type: string
-      required:
-      - type
-      - loc
-      - msg
-      title: ValidationErrorDetail
-      type: object
     SegmentUpdateInput:
       additionalProperties: false
       description: Input schema for updating an existing segment. All fields are optional.
@@ -469,12 +412,6 @@ components:
           description: The tag- and metadata-based filter rules defining which subscribers belong to this segment.
       title: SegmentUpdateInput
       type: object
-    SegmentErrorCode:
-      description: Error codes returned when creating or updating a segment fails.
-      enum:
-      - name_already_exists
-      title: SegmentErrorCode
-      type: string
     Operator:
       enum:
       - equals
@@ -488,6 +425,59 @@ components:
       title: Operator
       type: string
       description: An enumeration.
+    ValidationErrorDetail:
+      properties:
+        type:
+          description: The type of validation error.
+          title: Type
+          type: string
+        loc:
+          description: The location of the error in the request.
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Loc
+          type: array
+        msg:
+          description: A human-readable error message.
+          title: Msg
+          type: string
+      required:
+      - type
+      - loc
+      - msg
+      title: ValidationErrorDetail
+      type: object
+    SegmentPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/Segment'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[Segment]
+      type: object
     Segment:
       description: 'A saved, reusable audience — a named set of subscriber filters that can
 
@@ -521,35 +511,12 @@ components:
       - filters
       title: Segment
       type: object
-    SegmentPage:
-      properties:
-        results:
-          description: The list of results for this page.
-          items:
-            $ref: '#/components/schemas/Segment'
-          title: Results
-          type: array
-        next:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the next page of results, if any.
-          title: Next
-        previous:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the previous page of results, if any.
-          title: Previous
-        count:
-          description: The total number of results across all pages.
-          title: Count
-          type: integer
-      required:
-      - results
-      - count
-      title: Page[Segment]
-      type: object
+    SegmentErrorCode:
+      description: Error codes returned when creating or updating a segment fails.
+      enum:
+      - name_already_exists
+      title: SegmentErrorCode
+      type: string
     ErrorMessage:
       properties:
         code:
@@ -570,6 +537,27 @@ components:
       required:
       - detail
       title: ErrorMessage
+      type: object
+    ErrorMessage_SegmentErrorCode_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/SegmentErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[SegmentErrorCode]
       type: object
     SegmentInput:
       additionalProperties: false
@@ -595,18 +583,6 @@ components:
       - name
       - filters
       title: SegmentInput
-      type: object
-    ValidationErrorMessage:
-      properties:
-        detail:
-          description: A list of validation errors.
-          items:
-            $ref: '#/components/schemas/ValidationErrorDetail'
-          title: Detail
-          type: array
-      required:
-      - detail
-      title: ValidationErrorMessage
       type: object
     EmailFilterGroup:
       properties:
@@ -635,26 +611,50 @@ components:
       - predicate
       title: EmailFilterGroup
       type: object
-    ErrorMessage_SegmentErrorCode_:
+    ValidationErrorMessage:
       properties:
-        code:
-          allOf:
-          - $ref: '#/components/schemas/SegmentErrorCode'
-          description: The error code.
         detail:
-          description: A human-readable description of the error.
+          description: A list of validation errors.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
           title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
+          type: array
       required:
       - detail
-      title: ErrorMessage[SegmentErrorCode]
+      title: ValidationErrorMessage
+      type: object
+    EmailFilter:
+      properties:
+        field:
+          anyOf:
+          - enum:
+            - subscriber.churn_date
+            - subscriber.click_rate
+            - subscriber.last_click_date
+            - subscriber.last_open_date
+            - subscriber.open_rate
+            - subscriber.price
+            - subscriber.source
+            - subscriber.status
+            - subscriber.subscription_date
+            - subscriber.tags
+            - subscriber.upgrade_date
+            type: string
+          - pattern: ^subscriber\.metadata\..+$
+            type: string
+          description: The subscriber attribute to evaluate. Must be a recognized field or a `subscriber.metadata.*` path.
+          title: Field
+        operator:
+          $ref: '#/components/schemas/Operator'
+        value:
+          description: The value to compare the field against.
+          title: Value
+          type: string
+      required:
+      - field
+      - operator
+      - value
+      title: EmailFilter
       type: object
   securitySchemes:
     ApiKeyAuth:

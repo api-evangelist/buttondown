@@ -625,6 +625,21 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
+    WebhookAttemptStatus:
+      enum:
+      - unattempted
+      - successful
+      - failed
+      title: WebhookAttemptStatus
+      type: string
+      description: An enumeration.
+    WebhookStatus:
+      description: The status of a webhook.
+      enum:
+      - enabled
+      - disabled
+      title: WebhookStatus
+      type: string
     ExternalEventType:
       description: 'Various types of events that are recorded by Buttondown, both in terms of exogenous systems
 
@@ -740,121 +755,6 @@ components:
       - form.updated
       title: Type
       type: string
-    WebhookPage:
-      properties:
-        results:
-          description: The list of results for this page.
-          items:
-            $ref: '#/components/schemas/Webhook'
-          title: Results
-          type: array
-        next:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the next page of results, if any.
-          title: Next
-        previous:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the previous page of results, if any.
-          title: Previous
-        count:
-          description: The total number of results across all pages.
-          title: Count
-          type: integer
-      required:
-      - results
-      - count
-      title: Page[Webhook]
-      type: object
-    ValidationErrorDetail:
-      properties:
-        type:
-          description: The type of validation error.
-          title: Type
-          type: string
-        loc:
-          description: The location of the error in the request.
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Loc
-          type: array
-        msg:
-          description: A human-readable error message.
-          title: Msg
-          type: string
-      required:
-      - type
-      - loc
-      - msg
-      title: ValidationErrorDetail
-      type: object
-    WebhookStatus:
-      description: The status of a webhook.
-      enum:
-      - enabled
-      - disabled
-      title: WebhookStatus
-      type: string
-    WebhookAttemptStatus:
-      enum:
-      - unattempted
-      - successful
-      - failed
-      title: WebhookAttemptStatus
-      type: string
-      description: An enumeration.
-    Webhook:
-      description: 'Webhooks are used to notify external services of events that occur in the
-
-        system. For example, when a newsletter is sent, a webhook can be used to
-
-        notify an external service that the newsletter has been sent.'
-      properties:
-        id:
-          description: A unique TypeID associated with the object.
-          title: Id
-          type: string
-        creation_date:
-          description: The date and time at which the object was first created.
-          format: date-time
-          title: Creation Date
-          type: string
-        status:
-          $ref: '#/components/schemas/WebhookStatus'
-          description: Whether the webhook is enabled or not.
-        event_types:
-          description: The types of event for which the webhook will be triggered.
-          items:
-            $ref: '#/components/schemas/ExternalEventType'
-          title: Event Types
-          type: array
-        url:
-          description: The URL to which the webhook will send POST requests.
-          title: Url
-          type: string
-        description:
-          default: ''
-          description: An optional description of the webhook, for reference.
-          title: Description
-          type: string
-        signing_key:
-          default: ''
-          description: Optional HMAC signing key for webhook verification. When set, webhook requests will include an X-Buttondown-Signature header with sha256=<signature>.
-          title: Signing Key
-          type: string
-      required:
-      - id
-      - creation_date
-      - status
-      - event_types
-      - url
-      title: Webhook
-      type: object
     WebhookAttemptOutput:
       properties:
         id:
@@ -918,6 +818,168 @@ components:
       - status
       title: WebhookAttemptOutput
       type: object
+    ValidationErrorDetail:
+      properties:
+        type:
+          description: The type of validation error.
+          title: Type
+          type: string
+        loc:
+          description: The location of the error in the request.
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Loc
+          type: array
+        msg:
+          description: A human-readable error message.
+          title: Msg
+          type: string
+      required:
+      - type
+      - loc
+      - msg
+      title: ValidationErrorDetail
+      type: object
+    WebhookAttemptOutputPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/WebhookAttemptOutput'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[WebhookAttemptOutput]
+      type: object
+    ErrorMessage:
+      properties:
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage
+      type: object
+    WebhookPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/Webhook'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[Webhook]
+      type: object
+    ValidationErrorMessage:
+      properties:
+        detail:
+          description: A list of validation errors.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          title: Detail
+          type: array
+      required:
+      - detail
+      title: ValidationErrorMessage
+      type: object
+    Webhook:
+      description: 'Webhooks are used to notify external services of events that occur in the
+
+        system. For example, when a newsletter is sent, a webhook can be used to
+
+        notify an external service that the newsletter has been sent.'
+      properties:
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        status:
+          $ref: '#/components/schemas/WebhookStatus'
+          description: Whether the webhook is enabled or not.
+        event_types:
+          description: The types of event for which the webhook will be triggered.
+          items:
+            $ref: '#/components/schemas/ExternalEventType'
+          title: Event Types
+          type: array
+        url:
+          description: The URL to which the webhook will send POST requests.
+          title: Url
+          type: string
+        description:
+          default: ''
+          description: An optional description of the webhook, for reference.
+          title: Description
+          type: string
+        signing_key:
+          default: ''
+          description: Optional HMAC signing key for webhook verification. When set, webhook requests will include an X-Buttondown-Signature header with sha256=<signature>.
+          title: Signing Key
+          type: string
+      required:
+      - id
+      - creation_date
+      - status
+      - event_types
+      - url
+      title: Webhook
+      type: object
     WebhookInput:
       additionalProperties: false
       properties:
@@ -965,68 +1027,6 @@ components:
       - event_types
       - url
       title: WebhookInput
-      type: object
-    ErrorMessage:
-      properties:
-        code:
-          description: The error code.
-          title: Code
-          type: string
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage
-      type: object
-    ValidationErrorMessage:
-      properties:
-        detail:
-          description: A list of validation errors.
-          items:
-            $ref: '#/components/schemas/ValidationErrorDetail'
-          title: Detail
-          type: array
-      required:
-      - detail
-      title: ValidationErrorMessage
-      type: object
-    WebhookAttemptOutputPage:
-      properties:
-        results:
-          description: The list of results for this page.
-          items:
-            $ref: '#/components/schemas/WebhookAttemptOutput'
-          title: Results
-          type: array
-        next:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the next page of results, if any.
-          title: Next
-        previous:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the previous page of results, if any.
-          title: Previous
-        count:
-          description: The total number of results across all pages.
-          title: Count
-          type: integer
-      required:
-      - results
-      - count
-      title: Page[WebhookAttemptOutput]
       type: object
   securitySchemes:
     ApiKeyAuth:

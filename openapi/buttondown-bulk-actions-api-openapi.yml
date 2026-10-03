@@ -151,9 +151,30 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    BulkActionInput:
-      additionalProperties: false
+    BulkAction:
+      description: 'A bulk action represents, well, a bulk action. It is used to perform
+
+        actions on a large number of objects at once. For example, you can
+
+        use it to delete a large number of emails, or to unsubscribe a large
+
+        number of subscribers. The actions within a bulk action are processed
+
+        serially by Buttondown; this should be considered an ergonomic way to
+
+        batch API calls across the network rather than a net-new piece of functionality
+
+        in of itself.'
       properties:
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
         type:
           $ref: '#/components/schemas/BulkActionType'
           description: The type of bulk action to perform.
@@ -175,10 +196,23 @@ components:
           minProperties: 1
           title: Metadata
           type: object
+        status:
+          $ref: '#/components/schemas/BulkActionStatus'
+          description: The current processing status of the bulk action.
+        completion_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: The date and time at which the bulk action was completed.
+          title: Completion Date
       required:
+      - id
+      - creation_date
       - type
       - metadata
-      title: BulkActionInput
+      - status
+      title: BulkAction
       type: object
     ErrorMessage:
       properties:
@@ -260,30 +294,9 @@ components:
 
 
         (Not to be coy, but these names should be self-explanatory.)'
-    BulkAction:
-      description: 'A bulk action represents, well, a bulk action. It is used to perform
-
-        actions on a large number of objects at once. For example, you can
-
-        use it to delete a large number of emails, or to unsubscribe a large
-
-        number of subscribers. The actions within a bulk action are processed
-
-        serially by Buttondown; this should be considered an ergonomic way to
-
-        batch API calls across the network rather than a net-new piece of functionality
-
-        in of itself.'
+    BulkActionInput:
+      additionalProperties: false
       properties:
-        id:
-          description: A unique TypeID associated with the object.
-          title: Id
-          type: string
-        creation_date:
-          description: The date and time at which the object was first created.
-          format: date-time
-          title: Creation Date
-          type: string
         type:
           $ref: '#/components/schemas/BulkActionType'
           description: The type of bulk action to perform.
@@ -305,23 +318,10 @@ components:
           minProperties: 1
           title: Metadata
           type: object
-        status:
-          $ref: '#/components/schemas/BulkActionStatus'
-          description: The current processing status of the bulk action.
-        completion_date:
-          anyOf:
-          - format: date-time
-            type: string
-          - type: 'null'
-          description: The date and time at which the bulk action was completed.
-          title: Completion Date
       required:
-      - id
-      - creation_date
       - type
       - metadata
-      - status
-      title: BulkAction
+      title: BulkActionInput
       type: object
   securitySchemes:
     ApiKeyAuth:

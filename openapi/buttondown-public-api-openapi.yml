@@ -77,46 +77,6 @@ paths:
       security: []
 components:
   schemas:
-    PublicEmail:
-      description: Public email schema for email search results.
-      properties:
-        id:
-          description: A unique TypeID associated with the object.
-          title: Id
-          type: string
-        creation_date:
-          description: The date and time at which the object was first created.
-          format: date-time
-          title: Creation Date
-          type: string
-        subject:
-          title: Subject
-          type: string
-        slug:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Slug
-        publish_date:
-          anyOf:
-          - format: date-time
-            type: string
-          - type: 'null'
-          title: Publish Date
-        description:
-          title: Description
-          type: string
-        absolute_url:
-          title: Absolute Url
-          type: string
-      required:
-      - id
-      - creation_date
-      - subject
-      - description
-      - absolute_url
-      title: PublicEmail
-      type: object
     PublicEmailPage:
       properties:
         results:
@@ -166,6 +126,46 @@ components:
       required:
       - detail
       title: ErrorMessage
+      type: object
+    PublicEmail:
+      description: Public email schema for email search results.
+      properties:
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        subject:
+          title: Subject
+          type: string
+        slug:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Slug
+        publish_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Publish Date
+        description:
+          title: Description
+          type: string
+        absolute_url:
+          title: Absolute Url
+          type: string
+      required:
+      - id
+      - creation_date
+      - subject
+      - description
+      - absolute_url
+      title: PublicEmail
       type: object
   securitySchemes:
     ApiKeyAuth:

@@ -227,11 +227,11 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    ErrorMessage_ArchivePriceErrorCode_:
+    ErrorMessage_ListPricesErrorCode_:
       properties:
         code:
           allOf:
-          - $ref: '#/components/schemas/ArchivePriceErrorCode'
+          - $ref: '#/components/schemas/ListPricesErrorCode'
           description: The error code.
         detail:
           description: A human-readable description of the error.
@@ -246,7 +246,7 @@ components:
           type: object
       required:
       - detail
-      title: ErrorMessage[ArchivePriceErrorCode]
+      title: ErrorMessage[ListPricesErrorCode]
       type: object
     Price:
       properties:
@@ -323,35 +323,6 @@ components:
       - id
       title: Price
       type: object
-    PricePage:
-      properties:
-        results:
-          description: The list of results for this page.
-          items:
-            $ref: '#/components/schemas/Price'
-          title: Results
-          type: array
-        next:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the next page of results, if any.
-          title: Next
-        previous:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the previous page of results, if any.
-          title: Previous
-        count:
-          description: The total number of results across all pages.
-          title: Count
-          type: integer
-      required:
-      - results
-      - count
-      title: Page[Price]
-      type: object
     ErrorMessage_CreatePriceErrorCode_:
       properties:
         code:
@@ -372,6 +343,48 @@ components:
       required:
       - detail
       title: ErrorMessage[CreatePriceErrorCode]
+      type: object
+    ErrorMessage:
+      properties:
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage
+      type: object
+    ErrorMessage_ArchivePriceErrorCode_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/ArchivePriceErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[ArchivePriceErrorCode]
       type: object
     PriceInput:
       properties:
@@ -475,48 +488,17 @@ components:
       - active
       title: Product
       type: object
-    ErrorMessage:
-      properties:
-        code:
-          description: The error code.
-          title: Code
-          type: string
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage
-      type: object
-    ErrorMessage_ListPricesErrorCode_:
-      properties:
-        code:
-          allOf:
-          - $ref: '#/components/schemas/ListPricesErrorCode'
-          description: The error code.
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage[ListPricesErrorCode]
-      type: object
+    ListPricesErrorCode:
+      description: 'Represents the type of error that occurred when listing a price.
+
+
+        Human-readable error messages are provided in the `detail` field of the response;
+
+        these values are meant to be parseable by code or client logic.'
+      enum:
+      - paid_subscriptions_uninitialized
+      title: ListPricesErrorCode
+      type: string
     ArchivePriceErrorCode:
       description: 'Represents the type of error that occurred when archiving a price.
 
@@ -544,17 +526,35 @@ components:
       - suggested_amount_out_of_range
       title: CreatePriceErrorCode
       type: string
-    ListPricesErrorCode:
-      description: 'Represents the type of error that occurred when listing a price.
-
-
-        Human-readable error messages are provided in the `detail` field of the response;
-
-        these values are meant to be parseable by code or client logic.'
-      enum:
-      - paid_subscriptions_uninitialized
-      title: ListPricesErrorCode
-      type: string
+    PricePage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/Price'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[Price]
+      type: object
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

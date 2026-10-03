@@ -389,30 +389,6 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    ValidationErrorDetail:
-      properties:
-        type:
-          description: The type of validation error.
-          title: Type
-          type: string
-        loc:
-          description: The location of the error in the request.
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Loc
-          type: array
-        msg:
-          description: A human-readable error message.
-          title: Msg
-          type: string
-      required:
-      - type
-      - loc
-      - msg
-      title: ValidationErrorDetail
-      type: object
     BookPage:
       properties:
         results:
@@ -441,59 +417,6 @@ components:
       - results
       - count
       title: Page[Book]
-      type: object
-    BookUpdateInput:
-      additionalProperties: false
-      properties:
-        title:
-          anyOf:
-          - maxLength: 500
-            type: string
-          - type: 'null'
-          description: The title of the book.
-          title: Title
-        url:
-          anyOf:
-          - maxLength: 2000
-            type: string
-          - type: 'null'
-          description: The URL where the book can be purchased or viewed.
-          title: Url
-        image_url:
-          anyOf:
-          - maxLength: 2000
-            type: string
-          - type: 'null'
-          description: The URL of the book's cover image.
-          title: Image Url
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: A description of the book.
-          title: Description
-        year:
-          anyOf:
-          - maximum: 2147483647
-            minimum: -2147483648
-            type: integer
-          - type: 'null'
-          description: The year the book was published.
-          title: Year
-        isbn:
-          anyOf:
-          - maxLength: 20
-            type: string
-          - type: 'null'
-          description: The ISBN of the book.
-          title: Isbn
-        shared:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          description: Whether the book is displayed publicly on the archive.
-          title: Shared
-      title: BookUpdateInput
       type: object
     Book:
       properties:
@@ -552,6 +475,83 @@ components:
       - creation_date
       - title
       title: Book
+      type: object
+    ValidationErrorDetail:
+      properties:
+        type:
+          description: The type of validation error.
+          title: Type
+          type: string
+        loc:
+          description: The location of the error in the request.
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Loc
+          type: array
+        msg:
+          description: A human-readable error message.
+          title: Msg
+          type: string
+      required:
+      - type
+      - loc
+      - msg
+      title: ValidationErrorDetail
+      type: object
+    BookUpdateInput:
+      additionalProperties: false
+      properties:
+        title:
+          anyOf:
+          - maxLength: 500
+            type: string
+          - type: 'null'
+          description: The title of the book.
+          title: Title
+        url:
+          anyOf:
+          - maxLength: 2000
+            type: string
+          - type: 'null'
+          description: The URL where the book can be purchased or viewed.
+          title: Url
+        image_url:
+          anyOf:
+          - maxLength: 2000
+            type: string
+          - type: 'null'
+          description: The URL of the book's cover image.
+          title: Image Url
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: A description of the book.
+          title: Description
+        year:
+          anyOf:
+          - maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+          - type: 'null'
+          description: The year the book was published.
+          title: Year
+        isbn:
+          anyOf:
+          - maxLength: 20
+            type: string
+          - type: 'null'
+          description: The ISBN of the book.
+          title: Isbn
+        shared:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          description: Whether the book is displayed publicly on the archive.
+          title: Shared
+      title: BookUpdateInput
       type: object
     ErrorMessage:
       properties:

@@ -321,6 +321,75 @@ components:
       - detail
       title: ErrorMessage
       type: object
+    APIRequest:
+      description: Represents a request to the API (api.buttondown.com).
+      properties:
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        status_code:
+          description: The HTTP status code the API returned.
+          title: Status Code
+          type: integer
+        path:
+          description: The request path (e.g. `/v1/subscribers`).
+          title: Path
+          type: string
+        method:
+          description: The HTTP method used (e.g. `GET`, `POST`).
+          title: Method
+          type: string
+        source:
+          $ref: '#/components/schemas/APIRequestSource'
+          description: Where the request originated (e.g. `api`, `dashboard`).
+        version:
+          description: The API version the request was made against.
+          enum:
+          - '2024-07-01'
+          - '2024-08-01'
+          - '2024-08-15'
+          - '2024-09-30'
+          - '2024-12-30'
+          - '2025-01-02'
+          - '2025-05-19'
+          - '2025-06-01'
+          - '2026-01-01'
+          - '2026-04-01'
+          title: Version
+          type: string
+        ip_address:
+          description: The IP address the request was made from.
+          title: Ip Address
+          type: string
+        api_key_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The ID of the API key used, if authenticated via API key.
+          title: Api Key Id
+        api_key_label:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The human-readable label of the API key used, if any.
+          title: Api Key Label
+      required:
+      - id
+      - creation_date
+      - status_code
+      - path
+      - method
+      - source
+      - version
+      - ip_address
+      title: APIRequest
+      type: object
     APIRequestDetail:
       description: Represents a request to the API (api.buttondown.com).
       properties:
@@ -407,75 +476,6 @@ components:
       - request_data
       - headers
       title: APIRequestDetail
-      type: object
-    APIRequest:
-      description: Represents a request to the API (api.buttondown.com).
-      properties:
-        id:
-          description: A unique TypeID associated with the object.
-          title: Id
-          type: string
-        creation_date:
-          description: The date and time at which the object was first created.
-          format: date-time
-          title: Creation Date
-          type: string
-        status_code:
-          description: The HTTP status code the API returned.
-          title: Status Code
-          type: integer
-        path:
-          description: The request path (e.g. `/v1/subscribers`).
-          title: Path
-          type: string
-        method:
-          description: The HTTP method used (e.g. `GET`, `POST`).
-          title: Method
-          type: string
-        source:
-          $ref: '#/components/schemas/APIRequestSource'
-          description: Where the request originated (e.g. `api`, `dashboard`).
-        version:
-          description: The API version the request was made against.
-          enum:
-          - '2024-07-01'
-          - '2024-08-01'
-          - '2024-08-15'
-          - '2024-09-30'
-          - '2024-12-30'
-          - '2025-01-02'
-          - '2025-05-19'
-          - '2025-06-01'
-          - '2026-01-01'
-          - '2026-04-01'
-          title: Version
-          type: string
-        ip_address:
-          description: The IP address the request was made from.
-          title: Ip Address
-          type: string
-        api_key_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The ID of the API key used, if authenticated via API key.
-          title: Api Key Id
-        api_key_label:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The human-readable label of the API key used, if any.
-          title: Api Key Label
-      required:
-      - id
-      - creation_date
-      - status_code
-      - path
-      - method
-      - source
-      - version
-      - ip_address
-      title: APIRequest
       type: object
     APIRequestList:
       properties:

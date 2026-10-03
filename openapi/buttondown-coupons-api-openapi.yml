@@ -83,6 +83,41 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
+    StripeCoupon:
+      description: 'Coupons let you offer discounts to subscribers who pay for your newsletter.
+
+        Buttondown''s coupons are backed by Stripe, so each coupon maps to a coupon
+
+        on your connected Stripe account. Use them to run promotions—for example, a
+
+        percentage off a paid subscription.'
+      properties:
+        coupon_id:
+          description: The Stripe coupon ID (e.g. `coupon_...`).
+          title: Coupon Id
+          type: string
+        percent_off:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The percentage discount applied by the coupon, if any.
+          title: Percent Off
+        amount_off:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: The fixed amount discount applied by the coupon, in the smallest currency unit (e.g. cents), if any.
+          title: Amount Off
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The display name of the coupon.
+          title: Name
+      required:
+      - coupon_id
+      title: StripeCoupon
+      type: object
     StripeCouponPage:
       properties:
         results:
@@ -132,41 +167,6 @@ components:
       required:
       - detail
       title: ErrorMessage
-      type: object
-    StripeCoupon:
-      description: 'Coupons let you offer discounts to subscribers who pay for your newsletter.
-
-        Buttondown''s coupons are backed by Stripe, so each coupon maps to a coupon
-
-        on your connected Stripe account. Use them to run promotions—for example, a
-
-        percentage off a paid subscription.'
-      properties:
-        coupon_id:
-          description: The Stripe coupon ID (e.g. `coupon_...`).
-          title: Coupon Id
-          type: string
-        percent_off:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The percentage discount applied by the coupon, if any.
-          title: Percent Off
-        amount_off:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          description: The fixed amount discount applied by the coupon, in the smallest currency unit (e.g. cents), if any.
-          title: Amount Off
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The display name of the coupon.
-          title: Name
-      required:
-      - coupon_id
-      title: StripeCoupon
       type: object
   securitySchemes:
     ApiKeyAuth:

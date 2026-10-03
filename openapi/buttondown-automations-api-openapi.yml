@@ -639,6 +639,157 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
+    Operator:
+      enum:
+      - equals
+      - not_equals
+      - contains
+      - not_contains
+      - is_empty
+      - is_not_empty
+      - greater_than
+      - less_than
+      title: Operator
+      type: string
+      description: An enumeration.
+    ValidationErrorDetail:
+      properties:
+        type:
+          description: The type of validation error.
+          title: Type
+          type: string
+        loc:
+          description: The location of the error in the request.
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Loc
+          type: array
+        msg:
+          description: A human-readable error message.
+          title: Msg
+          type: string
+      required:
+      - type
+      - loc
+      - msg
+      title: ValidationErrorDetail
+      type: object
+    FilterGroup:
+      description: "Buttondown's filtering schema can be used for multiple things:\n\n- Filtering [the audience of an email](/api-emails-create) to a specific subset\n- Creating [finely-tuned automations](/api-automation-introduction)\n\nFilters are fractal; they can be nested in groups, and groups can be nested in other groups. This is accomplished through a tree-like structure. Every \"FilterGroup\" has a \"predicate\" field, which is either \"and\" or \"or\", which determines how the filters and groups within the group are combined, a \"groups\" field, which is a list of \"FilterGroup\" objects (that's that recursive bit!), and a \"filters\" field, which are the leaf-level filters themselves.\n\nLet's say you want a simple filter: all subscribers who have a tag whose ID is `sub_tag_0j6hb7h40j6hb7h40j6hb7h40j`. You can do that like this:\n\n```json\n{\n    \"filters\": [{\"field\": \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40j\"}],\n    \"groups\": [],\n    \"predicate\": \"and\"\n}\n```\n\nNow, let's say you want to filter for subscribers who have that tag and a tag whose ID is `sub_tag_0j6hb7h40j6hb7h40j6hb7h40k`. You can do that like this:\n\n```json\n{\n    \"filters\": [{\"field\": \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40j\"}, {\"field\": \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40k\"}],\n    \"groups\": [],\n    \"predicate\": \"and\"\n}\n```\n\nIf you wanted to change that `and` to an `or`, you can do that like this:\n\n```json\n{\n    \"filters\": [{\"field\": \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40j\"}, {\"field\": \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40k\"}],\n    \"groups\": [],\n    \"predicate\": \"or\"\n}\n```\n\nNow, let's say you want to filter for subscribers who have the first tag _or_ both the second tag and a third tag whose ID is `sub_tag_0j6hb7h40j6hb7h40j6hb7h40m`. This is where the whole nested thing comes in handy. You can do that like this:\n\n```json\n{\n    \"filters\": [{\"field\": \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40j\"}],\n    \"groups\": [\n        {\n            \"filters\": [{\"field\": \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40k\"}, {\"field\": \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40m\"}],\n            \"groups\": [],\n            \"predicate\": \"and\"\n        }\n    ],\n    \"predicate\": \"or\"\n}\n```\n\nYou can read more about the specific filter construction in the [Filter documentation](/api-emails-filter)."
+      properties:
+        filters:
+          description: The leaf-level filters to apply to the audience.
+          items:
+            $ref: '#/components/schemas/Filter'
+          title: Filters
+          type: array
+        groups:
+          description: The nested groups to apply to the audience.
+          items:
+            $ref: '#/components/schemas/FilterGroup'
+          title: Groups
+          type: array
+        predicate:
+          description: The logical operator to use when combining filters (either 'and' or 'or').
+          enum:
+          - and
+          - or
+          title: Predicate
+          type: string
+      required:
+      - filters
+      - groups
+      - predicate
+      title: FilterGroup
+      type: object
+    Automation:
+      description: A rule that automatically performs actions in response to events.
+      properties:
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        name:
+          description: The name of the automation.
+          title: Name
+          type: string
+        status:
+          $ref: '#/components/schemas/AutomationStatus'
+          description: Whether the automation is enabled or disabled.
+        trigger:
+          $ref: '#/components/schemas/ExternalEventType'
+          description: The event that causes this automation to run.
+        actions:
+          description: The actions to perform when the trigger fires.
+          items:
+            $ref: '#/components/schemas/Action'
+          title: Actions
+          type: array
+        filters:
+          $ref: '#/components/schemas/FilterGroup'
+          description: Conditions that must be met for the automation to run.
+        metadata:
+          additionalProperties: true
+          description: Additional metadata for the automation.
+          title: Metadata
+          type: object
+        should_evaluate_filter_after_delay:
+          description: If true, filters are re-evaluated after the delay has passed.
+          title: Should Evaluate Filter After Delay
+          type: boolean
+      required:
+      - id
+      - creation_date
+      - name
+      - status
+      - trigger
+      - actions
+      - filters
+      - metadata
+      - should_evaluate_filter_after_delay
+      title: Automation
+      type: object
+    DelayInput:
+      additionalProperties: false
+      description: Request payload configuration for delaying an automation action.
+      properties:
+        value:
+          description: The number of time units to delay.
+          maxLength: 16
+          minLength: 1
+          title: Value
+          type: string
+        unit:
+          description: The unit of time for the delay.
+          enum:
+          - minutes
+          - hours
+          - days
+          - weeks
+          title: Unit
+          type: string
+        time_of_day:
+          anyOf:
+          - enum:
+            - morning
+            - evening
+            - ''
+            type: string
+          - type: 'null'
+          description: If set, the action will be executed at this time of day after the delay has passed.
+          title: Time Of Day
+      required:
+      - value
+      - unit
+      title: DelayInput
+      type: object
     AutomationPage:
       properties:
         results:
@@ -668,6 +819,131 @@ components:
       - count
       title: Page[Automation]
       type: object
+    ValidationErrorMessage:
+      properties:
+        detail:
+          description: A list of validation errors.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          title: Detail
+          type: array
+      required:
+      - detail
+      title: ValidationErrorMessage
+      type: object
+    ActionInput:
+      additionalProperties: false
+      description: Request payload for an action to perform when the automation's trigger fires.
+      properties:
+        type:
+          $ref: '#/components/schemas/AutomationActionType'
+          description: The type of action to perform.
+        metadata:
+          additionalProperties: true
+          description: Configuration specific to the action type.
+          maxProperties: 100
+          title: Metadata
+          type: object
+        timing:
+          anyOf:
+          - $ref: '#/components/schemas/TimingInput'
+          - type: 'null'
+          description: When to execute this action. Defaults to immediate if not specified.
+      required:
+      - type
+      title: ActionInput
+      type: object
+    ErrorMessage_AutomationCreationErrorCode_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/AutomationCreationErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[AutomationCreationErrorCode]
+      type: object
+    AutomationCreationErrorCode:
+      description: 'Represents the type of error that occurred when creating an automation.
+
+
+        Human-readable error messages are provided in the `detail` field of the response;
+
+        these values are meant to be parseable by code or client logic.'
+      enum:
+      - delay_invalid
+      - filter_invalid__tag
+      - filter_invalid
+      - action_invalid
+      - filter_invalid__field
+      - invalid_newsletter_id
+      - trigger_action_invalid
+      - action_invalid__missing_body_or_subject
+      title: AutomationCreationErrorCode
+      type: string
+    AutomationInput:
+      additionalProperties: false
+      properties:
+        name:
+          description: The name of the automation.
+          maxLength: 100
+          minLength: 1
+          pattern: ^[^\x00-\x1f\x7f-\x9f]*[^\W_][^\x00-\x1f\x7f-\x9f]*$
+          title: Name
+          type: string
+        trigger:
+          $ref: '#/components/schemas/ExternalEventType'
+          description: The event that causes this automation to run.
+        actions:
+          description: The actions to perform when the trigger fires.
+          items:
+            $ref: '#/components/schemas/ActionInput'
+          maxItems: 25
+          title: Actions
+          type: array
+        filters:
+          anyOf:
+          - $ref: '#/components/schemas/FilterGroup'
+            description: Tag-based filtering rules used to decide which subscribers receive feed-generated emails.
+          - type: 'null'
+          description: Conditions that must be met for the automation to run. Omit or pass null for no filter.
+        metadata:
+          additionalProperties: true
+          description: Additional metadata for the automation.
+          maxProperties: 100
+          propertyNames:
+            maxLength: 100
+          title: Metadata
+          type: object
+        should_evaluate_filter_after_delay:
+          default: false
+          description: If true, filters are re-evaluated after the delay has passed.
+          title: Should Evaluate Filter After Delay
+          type: boolean
+      required:
+      - name
+      - trigger
+      - actions
+      title: AutomationInput
+      type: object
+    AutomationStatus:
+      enum:
+      - active
+      - inactive
+      title: Status
+      type: string
+      description: An enumeration.
     FailureBreakdownItem:
       description: A single failure reason with its count.
       properties:
@@ -683,6 +959,81 @@ components:
       - code
       - count
       title: FailureBreakdownItem
+      type: object
+    TimingInput:
+      additionalProperties: false
+      description: Request payload controls for when an automation action executes.
+      properties:
+        time:
+          description: Whether the action should execute immediately or after a delay.
+          enum:
+          - immediate
+          - delay
+          title: Time
+          type: string
+        delay:
+          anyOf:
+          - $ref: '#/components/schemas/DelayInput'
+          - type: 'null'
+          description: The delay configuration. Required when `time` is `delay`; null when `time` is `immediate`.
+      required:
+      - time
+      title: TimingInput
+      type: object
+    AutomationActionType:
+      description: The action that is triggered when the automation is successfully run.
+      enum:
+      - add_tags
+      - remove_tags
+      - send_email
+      - add_metadata
+      - remove_metadata
+      - change_email_address
+      - gift_premium_subscription
+      - ungift_premium_subscription
+      - send_discord_invitation
+      - send_github_invitation
+      - create_subscriber
+      - unsubscribe_subscriber
+      - shopify_unsubscribe
+      - shopify_resubscribe
+      - shopify_set_tags
+      - shopify_create_customer
+      - send_notification
+      - forward_reply
+      - create_arena_post
+      - create_bluesky_post
+      - create_linkedin_post
+      - create_mastodon_post
+      - create_tumblr_post
+      - create_twitter_post
+      - create_export
+      - create_gift_subscriber
+      - send_post_request
+      - send_confirmation_reminder
+      - update_email_type
+      title: ActionType
+      type: string
+    Action:
+      description: An action to perform when the automation's trigger fires.
+      properties:
+        type:
+          $ref: '#/components/schemas/AutomationActionType'
+          description: The type of action to perform.
+        metadata:
+          additionalProperties: true
+          description: Configuration specific to the action type.
+          title: Metadata
+          type: object
+        timing:
+          anyOf:
+          - $ref: '#/components/schemas/Timing'
+          - type: 'null'
+          description: When to execute this action. Defaults to immediate if not specified.
+      required:
+      - type
+      - metadata
+      title: Action
       type: object
     ExternalEventType:
       description: 'Various types of events that are recorded by Buttondown, both in terms of exogenous systems
@@ -798,377 +1149,6 @@ components:
       - form.deleted
       - form.updated
       title: Type
-      type: string
-    FilterGroup:
-      description: "Buttondown's filtering schema can be used for multiple things:\n\n- Filtering [the audience of an email](/api-emails-create) to a specific subset\n- Creating [finely-tuned automations](/api-automation-introduction)\n\nFilters are fractal; they can be nested in groups, and groups can be nested in other groups. This is accomplished through a tree-like structure. Every \"FilterGroup\" has a \"predicate\" field, which is either \"and\" or \"or\", which determines how the filters and groups within the group are combined, a \"groups\" field, which is a list of \"FilterGroup\" objects (that's that recursive bit!), and a \"filters\" field, which are the leaf-level filters themselves.\n\nLet's say you want a simple filter: all subscribers who have a tag whose ID is `sub_tag_0j6hb7h40j6hb7h40j6hb7h40j`. You can do that like this:\n\n```json\n{\n    \"filters\": [{\"field\": \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40j\"}],\n    \"groups\": [],\n    \"predicate\": \"and\"\n}\n```\n\nNow, let's say you want to filter for subscribers who have that tag and a tag whose ID is `sub_tag_0j6hb7h40j6hb7h40j6hb7h40k`. You can do that like this:\n\n```json\n{\n    \"filters\": [{\"field\": \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40j\"}, {\"field\": \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40k\"}],\n    \"groups\": [],\n    \"predicate\": \"and\"\n}\n```\n\nIf you wanted to change that `and` to an `or`, you can do that like this:\n\n```json\n{\n    \"filters\": [{\"field\": \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40j\"}, {\"field\": \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40k\"}],\n    \"groups\": [],\n    \"predicate\": \"or\"\n}\n```\n\nNow, let's say you want to filter for subscribers who have the first tag _or_ both the second tag and a third tag whose ID is `sub_tag_0j6hb7h40j6hb7h40j6hb7h40m`. This is where the whole nested thing comes in handy. You can do that like this:\n\n```json\n{\n    \"filters\": [{\"field\": \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40j\"}],\n    \"groups\": [\n        {\n            \"filters\": [{\"field\": \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40k\"}, {\"field\": \"subscriber.tags\", \"operator\": \"contains\", \"value\": \"sub_tag_0j6hb7h40j6hb7h40j6hb7h40m\"}],\n            \"groups\": [],\n            \"predicate\": \"and\"\n        }\n    ],\n    \"predicate\": \"or\"\n}\n```\n\nYou can read more about the specific filter construction in the [Filter documentation](/api-emails-filter)."
-      properties:
-        filters:
-          description: The leaf-level filters to apply to the audience.
-          items:
-            $ref: '#/components/schemas/Filter'
-          title: Filters
-          type: array
-        groups:
-          description: The nested groups to apply to the audience.
-          items:
-            $ref: '#/components/schemas/FilterGroup'
-          title: Groups
-          type: array
-        predicate:
-          description: The logical operator to use when combining filters (either 'and' or 'or').
-          enum:
-          - and
-          - or
-          title: Predicate
-          type: string
-      required:
-      - filters
-      - groups
-      - predicate
-      title: FilterGroup
-      type: object
-    ErrorMessage_AutomationCreationErrorCode_:
-      properties:
-        code:
-          allOf:
-          - $ref: '#/components/schemas/AutomationCreationErrorCode'
-          description: The error code.
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage[AutomationCreationErrorCode]
-      type: object
-    Operator:
-      enum:
-      - equals
-      - not_equals
-      - contains
-      - not_contains
-      - is_empty
-      - is_not_empty
-      - greater_than
-      - less_than
-      title: Operator
-      type: string
-      description: An enumeration.
-    AutomationUpdateInput:
-      additionalProperties: false
-      properties:
-        name:
-          anyOf:
-          - maxLength: 100
-            minLength: 1
-            pattern: ^[^\x00-\x1f\x7f-\x9f]*[^\W_][^\x00-\x1f\x7f-\x9f]*$
-            type: string
-          - type: 'null'
-          description: The name of the automation.
-          title: Name
-        status:
-          anyOf:
-          - $ref: '#/components/schemas/AutomationStatus'
-          - type: 'null'
-          description: Whether the automation is enabled or disabled.
-        trigger:
-          anyOf:
-          - $ref: '#/components/schemas/ExternalEventType'
-          - type: 'null'
-          description: The event that causes this automation to run.
-        timing:
-          anyOf:
-          - $ref: '#/components/schemas/TimingInput'
-          - type: 'null'
-          description: When to execute the automation's actions.
-        actions:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ActionInput'
-            maxItems: 25
-            type: array
-          - type: 'null'
-          description: The actions to perform when the trigger fires.
-          title: Actions
-        filters:
-          anyOf:
-          - $ref: '#/components/schemas/FilterGroup'
-            description: Tag-based filtering rules used to decide which subscribers receive feed-generated emails.
-          - type: 'null'
-          description: Conditions that must be met for the automation to run.
-        metadata:
-          anyOf:
-          - additionalProperties: true
-            maxProperties: 100
-            propertyNames:
-              maxLength: 100
-            type: object
-          - type: 'null'
-          description: Additional metadata for the automation.
-          title: Metadata
-        should_evaluate_filter_after_delay:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          description: If true, filters are re-evaluated after the delay has passed.
-          title: Should Evaluate Filter After Delay
-      title: AutomationUpdateInput
-      type: object
-    DelayInput:
-      additionalProperties: false
-      description: Request payload configuration for delaying an automation action.
-      properties:
-        value:
-          description: The number of time units to delay.
-          maxLength: 16
-          minLength: 1
-          title: Value
-          type: string
-        unit:
-          description: The unit of time for the delay.
-          enum:
-          - minutes
-          - hours
-          - days
-          - weeks
-          title: Unit
-          type: string
-        time_of_day:
-          anyOf:
-          - enum:
-            - morning
-            - evening
-            - ''
-            type: string
-          - type: 'null'
-          description: If set, the action will be executed at this time of day after the delay has passed.
-          title: Time Of Day
-      required:
-      - value
-      - unit
-      title: DelayInput
-      type: object
-    ValidationErrorDetail:
-      properties:
-        type:
-          description: The type of validation error.
-          title: Type
-          type: string
-        loc:
-          description: The location of the error in the request.
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Loc
-          type: array
-        msg:
-          description: A human-readable error message.
-          title: Msg
-          type: string
-      required:
-      - type
-      - loc
-      - msg
-      title: ValidationErrorDetail
-      type: object
-    AutomationCreationErrorCode:
-      description: 'Represents the type of error that occurred when creating an automation.
-
-
-        Human-readable error messages are provided in the `detail` field of the response;
-
-        these values are meant to be parseable by code or client logic.'
-      enum:
-      - delay_invalid
-      - filter_invalid__tag
-      - filter_invalid
-      - action_invalid
-      - filter_invalid__field
-      - invalid_newsletter_id
-      - trigger_action_invalid
-      - action_invalid__missing_body_or_subject
-      title: AutomationCreationErrorCode
-      type: string
-    Action:
-      description: An action to perform when the automation's trigger fires.
-      properties:
-        type:
-          $ref: '#/components/schemas/AutomationActionType'
-          description: The type of action to perform.
-        metadata:
-          additionalProperties: true
-          description: Configuration specific to the action type.
-          title: Metadata
-          type: object
-        timing:
-          anyOf:
-          - $ref: '#/components/schemas/Timing'
-          - type: 'null'
-          description: When to execute this action. Defaults to immediate if not specified.
-      required:
-      - type
-      - metadata
-      title: Action
-      type: object
-    ValidationErrorMessage:
-      properties:
-        detail:
-          description: A list of validation errors.
-          items:
-            $ref: '#/components/schemas/ValidationErrorDetail'
-          title: Detail
-          type: array
-      required:
-      - detail
-      title: ValidationErrorMessage
-      type: object
-    AutomationInput:
-      additionalProperties: false
-      properties:
-        name:
-          description: The name of the automation.
-          maxLength: 100
-          minLength: 1
-          pattern: ^[^\x00-\x1f\x7f-\x9f]*[^\W_][^\x00-\x1f\x7f-\x9f]*$
-          title: Name
-          type: string
-        trigger:
-          $ref: '#/components/schemas/ExternalEventType'
-          description: The event that causes this automation to run.
-        actions:
-          description: The actions to perform when the trigger fires.
-          items:
-            $ref: '#/components/schemas/ActionInput'
-          maxItems: 25
-          title: Actions
-          type: array
-        filters:
-          anyOf:
-          - $ref: '#/components/schemas/FilterGroup'
-            description: Tag-based filtering rules used to decide which subscribers receive feed-generated emails.
-          - type: 'null'
-          description: Conditions that must be met for the automation to run. Omit or pass null for no filter.
-        metadata:
-          additionalProperties: true
-          description: Additional metadata for the automation.
-          maxProperties: 100
-          propertyNames:
-            maxLength: 100
-          title: Metadata
-          type: object
-        should_evaluate_filter_after_delay:
-          default: false
-          description: If true, filters are re-evaluated after the delay has passed.
-          title: Should Evaluate Filter After Delay
-          type: boolean
-      required:
-      - name
-      - trigger
-      - actions
-      title: AutomationInput
-      type: object
-    TimingInput:
-      additionalProperties: false
-      description: Request payload controls for when an automation action executes.
-      properties:
-        time:
-          description: Whether the action should execute immediately or after a delay.
-          enum:
-          - immediate
-          - delay
-          title: Time
-          type: string
-        delay:
-          anyOf:
-          - $ref: '#/components/schemas/DelayInput'
-          - type: 'null'
-          description: The delay configuration. Required when `time` is `delay`; null when `time` is `immediate`.
-      required:
-      - time
-      title: TimingInput
-      type: object
-    Timing:
-      description: Controls when an automation's action executes after the trigger fires.
-      properties:
-        time:
-          description: Whether the action should execute immediately or after a delay.
-          enum:
-          - immediate
-          - delay
-          title: Time
-          type: string
-        delay:
-          anyOf:
-          - $ref: '#/components/schemas/Delay'
-          - type: 'null'
-          description: The delay configuration. Required when `time` is `delay`; null when `time` is `immediate`.
-      required:
-      - time
-      title: Timing
-      type: object
-    ActionInput:
-      additionalProperties: false
-      description: Request payload for an action to perform when the automation's trigger fires.
-      properties:
-        type:
-          $ref: '#/components/schemas/AutomationActionType'
-          description: The type of action to perform.
-        metadata:
-          additionalProperties: true
-          description: Configuration specific to the action type.
-          maxProperties: 100
-          title: Metadata
-          type: object
-        timing:
-          anyOf:
-          - $ref: '#/components/schemas/TimingInput'
-          - type: 'null'
-          description: When to execute this action. Defaults to immediate if not specified.
-      required:
-      - type
-      title: ActionInput
-      type: object
-    AutomationActionType:
-      description: The action that is triggered when the automation is successfully run.
-      enum:
-      - add_tags
-      - remove_tags
-      - send_email
-      - add_metadata
-      - remove_metadata
-      - change_email_address
-      - gift_premium_subscription
-      - ungift_premium_subscription
-      - send_discord_invitation
-      - send_github_invitation
-      - create_subscriber
-      - unsubscribe_subscriber
-      - shopify_unsubscribe
-      - shopify_resubscribe
-      - shopify_set_tags
-      - shopify_create_customer
-      - send_notification
-      - forward_reply
-      - create_arena_post
-      - create_bluesky_post
-      - create_linkedin_post
-      - create_mastodon_post
-      - create_tumblr_post
-      - create_twitter_post
-      - create_export
-      - create_gift_subscriber
-      - send_post_request
-      - send_confirmation_reminder
-      - update_email_type
-      title: ActionType
       type: string
     Delay:
       description: Configuration for how long to wait before executing the automation's action.
@@ -1307,65 +1287,66 @@ components:
           type: array
       title: Analytics
       type: object
-    Automation:
-      description: A rule that automatically performs actions in response to events.
+    AutomationUpdateInput:
+      additionalProperties: false
       properties:
-        id:
-          description: A unique TypeID associated with the object.
-          title: Id
-          type: string
-        creation_date:
-          description: The date and time at which the object was first created.
-          format: date-time
-          title: Creation Date
-          type: string
         name:
+          anyOf:
+          - maxLength: 100
+            minLength: 1
+            pattern: ^[^\x00-\x1f\x7f-\x9f]*[^\W_][^\x00-\x1f\x7f-\x9f]*$
+            type: string
+          - type: 'null'
           description: The name of the automation.
           title: Name
-          type: string
         status:
-          $ref: '#/components/schemas/AutomationStatus'
+          anyOf:
+          - $ref: '#/components/schemas/AutomationStatus'
+          - type: 'null'
           description: Whether the automation is enabled or disabled.
         trigger:
-          $ref: '#/components/schemas/ExternalEventType'
+          anyOf:
+          - $ref: '#/components/schemas/ExternalEventType'
+          - type: 'null'
           description: The event that causes this automation to run.
+        timing:
+          anyOf:
+          - $ref: '#/components/schemas/TimingInput'
+          - type: 'null'
+          description: When to execute the automation's actions.
         actions:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ActionInput'
+            maxItems: 25
+            type: array
+          - type: 'null'
           description: The actions to perform when the trigger fires.
-          items:
-            $ref: '#/components/schemas/Action'
           title: Actions
-          type: array
         filters:
-          $ref: '#/components/schemas/FilterGroup'
+          anyOf:
+          - $ref: '#/components/schemas/FilterGroup'
+            description: Tag-based filtering rules used to decide which subscribers receive feed-generated emails.
+          - type: 'null'
           description: Conditions that must be met for the automation to run.
         metadata:
-          additionalProperties: true
+          anyOf:
+          - additionalProperties: true
+            maxProperties: 100
+            propertyNames:
+              maxLength: 100
+            type: object
+          - type: 'null'
           description: Additional metadata for the automation.
           title: Metadata
-          type: object
         should_evaluate_filter_after_delay:
+          anyOf:
+          - type: boolean
+          - type: 'null'
           description: If true, filters are re-evaluated after the delay has passed.
           title: Should Evaluate Filter After Delay
-          type: boolean
-      required:
-      - id
-      - creation_date
-      - name
-      - status
-      - trigger
-      - actions
-      - filters
-      - metadata
-      - should_evaluate_filter_after_delay
-      title: Automation
+      title: AutomationUpdateInput
       type: object
-    AutomationStatus:
-      enum:
-      - active
-      - inactive
-      title: Status
-      type: string
-      description: An enumeration.
     ErrorMessage:
       properties:
         code:
@@ -1403,6 +1384,25 @@ components:
       - operator
       - value
       title: Filter
+      type: object
+    Timing:
+      description: Controls when an automation's action executes after the trigger fires.
+      properties:
+        time:
+          description: Whether the action should execute immediately or after a delay.
+          enum:
+          - immediate
+          - delay
+          title: Time
+          type: string
+        delay:
+          anyOf:
+          - $ref: '#/components/schemas/Delay'
+          - type: 'null'
+          description: The delay configuration. Required when `time` is `delay`; null when `time` is `immediate`.
+      required:
+      - time
+      title: Timing
       type: object
   securitySchemes:
     ApiKeyAuth:

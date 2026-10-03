@@ -399,113 +399,14 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    ValidationErrorDetail:
-      properties:
-        type:
-          description: The type of validation error.
-          title: Type
-          type: string
-        loc:
-          description: The location of the error in the request.
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Loc
-          type: array
-        msg:
-          description: A human-readable error message.
-          title: Msg
-          type: string
-      required:
-      - type
-      - loc
-      - msg
-      title: ValidationErrorDetail
-      type: object
-    CreateImportErrorCode:
+    ImportStatus:
       enum:
-      - import_failure
-      - invalid_file_type
-      - malformed_csv
-      title: CreateImportErrorCode
-      type: string
-      description: An enumeration.
-    UpdateImportInput:
-      additionalProperties: false
-      properties:
-        label:
-          anyOf:
-          - maxLength: 500
-            type: string
-          - type: 'null'
-          description: An optional label for the import.
-          title: Label
-          example: June 2025 migration
-        metadata:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          description: Metadata about the import, such as detected column mappings.
-          title: Metadata
-          example:
-            email_column: 0
-            metadata_columns:
-              name: 1
-        status:
-          anyOf:
-          - const: in_progress
-            type: string
-          - type: 'null'
-          description: The status of the import. Set to 'in_progress' to begin executing the import.
-          title: Status
-          example: in_progress
-      title: UpdateImportInput
-      type: object
-    ErrorMessage_CreateImportErrorCode_:
-      properties:
-        code:
-          allOf:
-          - $ref: '#/components/schemas/CreateImportErrorCode'
-          description: The error code.
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage[CreateImportErrorCode]
-      type: object
-    ImportSource:
-      enum:
-      - bare
-      - beehiiv
-      - buttondown
-      - custom
-      - flodesk
-      - ghost
-      - google
-      - mailchimp
-      - mailerlite
-      - memberful
-      - pencilbooth
-      - sender_dot_net
-      - sendy
-      - shopify
-      - sparkloop
-      - squarespace
-      - standard
-      - substack
-      - tinyletter
-      title: ImportSource
+      - failed
+      - in_progress
+      - not_started
+      - succeeded
+      - validating
+      title: ImportStatus
       type: string
       description: An enumeration.
     ImportResult:
@@ -544,35 +445,28 @@ components:
           title: New Tags
       title: ImportResult
       type: object
-    ErrorMessage:
-      properties:
-        code:
-          description: The error code.
-          title: Code
-          type: string
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage
-      type: object
-    ImportStatus:
+    ImportSource:
       enum:
-      - failed
-      - in_progress
-      - not_started
-      - succeeded
-      - validating
-      title: ImportStatus
+      - bare
+      - beehiiv
+      - buttondown
+      - custom
+      - flodesk
+      - ghost
+      - google
+      - mailchimp
+      - mailerlite
+      - memberful
+      - pencilbooth
+      - sender_dot_net
+      - sendy
+      - shopify
+      - sparkloop
+      - squarespace
+      - standard
+      - substack
+      - tinyletter
+      title: ImportSource
       type: string
       description: An enumeration.
     Import:
@@ -622,12 +516,124 @@ components:
       - source
       title: Import
       type: object
-    ImportType:
+    ValidationErrorDetail:
+      properties:
+        type:
+          description: The type of validation error.
+          title: Type
+          type: string
+        loc:
+          description: The location of the error in the request.
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Loc
+          type: array
+        msg:
+          description: A human-readable error message.
+          title: Msg
+          type: string
+      required:
+      - type
+      - loc
+      - msg
+      title: ValidationErrorDetail
+      type: object
+    ErrorMessage_CreateImportErrorCode_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/CreateImportErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[CreateImportErrorCode]
+      type: object
+    CreateImportErrorCode:
       enum:
-      - subscriber_import
-      title: ImportType
+      - import_failure
+      - invalid_file_type
+      - malformed_csv
+      title: CreateImportErrorCode
       type: string
       description: An enumeration.
+    ErrorMessage:
+      properties:
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage
+      type: object
+    UpdateImportInput:
+      additionalProperties: false
+      properties:
+        label:
+          anyOf:
+          - maxLength: 500
+            type: string
+          - type: 'null'
+          description: An optional label for the import.
+          title: Label
+          example: June 2025 migration
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          description: Metadata about the import, such as detected column mappings.
+          title: Metadata
+          example:
+            email_column: 0
+            metadata_columns:
+              name: 1
+        status:
+          anyOf:
+          - const: in_progress
+            type: string
+          - type: 'null'
+          description: The status of the import. Set to 'in_progress' to begin executing the import.
+          title: Status
+          example: in_progress
+      title: UpdateImportInput
+      type: object
+    ValidationErrorMessage:
+      properties:
+        detail:
+          description: A list of validation errors.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          title: Detail
+          type: array
+      required:
+      - detail
+      title: ValidationErrorMessage
+      type: object
     ImportPage:
       properties:
         results:
@@ -657,18 +663,12 @@ components:
       - count
       title: Page[Import]
       type: object
-    ValidationErrorMessage:
-      properties:
-        detail:
-          description: A list of validation errors.
-          items:
-            $ref: '#/components/schemas/ValidationErrorDetail'
-          title: Detail
-          type: array
-      required:
-      - detail
-      title: ValidationErrorMessage
-      type: object
+    ImportType:
+      enum:
+      - subscriber_import
+      title: ImportType
+      type: string
+      description: An enumeration.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

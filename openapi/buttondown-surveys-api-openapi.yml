@@ -536,39 +536,6 @@ components:
       - count
       title: Page[Survey]
       type: object
-    ErrorMessage_UpdateSurveyErrorCode_:
-      properties:
-        code:
-          allOf:
-          - $ref: '#/components/schemas/UpdateSurveyErrorCode'
-          description: The error code.
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage[UpdateSurveyErrorCode]
-      type: object
-    ValidationErrorMessage:
-      properties:
-        detail:
-          description: A list of validation errors.
-          items:
-            $ref: '#/components/schemas/ValidationErrorDetail'
-          title: Detail
-          type: array
-      required:
-      - detail
-      title: ValidationErrorMessage
-      type: object
     ValidationErrorDetail:
       properties:
         type:
@@ -593,13 +560,6 @@ components:
       - msg
       title: ValidationErrorDetail
       type: object
-    SurveyStatus:
-      enum:
-      - active
-      - inactive
-      title: Status
-      type: string
-      description: An enumeration.
     Survey:
       description: 'Surveys let you ask your subscribers a question—and personalize future
 
@@ -674,6 +634,113 @@ components:
       - input_type
       title: Survey
       type: object
+    ErrorMessage:
+      properties:
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage
+      type: object
+    UpdateSurveyErrorCode:
+      enum:
+      - survey_has_responses
+      title: UpdateSurveyErrorCode
+      type: string
+      description: An enumeration.
+    ErrorMessage_CreateSurveyErrorCode_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/CreateSurveyErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[CreateSurveyErrorCode]
+      type: object
+    SurveyStatus:
+      enum:
+      - active
+      - inactive
+      title: Status
+      type: string
+      description: An enumeration.
+    ErrorMessage_UpdateSurveyErrorCode_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/UpdateSurveyErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[UpdateSurveyErrorCode]
+      type: object
+    SurveyInputType:
+      enum:
+      - radio
+      - checkbox
+      - text
+      title: InputType
+      type: string
+      description: An enumeration.
+    ValidationErrorMessage:
+      properties:
+        detail:
+          description: A list of validation errors.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          title: Detail
+          type: array
+      required:
+      - detail
+      title: ValidationErrorMessage
+      type: object
+    CreateSurveyErrorCode:
+      description: 'Represents the type of error that occurred when creating a survey.
+
+
+        Human-readable error messages are provided in the `detail` field of the response;
+
+        these values are meant to be parseable by code or client logic.'
+      enum:
+      - identifier_already_exists
+      title: CreateSurveyErrorCode
+      type: string
     SurveyUpdateInput:
       additionalProperties: false
       properties:
@@ -728,27 +795,6 @@ components:
           description: If true, the order of `answers` is shuffled each time the survey is rendered.
           title: Randomize Answers
       title: SurveyUpdateInput
-      type: object
-    ErrorMessage_CreateSurveyErrorCode_:
-      properties:
-        code:
-          allOf:
-          - $ref: '#/components/schemas/CreateSurveyErrorCode'
-          description: The error code.
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage[CreateSurveyErrorCode]
       type: object
     SurveyInput:
       additionalProperties: false
@@ -817,33 +863,6 @@ components:
       - answers
       title: SurveyInput
       type: object
-    UpdateSurveyErrorCode:
-      enum:
-      - survey_has_responses
-      title: UpdateSurveyErrorCode
-      type: string
-      description: An enumeration.
-    ErrorMessage:
-      properties:
-        code:
-          description: The error code.
-          title: Code
-          type: string
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage
-      type: object
     SurveyResponseCadence:
       enum:
       - once
@@ -851,25 +870,6 @@ components:
       title: ResponseCadence
       type: string
       description: An enumeration.
-    SurveyInputType:
-      enum:
-      - radio
-      - checkbox
-      - text
-      title: InputType
-      type: string
-      description: An enumeration.
-    CreateSurveyErrorCode:
-      description: 'Represents the type of error that occurred when creating a survey.
-
-
-        Human-readable error messages are provided in the `detail` field of the response;
-
-        these values are meant to be parseable by code or client logic.'
-      enum:
-      - identifier_already_exists
-      title: CreateSurveyErrorCode
-      type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

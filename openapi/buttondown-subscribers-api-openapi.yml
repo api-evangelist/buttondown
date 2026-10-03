@@ -1393,83 +1393,378 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    SubscriberInput:
+    FirewallReason:
+      properties:
+        code:
+          $ref: '#/components/schemas/FirewallReasonCode'
+          description: The code of the firewall facet that flagged this subscriber.
+        reason:
+          description: Human-readable explanation for why we flagged the subscriber.
+          title: Reason
+          type: string
+      required:
+      - code
+      - reason
+      title: FirewallReason
+      type: object
+    FirewallReasonCode:
+      enum:
+      - email_address_capital_letters
+      - email_address_cleantalk_score
+      - email_address_contains_prohibited_string
+      - email_address_domain_burst
+      - email_address_esp_suppression
+      - email_address_extant_subscriber_count
+      - email_address_gmail_word_numbers
+      - email_address_has_gravatar
+      - email_address_is_honeypot
+      - email_address_length
+      - email_address_local_part_has_many_periods
+      - email_address_many_consonants_in_a_row
+      - email_address_mx_record_is_valid
+      - email_address_noreply_local_part
+      - email_address_null_characters
+      - email_address_peaceful_domain
+      - email_address_plus_single_number
+      - email_address_plus_variant_accounts
+      - email_address_previous_evaluation
+      - email_address_prohibited_via_domain
+      - email_address_regex
+      - email_address_sandbox_test
+      - email_address_shannon_entropy
+      - email_address_tied_to_account
+      - email_address_typo
+      - embedded_form_honeypot
+      - fingerprint_missing
+      - ip_address_cleantalk_score
+      - ip_address_country_risk
+      - ip_address_datacenter
+      - ip_address_extant_subscriber_count
+      - ip_address_peaceful
+      - ip_address_previous_evaluation
+      - ip_address_prohibited
+      - metadata_has_garbage
+      - newsletter_age
+      - newsletter_has_customized_transactional_email
+      - newsletter_has_prohibited_string
+      - newsletter_status
+      - project_honeypot
+      - referrer_url_prohibited
+      - registration_without_prior_page_visit
+      - subscriber_import_provenance
+      - subscriber_import_source
+      - text_contains_malicious_url
+      - text_contains_prohibited_string
+      - turnstile_response_token_is_valid
+      - user_agent_known
+      - username_shannon_entropy
+      title: FirewallReasonCode
+      type: string
+      description: An enumeration.
+    AutomationForSubscriber:
+      properties:
+        id:
+          description: The ID of this automation attempt.
+          title: Id
+          type: string
+        name:
+          description: The name of the automation that was triggered.
+          title: Name
+          type: string
+        status:
+          $ref: '#/components/schemas/AutomationAttemptStatus'
+          description: The status of the automation attempt (e.g. `pending`, `completed`, `skipped`).
+        automation_id:
+          description: The ID of the automation that was triggered.
+          title: Automation Id
+          type: string
+        execution_date:
+          description: When the automation attempt is scheduled to execute (or executed).
+          format: date-time
+          title: Execution Date
+          type: string
+        actions:
+          description: The resolved actions the automation will take for this subscriber.
+          items:
+            additionalProperties: true
+            type: object
+          title: Actions
+          type: array
+      required:
+      - id
+      - name
+      - status
+      - automation_id
+      - execution_date
+      - actions
+      title: AutomationForSubscriber
+      type: object
+    SubscriberUpdateInput:
       additionalProperties: false
       properties:
+        commenting_disabled:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          description: Whether this subscriber is prevented from commenting.
+          title: Commenting Disabled
         email_address:
+          anyOf:
+          - maxLength: 254
+            pattern: ^[a-zA-Z0-9.'_%+\-!]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$
+            type: string
+            format: email
+          - type: 'null'
           description: The email address of the subscriber.
           example: telemachus@buttondown.email
-          maxLength: 254
-          pattern: ^[a-zA-Z0-9.'_%+\-!]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$
           title: Email Address
-          type: string
-          format: email
         notes:
-          default: ''
+          anyOf:
+          - type: string
+          - type: 'null'
           description: Any notes you want to attach to the subscriber. These are not publicly visible.
           example: One of our first subscribers!
           title: Notes
-          type: string
         metadata:
-          additionalProperties: true
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
           default: {}
           description: A structured key-value blob that you can use to store arbitrary data on the object. Metadata can be nested — you can store objects and arrays within your metadata. (You can [read more about metadata.](https://docs.buttondown.com/metadata))
           title: Metadata
-          type: object
         tags:
-          default: []
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
           description: A list of [tag](https://docs.buttondown.com/api-tags-introduction) names applied to the subscriber. Tags that don't already exist will be created, which requires a plan that includes tags (Basic or higher).
-          items:
-            type: string
           title: Tags
-          type: array
         referrer_url:
+          anyOf:
+          - type: string
+          - type: 'null'
           default: ''
           description: The URL the subscriber was referred from (e.g. where they submitted the subscription form).
           title: Referrer Url
-          type: string
-        utm_campaign:
-          default: ''
-          description: The UTM campaign the subscriber was attributed to at signup.
-          maxLength: 300
-          title: Utm Campaign
-          type: string
-        utm_medium:
-          default: ''
-          description: The UTM medium the subscriber was attributed to at signup.
-          maxLength: 300
-          title: Utm Medium
-          type: string
-        utm_source:
-          default: ''
-          description: The UTM source the subscriber was attributed to at signup.
-          maxLength: 300
-          title: Utm Source
-          type: string
-        referring_subscriber_id:
-          anyOf:
-          - pattern: ^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|(?:sub)_(?:[0-7][0-9abcdefghjkmnpqrstvwxyz]{25}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}))$
-            type: string
-          - type: 'null'
-          description: The ID of the subscriber that referred this subscriber.
-          title: Referring Subscriber Id
         type:
           anyOf:
           - $ref: '#/components/schemas/SubscriberType'
           - type: 'null'
           description: 'The subscriber''s lifecycle state. One of: `blocked` (blocked by the newsletter), `churned` (previously paid, subscription ended), `churning` (paying but won''t renew), `complained` (marked an email as spam), `gifted` (granted free premium access by the newsletter), `past_due` (paid subscription with an overdue invoice), `paused` (premium subscription paused), `premium` (paying subscriber), `regular` (active free subscriber), `removed` (removed by the newsletter), `trialed` (temporarily enrolled in premium), `unactivated` (pending double opt-in confirmation), `undeliverable` (determined undeliverable), `unpaid` (has not paid yet), `unsubscribed` (voluntarily unsubscribed), `upcoming` (paid subscription that has not started yet). Subscribers with `premium`, `gifted`, `trialed`, or `churning` have access to premium content; use these to distinguish paid from free subscribers.'
-          example: regular
-        ip_address:
+        unsubscription_reason:
           anyOf:
-          - format: ipvanyaddress
+          - type: string
+          - type: 'null'
+          description: Free-text reason the subscriber unsubscribed, if provided.
+          title: Unsubscription Reason
+        email_which_prompted_unsubscription_id:
+          anyOf:
+          - pattern: ^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|(?:em)_(?:[0-7][0-9abcdefghjkmnpqrstvwxyz]{25}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}))$
             type: string
           - type: 'null'
-          description: The IP address of the subscriber. If provided, we will use this IP address to determine the subscriber's location and validate their legitimacy.
-          example: 127.0.0.1
-          title: Ip Address
+          description: The ID of the email that prompted the subscriber to unsubscribe, if any.
+          title: Email Which Prompted Unsubscription Id
+      title: SubscriberUpdateInput
+      type: object
+    ValidationErrorDetail:
+      properties:
+        type:
+          description: The type of validation error.
+          title: Type
+          type: string
+        loc:
+          description: The location of the error in the request.
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Loc
+          type: array
+        msg:
+          description: A human-readable error message.
+          title: Msg
+          type: string
       required:
-      - email_address
-      title: SubscriberInput
+      - type
+      - loc
+      - msg
+      title: ValidationErrorDetail
+      type: object
+    ListSubscribersErrorCode:
+      description: 'Represents the type of error that occurred when listing subscribers.
+
+
+        Human-readable error messages are provided in the `detail` field of the response;
+
+        these values are meant to be parseable by code or client logic.'
+      enum:
+      - invalid_tag
+      - date_invalid
+      - invalid_ordering
+      title: ListSubscribersErrorCode
+      type: string
+    AutomationAttemptStatus:
+      type: string
+      enum:
+      - unprocessed
+      - processed
+      - failed
+      - pending
+      - skipped
+      title: AutomationAttemptStatus
+      description: An enumeration.
+    SubscriberPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/Subscriber'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[Subscriber]
+      type: object
+    AutomationForSubscriberPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/AutomationForSubscriber'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[AutomationForSubscriber]
+      type: object
+    StripeSubscriptionPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/StripeSubscription'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[UnexpandableStripeSubscription]
+      type: object
+    ErrorMessage_ValidationErrorCode_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/SubscriberInputValidationErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[SubscriberInput.ValidationErrorCode]
+      type: object
+    EmailTransition:
+      properties:
+        date:
+          description: When the email address change took effect.
+          format: date-time
+          title: Date
+          type: string
+        old_email_address:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The subscriber's previous email address, or null for the initial address.
+          title: Old Email Address
+        new_email_address:
+          description: The subscriber's email address after the transition.
+          title: New Email Address
+          type: string
+      required:
+      - date
+      - new_email_address
+      title: EmailTransition
+      type: object
+    CollisionBehavior:
+      enum:
+      - no_op
+      - add
+      - overwrite
+      - fail
+      title: CollisionBehavior
+      type: string
+      description: An enumeration.
+    ValidationErrorMessage:
+      properties:
+        detail:
+          description: A list of validation errors.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          title: Detail
+          type: array
+      required:
+      - detail
+      title: ValidationErrorMessage
       type: object
     Subscriber:
       description: 'Subscribers are the main way you collect email addresses and
@@ -1774,28 +2069,6 @@ components:
       - utm_source
       title: Subscriber
       type: object
-    EmailTransition:
-      properties:
-        date:
-          description: When the email address change took effect.
-          format: date-time
-          title: Date
-          type: string
-        old_email_address:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The subscriber's previous email address, or null for the initial address.
-          title: Old Email Address
-        new_email_address:
-          description: The subscriber's email address after the transition.
-          title: New Email Address
-          type: string
-      required:
-      - date
-      - new_email_address
-      title: EmailTransition
-      type: object
     SubscriberSource:
       description: 'Represents the original provenance of a subscriber. This value is not exposed
 
@@ -1822,81 +2095,10 @@ components:
       - zapier
       title: Source
       type: string
-    ErrorMessage_UpdateSubscriberErrorCode_:
-      properties:
-        code:
-          allOf:
-          - $ref: '#/components/schemas/UpdateSubscriberErrorCode'
-          description: The error code.
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage[UpdateSubscriberErrorCode]
+    Empty:
+      properties: {}
+      title: Empty
       type: object
-    FirewallReasonCode:
-      enum:
-      - email_address_capital_letters
-      - email_address_cleantalk_score
-      - email_address_contains_prohibited_string
-      - email_address_domain_burst
-      - email_address_esp_suppression
-      - email_address_extant_subscriber_count
-      - email_address_gmail_word_numbers
-      - email_address_has_gravatar
-      - email_address_is_honeypot
-      - email_address_length
-      - email_address_local_part_has_many_periods
-      - email_address_many_consonants_in_a_row
-      - email_address_mx_record_is_valid
-      - email_address_noreply_local_part
-      - email_address_null_characters
-      - email_address_peaceful_domain
-      - email_address_plus_single_number
-      - email_address_plus_variant_accounts
-      - email_address_previous_evaluation
-      - email_address_prohibited_via_domain
-      - email_address_regex
-      - email_address_sandbox_test
-      - email_address_shannon_entropy
-      - email_address_tied_to_account
-      - email_address_typo
-      - embedded_form_honeypot
-      - fingerprint_missing
-      - ip_address_cleantalk_score
-      - ip_address_country_risk
-      - ip_address_datacenter
-      - ip_address_extant_subscriber_count
-      - ip_address_peaceful
-      - ip_address_previous_evaluation
-      - ip_address_prohibited
-      - metadata_has_garbage
-      - newsletter_age
-      - newsletter_has_customized_transactional_email
-      - newsletter_has_prohibited_string
-      - newsletter_status
-      - project_honeypot
-      - referrer_url_prohibited
-      - registration_without_prior_page_visit
-      - subscriber_import_provenance
-      - subscriber_import_source
-      - text_contains_malicious_url
-      - text_contains_prohibited_string
-      - turnstile_response_token_is_valid
-      - user_agent_known
-      - username_shannon_entropy
-      title: FirewallReasonCode
-      type: string
-      description: An enumeration.
     ErrorMessage_ListSubscribersErrorCode_:
       properties:
         code:
@@ -1918,23 +2120,6 @@ components:
       - detail
       title: ErrorMessage[ListSubscribersErrorCode]
       type: object
-    UpdateSubscriberErrorCode:
-      description: 'Represents the type of error that occurred when updating a subscriber.
-
-
-        Human-readable error messages are provided in the `detail` field of the response;
-
-        these values are meant to be parseable by code or client logic.'
-      enum:
-      - email_already_exists
-      - email_invalid
-      - email_has_been_changed_too_many_times
-      - firewall_blocked
-      - metadata_invalid
-      - subscriber_type_invalid
-      - tag_invalid
-      title: UpdateSubscriberErrorCode
-      type: string
     SubscriberType:
       description: 'Represents the state of a subscriber and what emails they
 
@@ -1969,109 +2154,18 @@ components:
       - upcoming
       title: Type
       type: string
-    ValidationErrorDetail:
-      properties:
-        type:
-          description: The type of validation error.
-          title: Type
-          type: string
-        loc:
-          description: The location of the error in the request.
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Loc
-          type: array
-        msg:
-          description: A human-readable error message.
-          title: Msg
-          type: string
-      required:
-      - type
-      - loc
-      - msg
-      title: ValidationErrorDetail
-      type: object
-    ErrorMessage_ValidationErrorCode_:
-      properties:
-        code:
-          allOf:
-          - $ref: '#/components/schemas/SubscriberInputValidationErrorCode'
-          description: The error code.
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage[SubscriberInput.ValidationErrorCode]
-      type: object
-    AutomationForSubscriberPage:
-      properties:
-        results:
-          description: The list of results for this page.
-          items:
-            $ref: '#/components/schemas/AutomationForSubscriber'
-          title: Results
-          type: array
-        next:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the next page of results, if any.
-          title: Next
-        previous:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the previous page of results, if any.
-          title: Previous
-        count:
-          description: The total number of results across all pages.
-          title: Count
-          type: integer
-      required:
-      - results
-      - count
-      title: Page[AutomationForSubscriber]
-      type: object
-    SubscriberPage:
-      properties:
-        results:
-          description: The list of results for this page.
-          items:
-            $ref: '#/components/schemas/Subscriber'
-          title: Results
-          type: array
-        next:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the next page of results, if any.
-          title: Next
-        previous:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the previous page of results, if any.
-          title: Previous
-        count:
-          description: The total number of results across all pages.
-          title: Count
-          type: integer
-      required:
-      - results
-      - count
-      title: Page[Subscriber]
-      type: object
+    UpdateAutomationAttemptErrorCode:
+      description: 'Represents the type of error that occurred when updating an automation attempt.
+
+
+        Human-readable error messages are provided in the `detail` field of the response;
+
+        these values are meant to be parseable by code or client logic.'
+      enum:
+      - automation_attempt_not_found
+      - invalid_status
+      title: UpdateAutomationAttemptErrorCode
+      type: string
     Transition:
       properties:
         date:
@@ -2087,106 +2181,6 @@ components:
       - type
       title: Transition
       type: object
-    ValidationErrorMessage:
-      properties:
-        detail:
-          description: A list of validation errors.
-          items:
-            $ref: '#/components/schemas/ValidationErrorDetail'
-          title: Detail
-          type: array
-      required:
-      - detail
-      title: ValidationErrorMessage
-      type: object
-    AutomationForSubscriber:
-      properties:
-        id:
-          description: The ID of this automation attempt.
-          title: Id
-          type: string
-        name:
-          description: The name of the automation that was triggered.
-          title: Name
-          type: string
-        status:
-          $ref: '#/components/schemas/AutomationAttemptStatus'
-          description: The status of the automation attempt (e.g. `pending`, `completed`, `skipped`).
-        automation_id:
-          description: The ID of the automation that was triggered.
-          title: Automation Id
-          type: string
-        execution_date:
-          description: When the automation attempt is scheduled to execute (or executed).
-          format: date-time
-          title: Execution Date
-          type: string
-        actions:
-          description: The resolved actions the automation will take for this subscriber.
-          items:
-            additionalProperties: true
-            type: object
-          title: Actions
-          type: array
-      required:
-      - id
-      - name
-      - status
-      - automation_id
-      - execution_date
-      - actions
-      title: AutomationForSubscriber
-      type: object
-    ListSubscribersErrorCode:
-      description: 'Represents the type of error that occurred when listing subscribers.
-
-
-        Human-readable error messages are provided in the `detail` field of the response;
-
-        these values are meant to be parseable by code or client logic.'
-      enum:
-      - invalid_tag
-      - date_invalid
-      - invalid_ordering
-      title: ListSubscribersErrorCode
-      type: string
-    AutomationAttemptStatus:
-      type: string
-      enum:
-      - unprocessed
-      - processed
-      - failed
-      - pending
-      - skipped
-      title: AutomationAttemptStatus
-      description: An enumeration.
-    SubscriberInputValidationErrorCode:
-      description: 'Represents the type of error that occurred when validating subscriber input.
-
-
-        Human-readable error messages are provided in the `detail` field of the response;
-
-        these values are meant to be parseable by code or client logic.'
-      enum:
-      - currency_mismatch
-      - email_already_exists
-      - email_blocked
-      - email_empty
-      - email_invalid
-      - invalid_input
-      - ip_address_spammy
-      - metadata_invalid
-      - newsletter_not_accepting_subscribers
-      - payment_failed
-      - promo_code_invalid
-      - rate_limited
-      - subscriber_already_exists
-      - subscriber_blocked
-      - subscriber_id_invalid
-      - subscriber_suppressed
-      - tag_invalid
-      title: ValidationErrorCode
-      type: string
     StripeSubscription:
       properties:
         subscription_id:
@@ -2257,21 +2251,26 @@ components:
       - status
       title: StripeSubscription
       type: object
-    UpdateAutomationAttemptErrorCode:
-      description: 'Represents the type of error that occurred when updating an automation attempt.
-
-
-        Human-readable error messages are provided in the `detail` field of the response;
-
-        these values are meant to be parseable by code or client logic.'
-      enum:
-      - automation_attempt_not_found
-      - invalid_status
-      title: UpdateAutomationAttemptErrorCode
-      type: string
-    Empty:
-      properties: {}
-      title: Empty
+    ErrorMessage_UpdateAutomationAttemptErrorCode_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/UpdateAutomationAttemptErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[UpdateAutomationAttemptErrorCode]
       type: object
     SubscriberUndeliverabilityReason:
       description: "The reason Buttondown has marked the subscriber as undeliverable.\nUndeliverable subscribers are not sent emails, and may be periodically removed from the system (or restored, if the reason is no longer valid.)\n\nThese reasons are grouped into three categories:\n- PermanentFailure (\"Failed (recipient)\"): Address-based issues where the recipient is truly unreachable.\n  Includes: HARD_BOUNCE\n- MessageFailure (\"Failed (message)\"): Message/sender problems where future emails may succeed.\n  Includes: ACCESS_DENIED, AUTHENTICATION_ISSUE, DELIVERY_EXPIRED, DOMAIN_BLOCKED, EMAIL_BLOCKED,\n            IP_BLOCKED, ON_ESP_DENYLIST, OUT_OF_STORAGE, PROBLEMATIC_URL, SPAM\n- Deferral (not shown to customers): Transient delivery issues that will be retried.\n  Includes: RATE_LIMITED, TRANSIENT"
@@ -2298,148 +2297,6 @@ components:
       - unreachable
       title: UndeliverabilityReason
       type: string
-    StripeSubscriptionPage:
-      properties:
-        results:
-          description: The list of results for this page.
-          items:
-            $ref: '#/components/schemas/StripeSubscription'
-          title: Results
-          type: array
-        next:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the next page of results, if any.
-          title: Next
-        previous:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the previous page of results, if any.
-          title: Previous
-        count:
-          description: The total number of results across all pages.
-          title: Count
-          type: integer
-      required:
-      - results
-      - count
-      title: Page[UnexpandableStripeSubscription]
-      type: object
-    FirewallReason:
-      properties:
-        code:
-          $ref: '#/components/schemas/FirewallReasonCode'
-          description: The code of the firewall facet that flagged this subscriber.
-        reason:
-          description: Human-readable explanation for why we flagged the subscriber.
-          title: Reason
-          type: string
-      required:
-      - code
-      - reason
-      title: FirewallReason
-      type: object
-    CollisionBehavior:
-      enum:
-      - no_op
-      - add
-      - overwrite
-      - fail
-      title: CollisionBehavior
-      type: string
-      description: An enumeration.
-    ErrorMessage_UpdateAutomationAttemptErrorCode_:
-      properties:
-        code:
-          allOf:
-          - $ref: '#/components/schemas/UpdateAutomationAttemptErrorCode'
-          description: The error code.
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage[UpdateAutomationAttemptErrorCode]
-      type: object
-    SubscriberUpdateInput:
-      additionalProperties: false
-      properties:
-        commenting_disabled:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          description: Whether this subscriber is prevented from commenting.
-          title: Commenting Disabled
-        email_address:
-          anyOf:
-          - maxLength: 254
-            pattern: ^[a-zA-Z0-9.'_%+\-!]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$
-            type: string
-            format: email
-          - type: 'null'
-          description: The email address of the subscriber.
-          example: telemachus@buttondown.email
-          title: Email Address
-        notes:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Any notes you want to attach to the subscriber. These are not publicly visible.
-          example: One of our first subscribers!
-          title: Notes
-        metadata:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          default: {}
-          description: A structured key-value blob that you can use to store arbitrary data on the object. Metadata can be nested — you can store objects and arrays within your metadata. (You can [read more about metadata.](https://docs.buttondown.com/metadata))
-          title: Metadata
-        tags:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          description: A list of [tag](https://docs.buttondown.com/api-tags-introduction) names applied to the subscriber. Tags that don't already exist will be created, which requires a plan that includes tags (Basic or higher).
-          title: Tags
-        referrer_url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          default: ''
-          description: The URL the subscriber was referred from (e.g. where they submitted the subscription form).
-          title: Referrer Url
-        type:
-          anyOf:
-          - $ref: '#/components/schemas/SubscriberType'
-          - type: 'null'
-          description: 'The subscriber''s lifecycle state. One of: `blocked` (blocked by the newsletter), `churned` (previously paid, subscription ended), `churning` (paying but won''t renew), `complained` (marked an email as spam), `gifted` (granted free premium access by the newsletter), `past_due` (paid subscription with an overdue invoice), `paused` (premium subscription paused), `premium` (paying subscriber), `regular` (active free subscriber), `removed` (removed by the newsletter), `trialed` (temporarily enrolled in premium), `unactivated` (pending double opt-in confirmation), `undeliverable` (determined undeliverable), `unpaid` (has not paid yet), `unsubscribed` (voluntarily unsubscribed), `upcoming` (paid subscription that has not started yet). Subscribers with `premium`, `gifted`, `trialed`, or `churning` have access to premium content; use these to distinguish paid from free subscribers.'
-        unsubscription_reason:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Free-text reason the subscriber unsubscribed, if provided.
-          title: Unsubscription Reason
-        email_which_prompted_unsubscription_id:
-          anyOf:
-          - pattern: ^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|(?:em)_(?:[0-7][0-9abcdefghjkmnpqrstvwxyz]{25}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}))$
-            type: string
-          - type: 'null'
-          description: The ID of the email that prompted the subscriber to unsubscribe, if any.
-          title: Email Which Prompted Unsubscription Id
-      title: SubscriberUpdateInput
-      type: object
     StripeCoupon:
       description: 'Coupons let you offer discounts to subscribers who pay for your newsletter.
 
@@ -2508,6 +2365,149 @@ components:
       - detail
       title: ErrorMessage
       type: object
+    ErrorMessage_UpdateSubscriberErrorCode_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/UpdateSubscriberErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[UpdateSubscriberErrorCode]
+      type: object
+    SubscriberInput:
+      additionalProperties: false
+      properties:
+        email_address:
+          description: The email address of the subscriber.
+          example: telemachus@buttondown.email
+          maxLength: 254
+          pattern: ^[a-zA-Z0-9.'_%+\-!]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$
+          title: Email Address
+          type: string
+          format: email
+        notes:
+          default: ''
+          description: Any notes you want to attach to the subscriber. These are not publicly visible.
+          example: One of our first subscribers!
+          title: Notes
+          type: string
+        metadata:
+          additionalProperties: true
+          default: {}
+          description: A structured key-value blob that you can use to store arbitrary data on the object. Metadata can be nested — you can store objects and arrays within your metadata. (You can [read more about metadata.](https://docs.buttondown.com/metadata))
+          title: Metadata
+          type: object
+        tags:
+          default: []
+          description: A list of [tag](https://docs.buttondown.com/api-tags-introduction) names applied to the subscriber. Tags that don't already exist will be created, which requires a plan that includes tags (Basic or higher).
+          items:
+            type: string
+          title: Tags
+          type: array
+        referrer_url:
+          default: ''
+          description: The URL the subscriber was referred from (e.g. where they submitted the subscription form).
+          title: Referrer Url
+          type: string
+        utm_campaign:
+          default: ''
+          description: The UTM campaign the subscriber was attributed to at signup.
+          maxLength: 300
+          title: Utm Campaign
+          type: string
+        utm_medium:
+          default: ''
+          description: The UTM medium the subscriber was attributed to at signup.
+          maxLength: 300
+          title: Utm Medium
+          type: string
+        utm_source:
+          default: ''
+          description: The UTM source the subscriber was attributed to at signup.
+          maxLength: 300
+          title: Utm Source
+          type: string
+        referring_subscriber_id:
+          anyOf:
+          - pattern: ^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|(?:sub)_(?:[0-7][0-9abcdefghjkmnpqrstvwxyz]{25}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}))$
+            type: string
+          - type: 'null'
+          description: The ID of the subscriber that referred this subscriber.
+          title: Referring Subscriber Id
+        type:
+          anyOf:
+          - $ref: '#/components/schemas/SubscriberType'
+          - type: 'null'
+          description: 'The subscriber''s lifecycle state. One of: `blocked` (blocked by the newsletter), `churned` (previously paid, subscription ended), `churning` (paying but won''t renew), `complained` (marked an email as spam), `gifted` (granted free premium access by the newsletter), `past_due` (paid subscription with an overdue invoice), `paused` (premium subscription paused), `premium` (paying subscriber), `regular` (active free subscriber), `removed` (removed by the newsletter), `trialed` (temporarily enrolled in premium), `unactivated` (pending double opt-in confirmation), `undeliverable` (determined undeliverable), `unpaid` (has not paid yet), `unsubscribed` (voluntarily unsubscribed), `upcoming` (paid subscription that has not started yet). Subscribers with `premium`, `gifted`, `trialed`, or `churning` have access to premium content; use these to distinguish paid from free subscribers.'
+          example: regular
+        ip_address:
+          anyOf:
+          - format: ipvanyaddress
+            type: string
+          - type: 'null'
+          description: The IP address of the subscriber. If provided, we will use this IP address to determine the subscriber's location and validate their legitimacy.
+          example: 127.0.0.1
+          title: Ip Address
+      required:
+      - email_address
+      title: SubscriberInput
+      type: object
+    UpdateSubscriberErrorCode:
+      description: 'Represents the type of error that occurred when updating a subscriber.
+
+
+        Human-readable error messages are provided in the `detail` field of the response;
+
+        these values are meant to be parseable by code or client logic.'
+      enum:
+      - email_already_exists
+      - email_invalid
+      - email_has_been_changed_too_many_times
+      - firewall_blocked
+      - metadata_invalid
+      - subscriber_type_invalid
+      - tag_invalid
+      title: UpdateSubscriberErrorCode
+      type: string
+    SubscriberInputValidationErrorCode:
+      description: 'Represents the type of error that occurred when validating subscriber input.
+
+
+        Human-readable error messages are provided in the `detail` field of the response;
+
+        these values are meant to be parseable by code or client logic.'
+      enum:
+      - currency_mismatch
+      - email_already_exists
+      - email_blocked
+      - email_empty
+      - email_invalid
+      - invalid_input
+      - ip_address_spammy
+      - metadata_invalid
+      - newsletter_not_accepting_subscribers
+      - payment_failed
+      - promo_code_invalid
+      - rate_limited
+      - subscriber_already_exists
+      - subscriber_blocked
+      - subscriber_id_invalid
+      - subscriber_suppressed
+      - tag_invalid
+      title: ValidationErrorCode
+      type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
