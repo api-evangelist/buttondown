@@ -389,34 +389,41 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    BookPage:
+    ValidationErrorDetail:
       properties:
-        results:
-          description: The list of results for this page.
+        type:
+          description: The type of validation error.
+          title: Type
+          type: string
+        loc:
+          description: The location of the error in the request.
           items:
-            $ref: '#/components/schemas/Book'
-          title: Results
+            anyOf:
+            - type: string
+            - type: integer
+          title: Loc
           type: array
-        next:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the next page of results, if any.
-          title: Next
-        previous:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the previous page of results, if any.
-          title: Previous
-        count:
-          description: The total number of results across all pages.
-          title: Count
-          type: integer
+        msg:
+          description: A human-readable error message.
+          title: Msg
+          type: string
       required:
-      - results
-      - count
-      title: Page[Book]
+      - type
+      - loc
+      - msg
+      title: ValidationErrorDetail
+      type: object
+    ValidationErrorMessage:
+      properties:
+        detail:
+          description: A list of validation errors.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          title: Detail
+          type: array
+      required:
+      - detail
+      title: ValidationErrorMessage
       type: object
     Book:
       properties:
@@ -476,29 +483,55 @@ components:
       - title
       title: Book
       type: object
-    ValidationErrorDetail:
+    ErrorMessage:
       properties:
-        type:
-          description: The type of validation error.
-          title: Type
+        code:
+          description: The error code.
+          title: Code
           type: string
-        loc:
-          description: The location of the error in the request.
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Loc
-          type: array
-        msg:
-          description: A human-readable error message.
-          title: Msg
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
           type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
       required:
-      - type
-      - loc
-      - msg
-      title: ValidationErrorDetail
+      - detail
+      title: ErrorMessage
+      type: object
+    BookPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/Book'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[Book]
       type: object
     BookUpdateInput:
       additionalProperties: false
@@ -552,39 +585,6 @@ components:
           description: Whether the book is displayed publicly on the archive.
           title: Shared
       title: BookUpdateInput
-      type: object
-    ErrorMessage:
-      properties:
-        code:
-          description: The error code.
-          title: Code
-          type: string
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage
-      type: object
-    ValidationErrorMessage:
-      properties:
-        detail:
-          description: A list of validation errors.
-          items:
-            $ref: '#/components/schemas/ValidationErrorDetail'
-          title: Detail
-          type: array
-      required:
-      - detail
-      title: ValidationErrorMessage
       type: object
     BookInput:
       additionalProperties: false

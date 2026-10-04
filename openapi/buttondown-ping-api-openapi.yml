@@ -54,10 +54,6 @@ paths:
       security: []
 components:
   schemas:
-    Empty:
-      properties: {}
-      title: Empty
-      type: object
     ErrorMessage:
       properties:
         code:
@@ -78,6 +74,10 @@ components:
       required:
       - detail
       title: ErrorMessage
+      type: object
+    Empty:
+      properties: {}
+      title: Empty
       type: object
   securitySchemes:
     ApiKeyAuth:

@@ -383,41 +383,6 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    User:
-      properties:
-        permissions:
-          $ref: '#/components/schemas/Permissions'
-        email_address:
-          description: The email address of the user.
-          title: Email Address
-          type: string
-        id:
-          description: A unique TypeID associated with the object.
-          title: Id
-          type: string
-        creation_date:
-          description: The date and time at which the object was first created.
-          format: date-time
-          title: Creation Date
-          type: string
-        status:
-          $ref: '#/components/schemas/InvitationStatus'
-          description: The status of the user's invitation (e.g. `pending`, `accepted`).
-        last_logged_in:
-          anyOf:
-          - format: date-time
-            type: string
-          - type: 'null'
-          description: When the user last logged in, or null if they haven't accepted the invitation.
-          title: Last Logged In
-      required:
-      - permissions
-      - email_address
-      - id
-      - creation_date
-      - status
-      title: User
-      type: object
     AccessLevel:
       enum:
       - none
@@ -426,106 +391,6 @@ components:
       title: AccessLevel
       type: string
       description: An enumeration.
-    ErrorMessage_Failure_:
-      properties:
-        code:
-          allOf:
-          - $ref: '#/components/schemas/Failure'
-          description: The error code.
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage[Failure]
-      type: object
-    UserInput:
-      properties:
-        permissions:
-          $ref: '#/components/schemas/Permissions'
-        email_address:
-          description: The email address of the user.
-          title: Email Address
-          type: string
-      required:
-      - permissions
-      - email_address
-      title: UserInput
-      type: object
-    ErrorMessage:
-      properties:
-        code:
-          description: The error code.
-          title: Code
-          type: string
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage
-      type: object
-    InvitationStatus:
-      type: string
-      enum:
-      - pending
-      - accepted
-      - declined
-      - revoked
-      - owner
-      title: InvitationStatus
-      description: An enumeration.
-    Failure:
-      enum:
-      - email_already_exists
-      title: Failure
-      type: string
-      description: An enumeration.
-    UserPage:
-      properties:
-        results:
-          description: The list of results for this page.
-          items:
-            $ref: '#/components/schemas/User'
-          title: Results
-          type: array
-        next:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the next page of results, if any.
-          title: Next
-        previous:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the previous page of results, if any.
-          title: Previous
-        count:
-          description: The total number of results across all pages.
-          title: Count
-          type: integer
-      required:
-      - results
-      - count
-      title: Page[User]
-      type: object
     UserUpdateInput:
       properties:
         permissions:
@@ -577,6 +442,141 @@ components:
           default: none
           description: Access level for form management.
       title: Permissions
+      type: object
+    ErrorMessage_Failure_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/Failure'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[Failure]
+      type: object
+    InvitationStatus:
+      type: string
+      enum:
+      - pending
+      - accepted
+      - declined
+      - revoked
+      - owner
+      title: InvitationStatus
+      description: An enumeration.
+    Failure:
+      enum:
+      - email_already_exists
+      title: Failure
+      type: string
+      description: An enumeration.
+    ErrorMessage:
+      properties:
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage
+      type: object
+    UserPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/User'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[User]
+      type: object
+    User:
+      properties:
+        permissions:
+          $ref: '#/components/schemas/Permissions'
+        email_address:
+          description: The email address of the user.
+          title: Email Address
+          type: string
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        status:
+          $ref: '#/components/schemas/InvitationStatus'
+          description: The status of the user's invitation (e.g. `pending`, `accepted`).
+        last_logged_in:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: When the user last logged in, or null if they haven't accepted the invitation.
+          title: Last Logged In
+      required:
+      - permissions
+      - email_address
+      - id
+      - creation_date
+      - status
+      title: User
+      type: object
+    UserInput:
+      properties:
+        permissions:
+          $ref: '#/components/schemas/Permissions'
+        email_address:
+          description: The email address of the user.
+          title: Email Address
+          type: string
+      required:
+      - permissions
+      - email_address
+      title: UserInput
       type: object
   securitySchemes:
     ApiKeyAuth:

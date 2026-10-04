@@ -269,41 +269,179 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    User:
+    ValidationErrorDetail:
       properties:
-        permissions:
-          $ref: '#/components/schemas/Permissions'
-        email_address:
-          description: The email address of the user.
-          title: Email Address
+        type:
+          description: The type of validation error.
+          title: Type
           type: string
-        id:
-          description: A unique TypeID associated with the object.
-          title: Id
+        loc:
+          description: The location of the error in the request.
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Loc
+          type: array
+        msg:
+          description: A human-readable error message.
+          title: Msg
           type: string
-        creation_date:
-          description: The date and time at which the object was first created.
-          format: date-time
-          title: Creation Date
-          type: string
-        status:
-          $ref: '#/components/schemas/InvitationStatus'
-          description: The status of the user's invitation (e.g. `pending`, `accepted`).
-        last_logged_in:
-          anyOf:
-          - format: date-time
-            type: string
-          - type: 'null'
-          description: When the user last logged in, or null if they haven't accepted the invitation.
-          title: Last Logged In
       required:
-      - permissions
-      - email_address
-      - id
-      - creation_date
-      - status
-      title: User
+      - type
+      - loc
+      - msg
+      title: ValidationErrorDetail
       type: object
+    AccessLevel:
+      enum:
+      - none
+      - read
+      - write
+      title: AccessLevel
+      type: string
+      description: An enumeration.
+    NotePage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/Note'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[Note]
+      type: object
+    ValidationErrorMessage:
+      properties:
+        detail:
+          description: A list of validation errors.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          title: Detail
+          type: array
+      required:
+      - detail
+      title: ValidationErrorMessage
+      type: object
+    Permissions:
+      properties:
+        subscriber:
+          allOf:
+          - $ref: '#/components/schemas/AccessLevel'
+          default: none
+          description: Access level for subscriber management.
+        email:
+          allOf:
+          - $ref: '#/components/schemas/AccessLevel'
+          default: none
+          description: Access level for email management.
+        sending:
+          allOf:
+          - $ref: '#/components/schemas/AccessLevel'
+          default: none
+          description: Access level for sending emails.
+        styling:
+          allOf:
+          - $ref: '#/components/schemas/AccessLevel'
+          default: none
+          description: Access level for newsletter styling.
+        administrivia:
+          allOf:
+          - $ref: '#/components/schemas/AccessLevel'
+          default: none
+          description: Access level for account administration.
+        automations:
+          allOf:
+          - $ref: '#/components/schemas/AccessLevel'
+          default: none
+          description: Access level for automation management.
+        surveys:
+          allOf:
+          - $ref: '#/components/schemas/AccessLevel'
+          default: none
+          description: Access level for survey management.
+        forms:
+          allOf:
+          - $ref: '#/components/schemas/AccessLevel'
+          default: none
+          description: Access level for form management.
+      title: Permissions
+      type: object
+    NoteInput:
+      properties:
+        body:
+          description: The text content of the note.
+          example: This subscriber upgraded to a paid plan.
+          minLength: 1
+          pattern: '[\s\S]*\S[\s\S]*'
+          title: Body
+          type: string
+        model_type:
+          description: The type of object this note is attached to (e.g., 'email', 'subscriber').
+          enum:
+          - automation
+          - comment
+          - conversation
+          - email
+          - external_feed
+          - invitation
+          - socialmention
+          - stripe_customer
+          - subscriber
+          - survey
+          - tag
+          - webmention
+          example: email
+          title: Model Type
+          type: string
+        model_id:
+          description: The UUID or TypeID of the object this note is attached to.
+          example: 13121cd6-0dfc-424c-bb12-988b0a32fcb3
+          maxLength: 50
+          pattern: ^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|(?:bsky_ss_doc|bsky_ss_pub|permission|unsub_req|auth_tok|rec_code|webauthn|api_req|aut_att|ext_evt|segment|str_cus|str_sub|sub_imp|sub_tag|adslot|em_dom|em_imp|le_evt|str_pd|adsku|socmn|webmn|book|bulk|cnvs|form|hook|inbx|news|note|resp|rssi|snip|snpr|acc|att|aut|com|emr|exp|img|inv|mes|rss|smp|srv|sub|dr|em)_(?:[0-7][0-9abcdefghjkmnpqrstvwxyz]{25}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}))$
+          title: Model Id
+          type: string
+        metadata:
+          additionalProperties: true
+          default: {}
+          description: A structured key-value blob that you can use to store arbitrary data on the object. Metadata can be nested — you can store objects and arrays within your metadata. (You can [read more about metadata.](https://docs.buttondown.com/metadata))
+          title: Metadata
+          type: object
+      required:
+      - body
+      - model_type
+      - model_id
+      title: NoteInput
+      type: object
+    InvitationStatus:
+      type: string
+      enum:
+      - pending
+      - accepted
+      - declined
+      - revoked
+      - owner
+      title: InvitationStatus
+      description: An enumeration.
     Note:
       properties:
         id:
@@ -378,84 +516,6 @@ components:
       - source
       title: Note
       type: object
-    ValidationErrorDetail:
-      properties:
-        type:
-          description: The type of validation error.
-          title: Type
-          type: string
-        loc:
-          description: The location of the error in the request.
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Loc
-          type: array
-        msg:
-          description: A human-readable error message.
-          title: Msg
-          type: string
-      required:
-      - type
-      - loc
-      - msg
-      title: ValidationErrorDetail
-      type: object
-    AccessLevel:
-      enum:
-      - none
-      - read
-      - write
-      title: AccessLevel
-      type: string
-      description: An enumeration.
-    NoteInput:
-      properties:
-        body:
-          description: The text content of the note.
-          example: This subscriber upgraded to a paid plan.
-          minLength: 1
-          pattern: '[\s\S]*\S[\s\S]*'
-          title: Body
-          type: string
-        model_type:
-          description: The type of object this note is attached to (e.g., 'email', 'subscriber').
-          enum:
-          - automation
-          - comment
-          - conversation
-          - email
-          - external_feed
-          - invitation
-          - socialmention
-          - stripe_customer
-          - subscriber
-          - survey
-          - tag
-          - webmention
-          example: email
-          title: Model Type
-          type: string
-        model_id:
-          description: The UUID or TypeID of the object this note is attached to.
-          example: 13121cd6-0dfc-424c-bb12-988b0a32fcb3
-          maxLength: 50
-          pattern: ^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|(?:bsky_ss_doc|bsky_ss_pub|permission|unsub_req|auth_tok|rec_code|webauthn|api_req|aut_att|ext_evt|segment|str_cus|str_sub|sub_imp|sub_tag|adslot|em_dom|em_imp|le_evt|str_pd|adsku|socmn|webmn|book|bulk|cnvs|form|hook|inbx|news|note|resp|rssi|snip|snpr|acc|att|aut|com|emr|exp|img|inv|mes|rss|smp|srv|sub|dr|em)_(?:[0-7][0-9abcdefghjkmnpqrstvwxyz]{25}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}))$
-          title: Model Id
-          type: string
-        metadata:
-          additionalProperties: true
-          default: {}
-          description: A structured key-value blob that you can use to store arbitrary data on the object. Metadata can be nested — you can store objects and arrays within your metadata. (You can [read more about metadata.](https://docs.buttondown.com/metadata))
-          title: Metadata
-          type: object
-      required:
-      - body
-      - model_type
-      - model_id
-      title: NoteInput
-      type: object
     ErrorMessage:
       properties:
         code:
@@ -477,100 +537,40 @@ components:
       - detail
       title: ErrorMessage
       type: object
-    InvitationStatus:
-      type: string
-      enum:
-      - pending
-      - accepted
-      - declined
-      - revoked
-      - owner
-      title: InvitationStatus
-      description: An enumeration.
-    ValidationErrorMessage:
+    User:
       properties:
-        detail:
-          description: A list of validation errors.
-          items:
-            $ref: '#/components/schemas/ValidationErrorDetail'
-          title: Detail
-          type: array
-      required:
-      - detail
-      title: ValidationErrorMessage
-      type: object
-    Permissions:
-      properties:
-        subscriber:
-          allOf:
-          - $ref: '#/components/schemas/AccessLevel'
-          default: none
-          description: Access level for subscriber management.
-        email:
-          allOf:
-          - $ref: '#/components/schemas/AccessLevel'
-          default: none
-          description: Access level for email management.
-        sending:
-          allOf:
-          - $ref: '#/components/schemas/AccessLevel'
-          default: none
-          description: Access level for sending emails.
-        styling:
-          allOf:
-          - $ref: '#/components/schemas/AccessLevel'
-          default: none
-          description: Access level for newsletter styling.
-        administrivia:
-          allOf:
-          - $ref: '#/components/schemas/AccessLevel'
-          default: none
-          description: Access level for account administration.
-        automations:
-          allOf:
-          - $ref: '#/components/schemas/AccessLevel'
-          default: none
-          description: Access level for automation management.
-        surveys:
-          allOf:
-          - $ref: '#/components/schemas/AccessLevel'
-          default: none
-          description: Access level for survey management.
-        forms:
-          allOf:
-          - $ref: '#/components/schemas/AccessLevel'
-          default: none
-          description: Access level for form management.
-      title: Permissions
-      type: object
-    NotePage:
-      properties:
-        results:
-          description: The list of results for this page.
-          items:
-            $ref: '#/components/schemas/Note'
-          title: Results
-          type: array
-        next:
+        permissions:
+          $ref: '#/components/schemas/Permissions'
+        email_address:
+          description: The email address of the user.
+          title: Email Address
+          type: string
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        status:
+          $ref: '#/components/schemas/InvitationStatus'
+          description: The status of the user's invitation (e.g. `pending`, `accepted`).
+        last_logged_in:
           anyOf:
-          - type: string
+          - format: date-time
+            type: string
           - type: 'null'
-          description: The URL to the next page of results, if any.
-          title: Next
-        previous:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the previous page of results, if any.
-          title: Previous
-        count:
-          description: The total number of results across all pages.
-          title: Count
-          type: integer
+          description: When the user last logged in, or null if they haven't accepted the invitation.
+          title: Last Logged In
       required:
-      - results
-      - count
-      title: Page[Note]
+      - permissions
+      - email_address
+      - id
+      - creation_date
+      - status
+      title: User
       type: object
   securitySchemes:
     ApiKeyAuth:

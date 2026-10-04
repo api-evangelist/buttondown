@@ -507,6 +507,204 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
+    ValidationErrorDetail:
+      properties:
+        type:
+          description: The type of validation error.
+          title: Type
+          type: string
+        loc:
+          description: The location of the error in the request.
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Loc
+          type: array
+        msg:
+          description: A human-readable error message.
+          title: Msg
+          type: string
+      required:
+      - type
+      - loc
+      - msg
+      title: ValidationErrorDetail
+      type: object
+    ErrorMessage_UpdateSurveyErrorCode_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/UpdateSurveyErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[UpdateSurveyErrorCode]
+      type: object
+    ValidationErrorMessage:
+      properties:
+        detail:
+          description: A list of validation errors.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          title: Detail
+          type: array
+      required:
+      - detail
+      title: ValidationErrorMessage
+      type: object
+    SurveyInput:
+      additionalProperties: false
+      properties:
+        identifier:
+          description: A newsletter-scoped slug used to reference this survey when embedding it in emails.
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          title: Identifier
+          type: string
+          example: color
+        question:
+          description: The survey question shown to subscribers.
+          maxLength: 500
+          pattern: ^[^\x00-\x1f\x7f-\x9f]*[^\W_][^\x00-\x1f\x7f-\x9f]*$
+          title: Question
+          type: string
+          example: What's your favorite color?
+        answers:
+          description: The list of pre-defined answer choices. Order is preserved unless `randomize_answers` is true.
+          items:
+            maxLength: 500
+            pattern: ^[^\x00-\x1f\x7f-\x9f]*[^\W_][^\x00-\x1f\x7f-\x9f]*$
+            type: string
+          minItems: 2
+          title: Answers
+          type: array
+          example:
+          - Red
+          - Green
+          - Blue
+        notes:
+          default: ''
+          description: Internal notes about the survey. Not shown to subscribers.
+          title: Notes
+          type: string
+          example: ''
+        response_cadence:
+          allOf:
+          - $ref: '#/components/schemas/SurveyResponseCadence'
+          default: once
+          description: How often a given subscriber can respond — e.g. `once` (single response per subscriber) or `unlimited`.
+          example: once
+        is_freeform_response_enabled:
+          default: false
+          description: If true, subscribers can provide a freeform text response in addition to (or instead of) picking from `answers`.
+          title: Is Freeform Response Enabled
+          type: boolean
+          example: false
+        input_type:
+          allOf:
+          - $ref: '#/components/schemas/SurveyInputType'
+          default: radio
+          description: The UI control used to collect responses (e.g. `radio`, `checkbox`).
+          example: radio
+        randomize_answers:
+          default: false
+          description: If true, the order of `answers` is shuffled each time the survey is rendered.
+          title: Randomize Answers
+          type: boolean
+          example: false
+      required:
+      - identifier
+      - question
+      - answers
+      title: SurveyInput
+      type: object
+    SurveyInputType:
+      enum:
+      - radio
+      - checkbox
+      - text
+      title: InputType
+      type: string
+      description: An enumeration.
+    CreateSurveyErrorCode:
+      description: 'Represents the type of error that occurred when creating a survey.
+
+
+        Human-readable error messages are provided in the `detail` field of the response;
+
+        these values are meant to be parseable by code or client logic.'
+      enum:
+      - identifier_already_exists
+      title: CreateSurveyErrorCode
+      type: string
+    SurveyUpdateInput:
+      additionalProperties: false
+      properties:
+        notes:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Internal notes about the survey. Not shown to subscribers.
+          title: Notes
+        answers:
+          anyOf:
+          - items:
+              maxLength: 500
+              pattern: ^[^\x00-\x1f\x7f-\x9f]*[^\W_][^\x00-\x1f\x7f-\x9f]*$
+              type: string
+            minItems: 2
+            type: array
+          - type: 'null'
+          description: The list of pre-defined answer choices. Order is preserved unless `randomize_answers` is true.
+          title: Answers
+          example:
+          - Red
+          - Green
+          - Blue
+        response_cadence:
+          anyOf:
+          - $ref: '#/components/schemas/SurveyResponseCadence'
+          - type: 'null'
+          description: How often a given subscriber can respond — e.g. `once` (single response per subscriber) or `unlimited`.
+          example: once
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/SurveyStatus'
+          - type: 'null'
+          description: The lifecycle status of the survey (e.g. `active`, `archived`).
+        is_freeform_response_enabled:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          default: false
+          description: If true, subscribers can provide a freeform text response in addition to (or instead of) picking from `answers`.
+          title: Is Freeform Response Enabled
+        input_type:
+          anyOf:
+          - $ref: '#/components/schemas/SurveyInputType'
+          - type: 'null'
+          description: The UI control used to collect responses (e.g. `radio`, `checkbox`).
+        randomize_answers:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          description: If true, the order of `answers` is shuffled each time the survey is rendered.
+          title: Randomize Answers
+      title: SurveyUpdateInput
+      type: object
     SurveyPage:
       properties:
         results:
@@ -536,29 +734,54 @@ components:
       - count
       title: Page[Survey]
       type: object
-    ValidationErrorDetail:
+    SurveyStatus:
+      enum:
+      - active
+      - inactive
+      title: Status
+      type: string
+      description: An enumeration.
+    ErrorMessage:
       properties:
-        type:
-          description: The type of validation error.
-          title: Type
+        code:
+          description: The error code.
+          title: Code
           type: string
-        loc:
-          description: The location of the error in the request.
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Loc
-          type: array
-        msg:
-          description: A human-readable error message.
-          title: Msg
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
           type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
       required:
-      - type
-      - loc
-      - msg
-      title: ValidationErrorDetail
+      - detail
+      title: ErrorMessage
+      type: object
+    ErrorMessage_CreateSurveyErrorCode_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/CreateSurveyErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[CreateSurveyErrorCode]
       type: object
     Survey:
       description: 'Surveys let you ask your subscribers a question—and personalize future
@@ -634,240 +857,17 @@ components:
       - input_type
       title: Survey
       type: object
-    ErrorMessage:
-      properties:
-        code:
-          description: The error code.
-          title: Code
-          type: string
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage
-      type: object
-    UpdateSurveyErrorCode:
-      enum:
-      - survey_has_responses
-      title: UpdateSurveyErrorCode
-      type: string
-      description: An enumeration.
-    ErrorMessage_CreateSurveyErrorCode_:
-      properties:
-        code:
-          allOf:
-          - $ref: '#/components/schemas/CreateSurveyErrorCode'
-          description: The error code.
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage[CreateSurveyErrorCode]
-      type: object
-    SurveyStatus:
-      enum:
-      - active
-      - inactive
-      title: Status
-      type: string
-      description: An enumeration.
-    ErrorMessage_UpdateSurveyErrorCode_:
-      properties:
-        code:
-          allOf:
-          - $ref: '#/components/schemas/UpdateSurveyErrorCode'
-          description: The error code.
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage[UpdateSurveyErrorCode]
-      type: object
-    SurveyInputType:
-      enum:
-      - radio
-      - checkbox
-      - text
-      title: InputType
-      type: string
-      description: An enumeration.
-    ValidationErrorMessage:
-      properties:
-        detail:
-          description: A list of validation errors.
-          items:
-            $ref: '#/components/schemas/ValidationErrorDetail'
-          title: Detail
-          type: array
-      required:
-      - detail
-      title: ValidationErrorMessage
-      type: object
-    CreateSurveyErrorCode:
-      description: 'Represents the type of error that occurred when creating a survey.
-
-
-        Human-readable error messages are provided in the `detail` field of the response;
-
-        these values are meant to be parseable by code or client logic.'
-      enum:
-      - identifier_already_exists
-      title: CreateSurveyErrorCode
-      type: string
-    SurveyUpdateInput:
-      additionalProperties: false
-      properties:
-        notes:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Internal notes about the survey. Not shown to subscribers.
-          title: Notes
-        answers:
-          anyOf:
-          - items:
-              maxLength: 500
-              pattern: ^[^\x00-\x1f\x7f-\x9f]*[^\W_][^\x00-\x1f\x7f-\x9f]*$
-              type: string
-            minItems: 2
-            type: array
-          - type: 'null'
-          description: The list of pre-defined answer choices. Order is preserved unless `randomize_answers` is true.
-          title: Answers
-          example:
-          - Red
-          - Green
-          - Blue
-        response_cadence:
-          anyOf:
-          - $ref: '#/components/schemas/SurveyResponseCadence'
-          - type: 'null'
-          description: How often a given subscriber can respond — e.g. `once` (single response per subscriber) or `unlimited`.
-          example: once
-        status:
-          anyOf:
-          - $ref: '#/components/schemas/SurveyStatus'
-          - type: 'null'
-          description: The lifecycle status of the survey (e.g. `active`, `archived`).
-        is_freeform_response_enabled:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          default: false
-          description: If true, subscribers can provide a freeform text response in addition to (or instead of) picking from `answers`.
-          title: Is Freeform Response Enabled
-        input_type:
-          anyOf:
-          - $ref: '#/components/schemas/SurveyInputType'
-          - type: 'null'
-          description: The UI control used to collect responses (e.g. `radio`, `checkbox`).
-        randomize_answers:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          description: If true, the order of `answers` is shuffled each time the survey is rendered.
-          title: Randomize Answers
-      title: SurveyUpdateInput
-      type: object
-    SurveyInput:
-      additionalProperties: false
-      properties:
-        identifier:
-          description: A newsletter-scoped slug used to reference this survey when embedding it in emails.
-          maxLength: 100
-          minLength: 1
-          pattern: ^[a-zA-Z0-9_-]+$
-          title: Identifier
-          type: string
-          example: color
-        question:
-          description: The survey question shown to subscribers.
-          maxLength: 500
-          pattern: ^[^\x00-\x1f\x7f-\x9f]*[^\W_][^\x00-\x1f\x7f-\x9f]*$
-          title: Question
-          type: string
-          example: What's your favorite color?
-        answers:
-          description: The list of pre-defined answer choices. Order is preserved unless `randomize_answers` is true.
-          items:
-            maxLength: 500
-            pattern: ^[^\x00-\x1f\x7f-\x9f]*[^\W_][^\x00-\x1f\x7f-\x9f]*$
-            type: string
-          minItems: 2
-          title: Answers
-          type: array
-          example:
-          - Red
-          - Green
-          - Blue
-        notes:
-          default: ''
-          description: Internal notes about the survey. Not shown to subscribers.
-          title: Notes
-          type: string
-          example: ''
-        response_cadence:
-          allOf:
-          - $ref: '#/components/schemas/SurveyResponseCadence'
-          default: once
-          description: How often a given subscriber can respond — e.g. `once` (single response per subscriber) or `unlimited`.
-          example: once
-        is_freeform_response_enabled:
-          default: false
-          description: If true, subscribers can provide a freeform text response in addition to (or instead of) picking from `answers`.
-          title: Is Freeform Response Enabled
-          type: boolean
-          example: false
-        input_type:
-          allOf:
-          - $ref: '#/components/schemas/SurveyInputType'
-          default: radio
-          description: The UI control used to collect responses (e.g. `radio`, `checkbox`).
-          example: radio
-        randomize_answers:
-          default: false
-          description: If true, the order of `answers` is shuffled each time the survey is rendered.
-          title: Randomize Answers
-          type: boolean
-          example: false
-      required:
-      - identifier
-      - question
-      - answers
-      title: SurveyInput
-      type: object
     SurveyResponseCadence:
       enum:
       - once
       - once_per_email
       title: ResponseCadence
+      type: string
+      description: An enumeration.
+    UpdateSurveyErrorCode:
+      enum:
+      - survey_has_responses
+      title: UpdateSurveyErrorCode
       type: string
       description: An enumeration.
   securitySchemes:

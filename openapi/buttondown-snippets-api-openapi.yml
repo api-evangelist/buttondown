@@ -538,6 +538,18 @@ components:
       - name
       title: SnippetInput
       type: object
+    ValidationErrorMessage:
+      properties:
+        detail:
+          description: A list of validation errors.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          title: Detail
+          type: array
+      required:
+      - detail
+      title: ValidationErrorMessage
+      type: object
     ErrorMessage:
       properties:
         code:
@@ -559,46 +571,45 @@ components:
       - detail
       title: ErrorMessage
       type: object
-    SnippetPage:
+    Snippet:
       properties:
-        results:
-          description: The list of results for this page.
-          items:
-            $ref: '#/components/schemas/Snippet'
-          title: Results
-          type: array
-        next:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the next page of results, if any.
-          title: Next
-        previous:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the previous page of results, if any.
-          title: Previous
-        count:
-          description: The total number of results across all pages.
-          title: Count
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        identifier:
+          description: A unique, newsletter-scoped slug used to reference the snippet inside email content (e.g. `{{ snippets.footer }}`). Must be unique per newsletter.
+          title: Identifier
+          type: string
+        name:
+          description: A human-readable name for the snippet, shown in the Buttondown UI.
+          title: Name
+          type: string
+        content:
+          description: The body of the snippet, substituted wherever the snippet is referenced. Interpreted according to `mode`.
+          title: Content
+          type: string
+        mode:
+          $ref: '#/components/schemas/SnippetMode'
+          description: 'The editor mode for the snippet, which controls how `content` is rendered: `fancy` (rich text, stored as HTML), `plaintext` (Markdown), or `naked` (raw HTML with no processing).'
+        reference_count:
+          default: 0
+          description: The number of emails that currently reference this snippet.
+          title: Reference Count
           type: integer
       required:
-      - results
-      - count
-      title: Page[Snippet]
-      type: object
-    ValidationErrorMessage:
-      properties:
-        detail:
-          description: A list of validation errors.
-          items:
-            $ref: '#/components/schemas/ValidationErrorDetail'
-          title: Detail
-          type: array
-      required:
-      - detail
-      title: ValidationErrorMessage
+      - id
+      - creation_date
+      - identifier
+      - name
+      - content
+      - mode
+      title: Snippet
       type: object
     SnippetMode:
       enum:
@@ -645,45 +656,34 @@ components:
           example: fancy
       title: SnippetUpdateInput
       type: object
-    Snippet:
+    SnippetPage:
       properties:
-        id:
-          description: A unique TypeID associated with the object.
-          title: Id
-          type: string
-        creation_date:
-          description: The date and time at which the object was first created.
-          format: date-time
-          title: Creation Date
-          type: string
-        identifier:
-          description: A unique, newsletter-scoped slug used to reference the snippet inside email content (e.g. `{{ snippets.footer }}`). Must be unique per newsletter.
-          title: Identifier
-          type: string
-        name:
-          description: A human-readable name for the snippet, shown in the Buttondown UI.
-          title: Name
-          type: string
-        content:
-          description: The body of the snippet, substituted wherever the snippet is referenced. Interpreted according to `mode`.
-          title: Content
-          type: string
-        mode:
-          $ref: '#/components/schemas/SnippetMode'
-          description: 'The editor mode for the snippet, which controls how `content` is rendered: `fancy` (rich text, stored as HTML), `plaintext` (Markdown), or `naked` (raw HTML with no processing).'
-        reference_count:
-          default: 0
-          description: The number of emails that currently reference this snippet.
-          title: Reference Count
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/Snippet'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
           type: integer
       required:
-      - id
-      - creation_date
-      - identifier
-      - name
-      - content
-      - mode
-      title: Snippet
+      - results
+      - count
+      title: Page[Snippet]
       type: object
   securitySchemes:
     ApiKeyAuth:

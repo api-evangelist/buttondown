@@ -151,69 +151,22 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    BulkAction:
-      description: 'A bulk action represents, well, a bulk action. It is used to perform
+    BulkActionStatus:
+      type: string
+      enum:
+      - not_started
+      - in_progress
+      - processed
+      - failed
+      title: BulkActionStatus
+      description: 'Represents the status of a bulk action.
 
-        actions on a large number of objects at once. For example, you can
 
-        use it to delete a large number of emails, or to unsubscribe a large
+        No action is required to move from one state or another; Buttondown
 
-        number of subscribers. The actions within a bulk action are processed
+        internally handles the transitions, and exposing the status is for
 
-        serially by Buttondown; this should be considered an ergonomic way to
-
-        batch API calls across the network rather than a net-new piece of functionality
-
-        in of itself.'
-      properties:
-        id:
-          description: A unique TypeID associated with the object.
-          title: Id
-          type: string
-        creation_date:
-          description: The date and time at which the object was first created.
-          format: date-time
-          title: Creation Date
-          type: string
-        type:
-          $ref: '#/components/schemas/BulkActionType'
-          description: The type of bulk action to perform.
-          example: delete_emails
-        metadata:
-          additionalProperties:
-            anyOf:
-            - type: string
-            - items:
-                type: string
-              type: array
-            - additionalProperties: true
-              type: object
-          description: Parameters for the bulk action. The exact shape depends on `type` — typically an `ids` list of object IDs to act on.
-          example:
-            ids:
-            - 611c8825-6f21-4544-bb47-9f50453e9cb0
-            - 418c701a-efe3-4e3d-a404-e635a2f28775
-          minProperties: 1
-          title: Metadata
-          type: object
-        status:
-          $ref: '#/components/schemas/BulkActionStatus'
-          description: The current processing status of the bulk action.
-        completion_date:
-          anyOf:
-          - format: date-time
-            type: string
-          - type: 'null'
-          description: The date and time at which the bulk action was completed.
-          title: Completion Date
-      required:
-      - id
-      - creation_date
-      - type
-      - metadata
-      - status
-      title: BulkAction
-      type: object
+        observability purposes only.'
     ErrorMessage:
       properties:
         code:
@@ -235,22 +188,6 @@ components:
       - detail
       title: ErrorMessage
       type: object
-    BulkActionStatus:
-      type: string
-      enum:
-      - not_started
-      - in_progress
-      - processed
-      - failed
-      title: BulkActionStatus
-      description: 'Represents the status of a bulk action.
-
-
-        No action is required to move from one state or another; Buttondown
-
-        internally handles the transitions, and exposing the status is for
-
-        observability purposes only.'
     BulkActionType:
       type: string
       enum:
@@ -322,6 +259,69 @@ components:
       - type
       - metadata
       title: BulkActionInput
+      type: object
+    BulkAction:
+      description: 'A bulk action represents, well, a bulk action. It is used to perform
+
+        actions on a large number of objects at once. For example, you can
+
+        use it to delete a large number of emails, or to unsubscribe a large
+
+        number of subscribers. The actions within a bulk action are processed
+
+        serially by Buttondown; this should be considered an ergonomic way to
+
+        batch API calls across the network rather than a net-new piece of functionality
+
+        in of itself.'
+      properties:
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        type:
+          $ref: '#/components/schemas/BulkActionType'
+          description: The type of bulk action to perform.
+          example: delete_emails
+        metadata:
+          additionalProperties:
+            anyOf:
+            - type: string
+            - items:
+                type: string
+              type: array
+            - additionalProperties: true
+              type: object
+          description: Parameters for the bulk action. The exact shape depends on `type` — typically an `ids` list of object IDs to act on.
+          example:
+            ids:
+            - 611c8825-6f21-4544-bb47-9f50453e9cb0
+            - 418c701a-efe3-4e3d-a404-e635a2f28775
+          minProperties: 1
+          title: Metadata
+          type: object
+        status:
+          $ref: '#/components/schemas/BulkActionStatus'
+          description: The current processing status of the bulk action.
+        completion_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: The date and time at which the bulk action was completed.
+          title: Completion Date
+      required:
+      - id
+      - creation_date
+      - type
+      - metadata
+      - status
+      title: BulkAction
       type: object
   securitySchemes:
     ApiKeyAuth:

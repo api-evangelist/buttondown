@@ -227,6 +227,42 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
+    Product:
+      properties:
+        id:
+          description: The unique identifier of the product.
+          title: Id
+          type: string
+        product_id:
+          description: The Stripe product ID.
+          title: Product Id
+          type: string
+        name:
+          description: The name of the product.
+          title: Name
+          type: string
+        creation_date:
+          description: The date the product was created in Stripe.
+          title: Creation Date
+          type: string
+        active:
+          description: Whether the product is currently active.
+          title: Active
+          type: boolean
+        default_price:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The ID of the default price for this product.
+          title: Default Price
+      required:
+      - id
+      - product_id
+      - name
+      - creation_date
+      - active
+      title: Product
+      type: object
     ErrorMessage_ListPricesErrorCode_:
       properties:
         code:
@@ -323,48 +359,17 @@ components:
       - id
       title: Price
       type: object
-    ErrorMessage_CreatePriceErrorCode_:
-      properties:
-        code:
-          allOf:
-          - $ref: '#/components/schemas/CreatePriceErrorCode'
-          description: The error code.
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage[CreatePriceErrorCode]
-      type: object
-    ErrorMessage:
-      properties:
-        code:
-          description: The error code.
-          title: Code
-          type: string
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage
-      type: object
+    ArchivePriceErrorCode:
+      description: 'Represents the type of error that occurred when archiving a price.
+
+
+        Human-readable error messages are provided in the `detail` field of the response;
+
+        these values are meant to be parseable by code or client logic.'
+      enum:
+      - default_price
+      title: ArchivePriceErrorCode
+      type: string
     ErrorMessage_ArchivePriceErrorCode_:
       properties:
         code:
@@ -386,6 +391,17 @@ components:
       - detail
       title: ErrorMessage[ArchivePriceErrorCode]
       type: object
+    ListPricesErrorCode:
+      description: 'Represents the type of error that occurred when listing a price.
+
+
+        Human-readable error messages are provided in the `detail` field of the response;
+
+        these values are meant to be parseable by code or client logic.'
+      enum:
+      - paid_subscriptions_uninitialized
+      title: ListPricesErrorCode
+      type: string
     PriceInput:
       properties:
         amount:
@@ -452,64 +468,6 @@ components:
       - style
       title: PriceInput
       type: object
-    Product:
-      properties:
-        id:
-          description: The unique identifier of the product.
-          title: Id
-          type: string
-        product_id:
-          description: The Stripe product ID.
-          title: Product Id
-          type: string
-        name:
-          description: The name of the product.
-          title: Name
-          type: string
-        creation_date:
-          description: The date the product was created in Stripe.
-          title: Creation Date
-          type: string
-        active:
-          description: Whether the product is currently active.
-          title: Active
-          type: boolean
-        default_price:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The ID of the default price for this product.
-          title: Default Price
-      required:
-      - id
-      - product_id
-      - name
-      - creation_date
-      - active
-      title: Product
-      type: object
-    ListPricesErrorCode:
-      description: 'Represents the type of error that occurred when listing a price.
-
-
-        Human-readable error messages are provided in the `detail` field of the response;
-
-        these values are meant to be parseable by code or client logic.'
-      enum:
-      - paid_subscriptions_uninitialized
-      title: ListPricesErrorCode
-      type: string
-    ArchivePriceErrorCode:
-      description: 'Represents the type of error that occurred when archiving a price.
-
-
-        Human-readable error messages are provided in the `detail` field of the response;
-
-        these values are meant to be parseable by code or client logic.'
-      enum:
-      - default_price
-      title: ArchivePriceErrorCode
-      type: string
     CreatePriceErrorCode:
       description: 'Represents the type of error that occurred when listing a price.
 
@@ -526,6 +484,48 @@ components:
       - suggested_amount_out_of_range
       title: CreatePriceErrorCode
       type: string
+    ErrorMessage:
+      properties:
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage
+      type: object
+    ErrorMessage_CreatePriceErrorCode_:
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/CreatePriceErrorCode'
+          description: The error code.
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage[CreatePriceErrorCode]
+      type: object
     PricePage:
       properties:
         results:
