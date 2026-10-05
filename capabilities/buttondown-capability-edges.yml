@@ -1,0 +1,48 @@
+slug: buttondown
+provider: Buttondown
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 3
+edges:
+- tag: Webhooks
+  spec_file: buttondown-webhooks-api-openapi.yml
+  capability_id: BC-4270.80
+  capability_id_l1: BC-4270
+  capability_name: Webhook & Event Subscription Management
+  confidence: 0.85
+  evidence: POST /webhooks create_webhook; GET /webhooks/{id}/attempts retrieve_webhook_attempts; schemas
+    ExternalEventType, WebhookAttemptStatus
+  reason: The tag manages the lifecycle of outbound webhook subscriptions, their event types and delivery
+    attempt status/testing — precisely Webhook & Event Subscription Management within the developer platform
+    capability.
+- tag: Emails
+  spec_file: buttondown-emails-api-openapi.yml
+  capability_id: BC-400
+  capability_id_l1: BC-400
+  capability_name: Marketing Management
+  confidence: 0.8
+  evidence: POST /emails/{id}/publish publish_email; POST /emails/{id}/send-draft Send Draft; GET /emails/{id}/analytics
+    Retrieve Email Analytics
+  reason: Authoring, drafting, publishing and measuring newsletter emails to a subscriber base is marketing
+    management; evidence straddles content production/distribution and email/digital marketing, so only
+    the L1 is asserted.
+- tag: Automations
+  spec_file: buttondown-automations-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.7
+  evidence: POST /automations/{id}/invoke Invoke Automation; schemas AutomationActionType, TimingInput,
+    Delay, ExternalEventType, Analytics
+  reason: Trigger/action/delay automations on a newsletter platform are email marketing automation flows
+    with analytics, fitting digital marketing management; some chance the better fit is lifecycle demand
+    generation.
