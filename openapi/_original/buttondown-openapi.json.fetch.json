@@ -1,0 +1,12 @@
+{
+ "url": "https://docs.buttondown.com/openapi.json",
+ "requested_url": "https://docs.buttondown.com/openapi.json",
+ "status": 200,
+ "content_type": "application/json; charset=utf-8",
+ "bytes": 953445,
+ "sha256": "9bd7eed8b5ae6987d97a3a3a2fb719648e72d477802b189e3a87daa8bdd55fa5",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
