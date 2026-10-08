@@ -76,3 +76,25 @@ api_access:
     without the tagging add-on.
 plan_count: 2
 add_on_count: 12
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - metered
+  units: []
+  plans:
+  - name: Free
+    access: free
+    model: free
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Paid (subscriber-scaled)
+    access: other
+    model: metered
+    model_how: stated
+    units: []
+    periods:
+    - month
