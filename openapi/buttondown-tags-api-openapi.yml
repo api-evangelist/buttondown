@@ -499,30 +499,6 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    ValidationErrorDetail:
-      properties:
-        type:
-          description: The type of validation error.
-          title: Type
-          type: string
-        loc:
-          description: The location of the error in the request.
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Loc
-          type: array
-        msg:
-          description: A human-readable error message.
-          title: Msg
-          type: string
-      required:
-      - type
-      - loc
-      - msg
-      title: ValidationErrorDetail
-      type: object
     TagInput:
       additionalProperties: false
       description: Input schema for creating a new tag.
@@ -618,100 +594,6 @@ components:
           title: Subscriber Editable
       title: TagUpdateInput
       type: object
-    ValidationErrorMessage:
-      properties:
-        detail:
-          description: A list of validation errors.
-          items:
-            $ref: '#/components/schemas/ValidationErrorDetail'
-          title: Detail
-          type: array
-      required:
-      - detail
-      title: ValidationErrorMessage
-      type: object
-    TagErrorCode:
-      description: Error codes returned when creating or updating a tag fails.
-      enum:
-      - feature_disabled
-      - name_already_exists
-      - name_blank
-      - name_invalid
-      - name_too_long
-      title: TagErrorCode
-      type: string
-    TagPage:
-      properties:
-        results:
-          description: The list of results for this page.
-          items:
-            $ref: '#/components/schemas/Tag'
-          title: Results
-          type: array
-        next:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the next page of results, if any.
-          title: Next
-        previous:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the previous page of results, if any.
-          title: Previous
-        count:
-          description: The total number of results across all pages.
-          title: Count
-          type: integer
-      required:
-      - results
-      - count
-      title: Page[Tag]
-      type: object
-    TagAnalytics:
-      description: Analytics data associated with a given tag.
-      properties:
-        created_subscribers:
-          description: The number of subscribers who have been created with this tag.
-          minimum: 0
-          title: Created Subscribers
-          type: integer
-        click_rate:
-          description: The click rate of emails sent to subscribers with this tag.
-          title: Click Rate
-          type: number
-        open_rate:
-          description: The open rate of emails sent to subscribers with this tag.
-          title: Open Rate
-          type: number
-      required:
-      - created_subscribers
-      - click_rate
-      - open_rate
-      title: TagAnalytics
-      type: object
-    ErrorMessage:
-      properties:
-        code:
-          description: The error code.
-          title: Code
-          type: string
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage
-      type: object
     ErrorMessage_TagErrorCode_:
       properties:
         code:
@@ -790,6 +672,124 @@ components:
       - subscriber_editable
       - secondary_id
       title: Tag
+      type: object
+    ValidationErrorMessage:
+      properties:
+        detail:
+          description: A list of validation errors.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          title: Detail
+          type: array
+      required:
+      - detail
+      title: ValidationErrorMessage
+      type: object
+    TagAnalytics:
+      description: Analytics data associated with a given tag.
+      properties:
+        created_subscribers:
+          description: The number of subscribers who have been created with this tag.
+          minimum: 0
+          title: Created Subscribers
+          type: integer
+        click_rate:
+          description: The click rate of emails sent to subscribers with this tag.
+          title: Click Rate
+          type: number
+        open_rate:
+          description: The open rate of emails sent to subscribers with this tag.
+          title: Open Rate
+          type: number
+      required:
+      - created_subscribers
+      - click_rate
+      - open_rate
+      title: TagAnalytics
+      type: object
+    TagErrorCode:
+      description: Error codes returned when creating or updating a tag fails.
+      enum:
+      - feature_disabled
+      - name_already_exists
+      - name_blank
+      - name_invalid
+      - name_too_long
+      title: TagErrorCode
+      type: string
+    TagPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/Tag'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[Tag]
+      type: object
+    ErrorMessage:
+      properties:
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage
+      type: object
+    ValidationErrorDetail:
+      properties:
+        type:
+          description: The type of validation error.
+          title: Type
+          type: string
+        loc:
+          description: The location of the error in the request.
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Loc
+          type: array
+        msg:
+          description: A human-readable error message.
+          title: Msg
+          type: string
+      required:
+      - type
+      - loc
+      - msg
+      title: ValidationErrorDetail
       type: object
   securitySchemes:
     ApiKeyAuth:

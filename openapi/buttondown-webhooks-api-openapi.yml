@@ -625,42 +625,6 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    ValidationErrorDetail:
-      properties:
-        type:
-          description: The type of validation error.
-          title: Type
-          type: string
-        loc:
-          description: The location of the error in the request.
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Loc
-          type: array
-        msg:
-          description: A human-readable error message.
-          title: Msg
-          type: string
-      required:
-      - type
-      - loc
-      - msg
-      title: ValidationErrorDetail
-      type: object
-    ValidationErrorMessage:
-      properties:
-        detail:
-          description: A list of validation errors.
-          items:
-            $ref: '#/components/schemas/ValidationErrorDetail'
-          title: Detail
-          type: array
-      required:
-      - detail
-      title: ValidationErrorMessage
-      type: object
     Webhook:
       description: 'Webhooks are used to notify external services of events that occur in the
 
@@ -708,34 +672,38 @@ components:
       - url
       title: Webhook
       type: object
-    WebhookPage:
+    ErrorMessage:
       properties:
-        results:
-          description: The list of results for this page.
-          items:
-            $ref: '#/components/schemas/Webhook'
-          title: Results
-          type: array
-        next:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the next page of results, if any.
-          title: Next
-        previous:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the previous page of results, if any.
-          title: Previous
-        count:
-          description: The total number of results across all pages.
-          title: Count
-          type: integer
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
       required:
-      - results
-      - count
-      title: Page[Webhook]
+      - detail
+      title: ErrorMessage
+      type: object
+    ValidationErrorMessage:
+      properties:
+        detail:
+          description: A list of validation errors.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          title: Detail
+          type: array
+      required:
+      - detail
+      title: ValidationErrorMessage
       type: object
     WebhookAttemptOutputPage:
       properties:
@@ -765,6 +733,69 @@ components:
       - results
       - count
       title: Page[WebhookAttemptOutput]
+      type: object
+    WebhookAttemptOutput:
+      properties:
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
+          type: string
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
+          type: string
+        status:
+          description: The status of the webhook attempt.
+          example:
+          - successful
+          title: Status
+          type: string
+        event_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The type of the event that triggered the attempt.
+          example:
+          - subscriber.created
+          title: Event Type
+        error_message:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The failure reason, if the attempt failed. Includes the response status code and a snippet of the response body when the endpoint returned a non-2xx response.
+          example:
+          - 'WebhookFailedError: Webhook returned 401: invalid signature'
+          title: Error Message
+        attempt_count:
+          default: 0
+          description: The number of times this attempt has been retried.
+          example:
+          - 1
+          title: Attempt Count
+          type: integer
+        completion_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: When the attempt finished, if it has.
+          example:
+          - '2026-04-27T05:25:19.819Z'
+          title: Completion Date
+        duration_ms:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: How long the HTTP request took, in milliseconds.
+          example:
+          - 412
+          title: Duration Ms
+      required:
+      - id
+      - creation_date
+      - status
+      title: WebhookAttemptOutput
       type: object
     WebhookInput:
       additionalProperties: false
@@ -814,35 +845,6 @@ components:
       - url
       title: WebhookInput
       type: object
-    ErrorMessage:
-      properties:
-        code:
-          description: The error code.
-          title: Code
-          type: string
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage
-      type: object
-    WebhookAttemptStatus:
-      enum:
-      - unattempted
-      - successful
-      - failed
-      title: WebhookAttemptStatus
-      type: string
-      description: An enumeration.
     ExternalEventType:
       description: 'Various types of events that are recorded by Buttondown, both in terms of exogenous systems
 
@@ -958,6 +960,67 @@ components:
       - form.updated
       title: Type
       type: string
+    WebhookPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/Webhook'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[Webhook]
+      type: object
+    WebhookAttemptStatus:
+      enum:
+      - unattempted
+      - successful
+      - failed
+      title: WebhookAttemptStatus
+      type: string
+      description: An enumeration.
+    ValidationErrorDetail:
+      properties:
+        type:
+          description: The type of validation error.
+          title: Type
+          type: string
+        loc:
+          description: The location of the error in the request.
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Loc
+          type: array
+        msg:
+          description: A human-readable error message.
+          title: Msg
+          type: string
+      required:
+      - type
+      - loc
+      - msg
+      title: ValidationErrorDetail
+      type: object
     WebhookStatus:
       description: The status of a webhook.
       enum:
@@ -965,69 +1028,6 @@ components:
       - disabled
       title: WebhookStatus
       type: string
-    WebhookAttemptOutput:
-      properties:
-        id:
-          description: A unique TypeID associated with the object.
-          title: Id
-          type: string
-        creation_date:
-          description: The date and time at which the object was first created.
-          format: date-time
-          title: Creation Date
-          type: string
-        status:
-          description: The status of the webhook attempt.
-          example:
-          - successful
-          title: Status
-          type: string
-        event_type:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The type of the event that triggered the attempt.
-          example:
-          - subscriber.created
-          title: Event Type
-        error_message:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The failure reason, if the attempt failed. Includes the response status code and a snippet of the response body when the endpoint returned a non-2xx response.
-          example:
-          - 'WebhookFailedError: Webhook returned 401: invalid signature'
-          title: Error Message
-        attempt_count:
-          default: 0
-          description: The number of times this attempt has been retried.
-          example:
-          - 1
-          title: Attempt Count
-          type: integer
-        completion_date:
-          anyOf:
-          - format: date-time
-            type: string
-          - type: 'null'
-          description: When the attempt finished, if it has.
-          example:
-          - '2026-04-27T05:25:19.819Z'
-          title: Completion Date
-        duration_ms:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          description: How long the HTTP request took, in milliseconds.
-          example:
-          - 412
-          title: Duration Ms
-      required:
-      - id
-      - creation_date
-      - status
-      title: WebhookAttemptOutput
-      type: object
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

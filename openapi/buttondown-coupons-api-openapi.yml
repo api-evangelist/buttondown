@@ -104,6 +104,35 @@ components:
       - detail
       title: ErrorMessage
       type: object
+    StripeCouponPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/StripeCoupon'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[StripeCoupon]
+      type: object
     StripeCoupon:
       description: 'Coupons let you offer discounts to subscribers who pay for your newsletter.
 
@@ -138,35 +167,6 @@ components:
       required:
       - coupon_id
       title: StripeCoupon
-      type: object
-    StripeCouponPage:
-      properties:
-        results:
-          description: The list of results for this page.
-          items:
-            $ref: '#/components/schemas/StripeCoupon'
-          title: Results
-          type: array
-        next:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the next page of results, if any.
-          title: Next
-        previous:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the previous page of results, if any.
-          title: Previous
-        count:
-          description: The total number of results across all pages.
-          title: Count
-          type: integer
-      required:
-      - results
-      - count
-      title: Page[StripeCoupon]
       type: object
   securitySchemes:
     ApiKeyAuth:

@@ -542,59 +542,6 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    SendingDomainRecord:
-      properties:
-        id:
-          description: The ESP-side identifier for the domain, when available.
-          title: Id
-          type: string
-        domain:
-          description: The custom sending domain being verified.
-          title: Domain
-          type: string
-        status:
-          $ref: '#/components/schemas/SendingDomainStatus'
-        warnings:
-          description: Human-readable warnings about the domain's DNS setup (e.g. a record left proxied through Cloudflare).
-          items: {}
-          title: Warnings
-          type: array
-        requirements:
-          description: The DNS records required for the domain, each with its current verification state.
-          items:
-            $ref: '#/components/schemas/RequirementRecord'
-          title: Requirements
-          type: array
-        existing_mail_provider:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The third-party mail provider already handling this domain's inbound mail, when detected; its MX record is then omitted from `requirements`.
-          title: Existing Mail Provider
-        detected_dns_provider:
-          anyOf:
-          - $ref: '#/components/schemas/ApexAliasProvider'
-          - type: 'null'
-        checked_date:
-          anyOf:
-          - format: date-time
-            type: string
-          - type: 'null'
-          description: When the record was last computed. Null until the first verification completes.
-          title: Checked Date
-        is_checking:
-          default: false
-          description: Whether a background re-verification is currently in flight. Clients poll while this is true.
-          title: Is Checking
-          type: boolean
-      required:
-      - id
-      - domain
-      - status
-      - warnings
-      - requirements
-      title: SendingDomainRecord
-      type: object
     ErrorMessage:
       properties:
         code:
@@ -615,264 +562,6 @@ components:
       required:
       - detail
       title: ErrorMessage
-      type: object
-    SendingDomainStatus:
-      description: The DNS verification status of a newsletter's custom sending domain.
-      enum:
-      - none
-      - invalid
-      - awaiting_ssl
-      - failing
-      - deliberately_cold
-      - valid
-      title: SendingDomainStatus
-      type: string
-    NewsletterInput:
-      additionalProperties: false
-      properties:
-        announcement_bar_background_color:
-          anyOf:
-          - const: ''
-            type: string
-          - maxLength: 7
-            pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
-            type: string
-          default: ''
-          description: The background color for the announcement bar on your archive page. Must be a valid hex color code.
-          example: '#FF6600'
-          title: Announcement Bar Background Color
-        announcement_bar_text:
-          default: ''
-          description: Text displayed in the announcement bar on your archive page. Useful for promotions, updates, or calls to action.
-          example: Subscribe to get 20% off your first order!
-          title: Announcement Bar Text
-          type: string
-        announcement_bar_visibility:
-          allOf:
-          - $ref: '#/components/schemas/NewsletterAnnouncementBarVisibility'
-          default: disabled
-          description: Controls who sees the announcement bar on your archive page.
-          enum:
-          - disabled
-          - everyone
-          - free_only
-          - logged_out_only
-          - paid_only
-          example: everyone
-        archive_theme:
-          allOf:
-          - $ref: '#/components/schemas/NewsletterArchiveTheme'
-          default: modern
-          description: The visual theme for your newsletter's archive page. See [archive themes](https://docs.buttondown.com/customizing-web-design) for previews.
-          example: modern
-        auditing_mode:
-          anyOf:
-          - $ref: '#/components/schemas/NewsletterAuditingMode'
-          - type: 'null'
-          description: The auditing mode for your newsletter, which controls spam and abuse protection. See [the Firewall](https://docs.buttondown.com/firewall) for more information.
-          example: enabled
-        css:
-          default: ''
-          description: Custom CSS styling applied to your newsletter emails. See [CSS customization](https://docs.buttondown.com/customizing-email-design#adding-custom-css) for more information.
-          example: '.header { color: #000; }'
-          title: Css
-          type: string
-        custom_email_template:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The identifier for a custom email template. See [email templates](https://docs.buttondown.com/customizing-email-design#buttondowns-default-templates) for available options.
-          example: modern
-          title: Custom Email Template
-        description:
-          description: A brief description of your newsletter, displayed on your public archive page and used for SEO.
-          example: Stay up to date with the latest trends in wigs and hairpieces
-          title: Description
-          type: string
-        domain:
-          default: ''
-          description: The custom domain where your newsletter archives are hosted (e.g., 'newsletter.example.com'). See [custom domains](https://docs.buttondown.com/hosting-on-a-custom-domain) for setup instructions.
-          example: sheinhardt.com
-          maxLength: 500
-          title: Domain
-          type: string
-        email_address:
-          anyOf:
-          - pattern: ^[a-zA-Z0-9.'_%+\-!]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$
-            type: string
-            format: email
-          - type: 'null'
-          description: The 'From' email address used when sending your newsletter. Must be verified before use.
-          example: newsletter@sheinhardt.com
-          title: Email Address
-        email_domain:
-          default: ''
-          description: The custom domain from which your newsletter emails are sent (e.g., 'mail.example.com'). See [sending domains](https://docs.buttondown.com/sending-from-a-custom-domain) for setup instructions.
-          example: mail.sheinhardt.com
-          maxLength: 500
-          title: Email Domain
-          type: string
-        email_theme_configuration:
-          additionalProperties:
-            type: string
-          default: {}
-          description: A dictionary of CSS token overrides for the email theme.
-          example:
-            primary-color: '#0069FF'
-          title: Email Theme Configuration
-          type: object
-        enabled_features:
-          default: []
-          description: A list of features enabled for your newsletter. Common values include 'archives', 'portal', 'surveys', 'comments', 'paid_subscriptions', 'automations', 'webhooks', 'tracking', and 'referrals'.
-          example:
-          - archives
-          - portal
-          - surveys
-          items:
-            type: string
-          title: Enabled Features
-          type: array
-        footer:
-          default: ''
-          description: HTML content displayed at the bottom of your newsletter emails. Supports [template tags](https://docs.buttondown.com/template-tags).
-          example: <p>Thanks for reading!</p>
-          title: Footer
-          type: string
-        from_name:
-          default: ''
-          description: The display name shown in the 'From' field of your emails (e.g., 'Jane from Acme Newsletter').
-          example: Sheinhardt Wig Company
-          title: From Name
-          type: string
-        header:
-          default: ''
-          description: HTML content displayed at the top of your newsletter emails. Supports [template tags](https://docs.buttondown.com/template-tags).
-          example: <p>Welcome to our newsletter!</p>
-          title: Header
-          type: string
-        icon:
-          default: ''
-          description: URL to your newsletter's icon image, used as a favicon and in various UI contexts.
-          example: https://example.com/icon.png
-          maxLength: 500
-          title: Icon
-          type: string
-        icon_alt_text:
-          default: ''
-          description: Alt text for the newsletter icon, used by screen readers and shown when the image cannot load.
-          maxLength: 500
-          title: Icon Alt Text
-          type: string
-        image:
-          default: ''
-          description: URL to your newsletter's header or branding image, displayed on archive pages and in social previews.
-          example: https://example.com/header.jpg
-          maxLength: 500
-          title: Image
-          type: string
-        locale:
-          allOf:
-          - $ref: '#/components/schemas/NewsletterLocale'
-          default: en
-          description: The language/locale for your newsletter's UI elements (confirmation emails, unsubscribe pages, etc.). See [localization](https://docs.buttondown.com/localization) for supported locales.
-          example: en
-        metadata:
-          additionalProperties: true
-          default: {}
-          description: A structured key-value blob that you can use to store arbitrary data on the object. Metadata can be nested — you can store objects and arrays within your metadata. (You can [read more about metadata.](https://docs.buttondown.com/metadata))
-          example:
-            source: my-app
-            tier: pro
-          title: Metadata
-          type: object
-        name:
-          description: The display name of your newsletter, shown to subscribers and on your archive page.
-          example: Sheinhardt Wig Company
-          title: Name
-          type: string
-        reply_to_address:
-          anyOf:
-          - pattern: ^[a-zA-Z0-9.'_%+\-!]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$
-            type: string
-            format: email
-          - type: 'null'
-          description: An alternative email address that receives replies to your newsletter emails, instead of the sending address.
-          example: newsletter@sheinhardt.com
-          title: Reply To Address
-        socials:
-          default: []
-          description: A list of social media accounts linked to your newsletter, displayed on your archive page. Each entry has a `type`, `url`, and optional `label`.
-          example:
-          - label: null
-            type: twitter
-            url: https://x.com/sheinhardt
-          items:
-            $ref: '#/components/schemas/SocialAccountSchema'
-          title: Socials
-          type: array
-        subscription_confirmation_redirect_url:
-          default: ''
-          description: A URL to redirect subscribers to after they confirm their subscription via double opt-in.
-          example: https://example.com/confirmed
-          title: Subscription Confirmation Redirect Url
-          type: string
-        subscription_redirect_url:
-          default: ''
-          description: A URL to redirect subscribers to immediately after they submit the subscription form (before confirmation).
-          example: https://example.com/thanks
-          title: Subscription Redirect Url
-          type: string
-        template:
-          allOf:
-          - $ref: '#/components/schemas/NewsletterEmailTemplate'
-          default: modern
-          description: The default email template for your newsletter. See [email templates](https://docs.buttondown.com/customizing-email-design#buttondowns-default-templates) for available options.
-          example: modern
-        test_mode:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          description: Whether test mode is enabled. When enabled, emails are not actually sent to subscribers, useful for testing automations and workflows.
-          title: Test Mode
-        theme_configuration:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Custom theme configuration (variables) for your newsletter. These can be referenced in your CSS and templates to maintain consistent styling.
-          example:
-            primary-color: '#0069FF'
-          title: Theme Configuration
-          type: object
-        timezone:
-          default: Etc/UTC
-          description: The timezone used for scheduling and displaying dates in your newsletter (e.g., 'America/New_York', 'Europe/London').
-          example: America/New_York
-          title: Timezone
-          type: string
-        tint_color:
-          default: '#0069FF'
-          description: The accent color for your newsletter's emails, applied to links and buttons. Your archive's accent color is set separately, by its theme. Must be a valid hex color code.
-          example: '#0069FF'
-          maxLength: 7
-          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
-          title: Tint Color
-          type: string
-        username:
-          description: The unique URL-safe identifier for your newsletter, used in your archive URL (e.g., 'buttondown.com/username').
-          example: sheinhardt
-          title: Username
-          type: string
-        web_css:
-          default: ''
-          description: Custom CSS styling applied to your newsletter's web presence (archive pages, subscription forms, etc.).
-          example: '.container { max-width: 800px; }'
-          title: Web Css
-          type: string
-      required:
-      - description
-      - name
-      - username
-      title: NewsletterInput
       type: object
     NewsletterPage:
       properties:
@@ -903,6 +592,32 @@ components:
       - count
       title: Page[Newsletter]
       type: object
+    NewsletterLocale:
+      enum:
+      - cs-CZ
+      - nl-NL
+      - en-AU
+      - en-CA
+      - en-GB
+      - en
+      - et
+      - fi-FI
+      - fr
+      - de
+      - it
+      - ja-JP
+      - ne
+      - nb-NO
+      - pl-PL
+      - pt-BR
+      - pt-PT
+      - ru
+      - es
+      - tr
+      - sv-SE
+      title: Locale
+      type: string
+      description: An enumeration.
     CreateNewsletterErrorCode:
       description: 'Represents the type of error that occurred when creating a newsletter.
 
@@ -993,87 +708,53 @@ components:
       title: SocialAccountType
       type: string
       description: An enumeration.
-    ApexAliasProvider:
+    ValidationErrorMessage:
       properties:
-        id:
-          description: Stable identifier for the DNS provider (e.g. `cloudflare`).
-          title: Id
+        detail:
+          description: A list of validation errors.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          title: Detail
+          type: array
+      required:
+      - detail
+      title: ValidationErrorMessage
+      type: object
+    HostingDomainRecord:
+      properties:
+        domain:
+          description: The custom hosting domain being verified.
+          title: Domain
           type: string
-        name:
-          description: Human-readable name of the DNS provider.
-          title: Name
+        record_type:
+          description: The DNS record type the domain should use (typically `CNAME`).
+          title: Record Type
           type: string
-        apex_alias_support:
-          description: How the provider supports pointing an apex/root domain at a CNAME target (e.g. CNAME flattening or ALIAS records).
-          title: Apex Alias Support
-          type: string
-        wording_kind:
-          description: Which copy variant to show for this provider's setup instructions.
-          title: Wording Kind
-          type: string
-        nameserver_regexes:
-          description: Patterns matched against a domain's nameservers to detect this provider.
+        data:
+          description: The record values currently observed at the domain, if any.
           items:
             type: string
-          title: Nameserver Regexes
+          title: Data
           type: array
-        support_doc_url:
+        nameservers:
+          description: The domain's nameservers, used to detect its DNS provider.
+          items:
+            type: string
+          title: Nameservers
+          type: array
+        apex_alias_provider:
           anyOf:
-          - type: string
+          - $ref: '#/components/schemas/ApexAliasProvider'
           - type: 'null'
-          description: Link to the provider's own DNS documentation, when available.
-          title: Support Doc Url
-        side_notes:
-          description: Provider-specific caveats to surface alongside the setup guidance.
-          title: Side Notes
-          type: string
-        buttondown_guide_url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: A first-party Buttondown setup guide for this provider, when one exists.
-          title: Buttondown Guide Url
-        supports_nameserver_delegation:
-          default: true
-          description: Whether the provider lets customers delegate a child zone with NS records.
-          title: Supports Nameserver Delegation
-          type: boolean
+        status:
+          $ref: '#/components/schemas/HostingDomainStatus'
       required:
-      - id
-      - name
-      - apex_alias_support
-      - wording_kind
-      - nameserver_regexes
-      - support_doc_url
-      - side_notes
-      title: ApexAliasProvider
+      - domain
+      - record_type
+      - data
+      - status
+      title: HostingDomainRecord
       type: object
-    NewsletterLocale:
-      enum:
-      - cs-CZ
-      - nl-NL
-      - en-AU
-      - en-CA
-      - en-GB
-      - en
-      - et
-      - fi-FI
-      - fr
-      - de
-      - it
-      - ja-JP
-      - ne
-      - nb-NO
-      - pl-PL
-      - pt-BR
-      - pt-PT
-      - ru
-      - es
-      - tr
-      - sv-SE
-      title: Locale
-      type: string
-      description: An enumeration.
     NewsletterUpdateInput:
       additionalProperties: false
       properties:
@@ -1480,6 +1161,317 @@ components:
           title: Web Css
       title: NewsletterUpdateInput
       type: object
+    SendingDomainRecord:
+      properties:
+        id:
+          description: The ESP-side identifier for the domain, when available.
+          title: Id
+          type: string
+        domain:
+          description: The custom sending domain being verified.
+          title: Domain
+          type: string
+        status:
+          $ref: '#/components/schemas/SendingDomainStatus'
+        warnings:
+          description: Human-readable warnings about the domain's DNS setup (e.g. a record left proxied through Cloudflare).
+          items: {}
+          title: Warnings
+          type: array
+        requirements:
+          description: The DNS records required for the domain, each with its current verification state.
+          items:
+            $ref: '#/components/schemas/RequirementRecord'
+          title: Requirements
+          type: array
+        existing_mail_provider:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The third-party mail provider already handling this domain's inbound mail, when detected; its MX record is then omitted from `requirements`.
+          title: Existing Mail Provider
+        detected_dns_provider:
+          anyOf:
+          - $ref: '#/components/schemas/ApexAliasProvider'
+          - type: 'null'
+        checked_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: When the record was last computed. Null until the first verification completes.
+          title: Checked Date
+        is_checking:
+          default: false
+          description: Whether a background re-verification is currently in flight. Clients poll while this is true.
+          title: Is Checking
+          type: boolean
+      required:
+      - id
+      - domain
+      - status
+      - warnings
+      - requirements
+      title: SendingDomainRecord
+      type: object
+    NewsletterInput:
+      additionalProperties: false
+      properties:
+        announcement_bar_background_color:
+          anyOf:
+          - const: ''
+            type: string
+          - maxLength: 7
+            pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+            type: string
+          default: ''
+          description: The background color for the announcement bar on your archive page. Must be a valid hex color code.
+          example: '#FF6600'
+          title: Announcement Bar Background Color
+        announcement_bar_text:
+          default: ''
+          description: Text displayed in the announcement bar on your archive page. Useful for promotions, updates, or calls to action.
+          example: Subscribe to get 20% off your first order!
+          title: Announcement Bar Text
+          type: string
+        announcement_bar_visibility:
+          allOf:
+          - $ref: '#/components/schemas/NewsletterAnnouncementBarVisibility'
+          default: disabled
+          description: Controls who sees the announcement bar on your archive page.
+          enum:
+          - disabled
+          - everyone
+          - free_only
+          - logged_out_only
+          - paid_only
+          example: everyone
+        archive_theme:
+          allOf:
+          - $ref: '#/components/schemas/NewsletterArchiveTheme'
+          default: modern
+          description: The visual theme for your newsletter's archive page. See [archive themes](https://docs.buttondown.com/customizing-web-design) for previews.
+          example: modern
+        auditing_mode:
+          anyOf:
+          - $ref: '#/components/schemas/NewsletterAuditingMode'
+          - type: 'null'
+          description: The auditing mode for your newsletter, which controls spam and abuse protection. See [the Firewall](https://docs.buttondown.com/firewall) for more information.
+          example: enabled
+        css:
+          default: ''
+          description: Custom CSS styling applied to your newsletter emails. See [CSS customization](https://docs.buttondown.com/customizing-email-design#adding-custom-css) for more information.
+          example: '.header { color: #000; }'
+          title: Css
+          type: string
+        custom_email_template:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The identifier for a custom email template. See [email templates](https://docs.buttondown.com/customizing-email-design#buttondowns-default-templates) for available options.
+          example: modern
+          title: Custom Email Template
+        description:
+          description: A brief description of your newsletter, displayed on your public archive page and used for SEO.
+          example: Stay up to date with the latest trends in wigs and hairpieces
+          title: Description
+          type: string
+        domain:
+          default: ''
+          description: The custom domain where your newsletter archives are hosted (e.g., 'newsletter.example.com'). See [custom domains](https://docs.buttondown.com/hosting-on-a-custom-domain) for setup instructions.
+          example: sheinhardt.com
+          maxLength: 500
+          title: Domain
+          type: string
+        email_address:
+          anyOf:
+          - pattern: ^[a-zA-Z0-9.'_%+\-!]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$
+            type: string
+            format: email
+          - type: 'null'
+          description: The 'From' email address used when sending your newsletter. Must be verified before use.
+          example: newsletter@sheinhardt.com
+          title: Email Address
+        email_domain:
+          default: ''
+          description: The custom domain from which your newsletter emails are sent (e.g., 'mail.example.com'). See [sending domains](https://docs.buttondown.com/sending-from-a-custom-domain) for setup instructions.
+          example: mail.sheinhardt.com
+          maxLength: 500
+          title: Email Domain
+          type: string
+        email_theme_configuration:
+          additionalProperties:
+            type: string
+          default: {}
+          description: A dictionary of CSS token overrides for the email theme.
+          example:
+            primary-color: '#0069FF'
+          title: Email Theme Configuration
+          type: object
+        enabled_features:
+          default: []
+          description: A list of features enabled for your newsletter. Common values include 'archives', 'portal', 'surveys', 'comments', 'paid_subscriptions', 'automations', 'webhooks', 'tracking', and 'referrals'.
+          example:
+          - archives
+          - portal
+          - surveys
+          items:
+            type: string
+          title: Enabled Features
+          type: array
+        footer:
+          default: ''
+          description: HTML content displayed at the bottom of your newsletter emails. Supports [template tags](https://docs.buttondown.com/template-tags).
+          example: <p>Thanks for reading!</p>
+          title: Footer
+          type: string
+        from_name:
+          default: ''
+          description: The display name shown in the 'From' field of your emails (e.g., 'Jane from Acme Newsletter').
+          example: Sheinhardt Wig Company
+          title: From Name
+          type: string
+        header:
+          default: ''
+          description: HTML content displayed at the top of your newsletter emails. Supports [template tags](https://docs.buttondown.com/template-tags).
+          example: <p>Welcome to our newsletter!</p>
+          title: Header
+          type: string
+        icon:
+          default: ''
+          description: URL to your newsletter's icon image, used as a favicon and in various UI contexts.
+          example: https://example.com/icon.png
+          maxLength: 500
+          title: Icon
+          type: string
+        icon_alt_text:
+          default: ''
+          description: Alt text for the newsletter icon, used by screen readers and shown when the image cannot load.
+          maxLength: 500
+          title: Icon Alt Text
+          type: string
+        image:
+          default: ''
+          description: URL to your newsletter's header or branding image, displayed on archive pages and in social previews.
+          example: https://example.com/header.jpg
+          maxLength: 500
+          title: Image
+          type: string
+        locale:
+          allOf:
+          - $ref: '#/components/schemas/NewsletterLocale'
+          default: en
+          description: The language/locale for your newsletter's UI elements (confirmation emails, unsubscribe pages, etc.). See [localization](https://docs.buttondown.com/localization) for supported locales.
+          example: en
+        metadata:
+          additionalProperties: true
+          default: {}
+          description: A structured key-value blob that you can use to store arbitrary data on the object. Metadata can be nested — you can store objects and arrays within your metadata. (You can [read more about metadata.](https://docs.buttondown.com/metadata))
+          example:
+            source: my-app
+            tier: pro
+          title: Metadata
+          type: object
+        name:
+          description: The display name of your newsletter, shown to subscribers and on your archive page.
+          example: Sheinhardt Wig Company
+          title: Name
+          type: string
+        reply_to_address:
+          anyOf:
+          - pattern: ^[a-zA-Z0-9.'_%+\-!]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$
+            type: string
+            format: email
+          - type: 'null'
+          description: An alternative email address that receives replies to your newsletter emails, instead of the sending address.
+          example: newsletter@sheinhardt.com
+          title: Reply To Address
+        socials:
+          default: []
+          description: A list of social media accounts linked to your newsletter, displayed on your archive page. Each entry has a `type`, `url`, and optional `label`.
+          example:
+          - label: null
+            type: twitter
+            url: https://x.com/sheinhardt
+          items:
+            $ref: '#/components/schemas/SocialAccountSchema'
+          title: Socials
+          type: array
+        subscription_confirmation_redirect_url:
+          default: ''
+          description: A URL to redirect subscribers to after they confirm their subscription via double opt-in.
+          example: https://example.com/confirmed
+          title: Subscription Confirmation Redirect Url
+          type: string
+        subscription_redirect_url:
+          default: ''
+          description: A URL to redirect subscribers to immediately after they submit the subscription form (before confirmation).
+          example: https://example.com/thanks
+          title: Subscription Redirect Url
+          type: string
+        template:
+          allOf:
+          - $ref: '#/components/schemas/NewsletterEmailTemplate'
+          default: modern
+          description: The default email template for your newsletter. See [email templates](https://docs.buttondown.com/customizing-email-design#buttondowns-default-templates) for available options.
+          example: modern
+        test_mode:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          description: Whether test mode is enabled. When enabled, emails are not actually sent to subscribers, useful for testing automations and workflows.
+          title: Test Mode
+        theme_configuration:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Custom theme configuration (variables) for your newsletter. These can be referenced in your CSS and templates to maintain consistent styling.
+          example:
+            primary-color: '#0069FF'
+          title: Theme Configuration
+          type: object
+        timezone:
+          default: Etc/UTC
+          description: The timezone used for scheduling and displaying dates in your newsletter (e.g., 'America/New_York', 'Europe/London').
+          example: America/New_York
+          title: Timezone
+          type: string
+        tint_color:
+          default: '#0069FF'
+          description: The accent color for your newsletter's emails, applied to links and buttons. Your archive's accent color is set separately, by its theme. Must be a valid hex color code.
+          example: '#0069FF'
+          maxLength: 7
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+          title: Tint Color
+          type: string
+        username:
+          description: The unique URL-safe identifier for your newsletter, used in your archive URL (e.g., 'buttondown.com/username').
+          example: sheinhardt
+          title: Username
+          type: string
+        web_css:
+          default: ''
+          description: Custom CSS styling applied to your newsletter's web presence (archive pages, subscription forms, etc.).
+          example: '.container { max-width: 800px; }'
+          title: Web Css
+          type: string
+      required:
+      - description
+      - name
+      - username
+      title: NewsletterInput
+      type: object
+    SendingDomainStatus:
+      description: The DNS verification status of a newsletter's custom sending domain.
+      enum:
+      - none
+      - invalid
+      - awaiting_ssl
+      - failing
+      - deliberately_cold
+      - valid
+      title: SendingDomainStatus
+      type: string
     HostingDomainStatus:
       description: The DNS verification status of a newsletter's custom hosting domain.
       enum:
@@ -1488,143 +1480,6 @@ components:
       - valid
       title: HostingDomainStatus
       type: string
-    NewsletterAuditingMode:
-      enum:
-      - disabled
-      - enabled
-      - aggressive
-      title: AuditingMode
-      type: string
-      description: An enumeration.
-    ValidationErrorMessage:
-      properties:
-        detail:
-          description: A list of validation errors.
-          items:
-            $ref: '#/components/schemas/ValidationErrorDetail'
-          title: Detail
-          type: array
-      required:
-      - detail
-      title: ValidationErrorMessage
-      type: object
-    SocialAccountSchema:
-      additionalProperties: false
-      properties:
-        type:
-          $ref: '#/components/schemas/SocialAccountType'
-          description: The type of social media account.
-        url:
-          description: The URL of the social media profile.
-          title: Url
-          type: string
-        label:
-          anyOf:
-          - maxLength: 32
-            type: string
-          - type: 'null'
-          description: An optional display label for the social media account.
-          title: Label
-      required:
-      - type
-      - url
-      title: SocialAccountSchema
-      type: object
-    HostingDomainRecord:
-      properties:
-        domain:
-          description: The custom hosting domain being verified.
-          title: Domain
-          type: string
-        record_type:
-          description: The DNS record type the domain should use (typically `CNAME`).
-          title: Record Type
-          type: string
-        data:
-          description: The record values currently observed at the domain, if any.
-          items:
-            type: string
-          title: Data
-          type: array
-        nameservers:
-          description: The domain's nameservers, used to detect its DNS provider.
-          items:
-            type: string
-          title: Nameservers
-          type: array
-        apex_alias_provider:
-          anyOf:
-          - $ref: '#/components/schemas/ApexAliasProvider'
-          - type: 'null'
-        status:
-          $ref: '#/components/schemas/HostingDomainStatus'
-      required:
-      - domain
-      - record_type
-      - data
-      - status
-      title: HostingDomainRecord
-      type: object
-    RequirementRecord:
-      properties:
-        record_type:
-          description: The DNS record type to create (e.g. `CNAME`, `TXT`, `MX`).
-          title: Record Type
-          type: string
-        name:
-          description: The host/name the DNS record should be created at.
-          title: Name
-          type: string
-        is_valid:
-          description: Whether the record is currently present and correct in DNS.
-          title: Is Valid
-          type: boolean
-        required_value:
-          description: The value the DNS record must point to.
-          title: Required Value
-          type: string
-        current_values:
-          description: The values currently observed at this record, if any.
-          items:
-            type: string
-          title: Current Values
-          type: array
-        context:
-          description: '`manual` if the customer must create this record themselves; `managed` if Buttondown provisions it.'
-          enum:
-          - managed
-          - manual
-          title: Context
-          type: string
-      required:
-      - record_type
-      - name
-      - is_valid
-      - required_value
-      - current_values
-      - context
-      title: RequirementRecord
-      type: object
-    NewsletterAnnouncementBarVisibility:
-      enum:
-      - disabled
-      - everyone
-      - free_only
-      - logged_out_only
-      - paid_only
-      title: AnnouncementBarVisibility
-      type: string
-      description: An enumeration.
-    NewsletterArchiveTheme:
-      enum:
-      - classic
-      - modern
-      - arbus
-      - lovelace
-      - myrna
-      title: ArchiveTheme
-      type: string
-      description: An enumeration.
     ErrorMessage_CreateNewsletterErrorCode_:
       properties:
         code:
@@ -1645,6 +1500,79 @@ components:
       required:
       - detail
       title: ErrorMessage[CreateNewsletterErrorCode]
+      type: object
+    NewsletterArchiveTheme:
+      enum:
+      - classic
+      - modern
+      - arbus
+      - lovelace
+      - myrna
+      title: ArchiveTheme
+      type: string
+      description: An enumeration.
+    NewsletterAuditingMode:
+      enum:
+      - disabled
+      - enabled
+      - aggressive
+      title: AuditingMode
+      type: string
+      description: An enumeration.
+    ApexAliasProvider:
+      properties:
+        id:
+          description: Stable identifier for the DNS provider (e.g. `cloudflare`).
+          title: Id
+          type: string
+        name:
+          description: Human-readable name of the DNS provider.
+          title: Name
+          type: string
+        apex_alias_support:
+          description: How the provider supports pointing an apex/root domain at a CNAME target (e.g. CNAME flattening or ALIAS records).
+          title: Apex Alias Support
+          type: string
+        wording_kind:
+          description: Which copy variant to show for this provider's setup instructions.
+          title: Wording Kind
+          type: string
+        nameserver_regexes:
+          description: Patterns matched against a domain's nameservers to detect this provider.
+          items:
+            type: string
+          title: Nameserver Regexes
+          type: array
+        support_doc_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Link to the provider's own DNS documentation, when available.
+          title: Support Doc Url
+        side_notes:
+          description: Provider-specific caveats to surface alongside the setup guidance.
+          title: Side Notes
+          type: string
+        buttondown_guide_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: A first-party Buttondown setup guide for this provider, when one exists.
+          title: Buttondown Guide Url
+        supports_nameserver_delegation:
+          default: true
+          description: Whether the provider lets customers delegate a child zone with NS records.
+          title: Supports Nameserver Delegation
+          type: boolean
+      required:
+      - id
+      - name
+      - apex_alias_support
+      - wording_kind
+      - nameserver_regexes
+      - support_doc_url
+      - side_notes
+      title: ApexAliasProvider
       type: object
     NewsletterEmailTemplate:
       description: 'Represents the template of an email.
@@ -2015,6 +1943,78 @@ components:
       - name
       - username
       title: Newsletter
+      type: object
+    SocialAccountSchema:
+      additionalProperties: false
+      properties:
+        type:
+          $ref: '#/components/schemas/SocialAccountType'
+          description: The type of social media account.
+        url:
+          description: The URL of the social media profile.
+          title: Url
+          type: string
+        label:
+          anyOf:
+          - maxLength: 32
+            type: string
+          - type: 'null'
+          description: An optional display label for the social media account.
+          title: Label
+      required:
+      - type
+      - url
+      title: SocialAccountSchema
+      type: object
+    NewsletterAnnouncementBarVisibility:
+      enum:
+      - disabled
+      - everyone
+      - free_only
+      - logged_out_only
+      - paid_only
+      title: AnnouncementBarVisibility
+      type: string
+      description: An enumeration.
+    RequirementRecord:
+      properties:
+        record_type:
+          description: The DNS record type to create (e.g. `CNAME`, `TXT`, `MX`).
+          title: Record Type
+          type: string
+        name:
+          description: The host/name the DNS record should be created at.
+          title: Name
+          type: string
+        is_valid:
+          description: Whether the record is currently present and correct in DNS.
+          title: Is Valid
+          type: boolean
+        required_value:
+          description: The value the DNS record must point to.
+          title: Required Value
+          type: string
+        current_values:
+          description: The values currently observed at this record, if any.
+          items:
+            type: string
+          title: Current Values
+          type: array
+        context:
+          description: '`manual` if the customer must create this record themselves; `managed` if Buttondown provisions it.'
+          enum:
+          - managed
+          - manual
+          title: Context
+          type: string
+      required:
+      - record_type
+      - name
+      - is_valid
+      - required_value
+      - current_values
+      - context
+      title: RequirementRecord
       type: object
   securitySchemes:
     ApiKeyAuth:

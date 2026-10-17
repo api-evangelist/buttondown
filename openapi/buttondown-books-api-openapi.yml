@@ -389,42 +389,6 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    ValidationErrorDetail:
-      properties:
-        type:
-          description: The type of validation error.
-          title: Type
-          type: string
-        loc:
-          description: The location of the error in the request.
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Loc
-          type: array
-        msg:
-          description: A human-readable error message.
-          title: Msg
-          type: string
-      required:
-      - type
-      - loc
-      - msg
-      title: ValidationErrorDetail
-      type: object
-    ValidationErrorMessage:
-      properties:
-        detail:
-          description: A list of validation errors.
-          items:
-            $ref: '#/components/schemas/ValidationErrorDetail'
-          title: Detail
-          type: array
-      required:
-      - detail
-      title: ValidationErrorMessage
-      type: object
     Book:
       properties:
         id:
@@ -483,27 +447,6 @@ components:
       - title
       title: Book
       type: object
-    ErrorMessage:
-      properties:
-        code:
-          description: The error code.
-          title: Code
-          type: string
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage
-      type: object
     BookPage:
       properties:
         results:
@@ -532,6 +475,67 @@ components:
       - results
       - count
       title: Page[Book]
+      type: object
+    ValidationErrorMessage:
+      properties:
+        detail:
+          description: A list of validation errors.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          title: Detail
+          type: array
+      required:
+      - detail
+      title: ValidationErrorMessage
+      type: object
+    BookInput:
+      additionalProperties: false
+      properties:
+        title:
+          description: The title of the book.
+          maxLength: 500
+          minLength: 1
+          title: Title
+          type: string
+        url:
+          default: ''
+          description: The URL where the book can be purchased or viewed.
+          maxLength: 2000
+          title: Url
+          type: string
+        image_url:
+          default: ''
+          description: The URL of the book's cover image.
+          maxLength: 2000
+          title: Image Url
+          type: string
+        description:
+          default: ''
+          description: A description of the book.
+          title: Description
+          type: string
+        year:
+          anyOf:
+          - maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+          - type: 'null'
+          description: The year the book was published.
+          title: Year
+        isbn:
+          default: ''
+          description: The ISBN of the book.
+          maxLength: 20
+          title: Isbn
+          type: string
+        shared:
+          default: true
+          description: Whether the book is displayed publicly on the archive.
+          title: Shared
+          type: boolean
+      required:
+      - title
+      title: BookInput
       type: object
     BookUpdateInput:
       additionalProperties: false
@@ -586,54 +590,50 @@ components:
           title: Shared
       title: BookUpdateInput
       type: object
-    BookInput:
-      additionalProperties: false
+    ErrorMessage:
       properties:
-        title:
-          description: The title of the book.
-          maxLength: 500
-          minLength: 1
-          title: Title
+        code:
+          description: The error code.
+          title: Code
           type: string
-        url:
-          default: ''
-          description: The URL where the book can be purchased or viewed.
-          maxLength: 2000
-          title: Url
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
           type: string
-        image_url:
-          default: ''
-          description: The URL of the book's cover image.
-          maxLength: 2000
-          title: Image Url
-          type: string
-        description:
-          default: ''
-          description: A description of the book.
-          title: Description
-          type: string
-        year:
-          anyOf:
-          - maximum: 2147483647
-            minimum: -2147483648
-            type: integer
-          - type: 'null'
-          description: The year the book was published.
-          title: Year
-        isbn:
-          default: ''
-          description: The ISBN of the book.
-          maxLength: 20
-          title: Isbn
-          type: string
-        shared:
-          default: true
-          description: Whether the book is displayed publicly on the archive.
-          title: Shared
-          type: boolean
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
       required:
-      - title
-      title: BookInput
+      - detail
+      title: ErrorMessage
+      type: object
+    ValidationErrorDetail:
+      properties:
+        type:
+          description: The type of validation error.
+          title: Type
+          type: string
+        loc:
+          description: The location of the error in the request.
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Loc
+          type: array
+        msg:
+          description: A human-readable error message.
+          title: Msg
+          type: string
+      required:
+      - type
+      - loc
+      - msg
+      title: ValidationErrorDetail
       type: object
   securitySchemes:
     ApiKeyAuth:

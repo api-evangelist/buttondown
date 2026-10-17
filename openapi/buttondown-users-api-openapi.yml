@@ -383,22 +383,6 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    AccessLevel:
-      enum:
-      - none
-      - read
-      - write
-      title: AccessLevel
-      type: string
-      description: An enumeration.
-    UserUpdateInput:
-      properties:
-        permissions:
-          $ref: '#/components/schemas/Permissions'
-      required:
-      - permissions
-      title: UserUpdateInput
-      type: object
     Permissions:
       properties:
         subscriber:
@@ -464,43 +448,6 @@ components:
       - detail
       title: ErrorMessage[Failure]
       type: object
-    InvitationStatus:
-      type: string
-      enum:
-      - pending
-      - accepted
-      - declined
-      - revoked
-      - owner
-      title: InvitationStatus
-      description: An enumeration.
-    Failure:
-      enum:
-      - email_already_exists
-      title: Failure
-      type: string
-      description: An enumeration.
-    ErrorMessage:
-      properties:
-        code:
-          description: The error code.
-          title: Code
-          type: string
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage
-      type: object
     UserPage:
       properties:
         results:
@@ -529,6 +476,19 @@ components:
       - results
       - count
       title: Page[User]
+      type: object
+    UserInput:
+      properties:
+        permissions:
+          $ref: '#/components/schemas/Permissions'
+        email_address:
+          description: The email address of the user.
+          title: Email Address
+          type: string
+      required:
+      - permissions
+      - email_address
+      title: UserInput
       type: object
     User:
       properties:
@@ -565,18 +525,58 @@ components:
       - status
       title: User
       type: object
-    UserInput:
+    AccessLevel:
+      enum:
+      - none
+      - read
+      - write
+      title: AccessLevel
+      type: string
+      description: An enumeration.
+    InvitationStatus:
+      type: string
+      enum:
+      - pending
+      - accepted
+      - declined
+      - revoked
+      - owner
+      title: InvitationStatus
+      description: An enumeration.
+    Failure:
+      enum:
+      - email_already_exists
+      title: Failure
+      type: string
+      description: An enumeration.
+    UserUpdateInput:
       properties:
         permissions:
           $ref: '#/components/schemas/Permissions'
-        email_address:
-          description: The email address of the user.
-          title: Email Address
-          type: string
       required:
       - permissions
-      - email_address
-      title: UserInput
+      title: UserUpdateInput
+      type: object
+    ErrorMessage:
+      properties:
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage
       type: object
   securitySchemes:
     ApiKeyAuth:

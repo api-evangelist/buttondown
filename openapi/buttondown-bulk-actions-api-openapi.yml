@@ -151,43 +151,6 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    BulkActionStatus:
-      type: string
-      enum:
-      - not_started
-      - in_progress
-      - processed
-      - failed
-      title: BulkActionStatus
-      description: 'Represents the status of a bulk action.
-
-
-        No action is required to move from one state or another; Buttondown
-
-        internally handles the transitions, and exposing the status is for
-
-        observability purposes only.'
-    ErrorMessage:
-      properties:
-        code:
-          description: The error code.
-          title: Code
-          type: string
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
-          type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
-      required:
-      - detail
-      title: ErrorMessage
-      type: object
     BulkActionType:
       type: string
       enum:
@@ -322,6 +285,43 @@ components:
       - metadata
       - status
       title: BulkAction
+      type: object
+    BulkActionStatus:
+      type: string
+      enum:
+      - not_started
+      - in_progress
+      - processed
+      - failed
+      title: BulkActionStatus
+      description: 'Represents the status of a bulk action.
+
+
+        No action is required to move from one state or another; Buttondown
+
+        internally handles the transitions, and exposing the status is for
+
+        observability purposes only.'
+    ErrorMessage:
+      properties:
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
+      required:
+      - detail
+      title: ErrorMessage
       type: object
   securitySchemes:
     ApiKeyAuth:

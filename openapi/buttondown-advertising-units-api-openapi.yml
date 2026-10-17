@@ -438,76 +438,14 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    AdvertisingUnitUpdateInput:
-      properties:
-        title:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The title of the advertising unit.
-          title: Title
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: A description of the advertising unit.
-          title: Description
-        dates:
-          description: The dates for this advertising unit's slots.
-          items:
-            type: string
-          title: Dates
-          type: array
-        behavior:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The behavior type of the advertising unit.
-          title: Behavior
-        url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL for the advertising unit's landing page.
-          title: Url
-        price:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          description: The price in the smallest currency unit.
-          title: Price
-        allows_html:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          description: Whether the advertising unit accepts HTML content.
-          title: Allows Html
-        allows_image:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          description: Whether the advertising unit accepts an image.
-          title: Allows Image
-        max_characters:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          description: Maximum number of characters allowed for the ad content.
-          title: Max Characters
-        submission_deadline_days:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          description: Number of days before the slot date that content must be submitted.
-          title: Submission Deadline Days
-      required:
-      - dates
-      title: AdvertisingUnitUpdateInput
-      type: object
-    AdvertisingSKUStatus:
+    AdvertisingSlotStatus:
       enum:
-      - active
-      - inactive
+      - expired
+      - executed
+      - finalized
+      - held
+      - open
+      - sold
       title: Status
       type: string
       description: An enumeration.
@@ -575,37 +513,256 @@ components:
           title: Status
       title: AdvertisingSlotUpdateInput
       type: object
-    AdvertisingSlotStatus:
-      enum:
-      - expired
-      - executed
-      - finalized
-      - held
-      - open
-      - sold
-      title: Status
-      type: string
-      description: An enumeration.
-    ErrorMessage:
+    AdvertisingUnit:
       properties:
-        code:
-          description: The error code.
-          title: Code
+        id:
+          description: A unique TypeID associated with the object.
+          title: Id
           type: string
-        detail:
-          description: A human-readable description of the error.
-          title: Detail
+        creation_date:
+          description: The date and time at which the object was first created.
+          format: date-time
+          title: Creation Date
           type: string
-        metadata:
-          additionalProperties:
-            type: string
-          default: {}
-          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
-          title: Metadata
-          type: object
+        status:
+          $ref: '#/components/schemas/AdvertisingSKUStatus'
+          description: The current status of the advertising unit.
+        slots:
+          description: The list of advertising slots for this unit.
+          items:
+            $ref: '#/components/schemas/AdvertisingSlot'
+          title: Slots
+          type: array
+        title:
+          description: The title of the advertising unit.
+          title: Title
+          type: string
+        description:
+          description: A description of the advertising unit.
+          title: Description
+          type: string
+        behavior:
+          description: The behavior type of the advertising unit.
+          title: Behavior
+          type: string
+        url:
+          description: The URL for the advertising unit's landing page.
+          title: Url
+          type: string
+        price:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: The price in the smallest currency unit, or null if not set.
+          title: Price
+        allows_html:
+          description: Whether the advertising unit accepts HTML content.
+          title: Allows Html
+          type: boolean
+        allows_image:
+          description: Whether the advertising unit accepts an image.
+          title: Allows Image
+          type: boolean
+        max_characters:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: Maximum number of characters allowed for the ad content.
+          title: Max Characters
+        submission_deadline_days:
+          description: Number of days before the slot date that content must be submitted.
+          title: Submission Deadline Days
+          type: integer
       required:
-      - detail
-      title: ErrorMessage
+      - id
+      - creation_date
+      - status
+      - slots
+      - title
+      - description
+      - behavior
+      - url
+      - allows_html
+      - allows_image
+      - submission_deadline_days
+      title: AdvertisingUnit
+      type: object
+    AdvertisingSlotPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/AdvertisingSlot'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[AdvertisingSlot]
+      type: object
+    AdvertisingUnitPage:
+      properties:
+        results:
+          description: The list of results for this page.
+          items:
+            $ref: '#/components/schemas/AdvertisingUnit'
+          title: Results
+          type: array
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the next page of results, if any.
+          title: Next
+        previous:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL to the previous page of results, if any.
+          title: Previous
+        count:
+          description: The total number of results across all pages.
+          title: Count
+          type: integer
+      required:
+      - results
+      - count
+      title: Page[AdvertisingUnit]
+      type: object
+    AdvertisingUnitInput:
+      properties:
+        title:
+          description: The title of the advertising unit.
+          maxLength: 100
+          title: Title
+          type: string
+        description:
+          default: ''
+          description: A description of the advertising unit.
+          title: Description
+          type: string
+        behavior:
+          default: ''
+          description: The behavior type of the advertising unit.
+          title: Behavior
+          type: string
+        url:
+          default: ''
+          description: The URL for the advertising unit's landing page.
+          title: Url
+          type: string
+        price:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: The price in the smallest currency unit.
+          title: Price
+        allows_html:
+          default: false
+          description: Whether the advertising unit accepts HTML content.
+          title: Allows Html
+          type: boolean
+        allows_image:
+          default: false
+          description: Whether the advertising unit accepts an image.
+          title: Allows Image
+          type: boolean
+        max_characters:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: Maximum number of characters allowed for the ad content.
+          title: Max Characters
+        submission_deadline_days:
+          default: 3
+          description: Number of days before the slot date that content must be submitted.
+          title: Submission Deadline Days
+          type: integer
+      required:
+      - title
+      title: AdvertisingUnitInput
+      type: object
+    AdvertisingUnitUpdateInput:
+      properties:
+        title:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The title of the advertising unit.
+          title: Title
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: A description of the advertising unit.
+          title: Description
+        dates:
+          description: The dates for this advertising unit's slots.
+          items:
+            type: string
+          title: Dates
+          type: array
+        behavior:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The behavior type of the advertising unit.
+          title: Behavior
+        url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The URL for the advertising unit's landing page.
+          title: Url
+        price:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: The price in the smallest currency unit.
+          title: Price
+        allows_html:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          description: Whether the advertising unit accepts HTML content.
+          title: Allows Html
+        allows_image:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          description: Whether the advertising unit accepts an image.
+          title: Allows Image
+        max_characters:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: Maximum number of characters allowed for the ad content.
+          title: Max Characters
+        submission_deadline_days:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: Number of days before the slot date that content must be submitted.
+          title: Submission Deadline Days
+      required:
+      - dates
+      title: AdvertisingUnitUpdateInput
       type: object
     AdvertisingSlot:
       properties:
@@ -711,191 +868,34 @@ components:
       - inquiry_message
       title: AdvertisingSlot
       type: object
-    AdvertisingUnitPage:
+    ErrorMessage:
       properties:
-        results:
-          description: The list of results for this page.
-          items:
-            $ref: '#/components/schemas/AdvertisingUnit'
-          title: Results
-          type: array
-        next:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the next page of results, if any.
-          title: Next
-        previous:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the previous page of results, if any.
-          title: Previous
-        count:
-          description: The total number of results across all pages.
-          title: Count
-          type: integer
+        code:
+          description: The error code.
+          title: Code
+          type: string
+        detail:
+          description: A human-readable description of the error.
+          title: Detail
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          default: {}
+          description: Additional context about the error. When present, a `documentation_url` key links to docs explaining how to resolve it.
+          title: Metadata
+          type: object
       required:
-      - results
-      - count
-      title: Page[AdvertisingUnit]
+      - detail
+      title: ErrorMessage
       type: object
-    AdvertisingUnitInput:
-      properties:
-        title:
-          description: The title of the advertising unit.
-          maxLength: 100
-          title: Title
-          type: string
-        description:
-          default: ''
-          description: A description of the advertising unit.
-          title: Description
-          type: string
-        behavior:
-          default: ''
-          description: The behavior type of the advertising unit.
-          title: Behavior
-          type: string
-        url:
-          default: ''
-          description: The URL for the advertising unit's landing page.
-          title: Url
-          type: string
-        price:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          description: The price in the smallest currency unit.
-          title: Price
-        allows_html:
-          default: false
-          description: Whether the advertising unit accepts HTML content.
-          title: Allows Html
-          type: boolean
-        allows_image:
-          default: false
-          description: Whether the advertising unit accepts an image.
-          title: Allows Image
-          type: boolean
-        max_characters:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          description: Maximum number of characters allowed for the ad content.
-          title: Max Characters
-        submission_deadline_days:
-          default: 3
-          description: Number of days before the slot date that content must be submitted.
-          title: Submission Deadline Days
-          type: integer
-      required:
-      - title
-      title: AdvertisingUnitInput
-      type: object
-    AdvertisingSlotPage:
-      properties:
-        results:
-          description: The list of results for this page.
-          items:
-            $ref: '#/components/schemas/AdvertisingSlot'
-          title: Results
-          type: array
-        next:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the next page of results, if any.
-          title: Next
-        previous:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The URL to the previous page of results, if any.
-          title: Previous
-        count:
-          description: The total number of results across all pages.
-          title: Count
-          type: integer
-      required:
-      - results
-      - count
-      title: Page[AdvertisingSlot]
-      type: object
-    AdvertisingUnit:
-      properties:
-        id:
-          description: A unique TypeID associated with the object.
-          title: Id
-          type: string
-        creation_date:
-          description: The date and time at which the object was first created.
-          format: date-time
-          title: Creation Date
-          type: string
-        status:
-          $ref: '#/components/schemas/AdvertisingSKUStatus'
-          description: The current status of the advertising unit.
-        slots:
-          description: The list of advertising slots for this unit.
-          items:
-            $ref: '#/components/schemas/AdvertisingSlot'
-          title: Slots
-          type: array
-        title:
-          description: The title of the advertising unit.
-          title: Title
-          type: string
-        description:
-          description: A description of the advertising unit.
-          title: Description
-          type: string
-        behavior:
-          description: The behavior type of the advertising unit.
-          title: Behavior
-          type: string
-        url:
-          description: The URL for the advertising unit's landing page.
-          title: Url
-          type: string
-        price:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          description: The price in the smallest currency unit, or null if not set.
-          title: Price
-        allows_html:
-          description: Whether the advertising unit accepts HTML content.
-          title: Allows Html
-          type: boolean
-        allows_image:
-          description: Whether the advertising unit accepts an image.
-          title: Allows Image
-          type: boolean
-        max_characters:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          description: Maximum number of characters allowed for the ad content.
-          title: Max Characters
-        submission_deadline_days:
-          description: Number of days before the slot date that content must be submitted.
-          title: Submission Deadline Days
-          type: integer
-      required:
-      - id
-      - creation_date
-      - status
-      - slots
-      - title
-      - description
-      - behavior
-      - url
-      - allows_html
-      - allows_image
-      - submission_deadline_days
-      title: AdvertisingUnit
-      type: object
+    AdvertisingSKUStatus:
+      enum:
+      - active
+      - inactive
+      title: Status
+      type: string
+      description: An enumeration.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
