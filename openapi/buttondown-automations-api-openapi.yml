@@ -1410,3 +1410,9 @@ components:
       in: header
       name: Authorization
       description: API key passed as 'Token <your-api-key>' in the Authorization header.
+x-provenance:
+  method: harvested
+  publisher: Buttondown
+  source: https://docs.buttondown.com/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
