@@ -1,4 +1,4 @@
-# Buttondown (buttondown)
+# Buttondown
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,91 +64,234 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Buttondown is an independent email newsletter platform for creators and businesses, offering a markdown editor, automations, paid subscriptions, analytics, team collaboration, and a feature-complete REST API for programmatic management of subscribers, emails, newsletters, and related resources.
+Buttondown is an independent, bootstrapped email newsletter platform for writers, creators and developers, offering a Markdown and rich-text editor, subscriber management with tags, segments and metadata, automations, RSS-to-email, surveys, comments, paid subscriptions via Stripe with no revenue share, custom sending and hosting domains, and hosted archives. Its public REST API covers 133 operations across 29 resource areas — subscribers, emails, tags, segments, automations, webhooks, imports, exports, surveys, forms, images, snippets, prices and more — described by a live OpenAPI 3.1 document, backed by an 82-event webhook catalog, a date-based version train, idempotency keys, and a first-party CLI for syncing newsletter content to a local folder.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/buttondown/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/buttondown/refs/heads/main/apis.yml)
+**Areas:** Analytics · Automation · Email · Markdown · Newsletters · Paid Subscriptions · Software-as-a-Service · Subscribers · Webhook · Segmentation · Developer Tools · Marketing
 
-## Scope
+## Buttondown on APIs.io
 
-- **Type:** Index
-- **Position:** Consumer
-- **Access:** 3rd-Party
+Everything profiled for Buttondown is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/buttondown/](https://apis.io/providers/buttondown/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (31)
 
-- Analytics
-- Automations
-- Email
-- Markdown
-- Newsletters
-- Paid Subscriptions
-- SaaS
-- Subscribers
+- [Buttondown Accounts API](https://apis.io/apis/buttondown/buttondown-accounts-api/) — The Accounts API from Buttondown — 1 operation(s) covering the authenticated account and its plan/feature state.
+- [Buttondown Advertising Units API](https://apis.io/apis/buttondown/buttondown-advertising-units-api/) — The Advertising Units API from Buttondown — 6 operation(s) covering newsletter sponsorship inventory — advertising units and the slots sold against them.
+- [Buttondown API Requests API](https://apis.io/apis/buttondown/buttondown-api-requests-api/) — The API Requests API from Buttondown — 2 operation(s) covering the account's own API request log, including retained response bodies for idempotent requests.
+- [Buttondown Attachments API](https://apis.io/apis/buttondown/buttondown-attachments-api/) — The Attachments API from Buttondown — 4 operation(s) covering files attached to emails and inbox replies.
+- [Buttondown Automations API](https://apis.io/apis/buttondown/buttondown-automations-api/) — The Automations API from Buttondown — 7 operation(s) covering triggered and scheduled email sequences, their actions, timing and analytics.
+- [Buttondown Books API](https://apis.io/apis/buttondown/buttondown-books-api/) — The Books API from Buttondown — 5 operation(s) covering the Bookshop.org book catalog embedded in newsletters.
+- [Buttondown Bulk Actions API](https://apis.io/apis/buttondown/buttondown-bulk-actions-api/) — The Bulk Actions API from Buttondown — 2 operation(s) covering asynchronous mass operations over existing records.
+- [Buttondown Comments API](https://apis.io/apis/buttondown/buttondown-comments-api/) — The Comments API from Buttondown — 5 operation(s) covering subscriber comments on emails, and their moderation state.
+- [Buttondown Coupons API](https://apis.io/apis/buttondown/buttondown-coupons-api/) — The Coupons API from Buttondown — 1 operation(s) covering Stripe coupons available to a paid newsletter.
+- [Buttondown Emails API](https://apis.io/apis/buttondown/buttondown-emails-api/) — The Emails API from Buttondown — 11 operation(s) covering drafting, scheduling, publishing, rendering and analyzing newsletter emails.
+- [Buttondown Events API](https://apis.io/apis/buttondown/buttondown-events-api/) — The Events API from Buttondown — 2 operation(s) covering the unified event store that also powers webhooks.
+- [Buttondown Exports API](https://apis.io/apis/buttondown/buttondown-exports-api/) — The Exports API from Buttondown — 3 operation(s) covering data exports of subscribers, emails and events.
+- [Buttondown External Feeds API](https://apis.io/apis/buttondown/buttondown-external-feeds-api/) — The External Feeds API from Buttondown — 7 operation(s) covering RSS-to-email feeds, their polling cadence and the items they produce.
+- [Buttondown Forms API](https://apis.io/apis/buttondown/buttondown-forms-api/) — The Forms API from Buttondown — 5 operation(s) covering hosted and embeddable subscription forms.
+- [Buttondown Images API](https://apis.io/apis/buttondown/buttondown-images-api/) — The Images API from Buttondown — 4 operation(s) covering images hosted for use in emails and archives.
+- [Buttondown Imports API](https://apis.io/apis/buttondown/buttondown-imports-api/) — The Imports API from Buttondown — 5 operation(s) covering bulk subscriber imports — the supported path for adding subscribers at volume.
+- [Buttondown Newsletters API](https://apis.io/apis/buttondown/buttondown-newsletters-api/) — The Newsletters API from Buttondown — 7 operation(s) covering newsletter settings, branding, locale, and custom sending/hosting domain verification.
+- [Buttondown Notes API](https://apis.io/apis/buttondown/buttondown-notes-api/) — The Notes API from Buttondown — 3 operation(s) covering internal notes attached to subscribers and team members.
+- [Buttondown Ping API](https://apis.io/apis/buttondown/buttondown-ping-api/) — The Ping API from Buttondown — 1 operation(s) covering a connectivity and credential health check.
+- [Buttondown Prices API](https://apis.io/apis/buttondown/buttondown-prices-api/) — The Prices API from Buttondown — 3 operation(s) covering paid-subscription pricing and products.
+- [Buttondown Public API](https://apis.io/apis/buttondown/buttondown-public-api/) — The Public API from Buttondown — 1 operation(s) covering the unauthenticated public archive search.
+- [Buttondown Segments API](https://apis.io/apis/buttondown/buttondown-segments-api/) — The Segments API from Buttondown — 5 operation(s) covering saved, reusable audiences built from tag and metadata filters.
+- [Buttondown Snippets API](https://apis.io/apis/buttondown/buttondown-snippets-api/) — The Snippets API from Buttondown — 5 operation(s) covering reusable content snippets referenced from emails.
+- [Buttondown Subscribers API](https://apis.io/apis/buttondown/buttondown-subscribers-api/) — The Subscribers API from Buttondown — 12 operation(s) covering subscriber lifecycle — creation, updates, tags, referrals, automations and Stripe subscriptions.
+- [Buttondown Survey Responses API](https://apis.io/apis/buttondown/buttondown-survey-responses-api/) — The Survey Responses API from Buttondown — 3 operation(s) covering responses collected from newsletter surveys.
+- [Buttondown Surveys API](https://apis.io/apis/buttondown/buttondown-surveys-api/) — The Surveys API from Buttondown — 5 operation(s) covering surveys embedded in emails and on the archive.
+- [Buttondown Tags API](https://apis.io/apis/buttondown/buttondown-tags-api/) — The Tags API from Buttondown — 6 operation(s) covering subscriber tags and their analytics.
+- [Buttondown Users API](https://apis.io/apis/buttondown/buttondown-users-api/) — The Users API from Buttondown — 5 operation(s) covering team members on the account and their permissions.
+- [Buttondown Webhooks API](https://apis.io/apis/buttondown/buttondown-webhooks-api/) — The Webhooks API from Buttondown — 7 operation(s) covering webhook registration, delivery attempts, and test fires.
+- [Buttondown Newsletter Platform](https://apis.io/apis/buttondown/newsletter-platform/) — The Buttondown hosted newsletter platform provides a markdown-based composition experience, subscriber management, delivery infrastructure, analytics,…
+- [Buttondown Buttondown API](https://apis.io/apis/buttondown/buttondown-buttondown-api-api/) — The Buttondown API API from Buttondown — 0 operation(s) for buttondown api.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-04-23
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### AsyncAPI (1)
 
-### Buttondown API
+Event-driven and webhook contracts.
 
-The Buttondown API is a RESTful HTTP API that enables programmatic management of newsletters, subscribers, emails, drafts, tags, automations, surveys, and webhooks. Authentication is via API keys issued in the Buttondown dashboard, and the API powers both first-party and third-party tooling on the platform.
+- [Buttondown Webhooks](https://apis.io/asyncapis/buttondown/buttondown-webhooks/)
 
-- **Human URL:** [https://docs.buttondown.com/api](https://docs.buttondown.com/api)
-- **Base URL:** `https://api.buttondown.email/v1`
+#### MCP servers (1)
 
-#### Tags
+Model Context Protocol servers that expose the API to agents.
 
-- Email
-- Newsletters
-- REST
-- Subscribers
+- [buttondown-mcp.yml](https://apis.io/servers/buttondown/buttondown-mcp-yml/)
 
-#### Properties
+#### Agentic access (1)
 
-- [Documentation](https://docs.buttondown.com/api)
-- [Developer  Portal](https://docs.buttondown.com/)
-- [A P I  Keys](https://buttondown.com/requests)
-- [Changelog](https://docs.buttondown.com/changelog)
-- [Status Page](https://buttondown.statuspage.io/)
-- [OpenAPI](openapi/buttondown-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/buttondown.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/buttondown.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Which operations an agent can call, which act, and which need a human in the loop.
 
+- [Buttondown Agentic Access](https://apis.io/agentic-access/buttondown/buttondown-agentic-access/)
 
-#### Tags
+#### Examples (2)
 
-- Analytics
-- Email
-- Markdown
-- Newsletters
-- SaaS
+Example requests and responses.
 
-#### Properties
+- [Buttondown Enums](https://apis.io/examples/buttondown/buttondown-enums/)
+- [Buttondown Fixtures](https://apis.io/examples/buttondown/buttondown-fixtures/)
 
-- [Website](https://buttondown.com/)
-- [Features](https://buttondown.com/features)
-- [Integrations](https://buttondown.com/features/integrations)
-- [Pricing](https://buttondown.com/pricing)
-- [Postman Collection](collections/buttondown.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/buttondown.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Collections (30)
 
-## Common Properties
+Postman and Open Collection request collections.
 
-- [GitHub Organization](https://github.com/buttondown)
-- [LinkedIn](https://www.linkedin.com/company/buttondown)
+- [Buttondown API](https://apis.io/collections/buttondown/open-buttondown/)
+- [Buttondown Accounts API](https://apis.io/collections/buttondown/open-buttondown-accounts-api/)
+- [Buttondown Advertising Units API](https://apis.io/collections/buttondown/open-buttondown-advertising-units-api/)
+- [Buttondown API Requests API](https://apis.io/collections/buttondown/open-buttondown-api-requests-api/)
+- [Buttondown Attachments API](https://apis.io/collections/buttondown/open-buttondown-attachments-api/)
+- [Buttondown Automations API](https://apis.io/collections/buttondown/open-buttondown-automations-api/)
+- [Buttondown Books API](https://apis.io/collections/buttondown/open-buttondown-books-api/)
+- [Buttondown Bulk Actions API](https://apis.io/collections/buttondown/open-buttondown-bulk-actions-api/)
+- [Buttondown Comments API](https://apis.io/collections/buttondown/open-buttondown-comments-api/)
+- [Buttondown Coupons API](https://apis.io/collections/buttondown/open-buttondown-coupons-api/)
+- [Buttondown Emails API](https://apis.io/collections/buttondown/open-buttondown-emails-api/)
+- [Buttondown Events API](https://apis.io/collections/buttondown/open-buttondown-events-api/)
+- [Buttondown Exports API](https://apis.io/collections/buttondown/open-buttondown-exports-api/)
+- [Buttondown External Feeds API](https://apis.io/collections/buttondown/open-buttondown-external-feeds-api/)
+- [Buttondown Forms API](https://apis.io/collections/buttondown/open-buttondown-forms-api/)
+- [Buttondown Images API](https://apis.io/collections/buttondown/open-buttondown-images-api/)
+- [Buttondown Imports API](https://apis.io/collections/buttondown/open-buttondown-imports-api/)
+- [Buttondown Newsletters API](https://apis.io/collections/buttondown/open-buttondown-newsletters-api/)
+- [Buttondown Notes API](https://apis.io/collections/buttondown/open-buttondown-notes-api/)
+- [Buttondown Ping API](https://apis.io/collections/buttondown/open-buttondown-ping-api/)
+- [Buttondown Prices API](https://apis.io/collections/buttondown/open-buttondown-prices-api/)
+- [Buttondown public API](https://apis.io/collections/buttondown/open-buttondown-public-api/)
+- [Buttondown Segments API](https://apis.io/collections/buttondown/open-buttondown-segments-api/)
+- [Buttondown Snippets API](https://apis.io/collections/buttondown/open-buttondown-snippets-api/)
+- [Buttondown Subscribers API](https://apis.io/collections/buttondown/open-buttondown-subscribers-api/)
+- …and 5 more published on APIs.io
+
+#### Overlays (29)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Buttondown Accounts Overlay](https://apis.io/overlays/buttondown/buttondown-accounts-overlay/)
+- [Buttondown Advertising Units Overlay](https://apis.io/overlays/buttondown/buttondown-advertising-units-overlay/)
+- [Buttondown Api Requests Overlay](https://apis.io/overlays/buttondown/buttondown-api-requests-overlay/)
+- [Buttondown Attachments Overlay](https://apis.io/overlays/buttondown/buttondown-attachments-overlay/)
+- [Buttondown Automations Overlay](https://apis.io/overlays/buttondown/buttondown-automations-overlay/)
+- [Buttondown Books Overlay](https://apis.io/overlays/buttondown/buttondown-books-overlay/)
+- [Buttondown Bulk Actions Overlay](https://apis.io/overlays/buttondown/buttondown-bulk-actions-overlay/)
+- [Buttondown Comments Overlay](https://apis.io/overlays/buttondown/buttondown-comments-overlay/)
+- [Buttondown Coupons Overlay](https://apis.io/overlays/buttondown/buttondown-coupons-overlay/)
+- [Buttondown Emails Overlay](https://apis.io/overlays/buttondown/buttondown-emails-overlay/)
+- [Buttondown Events Overlay](https://apis.io/overlays/buttondown/buttondown-events-overlay/)
+- [Buttondown Exports Overlay](https://apis.io/overlays/buttondown/buttondown-exports-overlay/)
+- [Buttondown External Feeds Overlay](https://apis.io/overlays/buttondown/buttondown-external-feeds-overlay/)
+- [Buttondown Forms Overlay](https://apis.io/overlays/buttondown/buttondown-forms-overlay/)
+- [Buttondown Images Overlay](https://apis.io/overlays/buttondown/buttondown-images-overlay/)
+- [Buttondown Imports Overlay](https://apis.io/overlays/buttondown/buttondown-imports-overlay/)
+- [Buttondown Newsletters Overlay](https://apis.io/overlays/buttondown/buttondown-newsletters-overlay/)
+- [Buttondown Notes Overlay](https://apis.io/overlays/buttondown/buttondown-notes-overlay/)
+- [Buttondown Ping Overlay](https://apis.io/overlays/buttondown/buttondown-ping-overlay/)
+- [Buttondown Prices Overlay](https://apis.io/overlays/buttondown/buttondown-prices-overlay/)
+- [Buttondown Public Overlay](https://apis.io/overlays/buttondown/buttondown-public-overlay/)
+- [Buttondown Segments Overlay](https://apis.io/overlays/buttondown/buttondown-segments-overlay/)
+- [Buttondown Snippets Overlay](https://apis.io/overlays/buttondown/buttondown-snippets-overlay/)
+- [Buttondown Subscribers Overlay](https://apis.io/overlays/buttondown/buttondown-subscribers-overlay/)
+- [Buttondown Survey Responses Overlay](https://apis.io/overlays/buttondown/buttondown-survey-responses-overlay/)
+- …and 4 more published on APIs.io
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Buttondown Authentication](https://apis.io/security/buttondown/buttondown-authentication/)
+- [Buttondown Domain Security](https://apis.io/security/buttondown/buttondown-domain-security/)
+- [Buttondown Vulnerability Disclosure](https://apis.io/security/buttondown/buttondown-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Buttondown Plans Pricing](https://apis.io/plans/buttondown/buttondown-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Buttondown Rate Limits](https://apis.io/rate-limits/buttondown/buttondown-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Buttondown Finops](https://apis.io/finops/buttondown/buttondown-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://buttondown.com/)
 - [Documentation](https://docs.buttondown.com/)
+- [Getting started](https://docs.buttondown.com/quickstart)
+- [API reference](https://docs.buttondown.com/api-introduction)
 - [Pricing](https://buttondown.com/pricing)
+- [Sign up](https://buttondown.com/register)
+- [Support](https://buttondown.com/support)
 - [Blog](https://buttondown.com/blog)
-- [Status Page](https://buttondown.statuspage.io/)
-- [Changelog](https://docs.buttondown.com/changelog)
-- [Support](mailto:support@buttondown.email)
-- [L L Ms Txt](https://docs.buttondown.com/llms.txt)
+- [Security](https://buttondown.com/blog/security)
+- [Terms of service](https://buttondown.com/legal/terms)
+- [Privacy policy](https://buttondown.com/legal/privacy)
+- [GitHub](https://github.com/buttondown)
+- [Status](https://status.buttondown.com)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 62.9** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 64.3 |
+| Contract quality | 64.4 |
+| Contract governance | 4.5 |
+| Operational transparency | 92.1 |
+| Developer ergonomics | 73.2 |
+| Access clarity | 65.8 |
+
+**Agent readiness 42.3** — agent-native
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | documented (partial credit) |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | verified |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | paginated |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 25.8** — Telecommunications
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/buttondown/](https://apis.io/providers/buttondown/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Buttondown: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/buttondown/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
