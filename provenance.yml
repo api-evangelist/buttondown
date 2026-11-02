@@ -227,10 +227,13 @@ artifacts:
   front-door-ai/2026-09-17.yml:
     method: unknown
     evidence: no authorship recorded
+  heartbeat/2026-11-02.yml:
+    method: unknown
+    evidence: no authorship recorded
   kin/checks-2026-10-23T222754.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
-  kin/checks-2026-10-31T095417.yml:
+  kin/checks-2026-11-02T082323.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-23T000603.yml:
@@ -285,6 +288,15 @@ artifacts:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-10-31T095417.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-01T171331.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-01T200237.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-02T082323.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   lifecycle/buttondown-lifecycle.yml:
@@ -480,6 +492,9 @@ artifacts:
   packages/buttondown-packages.yml:
     method: searched
     evidence: declared in the artifact
+  patterns/buttondown-patterns.yml:
+    method: derived
+    evidence: declared in the artifact
   plans/buttondown-plans-pricing.yml:
     method: searched
     evidence: declared in the artifact
@@ -488,6 +503,9 @@ artifacts:
     evidence: no authorship recorded
   rate-limits/buttondown-rate-limits.yml:
     method: searched
+    evidence: declared in the artifact
+  rules/buttondown-rules.yml:
+    method: generated
     evidence: declared in the artifact
   sandbox/buttondown-sandbox.yml:
     method: searched
@@ -512,6 +530,9 @@ artifacts:
     evidence: declared in the artifact
   skills/buttondown-subscribe-and-tag.md:
     method: generated
+    evidence: declared in the artifact
+  sla/buttondown-sla.yml:
+    method: searched
     evidence: declared in the artifact
   well-known/buttondown-security.txt:
     method: unknown
