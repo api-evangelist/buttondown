@@ -1,0 +1,218 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-28'
+method: searched
+source: https://buttondown.com/pricing
+sources:
+- https://buttondown.com/pricing
+provenance:
+  tool: engine/economics/harvest_pricing.py
+  run: 20261028T141238
+  grounding: every price_text was found verbatim in the fetched page text
+audience: business-product
+pricing_basis: usage-other
+delivery:
+  delivery: managed
+  method: page
+  read: '2026-10-28'
+published: true
+note: Pricing is driven by a subscriber-count slider; only the free first-100-subscribers price and add-on
+  prices appear as text. 50% non-profit discount mentioned; usage-based pricing negotiated for higher
+  send volumes.
+plan_count: 13
+currency: USD
+plans:
+- name: Base (first 100 subscribers)
+  price_text: Absolutely nothing for your first 100 subscribers.
+  currency: USD
+  period: month
+  unit: subscribers
+  included_quota: Rich text or markdown editor, Send from a custom domain, Hosted newsletter archives,
+    Privacy-first
+  overage: Price scales with number of subscribers (calculator)
+- name: Tagging & segmentation add-on
+  price_text: +$ 9 /month
+  price: 9
+  currency: USD
+  period: month
+  unit: add-on
+- name: Paid subscriptions add-on
+  price_text: +$ 9 /month
+  price: 9
+  currency: USD
+  period: month
+  unit: add-on
+- name: Comments and surveys add-on
+  price_text: +$ 9 /month
+  price: 9
+  currency: USD
+  period: month
+  unit: add-on
+- name: Analytics add-on
+  price_text: +$ 9 /month
+  price: 9
+  currency: USD
+  period: month
+  unit: add-on
+- name: RSS-to-email support add-on
+  price_text: +$ 9 /month
+  price: 9
+  currency: USD
+  period: month
+  unit: add-on
+- name: Email attachments add-on
+  price_text: +$ 9 /month
+  price: 9
+  currency: USD
+  period: month
+  unit: add-on
+- name: Sponsorships add-on
+  price_text: +$ 29 /month
+  price: 29
+  currency: USD
+  period: month
+  unit: add-on
+- name: Archives on a custom domain add-on
+  price_text: +$ 29 /month
+  price: 29
+  currency: USD
+  period: month
+  unit: add-on
+- name: Multiple newsletters add-on
+  price_text: +$ 29 /month
+  price: 29
+  currency: USD
+  period: month
+  unit: add-on
+- name: Automations add-on
+  price_text: +$ 29 /month
+  price: 29
+  currency: USD
+  period: month
+  unit: add-on
+- name: Whitelabeling add-on
+  price_text: +$ 79 /month
+  price: 79
+  currency: USD
+  period: month
+  unit: add-on
+- name: Teams add-on
+  price_text: +$ 79 /month
+  price: 79
+  currency: USD
+  period: month
+  unit: add-on
+rate_limit_statements:
+- All of these prices assume that you're sending at most one email a day to your entire subscriber base.
+x-canonical:
+  generated: '2026-11-01'
+  vocabulary: engine/economics/plans-canonical.yml
+  models:
+  - metered
+  - subscription
+  units:
+  - active-user
+  plans:
+  - name: Base (first 100 subscribers)
+    access: other
+    model: metered
+    model_how: derived
+    units:
+    - active-user
+    periods:
+    - month
+  - name: Tagging & segmentation add-on
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Paid subscriptions add-on
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Comments and surveys add-on
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Analytics add-on
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: RSS-to-email support add-on
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Email attachments add-on
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Sponsorships add-on
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Archives on a custom domain add-on
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Multiple newsletters add-on
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Automations add-on
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Whitelabeling add-on
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Teams add-on
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
