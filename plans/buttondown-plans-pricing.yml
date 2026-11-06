@@ -104,7 +104,7 @@ plans:
 rate_limit_statements:
 - All of these prices assume that you're sending at most one email a day to your entire subscriber base.
 x-canonical:
-  generated: '2026-11-02'
+  generated: '2026-11-06'
   vocabulary: engine/economics/plans-canonical.yml
   models:
   - metered
